@@ -16,9 +16,8 @@ namespace WeixinPF.Plugins.Hotel
         {
             BusConfiguration busConfiguration = new BusConfiguration();
             busConfiguration.EndpointName("WeixinPF.Plugins.Hotel");
-            busConfiguration.UseSerialization<JsonSerializer>();
-            busConfiguration.EnableInstallers();
-            busConfiguration.UsePersistence<InMemoryPersistence>();
+            busConfiguration.PurgeOnStartup(true);
+            busConfiguration.ApplyCommonConfiguration();
 
             Bus = NServiceBus.Bus.Create(busConfiguration).Start();
         }

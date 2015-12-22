@@ -19,14 +19,34 @@ namespace WeixinPF.Plugins.Hotel.Service
             InitializeComponent();
         }
 
+        static void Main()
+        {
+            using (HotelService service = new HotelService())
+            {
+                if (Environment.UserInteractive)
+                {
+                    service.OnStart(null);
+
+                    Console.WriteLine("Bus created and configured");
+                    Console.WriteLine("Press any key to exit");
+                    Console.ReadKey();
+
+                    service.OnStop();
+
+                    return;
+                }
+                Run(service);
+            }
+        }
+
         protected override void OnStart(string[] args)
         {
             BusConfiguration busConfiguration = new BusConfiguration();            
 
             busConfiguration.EndpointName("WeixinPF.Plugins.Hotel.Service.HotelService");
-            busConfiguration.UseSerialization<JsonSerializer>();
-            busConfiguration.UsePersistence<InMemoryPersistence>();
-            busConfiguration.EnableInstallers();
+            busConfiguration.PurgeOnStartup(true);
+            busConfiguration.ApplyCommonConfiguration();
+
             bus = Bus.Create(busConfiguration).Start();
 
             Console.WriteLine("Service start");
