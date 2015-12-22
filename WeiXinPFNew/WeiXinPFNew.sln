@@ -9,17 +9,75 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeixinPF", "WeixinPF", "{3B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel", "Hotel", "{3EB239AC-158A-48C8-8436-F9CFF075D85D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Plugins.Hotel", "SourceCode\Plugins\Hotel\WeixinPF.Plugins.Hotel\WeixinPF.Plugins.Hotel.csproj", "{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{75DA46E1-B09C-4C90-AA37-1447D57D1211}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Share", "Share", "{79065B03-9DE1-4779-BF60-470EAFBE4559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Plugins.Hotel.Service", "SourceCode\Plugins\Hotel\WeixinPF.Plugins.Hotel.Service\WeixinPF.Plugins.Hotel.Service.csproj", "{FB015820-1374-4AF4-9CF8-40A7C37B344B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{120E8F30-5B8A-4A62-98C1-B5804FBC97A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Messages", "SourceCode\Messages\WeixinPF.Messages\WeixinPF.Messages.csproj", "{2EF4819A-7ECB-4CDD-A241-79F839125AF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Shared", "SourceCode\WeixinPF\WeixinPF.Shared\WeixinPF.Shared.csproj", "{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB015820-1374-4AF4-9CF8-40A7C37B344B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB015820-1374-4AF4-9CF8-40A7C37B344B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB015820-1374-4AF4-9CF8-40A7C37B344B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB015820-1374-4AF4-9CF8-40A7C37B344B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF4819A-7ECB-4CDD-A241-79F839125AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF4819A-7ECB-4CDD-A241-79F839125AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF4819A-7ECB-4CDD-A241-79F839125AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF4819A-7ECB-4CDD-A241-79F839125AF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3EB239AC-158A-48C8-8436-F9CFF075D85D} = {537EF868-0E21-48FC-96CB-8668589CF562}
+		{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE} = {3EB239AC-158A-48C8-8436-F9CFF075D85D}
+		{75DA46E1-B09C-4C90-AA37-1447D57D1211} = {3B557A92-F4DB-4B87-878C-05BE010328F3}
+		{79065B03-9DE1-4779-BF60-470EAFBE4559} = {3B557A92-F4DB-4B87-878C-05BE010328F3}
+		{FB015820-1374-4AF4-9CF8-40A7C37B344B} = {3EB239AC-158A-48C8-8436-F9CFF075D85D}
+		{2EF4819A-7ECB-4CDD-A241-79F839125AF8} = {120E8F30-5B8A-4A62-98C1-B5804FBC97A2}
+		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0} = {79065B03-9DE1-4779-BF60-470EAFBE4559}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 1
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs40
 		SccLocalPath0 = .
+		SccProjectUniqueName1 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel\\WeixinPF.Plugins.Hotel.csproj
+		SccProjectTopLevelParentUniqueName1 = WeiXinPFNew.sln
+		SccProjectName1 = SourceCode/Plugins/Hotel/WeixinPF.Plugins.Hotel
+		SccLocalPath1 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel
+		SccProjectUniqueName2 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel.Service\\WeixinPF.Plugins.Hotel.Service.csproj
+		SccProjectTopLevelParentUniqueName2 = WeiXinPFNew.sln
+		SccProjectName2 = SourceCode/Plugins/Hotel/WeixinPF.Plugins.Hotel.Service
+		SccLocalPath2 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel.Service
+		SccProjectUniqueName3 = SourceCode\\Messages\\WeixinPF.Messages\\WeixinPF.Messages.csproj
+		SccProjectTopLevelParentUniqueName3 = WeiXinPFNew.sln
+		SccProjectName3 = SourceCode/Messages/WeixinPF.Messages
+		SccLocalPath3 = SourceCode\\Messages\\WeixinPF.Messages
+		SccProjectUniqueName4 = SourceCode\\WeixinPF\\WeixinPF.Shared\\WeixinPF.Shared.csproj
+		SccProjectTopLevelParentUniqueName4 = WeiXinPFNew.sln
+		SccProjectName4 = SourceCode/WeixinPF/WeixinPF.Shared
+		SccLocalPath4 = SourceCode\\WeixinPF\\WeixinPF.Shared
 	EndGlobalSection
 EndGlobal
