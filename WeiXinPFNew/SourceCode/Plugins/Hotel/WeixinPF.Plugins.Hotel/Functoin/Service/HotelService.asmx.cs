@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Services;
+using NServiceBus;
 using WeixinPF.Messages.Command;
+using WeixinPF.Messages.RequestResponse;
 
 namespace WeixinPF.Plugins.Hotel.Functoin.Service
 {
@@ -21,7 +25,26 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         [WebMethod]
         public void HelloWorld(int wid, int shopId)
         {
-            Global.Bus.Send("WeixinPF.Plugins.Hotel.Service.HotelService", new ShowAllRoom() {ShopId = shopId, Wid = wid});
+            ShowAllRoomResponse res = null;
+
+            IAsyncResult responseData = 
+                Global.Bus
+                .Send("WeixinPF.Plugins.Hotel.Service.HotelService", new ShowAllRoom() {ShopId = shopId, Wid = wid})
+                .Register(response =>
+                {
+                    CompletionResult localResult = (CompletionResult)response.AsyncState;
+                    res = localResult.Messages[0] as ShowAllRoomResponse;
+                }, this);
+
+            WaitHandle asyncWaitHandle = responseData.AsyncWaitHandle;
+            asyncWaitHandle.WaitOne(10000);
+
+            if (responseData.IsCompleted)
+            {
+                Context.Response.Write(string.Format("{{'RoomName':'{0}','Price':'{1}'}}", res.RoomName, res.Price));
+                Context.Response.End();
+            }
+            
         }
     }
 }

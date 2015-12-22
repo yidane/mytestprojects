@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NServiceBus;
 using WeixinPF.Messages.Command;
+using WeixinPF.Messages.RequestResponse;
 
 namespace WeixinPF.Plugins.Hotel.Service.Handler
 {
@@ -19,7 +20,7 @@ namespace WeixinPF.Plugins.Hotel.Service.Handler
 
         public void Handle(ShowAllRoom message)
         {
-            Console.WriteLine("process ShowAllRoom");
+            bus.Reply(new ShowAllRoomResponse() {RoomName = "大床房", Price = decimal.Parse("234.5")});
         }
     }
 }

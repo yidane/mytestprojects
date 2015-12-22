@@ -3,9 +3,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8"/>
+    
+    
 </head>
 <body>
+<input type="button" id="btnSearch" value="search"/>
+<input type="text" id="txtName"/>
+<input type="text" id="txtPrice"/>
+    <script src="../../Common/JS/Common/zepto.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                type: "post",
+                url: '../Service/HotelService.asmx/HelloWorld',
+                data: {
+                    wid: 1,
+                    shopId: 2
+                },
+                dataType: 'json',
+                success: function (result) {
+                    debugger;
+                    $("#txtName").val(result.RoomName);
+                    $("#txtPrice").val(result.Price);
+                }
+            });
+        });
 
+        
+    </script>
 </body>
 </html>
