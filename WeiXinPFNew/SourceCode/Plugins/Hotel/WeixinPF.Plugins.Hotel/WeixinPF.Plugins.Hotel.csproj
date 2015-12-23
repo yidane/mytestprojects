@@ -74,8 +74,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common\JS\Common\jquery-1.8.2.min.js" />
-    <Content Include="Common\JS\Common\zepto.min.js" />
+    <Content Include="Common\JS\jquery-1.8.2.min.js" />
+    <Content Include="Common\JS\zepto.min.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -102,8 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Common\CSS\Common\" />
+    <Folder Include="Common\CSS\" />
+    <Folder Include="Common\JS\Common\" />
     <Folder Include="Functoin\BackPage\" />
+    <Folder Include="Functoin\StaticPage\CSS\" />
+    <Folder Include="Functoin\StaticPage\Image\" />
+    <Folder Include="Functoin\StaticPage\JS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
