@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Messages", "Source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Shared", "SourceCode\WeixinPF\WeixinPF.Shared\WeixinPF.Shared.csproj", "{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Web", "SourceCode\WeixinPF\Web\WeixinPF.Web\WeixinPF.Web.csproj", "{90493C5B-A365-4098-BC5C-04B064DE83F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeixinFramework", "WeixinFramework", "{35739526-9D65-4C7F-BA27-D36DC5C468D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90493C5B-A365-4098-BC5C-04B064DE83F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90493C5B-A365-4098-BC5C-04B064DE83F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90493C5B-A365-4098-BC5C-04B064DE83F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90493C5B-A365-4098-BC5C-04B064DE83F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,9 +65,11 @@ Global
 		{FB015820-1374-4AF4-9CF8-40A7C37B344B} = {3EB239AC-158A-48C8-8436-F9CFF075D85D}
 		{2EF4819A-7ECB-4CDD-A241-79F839125AF8} = {120E8F30-5B8A-4A62-98C1-B5804FBC97A2}
 		{070F2C49-B23A-45A0-AAD5-31C37AF4AAB0} = {79065B03-9DE1-4779-BF60-470EAFBE4559}
+		{90493C5B-A365-4098-BC5C-04B064DE83F4} = {75DA46E1-B09C-4C90-AA37-1447D57D1211}
+		{35739526-9D65-4C7F-BA27-D36DC5C468D6} = {3B557A92-F4DB-4B87-878C-05BE010328F3}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs40
 		SccLocalPath0 = .
@@ -79,5 +89,9 @@ Global
 		SccProjectTopLevelParentUniqueName4 = WeiXinPFNew.sln
 		SccProjectName4 = SourceCode/WeixinPF/WeixinPF.Shared
 		SccLocalPath4 = SourceCode\\WeixinPF\\WeixinPF.Shared
+		SccProjectUniqueName5 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web\\WeixinPF.Web.csproj
+		SccProjectTopLevelParentUniqueName5 = WeiXinPFNew.sln
+		SccProjectName5 = SourceCode/WeixinPF/Web/WeixinPF.Web
+		SccLocalPath5 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web
 	EndGlobalSection
 EndGlobal
