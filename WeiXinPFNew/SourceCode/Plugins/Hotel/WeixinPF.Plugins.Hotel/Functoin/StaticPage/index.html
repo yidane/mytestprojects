@@ -39,14 +39,33 @@
 
 <template id="view-about-template">
 
-   <div>
-       <input type="text"  v-model="msg"> <span>{{msg}}</span>
+
+    <div>
+       <span>{{msg}}:</span>  <input type="text"  v-model="msg"><br>
+       <span>{{person.firstName}}:</span> <input type="text"  v-model="person.firstName"><br>
+       <span>{{person.lastName}}:</span> <input type="text"  v-model="person.lastName"><br>
+       <span>{{person.email}}:</span> <input type="text"  v-model="person.email"><br>
+
    </div>
+
 </template>
+
+<template id="view-order-template">
+    <ul>
+    <li v-for="order in orders">
+        <h1>姓名：{{order.firstName}}</h1>
+        <p>{{order.lastName}}</p>
+        <a>{{order.email}}</a>
+    </li>
+    </ul>
+    </template>
 
     <script src="../../Common/JS/vue/vue.min.js"></script>
 
 <script src="../../Common/JS/vue/vue-resource.min.js"></script>
-    <script src="JS/main.js"></script>
+<script src="JS/main.js"></script>
+     
+
+
 </body>
 </html>

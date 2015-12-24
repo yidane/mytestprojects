@@ -51,14 +51,14 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         public void GetJson()
         {
 
-            Context.Response.Write("{ \"firstName \":  \"Brett \",\"lastName \":  \"McLaughlin \",\"email \":  \"aaaa \"}");
+            Context.Response.Write("{\"firstName\":\"Brett\",\"lastName\":\"McLaughlin\",\"email\":\"aaaa\"}");
             Context.Response.End();
         }
 
         [WebMethod]
         public void GetListJson()
         {
-            Context.Response.Write("{\"people\":[{\"firstName\":\"Brett\",\"lastName\":\"McLaughlin\",\"email\":\"aaaa\"},{\"firstName\":\"Jason\",\"lastName\":\"Hunter\",\"email\":\"bbbb\"},{\"firstName\":\"Elliotte\",\"lastName\":\"Harold\",\"email\":\"cccc\"}]}");
+            Context.Response.Write("{\"orders\":[{\"firstName\":\"Brett\",\"lastName\":\"McLaughlin\",\"email\":\"aaaa\"},{\"firstName\":\"Jason\",\"lastName\":\"Hunter\",\"email\":\"bbbb\"},{\"firstName\":\"Elliotte\",\"lastName\":\"Harold\",\"email\":\"cccc\"}]}");
             Context.Response.End();
         }
     }

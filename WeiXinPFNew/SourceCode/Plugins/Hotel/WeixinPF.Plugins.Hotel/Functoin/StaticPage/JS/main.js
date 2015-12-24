@@ -15,14 +15,14 @@
 
 
 //
-var AppFooter = Vue.extend( {
-        template: '#app-footer-template',
+var AppFooter = Vue.extend({
+    template: '#app-footer-template',
     data: function () {
-        return { msg: 'about' }
+        return {msg: 'view-about'}
     },
     methods: {
         notify: function (msg) {
-            this.msg=msg
+            this.msg = msg
             if (this.msg.trim()) {
                 this.$dispatch('child-msg', this.msg)
             }
@@ -30,49 +30,113 @@ var AppFooter = Vue.extend( {
     }
 })
 
+var ViewAbout= Vue.extend({
+    template: '#view-about-template',
+    props: ['myMessage'],
+    data: function() {
+        return {msg: 'hello',
+            person:{}
+        }
+    },
+    activate: function (done) {
+        var self = this
+
+
+
+        this.getData(function (data) {
+
+            self.person = data
+            done()
+        })
+    },
+    methods: {
+        notify: function () {
+            if (this.msg.trim()) {
+                this.$dispatch('child-msg', this.msg)
+                this.msg = ''
+            }
+        },
+        getData: function (callBack) {
+            // GET request
+            this.$http.get('/Functoin/Service/HotelService.asmx/GetJson').then(function (response) {
+
+                // set data on vm
+
+                if (response.data) {
+                    callBack(response.data)
+                }
+
+            }, function (response) {
+
+                // handle error
+            });
+        }
+    }
+})
+
+var ViewOrder=Vue.extend({
+    template: '#view-order-template',
+    props: ['myMessage'],
+    data: function() {
+        return {
+            orders:{}
+        }
+    },
+    activate: function (done) {
+        var self = this
+        this.getData(function (data) {
+
+            self.orders = data
+            done()
+        })
+    },
+    methods: {
+
+        getData: function (callBack) {
+            // GET request
+            this.$http.get('/Functoin/Service/HotelService.asmx/GetListJson').then(function (response) {
+
+                // set data on vm
+
+                if (response.data) {
+                    callBack(response.data.orders)
+                }
+
+            }, function (response) {
+
+                // handle error
+            });
+        }
+    }
+})
+
 // 创建根实例
-var vm=new Vue({
+var vm = new Vue({
     el: '#div_app',
-   
+
     data: {
         currentView: 'view-about',
-        testVal:'123',
-        person:{}
-        },
-    components:{
-                'app-header':{
-                    template: '<div>this is header!</div>'
-                },
-        'app-footer':AppFooter,
-        'view-about':{
-            template:'#view-about-template',
-            props: ['myMessage'],
-            data: function () {
-                return { msg: 'hello' }
-            },
-            methods: {
-                notify: function () {
-                    if (this.msg.trim()) {
-                        this.$dispatch('child-msg', this.msg)
-                        this.msg = ''
-                    }
-                }
-            }
-                },
-                'view-room':{
-                    template:'<div>this is room!</div>'
-                },
-                'view-order':{
-                    template:'<div>this is order!</div>'
-                }
+        testVal: '123',
+        person: {}
     },
-        // 在创建实例时 `events` 选项简单地调用 `$on`
-        events: {
-            'child-msg': function (msg) {
-                // 事件回调内的 `this` 自动绑定到注册它的实例上
-                this.currentView=msg;
-            }
+    components: {
+        'app-header': {
+            template: '<div>this is header!</div>'
         },
+        'app-footer': AppFooter,
+        'view-about': ViewAbout,
+        'view-room': {
+            template: '<div>this is room!</div>'
+        },
+        'view-order': ViewOrder
+    },
+    // 在创建实例时 `events` 选项简单地调用 `$on`
+    events: {
+        'child-msg': function (msg) {
+            // 事件回调内的 `this` 自动绑定到注册它的实例上
+            this.currentView = msg;
+        }
+    },
     // 在 `methods` 对象中定义方法
     methods: {
         getData: function () {
@@ -80,7 +144,7 @@ var vm=new Vue({
             this.$http.get('/Functoin/Service/HotelService.asmx/GetJson').then(function (response) {
 
                 // set data on vm
-                this.person= response.data;
+                this.person = response.data;
 
             }, function (response) {
 
@@ -88,39 +152,9 @@ var vm=new Vue({
             });
         }
     },
-    ready: function() {
-        this.getData();
+    ready: function () {
+        //this.getData();
 
 
     }
 })
-
-    //new Vue({
-    //    el: 'div_app',
-    //    //data: {
-    //    //    currentView: 'view-about'
-    //    //},
-    //    components: {
-    //        'app-header':{
-    //            template: '<div>this is header!</div>'
-    //        }
-    //        //,'app-footer':AppFooter,
-    //        //'view-about':{
-    //        //    template:'<div>this is about!</div>'
-    //        //},
-    //        //'view-room':{
-    //        //    template:'<div>this is room!</div>'
-    //        //},
-    //        //'view-order':{
-    //        //    template:'<div>this is order!</div>'
-    //        //}
-    //    },
-    //    // 在创建实例时 `events` 选项简单地调用 `$on`
-    //    events: {
-    //        'child-msg': function (msg) {
-    //            // 事件回调内的 `this` 自动绑定到注册它的实例上
-    //            this.currentView(msg)
-    //        }
-    //    }
-    //})
-    //
