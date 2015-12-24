@@ -99,6 +99,7 @@
     <Content Include="Functoin\StaticPage\JS\main.js" />
     <Content Include="Functoin\StaticPage\JS\paycallback.js" />
     <Content Include="Functoin\StaticPage\JS\plugback.js" />
+	<Content Include="Functoin\BackPage\dingdan_confirm.aspx" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -115,6 +116,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Functoin\BackPage\dingdan_confirm.aspx.cs">
+      <DependentUpon>dingdan_confirm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Functoin\BackPage\dingdan_confirm.aspx.designer.cs">
+      <DependentUpon>dingdan_confirm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Functoin\Service\HotelService.asmx.cs">
       <DependentUpon>HotelService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -127,6 +135,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Common\Image\" />
+    <Folder Include="Functoin\BackPage\BasePage\" />
     <Folder Include="Functoin\BackPage\CSS\" />
     <Folder Include="Functoin\BackPage\Image\" />
     <Folder Include="Functoin\BackPage\JS\" />
@@ -136,6 +145,10 @@
     <ProjectReference Include="..\..\..\Messages\WeixinPF.Messages\WeixinPF.Messages.csproj">
       <Project>{2ef4819a-7ecb-4cdd-a241-79f839125af8}</Project>
       <Name>WeixinPF.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WeixinPF\Common\WeixinPF.Common\WeixinPF.Common.csproj">
+      <Project>{4c6c3917-60e6-42ed-ac44-d8da3d82a37b}</Project>
+      <Name>WeixinPF.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\WeixinPF\WeixinPF.Shared\WeixinPF.Shared.csproj">
       <Project>{070f2c49-b23a-45a0-aad5-31c37af4aab0}</Project>

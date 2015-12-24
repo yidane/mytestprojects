@@ -39,11 +39,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NServiceBus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\NServiceBus.5.2.12\lib\net45\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\HotelDbContext.cs" />
+    <Compile Include="Application\Repository\IHotelOrderRepository.cs" />
+    <Compile Include="Application\Service\HotelOrderService.cs" />
+    <Compile Include="Application\Service\IdentifyingCodeService.cs" />
+    <Compile Include="Handler\GetHotelOrderHandler.cs" />
+    <Compile Include="Handler\GetIdentifyingCodeHandler.cs" />
     <Compile Include="Handler\ShowAllRoomHandler.cs" />
     <Compile Include="HotelService.cs">
       <SubType>Component</SubType>
@@ -61,8 +76,13 @@
     <Compile Include="HotelService.Designer.cs">
       <DependentUpon>HotelService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\HotelOrderRepository.cs" />
+    <Compile Include="Models\HotelOrderInfo.cs" />
+    <Compile Include="Models\IdentifyingCodeInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Infrastructure\IdentifyingCodeRepository.cs" />
+    <Compile Include="Application\Repository\IIdentifyingCodeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -73,14 +93,20 @@
       <Project>{2ef4819a-7ecb-4cdd-a241-79f839125af8}</Project>
       <Name>WeixinPF.Messages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\WeixinPF\Application\WeixinPF.Application\WeixinPF.Application.csproj">
+      <Project>{c4941bbf-0230-4f8e-8f54-efcba0c80344}</Project>
+      <Name>WeixinPF.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WeixinPF\Infrastructure\WeixinPF.Infrastructure\WeixinPF.Infrastructure.csproj">
+      <Project>{04186677-71c9-4400-a294-02176774c5f7}</Project>
+      <Name>WeixinPF.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\WeixinPF\WeixinPF.Shared\WeixinPF.Shared.csproj">
       <Project>{070f2c49-b23a-45a0-aad5-31c37af4aab0}</Project>
       <Name>WeixinPF.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
