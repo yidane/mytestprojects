@@ -76,6 +76,12 @@
   <ItemGroup>
     <Content Include="Common\JS\jquery-1.8.2.min.js" />
     <Content Include="Common\JS\zepto.min.js" />
+    <Content Include="Common\CSS\weui\weui.min.css" />
+    <Content Include="Functoin\StaticPage\index.html" />
+    <Content Include="Common\JS\vue\vue-resource.min.js" />
+    <Content Include="Common\JS\vue\vue-router.min.js" />
+    <Content Include="Common\JS\vue\vue.min.js" />
+    <Content Include="Functoin\StaticPage\JS\main.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -88,6 +94,7 @@
     <Content Include="Functoin\Service\HotelService.asmx" />
     <Content Include="Functoin\StaticPage\TestPage.html" />
     <Content Include="Global.asax" />
+    <Content Include="Functoin\StaticPage\routeTest.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -102,14 +109,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Common\CSS\" />
     <Folder Include="Common\Image\" />
     <Folder Include="Functoin\BackPage\CSS\" />
     <Folder Include="Functoin\BackPage\Image\" />
     <Folder Include="Functoin\BackPage\JS\" />
     <Folder Include="Functoin\StaticPage\CSS\" />
     <Folder Include="Functoin\StaticPage\Image\" />
-    <Folder Include="Functoin\StaticPage\JS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

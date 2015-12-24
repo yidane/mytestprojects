@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>在线预订</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="../../Common/CSS/weui/weui.min.css" rel="stylesheet" />
+    <style>
+        .fade-transition {
+            transition: opacity .3s ease;
+        }
+        .fade-enter, .fade-leave {
+            opacity: 0;
+        }
+    </style>
+</head>
+<!-- index.html -->
+<body>
+<div id="div_app">
+    <app-header></app-header>
+    <component :is="currentView"  keep-alive  transition="fade"
+               transition-mode="out-in" v-bind:my-message="testVal">
+        <!-- 组件在 vm.currentview 变化时改变 -->
+    </component>
+    <app-footer></app-footer>
+</div>
+
+<!-- 子组件模板 -->
+<template id="app-footer-template">
+
+    <a  v-on:click="notify('view-about')" v-link="{ path: '/about' }">关于</a>
+    <a  v-on:click="notify('view-room')" v-link="{ path: '/room' }" >房型选择</a>
+    <a  v-on:click="notify('view-order')" v-link="{ path: '/order' }">订单</a>
+</template>
+
+<template id="view-about-template">
+
+   <div>
+       <input type="text"  v-model="msg"> <span>{{msg}}</span>
+   </div>
+</template>
+
+    <script src="../../Common/JS/vue/vue.min.js"></script>
+
+<script src="../../Common/JS/vue/vue-resource.min.js"></script>
+    <script src="JS/main.js"></script>
+</body>
+</html>

@@ -46,5 +46,20 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
             }
             
         }
+
+        [WebMethod]
+        public void GetJson()
+        {
+
+            Context.Response.Write("{ \"firstName \":  \"Brett \",\"lastName \":  \"McLaughlin \",\"email \":  \"aaaa \"}");
+            Context.Response.End();
+        }
+
+        [WebMethod]
+        public void GetListJson()
+        {
+            Context.Response.Write("{\"people\":[{\"firstName\":\"Brett\",\"lastName\":\"McLaughlin\",\"email\":\"aaaa\"},{\"firstName\":\"Jason\",\"lastName\":\"Hunter\",\"email\":\"bbbb\"},{\"firstName\":\"Elliotte\",\"lastName\":\"Harold\",\"email\":\"cccc\"}]}");
+            Context.Response.End();
+        }
     }
 }
