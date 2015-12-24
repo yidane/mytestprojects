@@ -77,11 +77,28 @@
     <Content Include="Common\JS\jquery-1.8.2.min.js" />
     <Content Include="Common\JS\zepto.min.js" />
     <Content Include="Common\CSS\weui\weui.min.css" />
+    <Content Include="Functoin\StaticPage\CSS\hotelOrderList.css" />
+    <Content Include="Functoin\StaticPage\CSS\hotels.css" />
+    <Content Include="Functoin\StaticPage\CSS\mystyle.css" />
+    <Content Include="Functoin\StaticPage\CSS\orderstyle.css" />
+    <Content Include="Functoin\StaticPage\Images\3YQLfzfunJ.png" />
+    <Content Include="Functoin\StaticPage\Images\9uKCykhUSh.png" />
+    <Content Include="Functoin\StaticPage\Images\addr.png" />
+    <Content Include="Functoin\StaticPage\Images\arrow3.png" />
+    <Content Include="Functoin\StaticPage\Images\detail.png" />
+    <Content Include="Functoin\StaticPage\Images\RTqs2yHIc9.jpg" />
+    <Content Include="Functoin\StaticPage\Images\s22KaR0Wtc.png" />
+    <Content Include="Functoin\StaticPage\Images\tel.png" />
+    <Content Include="Functoin\StaticPage\Images\xxyX63YryG.png" />
     <Content Include="Functoin\StaticPage\index.html" />
     <Content Include="Common\JS\vue\vue-resource.min.js" />
     <Content Include="Common\JS\vue\vue-router.min.js" />
     <Content Include="Common\JS\vue\vue.min.js" />
+    <Content Include="Functoin\StaticPage\JS\iscroll.js" />
+    <Content Include="Functoin\StaticPage\JS\jquery.min.js" />
     <Content Include="Functoin\StaticPage\JS\main.js" />
+    <Content Include="Functoin\StaticPage\JS\paycallback.js" />
+    <Content Include="Functoin\StaticPage\JS\plugback.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -113,8 +130,6 @@
     <Folder Include="Functoin\BackPage\CSS\" />
     <Folder Include="Functoin\BackPage\Image\" />
     <Folder Include="Functoin\BackPage\JS\" />
-    <Folder Include="Functoin\StaticPage\CSS\" />
-    <Folder Include="Functoin\StaticPage\Image\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
