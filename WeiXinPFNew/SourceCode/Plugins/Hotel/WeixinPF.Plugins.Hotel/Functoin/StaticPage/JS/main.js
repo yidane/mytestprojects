@@ -127,11 +127,13 @@ var vm = new Vue({
         currentView: 'view-room',
         testVal: '123',
         person: {},
-        imgDatas:[]
+        imgDatas:[],
+        headerTitle:'关于'
     },
     components: {
         'app-header': {
-            template: '#app-header-template'
+            template: '#app-header-template',
+            props:['header-title']
         },
         'app-footer': AppFooter,
         'view-about': ViewAbout,
@@ -148,6 +150,11 @@ var vm = new Vue({
         'child-msg': function (msg) {
             // 事件回调内的 `this` 自动绑定到注册它的实例上
             this.currentView = msg;
+            switch (msg){
+                case '':
+                    this.headerTitle='';
+                    break;
+            }
         },
         'onimgDataDispatch':function(data){
             this.imgDatas=data;

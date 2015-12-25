@@ -27,7 +27,7 @@
 <body>
 <div id="div_app">
 
-    <app-header></app-header>
+    <app-header :header-title="headerTitle"></app-header>
 
     <app-image :view-images="imgDatas"></app-image>
 
@@ -55,11 +55,11 @@
 <template id="app-footer-template">
 
     <!--<a :style="{ color: currentView=='view-about'?'red':'black' }"-->
-       <!--v-on:click="notify('view-about')" v-link="{ path: '/about' }">关于</a>-->
+    <!--v-on:click="notify('view-about')" v-link="{ path: '/about' }">关于</a>-->
     <!--<a :style="{ color: currentView=='view-room'?'red':'black' }"-->
-       <!--v-on:click="notify('view-room')" v-link="{ path: '/room' }">房型选择</a>-->
+    <!--v-on:click="notify('view-room')" v-link="{ path: '/room' }">房型选择</a>-->
     <!--<a :style="{ color: currentView=='view-order'?'red':'black' }"-->
-       <!--v-on:click="notify('view-order')" v-link="{ path: '/order' }">订单</a>-->
+    <!--v-on:click="notify('view-order')" v-link="{ path: '/order' }">订单</a>-->
 
     <div class="footermenu">
         <ul>
@@ -69,8 +69,9 @@
                    v-on:click="notify('view-about')"
                    v-link="{ path: '/about' }"
 
-                  >
+                        >
                     <img src="images/xxyX63YryG.png">
+
                     <p>关于</p>
                 </a>
             </li>
@@ -78,8 +79,9 @@
                 <a id="choice"
                    :class="{ active: currentView=='view-room' }"
                    v-on:click="notify('view-room')" v-link="{ path: '/room' }"
-                 >
+                        >
                     <img src="images/3YQLfzfunJ.png">
+
                     <p>房型选择</p>
                 </a>
             </li>
@@ -87,8 +89,9 @@
                 <a id="myOrder"
                    :class="{ active: currentView=='view-order' }"
                    v-on:click="notify('view-order')" v-link="{ path: '/order' }"
-                    >
-                    <span class="num">0</span>  <img src="images/s22KaR0Wtc.png">
+                        >
+                    <span class="num">0</span> <img src="images/s22KaR0Wtc.png">
+
                     <p>订单</p>
                 </a>
             </li>
@@ -102,11 +105,13 @@
 
 
         <ul class="round">
-            <li class="addr"><a href="http://www.cloudorg.com.cn/weixin/map/map_address.html?type=hotel&amp;id=2"><span>神仙湾</span></a></li>
+            <li class="addr"><a href="http://www.cloudorg.com.cn/weixin/map/map_address.html?type=hotel&amp;id=2"><span>神仙湾</span></a>
+            </li>
             <li class="tel"><a href="tel:123"><span>123 电话预订</span></a></li>
         </ul>
         <div class="detailcontent">
             <h2>商家介绍</h2>
+
             <div class="content">
                 <span style="color: #444444; font-family: 'Microsoft YaHei', Helvitica, Verdana, Arial, san-serif; font-size: 14px; font-weight: bold; line-height: 21px; background-color: #FCFCFC;">七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍</span>
             </div>
@@ -126,76 +131,91 @@
         }
     </style>
 
-    <div class="container red">
-        <span>{{msg}}:</span> <input type="text" v-model="msg"><br>
-        <span>{{person.firstName}}:</span> <input type="text" v-model="person.firstName"><br>
-        <span>{{person.lastName}}:</span> <input type="text" v-model="person.lastName"><br>
-        <span>{{person.email}}:</span> <input type="text" v-model="person.email"><br>
 
-    </div>
-
-
-    <ul class="round">
+    <ul class="round container">
         <li class="title mb"><span class="none">请认真填写在线订单</span></li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>预订人</th>
                     <td>
-                        <input name="ctl00$content$oderName" type="text" id="content_oderName" class="px" placeholder="请输入您的真实姓名"></td>
+                        <input name="ctl00$content$oderName"
+                               type="text" id="content_oderName"
+                               v-model="person.firstName"
+                               class="px" placeholder="请输入您的真实姓名"></td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>身份证号</th>
                     <td>
-                        <input name="ctl00$content$identityNumber" type="text" id="content_identityNumber" class="px" onblur="checkidcard()" required="" placeholder="请输入您的身份证号"></td>
+                        <input name="ctl00$content$identityNumber"
+                               v-model="person.lastName"
+                               type="text" id="content_identityNumber" class="px" onblur="checkidcard()" required=""
+                               placeholder="请输入您的身份证号"></td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>联系电话</th>
                     <td>
-                        <input name="ctl00$content$tel" type="text" id="content_tel" class="px" onblur="checkphone()" required="" placeholder="请输入您的电话"></td>
+                        <input name="ctl00$content$tel" type="text"
+                               v-model="person.email"
+                               id="content_tel" class="px" onblur="checkphone()" required="" placeholder="请输入您的电话"></td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>入住时间</th>
                     <td>
-                        <input name="arriveTime" class="px datetimepicker" id="arriveTime" value="" readonly="readonly" type="text" placeholder="入住时间">
+                        <input name="arriveTime" class="px datetimepicker" id="arriveTime" value="" readonly="readonly"
+                               type="text" placeholder="入住时间">
                     </td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>离店时间</th>
                     <td>
-                        <input name="leaveTime" class="px datetimepicker" id="leaveTime" value="" readonly="readonly" type="text" placeholder="离店时间">
+                        <input name="leaveTime" class="px datetimepicker" id="leaveTime" value="" readonly="readonly"
+                               type="text" placeholder="离店时间">
                     </td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>类型</th>
                     <td>
                         <input class="px" id="roomtype" value="标准间" type="text" readonly="true"></td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>预订数量</th>
                     <td>
                         <select name="orderNum" class="dropdown-select" id="orderNum" onchange="dothis(this.value)">
@@ -221,49 +241,72 @@
                             <option value="20">20</option>
                         </select></td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th>单价</th>
                     <td class="userinfo price">￥2</td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
-
-
 
 
         <li class="nob">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                <tbody><tr>
+                <tbody>
+                <tr>
                     <th valign="middle" class="thtop">备注</th>
                     <td>
-                        <textarea name="remark" class="pxtextarea" style="height: 99px; overflow-y: visible" id="remark" placeholder="请输入备注信息"></textarea></td>
+                        <textarea name="remark" class="pxtextarea" style="height: 99px; overflow-y: visible" id="remark"
+                                  placeholder="请输入备注信息"></textarea></td>
                 </tr>
-                </tbody></table>
+                </tbody>
+            </table>
         </li>
     </ul>
+
+
 </template>
 
 <template id="view-order-template">
-    <ul>
-        <li v-for="order in orders">
-            <h1>姓名：{{order.firstName}}</h1>
 
-            <p>{{order.lastName}}</p>
-            <a>{{order.email}}</a>
-        </li>
-    </ul>
+
+    <div class="cardexplain">
+
+        <!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
+        <ul class="round" v-for="order in orders">
+            <li class="title"  ><a
+                    href="#"><span>2015/12/16 15:54:30 kfc</span></a>
+            </li>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cpbiaoge">
+                <tbody>
+                <tr>
+                    <th>订单编号</th>
+                    <th width="70" class="cc">订单金额</th>
+                    <th width="60" class="cc">订单状态</th>
+                </tr>
+                <tr>
+                    <td>{{order.firstName}}</td>
+                    <td class="cc">{{order.lastName}}</td>
+                    <td class="cc"><em class="ok">{{order.email}}</em></td>
+                </tr>
+                </tbody>
+            </table>
+        </ul>
+    </div>
 </template>
 
 <template id="view-image-template">
     <style>
-        .header-img
-        {
+        .header-img {
             width: 100%;
         }
+
         .swiper-container {
             width: 100%;
             height: 200px;
@@ -275,19 +318,19 @@
             {{viewImages.length}}
             <div class="swiper-slide" v-for="imgData in viewImages">
 
-                    <img class="header-img"    :src="imgData.img">
+                <img class="header-img" :src="imgData.img">
             </div>
         </div>
-        </div>
-        <!-- 如果需要分页器 -->
-        <div class="swiper-pagination"></div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
 
-        <!-- 如果需要导航按钮 -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
 
-        <!-- 如果需要滚动条 -->
-        <div class="swiper-scrollbar"></div>
+    <!-- 如果需要滚动条 -->
+    <div class="swiper-scrollbar"></div>
     </div>
 
 
