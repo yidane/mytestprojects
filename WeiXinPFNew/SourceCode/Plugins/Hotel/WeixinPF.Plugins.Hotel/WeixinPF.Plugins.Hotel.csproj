@@ -105,6 +105,7 @@
     <Content Include="Functoin\StaticPage\JS\paycallback.js" />
     <Content Include="Functoin\StaticPage\JS\plugback.js" />
     <Content Include="Functoin\BackPage\dingdan_confirm.aspx" />
+    <Content Include="Functoin\StaticPage\JS\V-AppFooter.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
