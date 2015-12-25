@@ -31,8 +31,9 @@ var ViewAbout= Vue.extend({
             self.imgData=data;
             self.notify();
 
-            done();
+
         });
+        done();
     },
     methods: {
         notify: function () {
@@ -59,8 +60,9 @@ var ViewOrder=Vue.extend({
         this.getData(function (data) {
 
             self.orders = data
-            done()
+
         })
+        done()
     },
     methods: {
 
@@ -93,9 +95,9 @@ var ViewRoom=Vue.extend({
         var self = this;
         this.getData(function (data) {
             self.person = data;
-            done();
-        });
 
+        });
+        done();
     },
     methods: {
 
