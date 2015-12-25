@@ -65,7 +65,9 @@
   <ItemGroup>
     <Compile Include="Application\HotelDbContext.cs" />
     <Compile Include="Application\Repository\IHotelOrderRepository.cs" />
+    <Compile Include="Application\Repository\IHotelRepository.cs" />
     <Compile Include="Application\Service\HotelOrderService.cs" />
+    <Compile Include="Application\Service\HotelService.cs" />
     <Compile Include="Application\Service\IdentifyingCodeService.cs" />
     <Compile Include="Handler\GetHotelOrderHandler.cs" />
     <Compile Include="Handler\GetIdentifyingCodeHandler.cs" />
@@ -77,6 +79,8 @@
       <DependentUpon>HotelService.cs</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\HotelOrderRepository.cs" />
+    <Compile Include="Infrastructure\HotelRepository.cs" />
+    <Compile Include="Models\HotelInfo.cs" />
     <Compile Include="Models\HotelOrderInfo.cs" />
     <Compile Include="Models\IdentifyingCodeInfo.cs" />
     <Compile Include="Program.cs" />
