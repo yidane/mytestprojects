@@ -8,11 +8,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <link href="../../Common/CSS/weui/weui.min.css" rel="stylesheet" />
+    <link href="../../Common/CSS/weui/weui.min.css" rel="stylesheet"/>
+    <link href="../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>
+
+
+    <link href="CSS/hotels.css" rel="stylesheet"/>
     <style>
         .fade-transition {
             transition: opacity .3s ease;
         }
+
         .fade-enter, .fade-leave {
             opacity: 0;
         }
@@ -21,51 +26,279 @@
 <!-- index.html -->
 <body>
 <div id="div_app">
+
     <app-header></app-header>
-    <component :is="currentView"  keep-alive  transition="fade"
-               transition-mode="out-in" v-bind:my-message="testVal">
+
+    <app-image :view-images="imgDatas"></app-image>
+
+    <component :is="currentView" keep-alive transition="fade"
+               transition-mode="out-in" :my-message="testVal">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
-    <app-footer></app-footer>
+    <app-footer :current-view="currentView"></app-footer>
 </div>
 
+
 <!-- 子组件模板 -->
+<template id="app-header-template">
+    <div class="menu_header">
+        <div class="menu_topbar">
+            <strong class="head-title">关于</strong>
+            <span class="head_btn_left"><a href="javascript:history.go(-1);"><span>返回</span></a><b></b></span>
+            <a class="head_btn_right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1">
+                <span><i class="menu_header_home"></i></span><b></b>
+            </a>
+        </div>
+    </div>
+</template>
+
 <template id="app-footer-template">
 
-    <a  v-on:click="notify('view-about')" v-link="{ path: '/about' }">关于</a>
-    <a  v-on:click="notify('view-room')" v-link="{ path: '/room' }" >房型选择</a>
-    <a  v-on:click="notify('view-order')" v-link="{ path: '/order' }">订单</a>
+    <!--<a :style="{ color: currentView=='view-about'?'red':'black' }"-->
+       <!--v-on:click="notify('view-about')" v-link="{ path: '/about' }">关于</a>-->
+    <!--<a :style="{ color: currentView=='view-room'?'red':'black' }"-->
+       <!--v-on:click="notify('view-room')" v-link="{ path: '/room' }">房型选择</a>-->
+    <!--<a :style="{ color: currentView=='view-order'?'red':'black' }"-->
+       <!--v-on:click="notify('view-order')" v-link="{ path: '/order' }">订单</a>-->
+
+    <div class="footermenu">
+        <ul>
+            <li>
+                <a id="about"
+                   :class="{ active: currentView=='view-about' }"
+                   v-on:click="notify('view-about')"
+                   v-link="{ path: '/about' }"
+
+                  >
+                    <img src="images/xxyX63YryG.png">
+                    <p>关于</p>
+                </a>
+            </li>
+            <li>
+                <a id="choice"
+                   :class="{ active: currentView=='view-room' }"
+                   v-on:click="notify('view-room')" v-link="{ path: '/room' }"
+                 >
+                    <img src="images/3YQLfzfunJ.png">
+                    <p>房型选择</p>
+                </a>
+            </li>
+            <li>
+                <a id="myOrder"
+                   :class="{ active: currentView=='view-order' }"
+                   v-on:click="notify('view-order')" v-link="{ path: '/order' }"
+                    >
+                    <span class="num">0</span>  <img src="images/s22KaR0Wtc.png">
+                    <p>订单</p>
+                </a>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <template id="view-about-template">
 
+    <div class="cardexplain">
 
-    <div>
-       <span>{{msg}}:</span>  <input type="text"  v-model="msg"><br>
-       <span>{{person.firstName}}:</span> <input type="text"  v-model="person.firstName"><br>
-       <span>{{person.lastName}}:</span> <input type="text"  v-model="person.lastName"><br>
-       <span>{{person.email}}:</span> <input type="text"  v-model="person.email"><br>
 
-   </div>
+        <ul class="round">
+            <li class="addr"><a href="http://www.cloudorg.com.cn/weixin/map/map_address.html?type=hotel&amp;id=2"><span>神仙湾</span></a></li>
+            <li class="tel"><a href="tel:123"><span>123 电话预订</span></a></li>
+        </ul>
+        <div class="detailcontent">
+            <h2>商家介绍</h2>
+            <div class="content">
+                <span style="color: #444444; font-family: 'Microsoft YaHei', Helvitica, Verdana, Arial, san-serif; font-size: 14px; font-weight: bold; line-height: 21px; background-color: #FCFCFC;">七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍</span>
+            </div>
+        </div>
+    </div>
 
+</template>
+
+<template id="view-room-template">
+    <style scoped>
+        .container {
+            border: 1px solid #00f;
+        }
+
+        .red {
+            color: #f00;
+        }
+    </style>
+
+    <div class="container red">
+        <span>{{msg}}:</span> <input type="text" v-model="msg"><br>
+        <span>{{person.firstName}}:</span> <input type="text" v-model="person.firstName"><br>
+        <span>{{person.lastName}}:</span> <input type="text" v-model="person.lastName"><br>
+        <span>{{person.email}}:</span> <input type="text" v-model="person.email"><br>
+
+    </div>
+
+
+    <ul class="round">
+        <li class="title mb"><span class="none">请认真填写在线订单</span></li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>预订人</th>
+                    <td>
+                        <input name="ctl00$content$oderName" type="text" id="content_oderName" class="px" placeholder="请输入您的真实姓名"></td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>身份证号</th>
+                    <td>
+                        <input name="ctl00$content$identityNumber" type="text" id="content_identityNumber" class="px" onblur="checkidcard()" required="" placeholder="请输入您的身份证号"></td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>联系电话</th>
+                    <td>
+                        <input name="ctl00$content$tel" type="text" id="content_tel" class="px" onblur="checkphone()" required="" placeholder="请输入您的电话"></td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>入住时间</th>
+                    <td>
+                        <input name="arriveTime" class="px datetimepicker" id="arriveTime" value="" readonly="readonly" type="text" placeholder="入住时间">
+                    </td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>离店时间</th>
+                    <td>
+                        <input name="leaveTime" class="px datetimepicker" id="leaveTime" value="" readonly="readonly" type="text" placeholder="离店时间">
+                    </td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>类型</th>
+                    <td>
+                        <input class="px" id="roomtype" value="标准间" type="text" readonly="true"></td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>预订数量</th>
+                    <td>
+                        <select name="orderNum" class="dropdown-select" id="orderNum" onchange="dothis(this.value)">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                        </select></td>
+                </tr>
+                </tbody></table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th>单价</th>
+                    <td class="userinfo price">￥2</td>
+                </tr>
+                </tbody></table>
+        </li>
+
+
+
+
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tbody><tr>
+                    <th valign="middle" class="thtop">备注</th>
+                    <td>
+                        <textarea name="remark" class="pxtextarea" style="height: 99px; overflow-y: visible" id="remark" placeholder="请输入备注信息"></textarea></td>
+                </tr>
+                </tbody></table>
+        </li>
+    </ul>
 </template>
 
 <template id="view-order-template">
     <ul>
-    <li v-for="order in orders">
-        <h1>姓名：{{order.firstName}}</h1>
-        <p>{{order.lastName}}</p>
-        <a>{{order.email}}</a>
-    </li>
+        <li v-for="order in orders">
+            <h1>姓名：{{order.firstName}}</h1>
+
+            <p>{{order.lastName}}</p>
+            <a>{{order.email}}</a>
+        </li>
     </ul>
-    </template>
+</template>
 
-    <script src="../../Common/JS/vue/vue.min.js"></script>
+<template id="view-image-template">
+    <style>
+        .header-img
+        {
+            width: 100%;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
 
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {{viewImages.length}}
+            <div class="swiper-slide" v-for="imgData in viewImages">
+
+                    <img class="header-img"    :src="imgData.img">
+            </div>
+        </div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+        <!-- 如果需要滚动条 -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+
+
+</template>
+
+<script src="../../Common/JS/vue/vue.min.js"></script>
 <script src="../../Common/JS/vue/vue-resource.min.js"></script>
-<script src="JS/main.js"></script>
-     
+<script src="../../Common/web_component/swiper/swiper.min.js"></script>
 
+<script src="JS/V-AppFooter.js"></script>
+<script src="JS/main.js"></script>
 
 </body>
 </html>

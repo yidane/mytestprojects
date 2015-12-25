@@ -15,61 +15,33 @@
 
 
 //
-var AppFooter = Vue.extend({
-    template: '#app-footer-template',
-    data: function () {
-        return {msg: 'view-about'}
-    },
-    methods: {
-        notify: function (msg) {
-            this.msg = msg
-            if (this.msg.trim()) {
-                this.$dispatch('child-msg', this.msg)
-            }
-        }
-    }
-})
+
 
 var ViewAbout= Vue.extend({
     template: '#view-about-template',
-    props: ['myMessage'],
+
     data: function() {
-        return {msg: 'hello',
-            person:{}
+        return {
+            imgData: []
         }
     },
     activate: function (done) {
-        var self = this
-
-
-
+        var self = this;
         this.getData(function (data) {
+            self.imgData=data;
+            self.notify();
 
-            self.person = data
-            done()
-        })
+            done();
+        });
     },
     methods: {
         notify: function () {
-            if (this.msg.trim()) {
-                this.$dispatch('child-msg', this.msg)
-                this.msg = ''
+            if (this.imgData) {
+                this.$dispatch('imgData', this.imgData);
             }
         },
         getData: function (callBack) {
-            // GET request
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetJson').then(function (response) {
-
-                // set data on vm
-
-                if (response.data) {
-                    callBack(response.data)
-                }
-
-            }, function (response) {
-
-                // handle error
-            });
+            this.$parent.getData(callBack);
         }
     }
 })
@@ -110,50 +82,125 @@ var ViewOrder=Vue.extend({
     }
 })
 
-// 创建根实例
-var vm = new Vue({
-    el: '#div_app',
-
-    data: {
-        currentView: 'view-about',
-        testVal: '123',
-        person: {}
-    },
-    components: {
-        'app-header': {
-            template: '<div>this is header!</div>'
-        },
-        'app-footer': AppFooter,
-        'view-about': ViewAbout,
-        'view-room': {
-            template: '<div>this is room!</div>'
-        },
-        'view-order': ViewOrder
-    },
-    // 在创建实例时 `events` 选项简单地调用 `$on`
-    events: {
-        'child-msg': function (msg) {
-            // 事件回调内的 `this` 自动绑定到注册它的实例上
-            this.currentView = msg;
+var ViewRoom=Vue.extend({
+    template: '#view-room-template',
+    //props: ['myMessage'],
+    data: function() {
+        return {person:{}
         }
     },
-    // 在 `methods` 对象中定义方法
+    activate: function (done) {
+        var self = this;
+        this.getData(function (data) {
+            self.person = data;
+            done();
+        });
+
+    },
     methods: {
-        getData: function () {
+
+        getData: function (callBack) {
             // GET request
             this.$http.get('/Functoin/Service/HotelService.asmx/GetJson').then(function (response) {
 
                 // set data on vm
-                this.person = response.data;
+
+                if (response.data) {
+                    callBack(response.data)
+                }
 
             }, function (response) {
 
                 // handle error
             });
         }
+    }
+})
+
+// 创建根实例
+var vm = new Vue({
+    el: '#div_app',
+
+    data: {
+        currentView: 'view-room',
+        testVal: '123',
+        person: {},
+        imgDatas:[]
+    },
+    components: {
+        'app-header': {
+            template: '#app-header-template'
+        },
+        'app-footer': AppFooter,
+        'view-about': ViewAbout,
+
+        'view-room':  ViewRoom,
+        'view-order': ViewOrder,
+        'app-image':{
+            template:'#view-image-template',
+            props: ['viewImages']
+        }
+    },
+    // 在创建实例时 `events` 选项简单地调用 `$on`
+    events: {
+        'child-msg': function (msg) {
+            // 事件回调内的 `this` 自动绑定到注册它的实例上
+            this.currentView = msg;
+        },
+        'onimgDataDispatch':function(data){
+            this.imgDatas=data;
+        }
+    },
+    // 在 `methods` 对象中定义方法
+    methods: {
+        getData: function (callBack) {
+            //// GET request
+            //this.$http.get('/Functoin/Service/HotelService.asmx/GetJson').then(function (response) {
+            //
+            //    // set data on vm
+            //    this.person = response.data;
+            //
+            //}, function (response) {
+            //
+            //    // handle error
+            //});
+            var data=[{no:1 ,img:'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'},
+                {no:2 ,img:'http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg'},
+            ];
+            callBack(data);
+        },
+        initSwiper:function(){
+            var mySwiper = new Swiper('.swiper-container', {
+                direction: 'vertical',
+                loop: true,
+
+                // 如果需要分页器
+                pagination: '.swiper-pagination',
+
+                // 如果需要前进后退按钮
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+
+                // 如果需要滚动条
+                scrollbar: '.swiper-scrollbar'
+            });
+        }
     },
     ready: function () {
-        //this.getData();
+        var self=this;
+
+        //1.从父组件获取数据，传递给app-image组件
+        this.getData(function(data){
+            self.imgDatas=data;
+
+            setTimeout(function(){
+                self.initSwiper();
+            },1000);
+        });
+
+        //2.关于视图加载时候获取数据，传递给app-image组件
+        //this.currentView='view-room';
+
 
 
     }

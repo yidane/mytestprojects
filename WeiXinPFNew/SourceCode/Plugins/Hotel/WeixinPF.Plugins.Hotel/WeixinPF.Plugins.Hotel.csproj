@@ -78,6 +78,10 @@
     <Content Include="Common\JS\jquery-1.8.2.min.js" />
     <Content Include="Common\JS\zepto.min.js" />
     <Content Include="Common\CSS\weui\weui.min.css" />
+    <Content Include="Common\web_component\swiper\animate.min.css" />
+    <Content Include="Common\web_component\swiper\swiper.animate1.0.2.min.js" />
+    <Content Include="Common\web_component\swiper\swiper.min.css" />
+    <Content Include="Common\web_component\swiper\swiper.min.js" />
     <Content Include="Functoin\StaticPage\CSS\hotelOrderList.css" />
     <Content Include="Functoin\StaticPage\CSS\hotels.css" />
     <Content Include="Functoin\StaticPage\CSS\mystyle.css" />
