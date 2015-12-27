@@ -77,6 +77,13 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="xmlconfig\alipay.config" />
+    <Content Include="xmlconfig\chinabank.config" />
+    <Content Include="xmlconfig\order.config" />
+    <Content Include="xmlconfig\site.config" />
+    <Content Include="xmlconfig\tenpay.config" />
+    <Content Include="xmlconfig\urls.config" />
+    <Content Include="xmlconfig\user.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\JS\jquery-1.8.2.min.js" />

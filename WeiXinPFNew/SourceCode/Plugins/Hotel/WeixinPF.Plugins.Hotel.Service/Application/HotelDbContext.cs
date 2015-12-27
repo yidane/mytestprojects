@@ -30,6 +30,15 @@ namespace WeixinPF.Plugins.Hotel.Service.Application
 
             modelBuilder.Entity<HotelOrderInfo>()
                 .HasKey(t => t.Id);
+
+            modelBuilder.Entity<HotelUserInfo>()
+                .HasKey(t => t.Id);
+
+            modelBuilder.Entity<HotelAdminInfo>()
+                .HasKey(t => t.Id);
+
+            modelBuilder.Entity<HotelInfo>()
+                .HasKey(t => t.id);
         }
 
         //为您要在模型中包含的每种实体类型都添加 DbSet。有关配置和使用 Code First  模型
@@ -38,5 +47,11 @@ namespace WeixinPF.Plugins.Hotel.Service.Application
         public virtual DbSet<IdentifyingCodeInfo> IdentifyingCodeInfo { get; set; }
 
         public virtual DbSet<HotelOrderInfo> HotelOrderInfo { get; set; }
+
+        public virtual DbSet<HotelUserInfo> HotelUserInfo { get; set; }
+
+        public virtual DbSet<HotelAdminInfo> HotelAdminInfo { get; set; }
+
+        public virtual DbSet<HotelInfo> HotelInfo { get; set; }
     }
 }

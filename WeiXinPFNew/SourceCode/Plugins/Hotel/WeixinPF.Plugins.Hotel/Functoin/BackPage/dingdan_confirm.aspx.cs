@@ -2,13 +2,19 @@
 using System.Threading;
 using System.Web.UI;
 using NServiceBus;
+using WeixinPF.Application.Agent;
 using WeixinPF.Common.Enum;
+using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
+
+//using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
+
 //using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
 
 namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
 {
-    public partial class dingdan_confirm : Page
+    public partial class dingdan_confirm : ManagePage
     {
         public int hotelid = 0;
         public string Dingdanlist = "";
@@ -20,8 +26,20 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //hotelid =  this.GetHotelId();
-            //wid = this.GetWeiXinCode().id;
+#if DEBUG
+            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var model = bll.GetModel("ht", "123456", true);
+            if (model == null)
+            {
+                //msgtip.InnerHtml = "用户名或密码有误，请重试！";
+                return;
+            }
+            Session[MXKeys.SESSION_ADMIN_INFO] = model;
+            Session.Timeout = 45;
+#endif
+
+            hotelid = this.GetHotelId();
+            wid = this.GetWeiXinCode().id;
             confirmnumber.CausesValidation = true;
         }
 

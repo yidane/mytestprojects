@@ -44,9 +44,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agent\Repository\IManagerLogRepository.cs" />
+    <Compile Include="Agent\Repository\IManagerRepository.cs" />
+    <Compile Include="Agent\Repository\IManagerRoleRepository.cs" />
+    <Compile Include="Agent\Service\ManagerLogService.cs" />
+    <Compile Include="Agent\Service\ManagerRoleService.cs" />
+    <Compile Include="Agent\Service\ManagerService.cs" />
     <Compile Include="BaseRepository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\Interface\ISiteConfigRepository.cs" />
+    <Compile Include="System\SiteConfig.cs" />
+    <Compile Include="Weixin\Repository\IWXUserRepository.cs" />
+    <Compile Include="Weixin\Service\WXUserService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\WeixinPF.Common\WeixinPF.Common.csproj">
+      <Project>{4c6c3917-60e6-42ed-ac44-d8da3d82a37b}</Project>
+      <Name>WeixinPF.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Model\WeixinPF.Model\WeixinPF.Model.csproj">
+      <Project>{44d55bf4-ef1f-465d-810c-1be14910673f}</Project>
+      <Name>WeixinPF.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

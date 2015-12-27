@@ -11,111 +11,231 @@ namespace WeixinPF.Plugins.Hotel.Service.Models
     /// <summary>
     /// 酒店信息
     /// </summary>
-    [Table("wx_Hotel_HotelInfo")]
+    [Table("wx_hotels_info")]
     public class HotelInfo
     {
-        [Key]
-        public int Id { get; set; }
+        public HotelInfo()
+        { }
+        #region Model
+        private int _id;
+        private int? _wid;
+        private string _hotelname;
+        private string _hoteladdress;
+        private string _hotelphone;
+        private string _mobilphone;
+        private string _noticeemail;
+        private string _emailpws;
+        private string _smtp;
+        private string _coverpic;
+        private string _toppic;
+        private int? _orderlimit;
+        private bool _listmode = true;
+        private int? _messagenotice;
+        private string _pwd;
+        private string _hotelintroduct;
+        private string _orderremark;
+        private DateTime? _createdate;
+        private int? _sortid;
+        private decimal? _xplace;
+        private decimal? _yplace;
+
+        private string _hotelCode;
+        private string _operator;
+        private string _hotelLevel;
+        private bool? _recommend;
 
         /// <summary>
-        /// 公众号Id
+        /// 编号
         /// </summary>
-        public int Wid { get; set; }
+        [Key]
+        public int id
+        {
+            set { _id = value; }
+            get { return _id; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? wid
+        {
+            set { _wid = value; }
+            get { return _wid; }
+        }
         /// <summary>
         /// 商家名称
         /// </summary>
-        public string HotelName { get; set; }
+        public string hotelName
+        {
+            set { _hotelname = value; }
+            get { return _hotelname; }
+        }
         /// <summary>
         /// 商家地址
         /// </summary>
-        public string HotelAddress { get; set; }
+        public string hotelAddress
+        {
+            set { _hoteladdress = value; }
+            get { return _hoteladdress; }
+        }
         /// <summary>
         /// 商家电话
         /// </summary>
-        public string HotelPhone { get; set; }
+        public string hotelPhone
+        {
+            set { _hotelphone = value; }
+            get { return _hotelphone; }
+        }
         /// <summary>
         /// 手机号
         /// </summary>
-        public string MobilePhone { get; set; }
+        public string mobilPhone
+        {
+            set { _mobilphone = value; }
+            get { return _mobilphone; }
+        }
         /// <summary>
         /// 通知邮箱
         /// </summary>
-        public string NoticeEmail { get; set; }
+        public string noticeEmail
+        {
+            set { _noticeemail = value; }
+            get { return _noticeemail; }
+        }
         /// <summary>
         /// 邮箱密码
         /// </summary>
-        public string EmailPassword { get; set; }
+        public string emailPws
+        {
+            set { _emailpws = value; }
+            get { return _emailpws; }
+        }
         /// <summary>
         /// smtp服务器
         /// </summary>
-        public string Smtp { get; set; }
+        public string smtp
+        {
+            set { _smtp = value; }
+            get { return _smtp; }
+        }
         /// <summary>
         /// 封面图片
         /// </summary>
-        public string CoverPic { get; set; }
+        public string coverPic
+        {
+            set { _coverpic = value; }
+            get { return _coverpic; }
+        }
         /// <summary>
         /// 订单页头部图片
         /// </summary>
-        public string TopPic { get; set; }
+        public string topPic
+        {
+            set { _toppic = value; }
+            get { return _toppic; }
+        }
         /// <summary>
         /// 每人每天提交订单次数
         /// </summary>
-        public int? OrderLimit { get; set; }
+        public int? orderLimit
+        {
+            set { _orderlimit = value; }
+            get { return _orderlimit; }
+        }
         /// <summary>
         /// 列表模式
         /// </summary>
-        public bool ListMode { get; set; }
+        public bool listMode
+        {
+            set { _listmode = value; }
+            get { return _listmode; }
+        }
         /// <summary>
         /// 短信提醒
         /// </summary>
-        public int? MessageNotice { get; set; }
+        public int? messageNotice
+        {
+            set { _messagenotice = value; }
+            get { return _messagenotice; }
+        }
         /// <summary>
         /// 订单确认密码
         /// </summary>
-        public string ConfirmPassword { get; set; }
+        public string pwd
+        {
+            set { _pwd = value; }
+            get { return _pwd; }
+        }
         /// <summary>
         /// 商家介绍
         /// </summary>
-        public string HotelIntroduct { get; set; }
+        public string hotelIntroduct
+        {
+            set { _hotelintroduct = value; }
+            get { return _hotelintroduct; }
+        }
         /// <summary>
         /// 订房说明
         /// </summary>
-        public string OrderRemark { get; set; }
+        public string orderRemark
+        {
+            set { _orderremark = value; }
+            get { return _orderremark; }
+        }
         /// <summary>
         /// 
         /// </summary>
-        public DateTime CreateDate { get; set; }
+        public DateTime? createDate
+        {
+            set { _createdate = value; }
+            get { return _createdate; }
+        }
         /// <summary>
         /// 
         /// </summary>
-        public int SortId { get; set; }
+        public int? sortid
+        {
+            set { _sortid = value; }
+            get { return _sortid; }
+        }
         /// <summary>
         /// 
         /// </summary>
-        public decimal Xplace { get; set; }
+        public decimal? xplace
+        {
+            set { _xplace = value; }
+            get { return _xplace; }
+        }
         /// <summary>
         /// 
         /// </summary>
-        public decimal Yplace { get; set; }
+        public decimal? yplace
+        {
+            set { _yplace = value; }
+            get { return _yplace; }
+        }
 
-        /// <summary>
-        /// 房间编号
-        /// </summary>
-        public string HotelCode { get; set; }
 
-        /// <summary>
-        /// 运营人
-        /// </summary>
-        public string Operator { get; set; }
+        public string HotelCode
+        {
+            get { return _hotelCode; }
+            set { _hotelCode = value; }
+        }
+        public string Operator
+        {
+            get { return _operator; }
+            set { _operator = value; }
+        }
+        public string HotelLevel
+        {
+            get { return _hotelLevel; }
+            set { _hotelLevel = value; }
+        }
 
-        /// <summary>
-        /// 星级
-        /// </summary>
-        public string HotelLevel { get; set; }
-
-        /// <summary>
-        /// 是否推荐
-        /// </summary>
-        public bool Recommend { get; set; }
+        public bool? Recommend
+        {
+            get { return _recommend; }
+            set { _recommend = value; }
+        }
+        #endregion Model
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Plugins.Hotel.Service.Models
 {
-    [Table("wx_Hotel_OrderInfo")]
+    [Table("wx_hotel_dingdan")]
     public class HotelOrderInfo
     {
         [Key]

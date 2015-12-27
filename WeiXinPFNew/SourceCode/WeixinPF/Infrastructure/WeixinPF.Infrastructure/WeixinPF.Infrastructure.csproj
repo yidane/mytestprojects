@@ -55,8 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agent\ManagerLogRepository.cs" />
+    <Compile Include="Agent\ManagerRepository.cs" />
+    <Compile Include="Agent\ManagerRoleRepository.cs" />
     <Compile Include="BaseRepository\EFRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\SiteConfigRepository.cs" />
+    <Compile Include="Weixin\WXUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -66,6 +71,18 @@
     <ProjectReference Include="..\..\Application\WeixinPF.Application\WeixinPF.Application.csproj">
       <Project>{c4941bbf-0230-4f8e-8f54-efcba0c80344}</Project>
       <Name>WeixinPF.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\WeixinPF.Common\WeixinPF.Common.csproj">
+      <Project>{4c6c3917-60e6-42ed-ac44-d8da3d82a37b}</Project>
+      <Name>WeixinPF.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\WeixinPF.DBUtility\WeixinPF.DBUtility.csproj">
+      <Project>{7d5b8436-b951-43a6-9934-1868e9b6645b}</Project>
+      <Name>WeixinPF.DBUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Model\WeixinPF.Model\WeixinPF.Model.csproj">
+      <Project>{44d55bf4-ef1f-465d-810c-1be14910673f}</Project>
+      <Name>WeixinPF.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

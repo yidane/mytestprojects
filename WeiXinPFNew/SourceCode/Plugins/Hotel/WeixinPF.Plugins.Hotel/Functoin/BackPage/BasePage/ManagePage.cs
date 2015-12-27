@@ -1,26 +1,42 @@
 ﻿using System;
 using System.Web;
+using WeixinPF.Application.Agent;
+using WeixinPF.Application.Agent.Service;
+using WeixinPF.Application.System;
+using WeixinPF.Application.Weixin.Service;
+using WeixinPF.Common;
+using WeixinPF.Common.Enum;
+using WeixinPF.Infrastructure.Agent;
+using WeixinPF.Infrastructure.System;
+using WeixinPF.Infrastructure.Weixin;
+using WeixinPF.Model.Agent;
+using WeixinPF.Model.System;
+using WeixinPF.Model.Weixin;
+using WeixinPF.Plugins.Hotel.Service.Application;
+using WeixinPF.Plugins.Hotel.Service.Application.Service;
+using WeixinPF.Plugins.Hotel.Service.Infrastructure;
+using WeixinPF.Plugins.Hotel.Service.Models;
 
 namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
 {
     public class ManagePage : System.Web.UI.Page
     {
-        protected internal Model.siteconfig siteConfig;
+        protected internal siteconfig siteConfig;
 
         public ManagePage()
         {
             this.Load += new EventHandler(ManagePage_Load);
-            siteConfig = new BLL.siteconfig().loadConfig();
+            siteConfig = new SiteConfig(new SiteConfigRepository()).loadConfig();
         }
 
         private void ManagePage_Load(object sender, EventArgs e)
         {
             //判断管理员是否登录
-            if (!IsAdminLogin())
-            {
-                Response.Write("<script>parent.location.href='" + siteConfig.webpath + siteConfig.webmanagepath + "/login.aspx'</script>");
-                Response.End();
-            }
+            //if (!IsAdminLogin())
+            //{
+            //    Response.Write("<script>parent.location.href='" + siteConfig.webpath + siteConfig.webmanagepath + "/login.aspx'</script>");
+            //    Response.End();
+            //}
         }
 
         #region 管理员============================================
@@ -41,8 +57,8 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
                 string adminpwd = Utils.GetCookie("AdminPwd", "WeiXinPF");
                 if (adminname != "" && adminpwd != "")
                 {
-                    BLL.manager bll = new BLL.manager();
-                    Model.manager model = bll.GetModel(adminname, adminpwd);
+                    var service = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+                    var model = service.GetModel(adminname, adminpwd);
                     if (model != null)
                     {
                         Session[MXKeys.SESSION_ADMIN_INFO] = model;
@@ -56,11 +72,11 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
         /// <summary>
         /// 取得管理员信息
         /// </summary>
-        public Model.manager GetAdminInfo()
+        public ManagerInfo GetAdminInfo()
         {
             if (IsAdminLogin())
             {
-                Model.manager model = Session[MXKeys.SESSION_ADMIN_INFO] as Model.manager;
+                var model = Session[MXKeys.SESSION_ADMIN_INFO] as ManagerInfo;
                 if (model != null)
                 {
                     return model;
@@ -78,9 +94,9 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
         /// <param name="action_type">操作类型</param>
         public void ChkAdminLevel(string nav_name, string action_type)
         {
-            Model.manager model = GetAdminInfo();
-            BLL.manager_role bll = new BLL.manager_role();
-            bool result = bll.Exists(model.role_id, nav_name, action_type);
+            var model = GetAdminInfo();
+            var service = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
+            bool result = service.Exists(model.role_id, nav_name, action_type);
 
             if (!result)
             {
@@ -100,8 +116,8 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
         {
             if (siteConfig.logstatus > 0)
             {
-                Model.manager model = GetAdminInfo();
-                int newId = new BLL.manager_log().Add(model.id, model.user_name, action_type, remark);
+                var model = GetAdminInfo();
+                int newId = new ManagerLogService(new ManagerLogRepository(siteConfig.sysdatabaseprefix)).Add(model.id, model.user_name, action_type, remark);
                 if (newId > 0)
                 {
                     return true;
@@ -166,8 +182,8 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
                 string uweixinId = Utils.GetCookie("nowweixinId", "WeiXinPF");
                 if (uweixinId != "")
                 {
-                    BLL.wx_userweixin bll = new BLL.wx_userweixin();
-                    Model.wx_userweixin model = bll.GetModel(int.Parse(uweixinId));
+                    var service = new WXUserService(new WXUserRepository());
+                    var model = service.GetModel(int.Parse(uweixinId));
                     if (model != null)
                     {
                         Session["nowweixin"] = model;
@@ -181,11 +197,11 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
         /// <summary>
         /// 取得当前微信帐号信息
         /// </summary>
-        public Model.wx_userweixin GetWeiXinCode()
+        public WX_UserWeixinInfo GetWeiXinCode()
         {
             if (IsWeiXinCode())
             {
-                Model.wx_userweixin model = Session["nowweixin"] as Model.wx_userweixin;
+                var model = Session["nowweixin"] as WX_UserWeixinInfo;
                 if (model != null)
                 {
                     return model;
@@ -193,22 +209,30 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
             }
             else
             {
-                int shopid = GetShopId();
-                if (shopid != 0)
-                {
-                    BLL.wx_diancai_shopinfo shopBll = new BLL.wx_diancai_shopinfo();
-                    Model.wx_diancai_shopinfo shop = shopBll.GetModel(shopid);
+                //int shopid = GetShopId();
+                //if (shopid != 0)
+                //{
+                //    BLL.wx_diancai_shopinfo shopBll = new BLL.wx_diancai_shopinfo();
+                //    Model.wx_diancai_shopinfo shop = shopBll.GetModel(shopid);
 
-                    return new BLL.wx_userweixin().GetModel(shop.wid.Value);
-                }
+                //    return new BLL.wx_userweixin().GetModel(shop.wid.Value);
+                //}
 
                 int hotelid = GetHotelId();
                 if (hotelid != 0)
                 {
-                    BLL.wx_hotels_info hotelBll = new BLL.wx_hotels_info();
-                    Model.wx_hotels_info hotel = hotelBll.GetModel(hotelid);
+                    HotelInfo hotel = null;
 
-                    return new BLL.wx_userweixin().GetModel(hotel.wid.Value);
+                    using (var dbContext = new HotelDbContext())
+                    {                        
+                        hotel = new HotelService(new HotelRepository()).GetModel(hotelid);                        
+                    }
+
+                    if (hotel !=null)
+                    {
+                        return new WXUserService(new WXUserRepository()).GetModel(hotel.wid.Value);
+                    }
+                    
                 }
                 Response.Write("<script>parent.location.href='http://" + HttpContext.Current.Request.Url.Authority + "/admin/weixin/myweixinlist.aspx'</script>");
                 Response.End();
@@ -216,54 +240,59 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage
             return null;
         }
 
-        public int GetShopId()
-        {
-            if (IsAdminLogin())
-            {
-                Model.manager admin = GetAdminInfo();
-                BLL.wx_diancai_admin shopAdminBll = new BLL.wx_diancai_admin();
-                Model.wx_diancai_admin shopAdmin = shopAdminBll.GetModel(admin.id);
-                if (shopAdmin != null)
-                {
-                    return shopAdmin.ShopId;
-                }
+        //public int GetShopId()
+        //{
+        //    if (IsAdminLogin())
+        //    {
+        //        var admin = GetAdminInfo();
+        //        BLL.wx_diancai_admin shopAdminBll = new BLL.wx_diancai_admin();
+        //        Model.wx_diancai_admin shopAdmin = shopAdminBll.GetModel(admin.id);
+        //        if (shopAdmin != null)
+        //        {
+        //            return shopAdmin.ShopId;
+        //        }
 
-                BLL.wx_diancai_shop_user suBll = new BLL.wx_diancai_shop_user();
-                Model.wx_diancai_shop_user shopUser = suBll.GetModel(admin.id);
+        //        BLL.wx_diancai_shop_user suBll = new BLL.wx_diancai_shop_user();
+        //        Model.wx_diancai_shop_user shopUser = suBll.GetModel(admin.id);
 
-                if (shopUser != null)
-                {
-                    return shopUser.ShopId;
-                }
-                return 0;
-            }
-            return 0;
-        }
+        //        if (shopUser != null)
+        //        {
+        //            return shopUser.ShopId;
+        //        }
+        //        return 0;
+        //    }
+        //    return 0;
+        //}
 
         public int GetHotelId()
         {
             if (IsAdminLogin())
             {
-                Model.manager admin = GetAdminInfo();
-                BLL.wx_hotel_admin hotelAdminBll = new BLL.wx_hotel_admin();
-                Model.wx_hotel_admin hotelAdmin = hotelAdminBll.GetModel(admin.id);
-                if (hotelAdmin != null)
+                var admin = GetAdminInfo();
+
+                using (var dbContext = new HotelDbContext())
                 {
-                    return hotelAdmin.HotelId;
+                    var adminService = new HotelAdminService(new HotelAdminRepository(dbContext));
+
+                    var hotelAdmin = adminService.GetModel(admin.id);
+                    if (hotelAdmin != null)
+                    {
+                        return hotelAdmin.HotelId;
+                    }
+
+                    var userService = new HotelUserService(new HotelUserRepository(dbContext));
+                    
+                    var hotelUser = userService.GetModel(admin.id);
+
+                    if (hotelUser != null)
+                    {
+                        return hotelUser.HotelId;
+                    }
                 }
-
-                BLL.wx_hotel_user suBll = new BLL.wx_hotel_user();
-                Model.wx_hotel_user hotelUser = suBll.GetModel(admin.id);
-
-                if (hotelUser != null)
-                {
-                    return hotelUser.HotelId;
-                }
-
+              
                 return 0;
             }
             return 0;
-
         }
     }
 }
