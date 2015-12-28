@@ -1,7 +1,7 @@
 ﻿var AppFooter = Vue.extend({
     template: '#app-footer-template',
     data: function () {
-        return { msg: 'view-about' }
+        return { msg: 'view-room' }
     },
     methods: {
         notify: function (msg) {

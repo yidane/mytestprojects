@@ -107,13 +107,16 @@
     <Content Include="Common\JS\vue\vue-resource.min.js" />
     <Content Include="Common\JS\vue\vue-router.min.js" />
     <Content Include="Common\JS\vue\vue.min.js" />
+    <Content Include="Functoin\StaticPage\JS\index\v-index-viewAbout.js" />
+    <Content Include="Functoin\StaticPage\JS\index\v-index-viewOrder.js" />
+    <Content Include="Functoin\StaticPage\JS\index\v-index-viewRoom.js" />
     <Content Include="Functoin\StaticPage\JS\iscroll.js" />
     <Content Include="Functoin\StaticPage\JS\jquery.min.js" />
-    <Content Include="Functoin\StaticPage\JS\main.js" />
+    <Content Include="Functoin\StaticPage\JS\index\main.js" />
     <Content Include="Functoin\StaticPage\JS\paycallback.js" />
     <Content Include="Functoin\StaticPage\JS\plugback.js" />
     <Content Include="Functoin\BackPage\dingdan_confirm.aspx" />
-    <Content Include="Functoin\StaticPage\JS\V-AppFooter.js" />
+    <Content Include="Functoin\StaticPage\JS\index\v-index-appFooter.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
