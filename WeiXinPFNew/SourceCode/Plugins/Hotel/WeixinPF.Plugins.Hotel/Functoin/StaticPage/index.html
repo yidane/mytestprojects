@@ -13,7 +13,7 @@
     <link href="../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>
 
 
-    <link href="CSS/hotels.css" rel="stylesheet"/>
+    <!--<link href="CSS/hotels.css" rel="stylesheet"/>-->
     <style>
         .fade-transition {
             transition: opacity .3s ease;
@@ -28,7 +28,7 @@
 </head>
 <!-- index.html -->
 <body>
-<div id="div_app">
+<div id="div_app" class="content-padded">
 
 
     <app-header :header-title="headerTitle"></app-header>
@@ -45,15 +45,27 @@
 
 <!-- 子组件模板 -->
 <template id="app-header-template">
-    <div class="menu_header">
-        <div class="menu_topbar">
-            <strong class="head-title">{{headerTitle}}</strong>
-            <span class="head_btn_left"><a href="javascript:history.go(-1);"><span>返回</span></a><b></b></span>
-            <a class="head_btn_right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1">
-                <span><i class="menu_header_home"></i></span><b></b>
-            </a>
-        </div>
-    </div>
+    <!--<div class="menu_header">-->
+        <!--<div class="menu_topbar">-->
+            <!--<strong class="head-title">{{headerTitle}}</strong>-->
+            <!--<span class="head_btn_left"><a href="javascript:history.go(-1);"><span>返回</span></a><b></b></span>-->
+            <!--<a class="head_btn_right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1">-->
+                <!--<span><i class="menu_header_home"></i></span><b></b>-->
+            <!--</a>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left" href="javascript:history.go(-1);">
+            <span class="icon icon-left"></span>
+            返回
+        </a>
+        <a class="button button-link button-nav pull-right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1">
+            下一步
+            <span class="icon icon-right"></span>
+        </a>
+        <h1 class="title">{{headerTitle}}</h1>
+    </header>
 </template>
 
 <template id="app-footer-template">
@@ -96,6 +108,25 @@
             </li>
         </ul>
     </div>
+
+
+    <nav class="bar bar-tab">
+        <a class="tab-item external" href="#">
+            <span class="icon icon-cart"></span>
+            <span class="tab-label">关于</span>
+        </a>
+        <a class="tab-item external active" href="#">
+            <span class="icon icon-home"></span>
+            <span class="tab-label">房型选择</span>
+
+        </a>
+        <a class="tab-item external" href="#">
+            <span class="icon icon-cart"></span>
+            <span class="tab-label">订单</span>
+            <span class="badge">0</span>
+        </a>
+
+    </nav>
 </template>
 
 <template id="view-about-template">
