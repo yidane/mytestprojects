@@ -17,8 +17,9 @@ namespace WeixinPF.Plugins.Hotel.Service.Application.Service
             using (var context = new HotelDbContext())
             {
                 IHotelOrderRepository repository = new HotelOrderRepository(context); //改造方向：依赖注入，彻底去除对Infrastructure层的依赖
+                var result = repository.Get(item => item.id.Equals(orderId)).FirstOrDefault();
 
-                return repository.Get(item =>item.Id.Equals(orderId)).FirstOrDefault();
+                return result;
             }
         }
     }

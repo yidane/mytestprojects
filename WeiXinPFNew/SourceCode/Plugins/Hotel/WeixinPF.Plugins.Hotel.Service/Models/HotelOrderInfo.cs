@@ -12,54 +12,82 @@ namespace WeixinPF.Plugins.Hotel.Service.Models
     public class HotelOrderInfo
     {
         [Key]
-        public int Id { get; set; }
+        [Column("id")]
+        public int id { get; set; }
 
         [Required]
-        public int HotelId { get; set; }
+        [Column("hotelid")]
+        public int hotelid { get; set; }
 
         [Required, MaxLength(50)]
-        public string OpenId { get; set; }
+        [Column("openid")]
+        public string openid { get; set; }
 
         /// <summary>
         /// 预定人
         /// </summary>
         [Required, MaxLength(50)]
-        public string OrderPersonName { get; set; }
+        [Column("oderName")]
+        public string oderName { get; set; }
 
         [Required, MaxLength(20)]
-        public string Tel { get; set; }
-        public DateTime ArriveDate { get; set; }
-        public DateTime LeaveDate { get; set; }
+        [Column("tel")]
+        public string tel { get; set; }
+
+        [Column("arriveTime")]
+        public DateTime arriveTime { get; set; }
+
+        [Column("leaveTime")]
+        public DateTime leaveTime { get; set; }
 
         [Required, MaxLength(50)]
-        public string RoomType { get; set; }
-        public DateTime OrderDate { get; set; }
+        [Column("roomType")]
+        public string roomType { get; set; }
+
+        [Column("orderTime")]
+        public DateTime orderTime { get; set; }
 
         /// <summary>
         /// 预订数量
         /// </summary>
-        public int OrderNum { get; set; }
+        [Column("orderNum")]
+        public int orderNum { get; set; }
 
-        public decimal Price { get; set; }
-        public int OrderStatus { get; set; }
-        public int IsDelete { get; set; }
-        public DateTime CreateDate { get; set; }
-        public int RoomId { get; set; }
-        public decimal yuanjia { get; set; }
+        [Column("price")]
+        public double price { get; set; }
+
+        [Column("orderStatus")]
+        public int orderStatus { get; set; }
+
+        [Column("isDelete")]
+        public int isDelete { get; set; }
+
+        [Column("createDate")]
+        public DateTime createDate { get; set; }
+
+        [Column("roomid")]
+        public int roomid { get; set; }
+
+        [Column("yuanjia")]
+        public double yuanjia { get; set; }
 
         [Required, MaxLength(1024)]
-        public string Remark { get; set; }
+        [Column("remark")]
+        public string remark { get; set; }
 
         [Required, MaxLength(50)]
-        public string IdentityCode { get; set; }
+        [Column("identityNumber")]
+        public string identityNumber { get; set; }
 
         [Required, MaxLength(50)]
-        public string WXOrderNumber { get; set; }
+        [Column("wxOrderNumber")]
+        public string wxOrderNumber { get; set; }
 
         /// <summary>
         /// 系统内部订单号
         /// </summary>
         [Required, MaxLength(50)]
-        public string OrderNumber { get; set; }
+        [Column("orderNumber")]
+        public string orderNumber { get; set; }
     }
 }

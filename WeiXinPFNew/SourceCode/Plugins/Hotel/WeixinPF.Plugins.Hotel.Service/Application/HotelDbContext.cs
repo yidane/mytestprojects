@@ -29,7 +29,7 @@ namespace WeixinPF.Plugins.Hotel.Service.Application
                 .HasKey(t => t.IdentifyingCodeId);
 
             modelBuilder.Entity<HotelOrderInfo>()
-                .HasKey(t => t.Id);
+                .HasKey(t => t.id);
 
             modelBuilder.Entity<HotelUserInfo>()
                 .HasKey(t => t.Id);

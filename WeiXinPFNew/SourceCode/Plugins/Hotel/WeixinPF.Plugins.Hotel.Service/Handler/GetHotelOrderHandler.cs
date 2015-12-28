@@ -33,26 +33,26 @@ namespace WeixinPF.Plugins.Hotel.Service.Handler
         {
             return new GetHotelOrderResponse()
                     {
-                        Id = order.Id,
-                        HotelId = order.HotelId,
-                        OpenId = order.OpenId,
-                        OrderPersonName = order.OrderPersonName,
-                        Tel = order.Tel,
-                        ArriveDate = order.ArriveDate,
-                        LeaveDate = order.LeaveDate,
-                        RoomType = order.RoomType,
-                        OrderDate = order.OrderDate,
-                        OrderNum = order.OrderNum,
-                        Price = order.Price,
-                        OrderStatus = order.OrderStatus,
-                        IsDelete = order.IsDelete,
-                        CreateDate = order.CreateDate,
-                        RoomId = order.RoomId,
-                        yuanjia = order.yuanjia,
-                        Remark = order.Remark,
-                        IdentityCode = order.IdentityCode,
-                        WXOrderNumber = order.WXOrderNumber,
-                        OrderNumber = order.OrderNumber
+                        Id = order.id,
+                        HotelId = order.hotelid,
+                        OpenId = order.openid,
+                        OrderPersonName = order.oderName,
+                        Tel = order.tel,
+                        ArriveDate = order.arriveTime,
+                        LeaveDate = order.leaveTime,
+                        RoomType = order.roomType,
+                        OrderDate = order.orderTime,
+                        OrderNum = order.orderNum,
+                        Price = decimal.Parse(order.price.ToString()) ,
+                        OrderStatus = order.orderStatus,
+                        IsDelete = order.isDelete,
+                        CreateDate = order.createDate,
+                        RoomId = order.roomid,
+                        yuanjia = decimal.Parse(order.yuanjia.ToString()) ,
+                        Remark = order.remark,
+                        IdentityCode = order.identityNumber,
+                        WXOrderNumber = order.wxOrderNumber,
+                        OrderNumber = order.orderNumber
                     };
         }
     }

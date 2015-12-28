@@ -51,6 +51,9 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
             GetIdentifyingCodeResponse identifyingCode = null;
             GetHotelOrderResponse hotelOrder = null;
 
+            
+
+
             IAsyncResult resIdentifyingCode = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetIdentifyingCodeRequest()
             {
                 ShopId = this.hotelid,
@@ -71,18 +74,18 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
                 return;
             }
 
-            
-                IAsyncResult resOrder = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelOrderByOrderIdRequest()
-                {
-                    OrderId = int.Parse(identifyingCode.OrderId) 
-                }).Register(response =>
-                {
-                    CompletionResult localResult = (CompletionResult)response.AsyncState;
-                    hotelOrder = localResult.Messages[0] as GetHotelOrderResponse;
-                }, this);
+            IAsyncResult resOrder = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelOrderByOrderIdRequest()
+            {
+                OrderId = int.Parse(identifyingCode.OrderId)
+            }).Register(response =>
+            {
+                CompletionResult localResult = (CompletionResult)response.AsyncState;
+                hotelOrder = localResult.Messages[0] as GetHotelOrderResponse;
+            }, this);
 
-                WaitHandle asyncOrderWaitHandle = resOrder.AsyncWaitHandle;
-                asyncOrderWaitHandle.WaitOne(10000);
+            WaitHandle asyncOrderWaitHandle = resOrder.AsyncWaitHandle;
+            asyncOrderWaitHandle.WaitOne(10000);
+
 
             if (!resOrder.IsCompleted || hotelOrder == null)
             {
