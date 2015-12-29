@@ -1,11 +1,11 @@
 ﻿
 
-var ViewRoom = Vue.extend({
+var ViewOrderCreate = Vue.extend({
     template: '#view-room-template',
-    props: ['wid','openid','hotel'],
+    props: ['wid','openid','hotel','room'],
     data: function () {
         return {
-           rooms:[]
+            rooms:[]
         }
     },
     activate: function (done) {
@@ -22,16 +22,16 @@ var ViewRoom = Vue.extend({
             this.$http.get('/Functoin/Service/HotelService.asmx/GetRooms',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
 
-                // set data on vm
+                    // set data on vm
 
-                if (response.data) {
-                    callBack(response.data)
-                }
+                    if (response.data) {
+                        callBack(response.data)
+                    }
 
-            }, function (response) {
+                }, function (response) {
 
-                // handle error
-            });
+                    // handle error
+                });
         },
         viewOrderCreate: function (room) {
             //var data={

@@ -1,13 +1,15 @@
 
+
 var vm = new Vue({
     el: '#div_app',
 
     data: {
-        currentView: 'view-room',
-
+        currentView: '',
         person: {},
         imgDatas:[],
-        headerTitle:''
+        headerTitle:'',
+        hotel:{},
+        room:{}
     },
     components: {
         'app-header': {
@@ -19,6 +21,7 @@ var vm = new Vue({
 
         'view-room':  ViewRoom,
         'view-order': ViewOrder,
+        'view-orderCreate':ViewOrderCreate,
         'app-image':{
             template:'#view-image-template',
             props: ['viewImages']
@@ -29,7 +32,19 @@ var vm = new Vue({
         'child-msg': function (msg) {
             // �¼��ص��ڵ� `this` �Զ��󶨵�ע������ʵ����
             this.currentView = msg;
-            switch (msg){
+
+        },
+        'onimgDataDispatch':function(data){
+            this.imgDatas=data;
+        },
+        'onviewOrderCreateDispatch':function(data){
+            this.currentView='view-orderCreate';
+            this.room=data;
+        }
+    },
+    watch: {
+        'currentView':function(val, oldVal) {
+            switch (val){
                 case 'view-about':
                     this.headerTitle='关于';
                     window.document.title='关于';
@@ -42,13 +57,13 @@ var vm = new Vue({
                     this.headerTitle='订单';
                     window.document.title='订单';
                     break;
+                case 'view-orderCreate':
+                    this.headerTitle='订单';
+                    window.document.title='订单';
+                    break;
             }
-        },
-        'onimgDataDispatch':function(data){
-            this.imgDatas=data;
-        }
+}
     },
-
     methods: {
         getData: function (callBack) {
             //// GET request
@@ -66,6 +81,22 @@ var vm = new Vue({
             ];
             callBack(data);
         },
+
+        getHotelData:function(callBack){
+            this.$http.get('/Functoin/Service/HotelService.asmx/GetHotelInfo'
+                ,{wid:this.wid,openid:this.openid}).then(function (response) {
+                    if(response)
+                    {
+                        callBack(response.data);
+                    }
+
+
+                }, function (response) {
+
+                    // handle error
+                });
+        },
+
         initSwiper:function(){
             var mySwiper = new Swiper('.swiper-container', {
                 direction: 'vertical',
@@ -87,19 +118,19 @@ var vm = new Vue({
         var self=this;
 
         this.openid= getQueryStringByName('openid');
-        this.wid='123';//getQueryStringByName('wid');
+        this.wid=getQueryStringByName('wid');
 
-        //1.�Ӹ������ȡ���ݣ����ݸ�app-image���?
-        this.getData(function(data){
-            self.imgDatas=data;
 
-            setTimeout(function(){
-                self.initSwiper();
-            },1000);
+        this.getHotelData(function(data){
+            self.hotel=data;
+
+            self.currentView='view-room';
+
+            //setTimeout(function(){
+            //    self.initSwiper();
+            //},1000);
         });
 
-        //2.������ͼ����ʱ���ȡ���ݣ����ݸ�app-image���?
-        //this.currentView='view-room';
 
 
 

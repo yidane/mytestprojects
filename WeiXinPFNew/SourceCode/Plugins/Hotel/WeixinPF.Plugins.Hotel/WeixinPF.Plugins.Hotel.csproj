@@ -95,6 +95,7 @@
     <Content Include="Functoin\StaticPage\CSS\hotels.css" />
     <Content Include="Functoin\StaticPage\CSS\mystyle.css" />
     <Content Include="Functoin\StaticPage\CSS\orderstyle.css" />
+    <Content Include="Functoin\StaticPage\hotelCreate.html" />
     <Content Include="Functoin\StaticPage\Images\3YQLfzfunJ.png" />
     <Content Include="Functoin\StaticPage\Images\9uKCykhUSh.png" />
     <Content Include="Functoin\StaticPage\Images\addr.png" />
@@ -110,6 +111,7 @@
     <Content Include="Common\JS\vue\vue.min.js" />
     <Content Include="Functoin\StaticPage\JS\index\v-index-viewAbout.js" />
     <Content Include="Functoin\StaticPage\JS\index\v-index-viewOrder.js" />
+    <Content Include="Functoin\StaticPage\JS\index\v-index-viewOrderCreate.js" />
     <Content Include="Functoin\StaticPage\JS\index\v-index-viewRoom.js" />
     <Content Include="Functoin\StaticPage\JS\iscroll.js" />
     <Content Include="Functoin\StaticPage\JS\jquery.min.js" />

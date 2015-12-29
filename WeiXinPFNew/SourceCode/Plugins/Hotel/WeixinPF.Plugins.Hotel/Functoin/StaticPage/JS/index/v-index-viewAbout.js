@@ -1,6 +1,6 @@
 ﻿var ViewAbout = Vue.extend({
     template: '#view-about-template',
-    props: ['wid','openid'],
+    props: ['wid','openid','hotel'],
     data: function () {
         return {
             imgData: [],

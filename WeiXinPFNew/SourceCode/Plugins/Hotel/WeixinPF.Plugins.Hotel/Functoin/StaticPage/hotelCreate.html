@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-validate="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,7 @@
     <app-image :view-images="imgDatas"></app-image>
 
     <component :is="currentView" keep-alive transition="fade"
-               transition-mode="out-in" :wid="wid" :openid="openid" :hotel="hotel" :room="room">
+               transition-mode="out-in" :wid="wid" :openid="openid" :hotel="hotel">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
     <app-footer :current-view="currentView"></app-footer>
@@ -98,7 +98,7 @@
             </li>
             <li>
                 <a id="myOrder" href="#order"
-                   :class="{ active: msg=='view-order'||msg=='view-orderCreate' }"
+                   :class="{ active: msg=='view-order' }"
                    v-on:click="notify('view-order')" v-link="{ path: '/order' }"
                         >
                     <span class="num">0</span> <img src="images/s22KaR0Wtc.png">
@@ -162,109 +162,7 @@
 
 </template>
 
-<template id="view-about-template">
-    <style>
-        .jieshao {
-            color: #444444;
-            font-family: 'Microsoft YaHei', Helvitica, Verdana, Arial, san-serif;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 21px;
-            background-color: #FCFCFC;
-        }
-    </style>
-
-    <div class="cardexplain">
-
-
-        <ul class="round">
-            <li class="addr">
-                <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>
-            </li>
-            <li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>
-        </ul>
-        <div class="detailcontent">
-            <h2>商家介绍</h2>
-
-            <div class="content">
-                <span class="jieshao">{{hotel.jieShao}}</span>
-            </div>
-        </div>
-    </div>
-
-</template>
-
 <template id="view-room-template">
-    <!--商家房价及类型-->
-    <ul class="round">
-        <li class="title"><span class="none">{{hotel.name}}</span></li>
-        <li class="dandanb" v-for="room in rooms">
-            <!--<a v-on:click="viewOrderCreate(room,openid,wid)"-->
-               <!--href="hotelCreate.html?roomid={{room.id}}&amp;hotelid={{hotel.id}}&amp;openid={{openid}}"-->
-                    <!-->-->
-            <a v-on:click="viewOrderCreate"
-
-                    >
-                <span>
-                    <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <div>{{room.roomType}}</div>
-                                <div><img src="{{room.roomImgs[0].url}}" class="showimg">
-
-                                    <p class="break-word">{{room.detail}}</p>
-
-                                    <p>原价：<a class="yuanjia">￥{{room.costPrice}}</a></p>
-
-                                    <p>优惠价：<a class="youhuijia">￥{{room.totalPrice}}</a></p></div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table> </span></a></li>
-    </ul>
- 
-    <ul class="round">
-        <li class="addr">
-            <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>
-        </li>
-        <li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>
-        <li class="detail"><a href="hotel_detail.aspx?openid={{openid}}&hotelid={{hotel.id}}&wid={{wid}}"><span>查看商家详情</span></a>
-        </li>
-    </ul>
-    </div>
-
-</template>
-
-<template id="view-order-template">
-
-
-    <div class="cardexplain">
-
-        <!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
-        <ul class="round" v-for="order in orders">
-            <li class="title"><a
-                    href="#"><span>2015/12/16 15:54:30 kfc</span></a>
-            </li>
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cpbiaoge">
-                <tbody>
-                <tr>
-                    <th>订单编号</th>
-                    <th width="70" class="cc">订单金额</th>
-                    <th width="60" class="cc">订单状态</th>
-                </tr>
-                <tr>
-                    <td>{{order.firstName}}</td>
-                    <td class="cc">{{order.lastName}}</td>
-                    <td class="cc"><em class="ok">{{order.email}}</em></td>
-                </tr>
-                </tbody>
-            </table>
-        </ul>
-    </div>
-</template>
-
-<template id="view-orderCreate-template">
 
 
     <ul class="round">
@@ -299,7 +197,7 @@
             <span class="gpd-item-title-name">商品说明</span>
             <span class="gp-icons gpd-up-icon"></span>
         </h2>
-        <div class="content  gpd-content">{{room.detail}} </div>
+        <div class="content  gpd-content">{{room.peitao}} </div>
     </div>
 
     <div class="detailcontent">
@@ -358,7 +256,7 @@
     </div>
 
 
-    <validator lazy name="roomValidation">
+    <validator name="roomValidation">
         <form novalidate>
 
             <ul class="round">
@@ -520,10 +418,265 @@
 
 </template>
 
-<!--<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>-->
-<!--<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.8/js/sm.min.js' charset='utf-8'></script>-->
+<template id="view-orderCreate-template">
+
+
+    <ul class="round">
+        <li class="biaotou bradius pad">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>类型</td>
+                    <td class="yuanjia">原价</td>
+                    <td class="youhuijia">优惠价</td>
+                </tr>
+            </table>
+        </li>
+        <li><span class="noneorder">
+                <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>{{room.roomtype}}</td>
+                        <td class="yuanjia">￥{{room.costPrice}}</td>
+                        <td class="youhuijia">￥{{room.totalPrice}}</td>
+                    </tr>
+                </table>
+            </span>
+        </li>
+
+    </ul>
+
+    <!--后台可控制是否显示-->
+
+
+    <div class="detailcontent">
+        <h2 class="gpd-item-title">
+            <img class="detailicon-ticket" src="../restaurant/images/info.png" />
+            <span class="gpd-item-title-name">商品说明</span>
+            <span class="gp-icons gpd-up-icon"></span>
+        </h2>
+        <div class="content  gpd-content">{{room.peitao}} </div>
+    </div>
+
+    <div class="detailcontent">
+        <h2 class="gpd-item-title">
+            <img class="detailicon-ticket" src="../restaurant/images/info.png" />
+            <span class="gpd-item-title-name">使用须知</span>
+            <span class="gp-icons gpd-up-icon"></span>
+
+        </h2>
+
+        <div class="content gpd-content">
+            {{room.instruction}}
+
+        </div>
+    </div>
+
+
+    <div class="detailcontent">
+        <h2 class="gpd-item-title">
+            <img class="detailicon-ticket" src="../restaurant/images/undo.png" />
+            <span class="gpd-item-title-name">退单规则</span>
+            <span class="gp-icons gpd-up-icon"></span>
+
+        </h2>
+
+        <div class="content gpd-content">
+
+            {{room.refundRule}}
+        </div>
+    </div>
+
+
+    <ul class="round">
+        <li class="tel"><a href="tel: {{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>
+    </ul>
+
+
+
+    <input type="hidden" name="formhash" id="formhash" value="7de8fa52" />
+    <input type="hidden" name="issub" id="issub" value="0" />
+
+    <div class='alert alert-warning' role='alert'>
+        <strong>提示</strong> 填写入住其中一人的真实信息即可。
+    </div>
+    <div class="footer-money">
+
+        <p>
+            <span class=" color-red">已优惠</span>
+            <span id="price3" class="color-red discount-money">￥{{order.discount}}</span>
+            <span>共</span>
+            <span id="price" class="  total-money color-red">￥{{order.totalPrice}}</span>
+            <span id="yuanjia" class="  cost-money">￥{{order.costPrice}}</span>
+
+        </p>
+
+    </div>
+
+
+    <validator name="roomValidation">
+        <form novalidate>
+
+            <ul class="round">
+                <li class="title mb"><span class="none">请认真填写在线订单</span></li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>预订人</th>
+                            <td>
+                                <input name="oderName" type="text" class="px" id="oderName"
+                                       v-validate:oderName="['required']" v-model="order.oderName"
+                                       placeholder="请输入您的真实姓名" /></td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>身份证号</th>
+                            <td>
+                                <input name="identityNumber" type="text" class="px"
+                                       v-validate:identityNumber="['idCard']"
+                                       id="identityNumber" v-model="order.identityNumber"
+                                       placeholder="请输入您的身份证号" /></td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>联系电话</th>
+                            <td>
+                                <input name="tel" type="tel" class="px" id="tel"
+                                       v-model="order.tel" required placeholder="请输入您的电话" /></td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>入住时间</th>
+                            <td>
+                                <input name="arriveTime" class="px"
+                                       id="arriveTime"
+                                       v-model="order.arriveTime"
+                                       type="date" placeholder="入住时间" />
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>离店时间</th>
+                            <td>
+                                <input name="leaveTime" class="px" id="leaveTime"  v-model="order.leaveTime"
+                                       type="date" placeholder="离店时间" />
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>类型</th>
+                            <td>
+                                <input class="px" id="roomtype"
+                                       v-model="room.roomtype"
+                                       type="text" readonly="true" /></td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>预订数量</th>
+                            <td>
+                                <select name="orderNum" class="dropdown-select" id="orderNum"  v-model="order.orderNum">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th>单价</th>
+                            <td class="userinfo price">￥{{ room.roomtype}}</td>
+                        </tr>
+                    </table>
+                </li>
+
+
+
+
+                <li class="nob">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                        <tr>
+                            <th valign="middle" class="thtop">备注</th>
+                            <td>
+                                <textarea name="remark" class="pxtextarea"
+                                          style="height: 99px; overflow-y: visible"
+                                          v-model="order.remark"
+                                          id="remark" placeholder="请输入备注信息"></textarea></td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+            <!--<div>-->
+            <!--<span v-if="$roomValidation.id.required">Required Your ID.</span>-->
+            <!--<span v-if="$validation.id.minlength">Your ID is too short.</span>-->
+            <!--<span v-if="$validation.id.maxlength">Your ID is too long.</span>-->
+            <!--</div>-->
+            <div class="footReturn">
+                <a id="showcard" class="submit" v-if="$roomValidation.valid">提交订单</a>
+
+            </div>
+
+
+        </form>
+    </validator>
+
+    <script>
+        //        Vue.validator('idCard', {
+        //            message: '身份证号错误',
+        //            check: function (val) {
+        //                return /^[-+]?[0-9]+$/.test(val);
+        //            }
+        //        });
+        //
+        //        // build-in validator customizable
+        //        var required = Vue.validator('required');
+        //        Vue.validator('required', {
+        //            message: function (field) {
+        //                return '必填项 "' + field + '" 不能为空'
+        //            },
+        //            check: required
+        //        })
+    </script>
+
+</template>
+
+
 <script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>
-<!--<script src="https://cdn.jsdelivr.net/vue.router/0.5.2/vue-router.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/vue.router/0.5.2/vue-router.min.js"></script>
 <script src="../../Common/JS/vue/vue-resource.min.js"></script>
 <script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>
 
@@ -549,8 +702,6 @@
 <script src="JS/index/v-index-viewAbout.js"></script>
 <script src="JS/index/v-index-viewOrder.js"></script>
 <script src="JS/index/v-index-viewRoom.js"></script>
-<script src="JS/index/v-index-viewOrderCreate.js"></script>
 <script src="JS/index/main.js"></script>
-
 </body>
 </html>

@@ -59,11 +59,84 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
             var hotelDto = new HotelDto()
             {
                 Id = 1,
+                Name= "七天连锁",
                 Tel = "18311300760",
                 Address = "神仙湾",
                 JieShao = "七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍"
             };
             Context.Response.Write(JSONHelper.Serialize(hotelDto,true));
+            Context.Response.End();
+        }
+
+        /// <summary>
+        /// 获取房间列表
+        /// </summary>
+        /// <param name="wid"></param>
+        /// <param name="openid"></param>
+        /// <param name="hotelId"></param>
+        [WebMethod]
+        public void GetRooms(int wid, string openid, int hotelId)
+        {
+            var roomDtos = new List<RoomDto>()
+            {
+                new RoomDto()
+                {
+                    Id = 1,
+                    RoomType="大床房",
+                    Detail = "好大的床啊",
+                    CostPrice = 20.21,
+                    TotalPrice = 10.51,
+                    RoomImgs = new List<RoomImgDto>()
+                    {
+                        new RoomImgDto() {Name = "床头",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712357746.png"},
+                        new RoomImgDto() {Name = "床尾",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg"}
+                    }
+                },
+                new RoomDto()
+                {
+                    Id = 2,
+                    RoomType="双人床",
+                    Detail = "骚年加油",
+                    CostPrice = 32.21,
+                    TotalPrice = 1.51,
+                    RoomImgs = new List<RoomImgDto>()
+                    {
+                         new RoomImgDto() {Name = "床尾",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg"},
+                        new RoomImgDto() {Name = "床头",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712357746.png"}
+                       
+                    }
+                },
+            };
+            Context.Response.Write(JSONHelper.Serialize(roomDtos, true));
+            Context.Response.End();
+        }
+
+        /// <summary>
+        /// 获取房间明细
+        /// </summary>
+        /// <param name="wid"></param>
+        /// <param name="openid"></param>
+        /// <param name="hotelId"></param>
+        /// <param name="roomId"></param>
+        [WebMethod]
+        public void GetRoom(int wid, string openid, int hotelId,int roomId)
+        {
+            var roomDto = new RoomDto()
+            {
+                Id = 1,
+                RoomType = "大床房",
+                Detail = "好大的床啊",
+                Instruction="房间介绍介绍",
+                RefundRule= "退单规则退单规则退单规则",
+                CostPrice = 20.21,
+                TotalPrice = 10.51,
+                RoomImgs = new List<RoomImgDto>()
+                    {
+                        new RoomImgDto() {Name = "床头",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712357746.png"},
+                        new RoomImgDto() {Name = "床尾",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg"}
+                    }
+            };
+            Context.Response.Write(JSONHelper.Serialize(roomDto, true));
             Context.Response.End();
         }
 
@@ -86,9 +159,29 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
     public class HotelDto
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string Address { get; set; }
 
         public string Tel { get; set; }
         public string JieShao { get; set; }
+    }
+
+    public class RoomDto
+    {
+        public int Id { get; set; }
+        public string RoomType { get; set; }
+        public List<RoomImgDto> RoomImgs { get; set; }
+         public double CostPrice { get; set; }
+         public double TotalPrice { get; set; }
+        public string Detail { get; set; }
+        public string Instruction { get; set; }
+        public string RefundRule { get; set; }
+    }
+
+    public class RoomImgDto
+    {
+
+        public string Url { get; set; }
+        public string Name { get; set; }
     }
 }
