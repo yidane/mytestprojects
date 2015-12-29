@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="commodity_detail.aspx.cs" Inherits="WeiXinPF.Web.admin.hotel.Verification.commodity_detail" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeBehind="commodity_detail.aspx.cs" Inherits="WeixinPF.Plugins.Hotel.Functoin.BackPage.commodity_detail" %>
 
 <!DOCTYPE html>
 

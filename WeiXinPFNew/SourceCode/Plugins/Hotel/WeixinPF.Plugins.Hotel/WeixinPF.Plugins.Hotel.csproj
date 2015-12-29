@@ -90,6 +90,7 @@
     <Content Include="Common\web_component\swiper\swiper.animate1.0.2.min.js" />
     <Content Include="Common\web_component\swiper\swiper.min.css" />
     <Content Include="Common\web_component\swiper\swiper.min.js" />
+    <Content Include="Functoin\BackPage\commodity_detail.aspx" />
     <Content Include="Functoin\StaticPage\CSS\hotelOrderList.css" />
     <Content Include="Functoin\StaticPage\CSS\hotels.css" />
     <Content Include="Functoin\StaticPage\CSS\mystyle.css" />
@@ -142,6 +143,13 @@
   <ItemGroup>
     <Compile Include="Functoin\BackPage\BasePage\ManagePage.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Functoin\BackPage\commodity_detail.aspx.cs">
+      <DependentUpon>commodity_detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Functoin\BackPage\commodity_detail.aspx.designer.cs">
+      <DependentUpon>commodity_detail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Functoin\BackPage\dingdan_confirm.aspx.cs">
       <DependentUpon>dingdan_confirm.aspx</DependentUpon>

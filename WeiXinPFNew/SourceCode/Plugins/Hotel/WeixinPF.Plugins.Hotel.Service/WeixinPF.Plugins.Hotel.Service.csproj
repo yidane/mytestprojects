@@ -39,6 +39,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.0.4.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Common\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\..\..\..\Common\Dapper.dll</HintPath>
     </Reference>
@@ -76,8 +80,11 @@
     <Compile Include="Application\Service\HotelService.cs" />
     <Compile Include="Application\Service\HotelUserService.cs" />
     <Compile Include="Application\Service\IdentifyingCodeService.cs" />
+    <Compile Include="Handler\GetByIdentifyingCodeIdHandler.cs" />
     <Compile Include="Handler\GetHotelOrderHandler.cs" />
+    <Compile Include="Handler\GetIdentifyingCodeDetailHandler.cs" />
     <Compile Include="Handler\GetIdentifyingCodeHandler.cs" />
+    <Compile Include="Handler\MakeUseOfIdentifyingCodeHandler.cs" />
     <Compile Include="Handler\ShowAllRoomHandler.cs" />
     <Compile Include="HotelService.cs">
       <SubType>Component</SubType>
@@ -93,6 +100,7 @@
     <Compile Include="Models\HotelInfo.cs" />
     <Compile Include="Models\HotelOrderInfo.cs" />
     <Compile Include="Models\HotelUserInfo.cs" />
+    <Compile Include="Models\IdentifyingCodeDetailSearchDTO.cs" />
     <Compile Include="Models\IdentifyingCodeInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

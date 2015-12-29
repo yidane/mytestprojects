@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using NServiceBus;
 using NServiceBus.Unicast;
+using WeixinPF.Common;
 using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Plugins.Hotel.Service.Application.Service;
 using WeixinPF.Plugins.Hotel.Service.Models;
@@ -18,6 +20,14 @@ namespace WeixinPF.Plugins.Hotel.Service.Handler
         public GetHotelOrderHandler(IBus bus)
         {
             this.bus = bus;
+            Mapper.CreateMap<HotelOrderInfo, GetHotelOrderResponse>()
+                .ForMember(des=>des.OrderPersonName, source => source.MapFrom(s => s.oderName))
+                .ForMember(des => des.ArriveDate, source => source.MapFrom(s => s.arriveTime))
+                .ForMember(des => des.LeaveDate, source => source.MapFrom(s => s.leaveTime))
+                .ForMember(des => des.OrderDate, source => source.MapFrom(s => s.orderTime))
+                .ForMember(des => des.IdentityCode, source => source.MapFrom(s => s.identityNumber))
+                .ForMember(des=>des.Price, source=>source.MapFrom(s=>s.price.ToString()))
+                .ForMember(des => des.yuanjia, source => source.MapFrom(s => s.yuanjia.ToString()));
         }
 
         public void Handle(GetHotelOrderByOrderIdRequest message)
@@ -25,8 +35,16 @@ namespace WeixinPF.Plugins.Hotel.Service.Handler
             var info = HotelOrderService.GetOrderInfo(message.OrderId);
 
             var response = TransformToResponse(info);
-
-            bus.Reply(response);
+            try
+            {
+                bus.Reply(response);
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            
         }
 
         private GetHotelOrderResponse TransformToResponse(HotelOrderInfo order)

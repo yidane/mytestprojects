@@ -54,8 +54,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestResponse\HotelOrder\GetHotelOrderByOrderIdRequest.cs" />
     <Compile Include="RequestResponse\HotelOrder\GetHotelOrderResponse.cs" />
+    <Compile Include="RequestResponse\IdentifyingCode\GetByIdnetifyingCodeIdRequest.cs" />
+    <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeDetailRequest.cs" />
+    <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeDetailResponse.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeRequest.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeResponse.cs" />
+    <Compile Include="Command\IdentifyingCode\MakeUseOfIdentifyingCode.cs" />
     <Compile Include="RequestResponse\ShowAllRoomRequest.cs" />
     <Compile Include="RequestResponse\ShowAllRoomResponse.cs" />
   </ItemGroup>

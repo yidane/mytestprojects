@@ -89,6 +89,13 @@ namespace WeixinPF.Infrastructure.BaseRepository
             return Context.Set<TEntity>().ToList();
         }
 
+        public IEnumerable<TEntity> GetReturnEnumerable(Func<TEntity, bool> conditions)
+        {
+            if (conditions != null)
+                return Context.Set<TEntity>().Where<TEntity>(conditions);
+            return Context.Set<TEntity>();
+        }
+
         /// <summary>
         ///     带分页的查询
         /// </summary>

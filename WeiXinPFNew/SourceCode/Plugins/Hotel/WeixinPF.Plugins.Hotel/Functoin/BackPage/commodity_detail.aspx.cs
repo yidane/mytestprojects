@@ -1,6 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Threading;
+using NServiceBus;
+using WeixinPF.Common;
+using WeixinPF.Common.Enum;
+using WeixinPF.Messages.Command;
+using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
+using WeixinPF.Plugins.Hotel.Service.Application.Service;
+using WeixinPF.Plugins.Hotel.Service.Models;
 
 namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
 {
@@ -39,49 +49,80 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
 
             if (Guid.TryParse(this.cid, out identifyingCodeId))
             {
-                var identifyingCodeObject = IdentifyingCodeService.GetIdentifyingCodeInfoByIdentifyingCodeId(identifyingCodeId, ModuleName, this.wid);
+                GetIdentifyingCodeResponse identifyingCodeObject = null;
 
-                if (identifyingCodeObject != null)
+                IAsyncResult resIdentifyingCode = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetByIdnetifyingCodeIdRequest()
                 {
-                    var order = new BLL.wx_hotel_dingdan().GetModel(int.Parse(identifyingCodeObject.OrderId));
+                    IdentifyingCodeId = identifyingCodeId,
+                    ModuleName = ModuleName,
+                    Wid = this.wid
+                }).Register(response =>
+                {
+                    CompletionResult localResult = (CompletionResult)response.AsyncState;
+                    identifyingCodeObject = localResult.Messages[0] as GetIdentifyingCodeResponse;
+                }, this);
 
-                    if (order != null)
+                WaitHandle asyncWaitHandle = resIdentifyingCode.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                if (!resIdentifyingCode.IsCompleted || identifyingCodeObject == null)
+                {
+                    this.Response.Write(
+                        "<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
+                    return;
+                }
+
+                var order = HotelOrderService.GetOrderInfo(int.Parse(identifyingCodeObject.OrderId));
+
+                if (order != null)
+                {
+                    if (order.orderStatus.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId) ||
+                        order.orderStatus.Equals(HotelStatusManager.OrderStatus.Refunding.StatusId)
+                        || order.orderStatus.Equals(HotelStatusManager.OrderStatus.Completed))
                     {
-                        if (order.orderStatus.Value.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId) ||
-                            order.orderStatus.Value.Equals(HotelStatusManager.OrderStatus.Refunding.StatusId)
-                            || order.orderStatus.Value.Equals(HotelStatusManager.OrderStatus.Completed))
-                        {
-                            this.Response.Write(
-                                "<script language='javascript' type='text/javascript'>alert('该订单已完成或进行退单处理，不能进行验证！')</script>");
-                        }
-                        else if(identifyingCodeObject.ShopId.Equals(this.hotelid.ToString(CultureInfo.InvariantCulture)))
-                        {
-                            identifyingCodeObject.Status = 2;
-                            identifyingCodeObject.ModifyTime = DateTime.Now;
+                        this.Response.Write(
+                            "<script language='javascript' type='text/javascript'>alert('该订单已完成或进行退单处理，不能进行验证！')</script>");
+                        return;
+                    }
+                    else if (identifyingCodeObject.ShopId.Equals(this.hotelid.ToString(CultureInfo.InvariantCulture)))
+                    {
+                        var useIdentifyingCode = new MakeUseOfIdentifyingCode() {IdentifyingCodeId = identifyingCodeId};
 
-                            IdentifyingCodeService.ModifyIdentifyingCodeInfo(identifyingCodeObject);
+                        Global.Bus.Send("WeixinPF.Plugins.Hotel", useIdentifyingCode)
+                            .Register<int>(response =>
+                            {
+                                if (response == 1)
+                                {
+                                    AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改支付状态，主键为" + id);
+                                        //记录日志                                                                                                   //Response.Redirect("dingdan_confirm.aspx?shopid=" + shopid + "");
+                                    Response.Write(
+                                        "<script language='javascript' type='text/javascript'>alert('核销成功！');location.href = 'dingdan_confirm.aspx?shopid=" +
+                                        hotelid + "';</script>");
+                                }
+                                else
+                                {
+                                    AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改支付状态失败，主键为" + id);
+                                        //记录日志                                                                                                   //Response.Redirect("dingdan_confirm.aspx?shopid=" + shopid + "");
+                                    Response.Write(
+                                        "<script language='javascript' type='text/javascript'>alert('核销失败');</script>");
+                                }
+                            });
 
-                            AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改支付状态，主键为" + id); //记录日志
-                                                                                                //JscriptMsg("修改成功！", "dingdan_confirm.aspx?shopid=" + shopid + "", "Success");
-                                                                                                //Response.Redirect("dingdan_confirm.aspx?shopid=" + shopid + "");
-                            Response.Write("<script language='javascript' type='text/javascript'>alert('核销成功！');location.href = 'dingdan_confirm.aspx?shopid=" + hotelid + "';</script>");
 
-                        }
-                        else
-                        {
-                            this.Response.Write("<script language='javascript' type='text/javascript'>alert('核销失败。')</script>");
-                        }
+
                     }
                     else
                     {
-                        this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
+                        this.Response.Write(
+                            "<script language='javascript' type='text/javascript'>alert('核销失败。')</script>");
                     }
                 }
                 else
                 {
-                    this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
-                }
-            }                       
+                    this.Response.Write(
+                        "<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
+                }                                    
+            }
         }
 
         public void List(int ids)
@@ -90,41 +131,79 @@ namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
             Dingdanlist = "";
             dingdanren = "";
 
-            var identifyingCodeDetails = IdentifyingCodeService.GetIdentifyingCodeDetailById(cid, "hotel");
-
-            if (identifyingCodeDetails != null && identifyingCodeDetails.Any())
+            var searchRequest = new GetIdentifyingCodeDetailRequest()
             {
-                decimal amount = 0;
+                IdentifyingCodeId = Guid.Parse(cid),
+                ModuleName = "hotel"
+            };
 
+            GetIdentifyingCodeDetailResponse searchResponse = null;
 
-                if (identifyingCodeDetails.FirstOrDefault().Status == 2)
-                {
-                    save_groupbase.Text = "已验证";
-                    save_groupbase.Enabled = false;
-                    save_groupbase.Style.Value = "";
-                }
-                Dingdanlist += "<tr><th>商品名称</th><th class=\"cc\">购买数量</th><th class=\"cc\">单价</th><th class=\"cc\">入住时间</th><th class=\"cc\">离店时间</th></tr>";
-                foreach (var item in identifyingCodeDetails)
-                {
-                    Dingdanlist += " <tr><td class=\"cc\">" + item.ProductName + "</td>";
-                    Dingdanlist += "<td class=\"cc\">" + item.Number + "</td>";
-                    Dingdanlist += "<td class=\"cc\">" + item.Price + "</td>";                    
-                    Dingdanlist += "<td class=\"cc\">" + item.ArriveTime + "</td>";
-                    Dingdanlist += "<td class=\"cc\">" + item.LeaveTime + "</td></tr>";
-                    amount += Convert.ToDecimal(item.TotelPrice);
-                }
-                Dingdanlist += "<tr><td></td><td ></td><td ></td><td ></td><td class=\"rr\" style=\"color: red; font-weight:bold;\">支付总计：￥" + amount + "</td></tr>";
+            IAsyncResult resSearchResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", searchRequest).Register(response =>
+            {
+                CompletionResult localResult = (CompletionResult)response.AsyncState;
+                searchResponse = localResult.Messages[0] as GetIdentifyingCodeDetailResponse;
+            }, this);
+
+            WaitHandle asyncWaitHandle = resSearchResult.AsyncWaitHandle;
+            asyncWaitHandle.WaitOne(10000);
+
+            if (!resSearchResult.IsCompleted || searchResponse == null || !searchResponse.Details.Any())
+            {
+                this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！');location.href = 'dingdan_confirm.aspx?shopid=" +
+                                        hotelid + "';</script>");
+                this.Response.End();
             }
-            
-            var hotelOrder = new BLL.wx_hotel_dingdan().GetModel(int.Parse(id));
-            
-            //订单信息
-            if (hotelOrder != null)
+
+            decimal amount = 0;
+
+            if (searchResponse.Details.FirstOrDefault().Status == 2)
             {
-                dingdanren += "<tr><td width=\"70\">订单编号： " + hotelOrder.OrderNumber + "</td></tr>";
-                dingdanren += "<tr> <td>交易日期：" + hotelOrder.orderTime + "</td></tr>";
-                dingdanren += "<tr><td>预定人：" + hotelOrder.oderName + "</td></tr>";
-                dingdanren += "<tr><td>电话：" + hotelOrder.tel + "</td></tr>";
+                save_groupbase.Text = "已验证";
+                save_groupbase.Enabled = false;
+                save_groupbase.Style.Value = "";
+            }
+            Dingdanlist += "<tr><th>商品名称</th><th class=\"cc\">购买数量</th><th class=\"cc\">单价</th><th class=\"cc\">入住时间</th><th class=\"cc\">离店时间</th></tr>";
+            foreach (var item in searchResponse.Details)
+            {
+                Dingdanlist += " <tr><td class=\"cc\">" + item.ProductName + "</td>";
+                Dingdanlist += "<td class=\"cc\">" + item.Number + "</td>";
+                Dingdanlist += "<td class=\"cc\">" + item.Price + "</td>";
+                Dingdanlist += "<td class=\"cc\">" + item.ArriveTime + "</td>";
+                Dingdanlist += "<td class=\"cc\">" + item.LeaveTime + "</td></tr>";
+                amount += Convert.ToDecimal(item.TotelPrice);
+            }
+            Dingdanlist += "<tr><td></td><td ></td><td ></td><td ></td><td class=\"rr\" style=\"color: red; font-weight:bold;\">支付总计：￥" + amount + "</td></tr>";
+            
+
+            GetHotelOrderResponse orderResponse = null;
+
+            IAsyncResult resOrderResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelOrderByOrderIdRequest() {OrderId = int.Parse(id)})
+                .Register(response =>
+                {
+                    CompletionResult localResult = (CompletionResult)response.AsyncState;
+                    orderResponse = localResult.Messages[0] as GetHotelOrderResponse;
+                }, this);
+
+            WaitHandle WaitHandle = resOrderResult.AsyncWaitHandle;
+            WaitHandle.WaitOne(10000);
+
+            //var hotelOrder = new BLL.wx_hotel_dingdan().GetModel(int.Parse(id));
+            if (!resOrderResult.IsCompleted || orderResponse==null)
+            {
+                this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！');location.href = 'dingdan_confirm.aspx?shopid=" +
+                                        hotelid + "';</script>");
+                this.Response.End();
+
+            }
+
+            //订单信息
+            if (orderResponse != null)
+            {
+                dingdanren += "<tr><td width=\"70\">订单编号： " + orderResponse.OrderNumber + "</td></tr>";
+                dingdanren += "<tr> <td>交易日期：" + orderResponse.OrderDate + "</td></tr>";
+                dingdanren += "<tr><td>预定人：" + orderResponse.OrderPersonName + "</td></tr>";
+                dingdanren += "<tr><td>电话：" + orderResponse.Tel + "</td></tr>";
             }
             else
             {
