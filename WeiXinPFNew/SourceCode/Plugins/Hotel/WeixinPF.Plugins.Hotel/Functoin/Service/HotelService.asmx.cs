@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Services;
 using NServiceBus;
+using WeixinPF.Common;
+using WeixinPF.Common.Extension;
 using WeixinPF.Common.Helper;
 using WeixinPF.Messages.Command;
 using WeixinPF.Messages.RequestResponse;
@@ -28,9 +30,9 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         {
             ShowAllRoomResponse res = null;
 
-            IAsyncResult responseData = 
+            IAsyncResult responseData =
                 Global.Bus
-                .Send("WeixinPF.Plugins.Hotel.Service.HotelService", new ShowAllRoom() {ShopId = shopId, Wid = wid})
+                .Send("WeixinPF.Plugins.Hotel.Service.HotelService", new ShowAllRoom() { ShopId = shopId, Wid = wid })
                 .Register(response =>
                 {
                     CompletionResult localResult = (CompletionResult)response.AsyncState;
@@ -45,7 +47,7 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
                 Context.Response.Write(string.Format("{{'RoomName':'{0}','Price':'{1}'}}", res.RoomName, res.Price));
                 Context.Response.End();
             }
-            
+
         }
 
         /// <summary>
@@ -54,18 +56,27 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         /// <param name="wid"></param>
         /// <param name="openid"></param>
         [WebMethod]
-        public void GetHotelInfo(int wid,string openid)
+        public void GetHotelInfo(int wid, string openid)
         {
-            var hotelDto = new HotelDto()
+            GetHotelResponse responseData = null;
+            var asyncResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelRequest() { HotelId = wid })
+                    .Register(response =>
+                    {
+                        CompletionResult result = response.AsyncState as CompletionResult;
+                        if (result != null)
+                        {
+                            responseData = result.Messages[0] as GetHotelResponse;
+
+                        }
+                    }, this);
+
+            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+            asyncWaitHandle.WaitOne(10000);
+
+            if (asyncResult.IsCompleted)
             {
-                Id = 1,
-                Name= "七天连锁",
-                Tel = "18311300760",
-                Address = "神仙湾",
-                JieShao = "七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍"
-            };
-            Context.Response.Write(JSONHelper.Serialize(hotelDto,true));
-            Context.Response.End();
+                this.WriteJson(AjaxResult.Succeed(responseData));
+            }
         }
 
         /// <summary>
@@ -107,8 +118,7 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
                     }
                 },
             };
-            Context.Response.Write(JSONHelper.Serialize(roomDtos, true));
-            Context.Response.End();
+            this.WriteJson(roomDtos);
         }
 
         /// <summary>
@@ -119,15 +129,15 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         /// <param name="hotelId"></param>
         /// <param name="roomId"></param>
         [WebMethod]
-        public void GetRoom(int wid, string openid, int hotelId,int roomId)
+        public void GetRoom(int wid, string openid, int hotelId, int roomId)
         {
             var roomDto = new RoomDto()
             {
                 Id = 1,
                 RoomType = "大床房",
                 Detail = "好大的床啊",
-                Instruction="房间介绍介绍",
-                RefundRule= "退单规则退单规则退单规则",
+                Instruction = "房间介绍介绍",
+                RefundRule = "退单规则退单规则退单规则",
                 CostPrice = 20.21,
                 TotalPrice = 10.51,
                 RoomImgs = new List<RoomImgDto>()
@@ -136,8 +146,7 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
                         new RoomImgDto() {Name = "床尾",Url = "http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg"}
                     }
             };
-            Context.Response.Write(JSONHelper.Serialize(roomDto, true));
-            Context.Response.End();
+            this.WriteJson(roomDto);
         }
 
         [WebMethod]
@@ -171,8 +180,8 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         public int Id { get; set; }
         public string RoomType { get; set; }
         public List<RoomImgDto> RoomImgs { get; set; }
-         public double CostPrice { get; set; }
-         public double TotalPrice { get; set; }
+        public double CostPrice { get; set; }
+        public double TotalPrice { get; set; }
         public string Detail { get; set; }
         public string Instruction { get; set; }
         public string RefundRule { get; set; }

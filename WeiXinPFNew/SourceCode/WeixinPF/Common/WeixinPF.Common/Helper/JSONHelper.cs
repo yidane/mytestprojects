@@ -10,20 +10,24 @@ namespace WeixinPF.Common.Helper
         /// 将对象转换成为JSON字符串
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="useCamel">是否使用驼峰命名法序列化</param>
+        /// <param name="dateTimeFormat">时间序列化的格式</param>
         /// <returns></returns>
-        public static string Serialize(object data, bool useCamel = false)
+        public static string Serialize(object data, string dateTimeFormat)
         {
             //设置时间类型的序列化
             var settings = new JsonSerializerSettings();
-            settings.Converters.Add(new IsoDateTimeConverter()
+
+            if (!string.IsNullOrEmpty(dateTimeFormat))
             {
-                DateTimeFormat = "yyyy-MM-dd"
-            });
-            if (useCamel)
-            {
-                settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                settings.Converters.Add(new IsoDateTimeConverter()
+                {
+                    DateTimeFormat = dateTimeFormat
+                });
             }
+
+            //为了符合JavaScript的命名要求
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             return JsonConvert.SerializeObject(data, settings);
         }
 
