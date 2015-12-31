@@ -1,37 +1,61 @@
 ﻿
 var ViewOrder = Vue.extend({
     template: '#view-order-template',
-    props: ['myMessage'],
+    props: ['wid','openid','hotel','room','order'],
     data: function () {
         return {
             orders: {}
         }
     },
-    activate: function (done) {
+    computed: {
+        statusCss:function(){
+
+        }
+    },
+    //activate: function (done) {
+    //    var self = this
+    //    this.getData(function (data) {
+    //
+    //        self.orders = data
+    //
+    //    })
+    //    done()
+    //},
+    ready:function(){
         var self = this
-        this.getData(function (data) {
+        this.getOrderList(function (data) {
 
-            self.orders = data
-
-        })
-        done()
+            self.orders = data;
+            self.updateOrderNumber(data.length);
+        });
     },
     methods: {
-
-        getData: function (callBack) {
+        getOrderList: function (callBack) {
             // GET request
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetListJson').then(function (response) {
+            this.$http.get('/Functoin/Service/HotelService.asmx/GetOrderList',
+                {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
 
-                // set data on vm
-
-                if (response.data) {
-                    callBack(response.data.orders)
-                }
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
+                    }
 
             }, function (response) {
 
                 // handle error
             });
+        },
+        updateOrderNumber:function(num){
+            this.$dispatch('onUpdateOrderNumberDispatch', num);
+        },
+        viewOrderCreate: function (order) {
+        if (order) {
+            var room={
+                id:order.roomId
+            };
+                this.$dispatch('onChangeView', 'view-orderCreate');
+             this.$dispatch('onOrderDispatch', order);
+                this.$dispatch('onviewOrderCreateDispatch', room);
+            }
         }
     }
 })

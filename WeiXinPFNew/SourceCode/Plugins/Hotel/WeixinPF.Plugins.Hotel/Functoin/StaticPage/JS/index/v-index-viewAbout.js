@@ -3,15 +3,14 @@
     props: ['wid','openid','hotel'],
     data: function () {
         return {
-            imgData: [],
-            hotelInfo:{}
+            imgData: []
         }
     },
     activate: function (done) {
         var self = this;
-        this.getData(function (data) {
-            self.hotelInfo = data;
-        });
+        //this.getData(function (data) {
+        //    self.hotelInfo = data;
+        //});
         //this.getData(function (data) {
         //    self.imgData = data;
         //    self.notify();

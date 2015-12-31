@@ -33,32 +33,44 @@ var ViewOrderCreate = Vue.extend({
         discount:function () {
 
             return  (this.costPrice-this.totalPrice).toFixed(2);
+        },
+        today:function(){
+            return new Date().toJSON().split('T')[0];
+        },
+        minLeaveDate:function(){
+            var leave=  new Date();
+            if(this.order.arriveTime)
+            {
+               var arrive=  new Date(this.order.arriveTime);
+
+                leave=arrive;
+            }
+            leave.setDate(leave.getDate() + 1);
+            return leave.toJSON().split('T')[0];
         }
 
 
     },
-    //watch: {
-    //    'order.arriveTime': function (val, oldVal) {
-    //        console.log('new: %s, old: %s', val, oldVal)
-    //        console.log('type:%s',typeof val)
-    //    }
-    //},
+    watch: {
+        'order': function (order, oldVal) {
+
+            //不同订单，显示不同信息
+            if(oldVal.id!=order.id)
+            {
+                if(order.id>0)
+                {
+                    this.getOrdrderData();
+                }
+                else
+                {
+                    this.getNoOrderData();
+                }
+            }
+        }
+    },
     activate: function (done) {
         var self = this;
-        if(!this.order||!this.order.id)
-        {
-            self.order={
-                id:0,
-                discount:0,
-                totalPrice:0,
-                costPrice:0,
-                orderNum:1
-            };
-            this.getOrderLastUserInfo(function(data){
-                self.order.orderUser=data;
-                self.$activateValidator();
-            });
-        }
+        this.getNoOrderData();
 
         //this.toggleItemShow();
         done();
@@ -66,29 +78,71 @@ var ViewOrderCreate = Vue.extend({
 
     ready:function(){
         var self = this;
-        //如果房间对象存在，则获取详细的房间信息
-        if(this.room&&this.room.id){
-            this.getRoom(function (data) {
-                self.room=data;
-            });
-        }
-        //如果已有订单，获取订单详情
-        if(this.order&&this.order.id&&this.order.id>0)
-        {
-            this.getOrder(function(data){
-                self.order=data;
-            });
-        }
+       this.getOrdrderData();
+
         this.toggleItemShow();
+
+        //$('[type="date"].min-today').prop('min', function(){
+        //    return new Date().toJSON().split('T')[0];
+        //});
     },
     methods: {
+        getOrdrderData:function(){
+            var self = this;
+            var hasOrder=false;
 
+            //如果已有订单，获取订单详情
+            if(this.order&&this.order.id&&this.order.id>0)
+            {
+                hasOrder=true;
+                this.getOrder(function(data){
+                    self.order=data;
+                    if(self.$activateValidator)
+                    {
+                        self.$activateValidator();
+                    }
+
+                });
+            }
+            //如果房间对象存在，则获取详细的房间信息
+            if(this.room&&this.room.id){
+                this.getRoom(function (data) {
+                    self.room=data;
+                    if(!hasOrder)
+                    {
+                        if(self.$activateValidator)
+                        {
+                            self.$activateValidator();
+                        }
+
+                    }
+                });
+            }
+        },
+        getNoOrderData: function () {
+            var self = this;
+            if(!this.order||!this.order.id)
+            {
+                self.order={
+                    id:0,
+                    discount:0,
+                    totalPrice:0,
+                    costPrice:0,
+                    orderNum:1,
+                    status:-1
+                };
+                this.getOrderLastUserInfo(function(data){
+                    self.order.orderUser=data;
+                    //self.$activateValidator();
+                });
+            }
+        },
         getRoom: function (callBack) {
             // GET request
             this.$http.get('/Functoin/Service/HotelService.asmx/GetRoom',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id,roomId:this.room.id}).then(function (response) {
-                    if (response.data) {
-                        callBack(response.data)
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
                     }
 
                 }, function (response) {
@@ -99,8 +153,8 @@ var ViewOrderCreate = Vue.extend({
         getOrderLastUserInfo:function(callBack){
             this.$http.get('/Functoin/Service/HotelService.asmx/GetOrderLastUserInfo',
                 {wid:this.wid,openid:this.openid}).then(function (response) {
-                    if (response.data) {
-                        callBack(response.data);
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
                     }
 
                 }, function (response) {
@@ -112,8 +166,8 @@ var ViewOrderCreate = Vue.extend({
             // GET request
             this.$http.get('/Functoin/Service/HotelService.asmx/GetOrder',
                 {wid:this.wid,openid:this.openid,orderId:this.order.id}).then(function (response) {
-                    if (response.data) {
-                        callBack(response.data)
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
                     }
 
                 }, function (response) {

@@ -21,12 +21,10 @@ var ViewRoom = Vue.extend({
             // GET request
             this.$http.get('/Functoin/Service/HotelService.asmx/GetRooms',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
+                    }
 
-                // set data on vm
-
-                if (response.data) {
-                    callBack(response.data)
-                }
 
             }, function (response) {
 

@@ -38,8 +38,9 @@ var vm = new Vue({
         hotel: {},
         room: {},
         order:{
-            id:1
-        }
+            id:0
+        },
+        orderCount:0
     },
     components: {
         'app-header': {
@@ -70,6 +71,15 @@ var vm = new Vue({
         'onviewOrderCreateDispatch': function (data) {
             //this.currentView='view-orderCreate';
             this.room = data;
+        },
+        'onUpdateOrderNumberDispatch':function(data){
+            if(data>this.orderCount)
+            {
+                this.orderCount=data;
+            }
+        },
+        'onOrderDispatch':function(data){
+            this.order=data;
         }
     },
     watch: {
@@ -96,30 +106,29 @@ var vm = new Vue({
     },
     methods: {
         getData: function (callBack) {
-            //// GET request
-            //this.$http.get('/Functoin/Service/HotelService.asmx/GetJson').then(function (response) {
-            //
-            //    // set data on vm
-            //    this.person = response.data;
-            //
-            //}, function (response) {
-            //
-            //    // handle error
-            //});
+
             var data = [{no: 1, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'},
                 {no: 2, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg'},
             ];
             callBack(data);
         },
+        getOrderCount:function(callBack){
+            this.$http.get('/Functoin/Service/HotelService.asmx/GetOrderCount'
+                , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
+                    }
+                }, function (response) {
 
+                    // handle error
+                });
+        },
         getHotelData: function (callBack) {
             this.$http.get('/Functoin/Service/HotelService.asmx/GetHotelInfo'
-                , {wid: this.wid, openid: this.openid}).then(function (response) {
-                    if (response) {
-                        callBack(response.data);
+                , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
+                    if (response.data&&response.data.success) {
+                        callBack(response.data.data);
                     }
-
-
                 }, function (response) {
 
                     // handle error
@@ -148,7 +157,7 @@ var vm = new Vue({
 
         this.openid = getQueryStringByName('openid');
         this.wid = getQueryStringByName('wid');
-
+        this.hotel.id= getQueryStringByName('hotelId');
 
         this.getHotelData(function (data) {
             self.hotel = data;
@@ -159,7 +168,10 @@ var vm = new Vue({
             //    self.initSwiper();
             //},1000);
         });
+        this.getOrderCount(function (data) {
+            self.orderCount = data;
 
+        });
 
     }
 })

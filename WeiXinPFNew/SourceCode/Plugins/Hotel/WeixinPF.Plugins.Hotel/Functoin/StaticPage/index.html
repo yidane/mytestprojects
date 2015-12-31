@@ -43,7 +43,7 @@
                :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
-    <app-footer :current-view="currentView"></app-footer>
+    <app-footer :current-view="currentView" :order-count="orderCount"></app-footer>
 </div>
 
 
@@ -104,7 +104,7 @@
                    :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }"
                    v-on:click="notify('view-order')" v-link="{ path: '/order' }"
                         >
-                    <span class="num">0</span> <img src="images/s22KaR0Wtc.png">
+                    <span class="num">{{orderCount}}</span> <img src="images/s22KaR0Wtc.png">
 
                     <p>订单</p>
                 </a>
@@ -203,9 +203,7 @@
         <li class="title"><span class="none">{{hotel.name}}</span></li>
         <li class="dandanb" v-for="room in rooms">
 
-            <a v-on:click="viewOrderCreate(room)"
-
-                    >
+            <a v-on:click="viewOrderCreate(room)" >
                 <span>
                     <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tbody>
@@ -244,8 +242,10 @@
 
         <!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
         <ul class="round" v-for="order in orders">
-            <li class="title"><a
-                    href="#"><span>2015/12/16 15:54:30 kfc</span></a>
+            <li class="title">
+                <a v-on:click="viewOrderCreate(order)">
+                <span><b>{{order.orderTime}}</b>
+                    <b style='margin-left:0.5rem'>{{hotel.name}}</b></span></a>
             </li>
             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cpbiaoge">
                 <tbody>
@@ -255,9 +255,9 @@
                     <th width="60" class="cc">订单状态</th>
                 </tr>
                 <tr>
-                    <td>{{order.firstName}}</td>
-                    <td class="cc">{{order.lastName}}</td>
-                    <td class="cc"><em class="ok">{{order.email}}</em></td>
+                    <td>{{order.orderNumber}}</td>
+                    <td class="cc">{{order.orderPrice}}</td>
+                    <td class="cc"><em class="ok">{{order.statusName}}</em></td>
                 </tr>
                 </tbody>
             </table>
@@ -266,6 +266,13 @@
 </template>
 
 <template id="view-orderCreate-template">
+    <style>
+        .full-btn{
+            width: 100%;
+        }
+    </style>
+
+
     <ul class="round">
         <li class="biaotou bradius pad">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -294,7 +301,7 @@
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="../restaurant/images/info.png" />
+            <img class="detailicon-ticket" src="www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
             <span class="gpd-item-title-name">商品说明</span>
             <span class="gp-icons gpd-up-icon"></span>
         </h2>
@@ -303,7 +310,7 @@
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="../restaurant/images/info.png" />
+            <img class="detailicon-ticket" src="www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
             <span class="gpd-item-title-name">使用须知</span>
             <span class="gp-icons gpd-up-icon"></span>
 
@@ -318,7 +325,7 @@
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="../restaurant/images/undo.png" />
+            <img class="detailicon-ticket" src="www.cloudorg.com.cn/weixin/restaurant/images/undo.png" />
             <span class="gpd-item-title-name">退单规则</span>
             <span class="gp-icons gpd-up-icon"></span>
 
@@ -402,8 +409,9 @@
                         <tr>
                             <th>入住时间</th>
                             <td>
-                                <input name="arriveTime" class="px"
+                                <input name="arriveTime" class="px min-today"
                                        id="arriveTime"
+                                       :min="today"
                                        v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"
                                        v-model="order.arriveTime"
                                        type="date" placeholder="入住时间" />
@@ -416,7 +424,8 @@
                         <tr>
                             <th>离店时间</th>
                             <td>
-                                <input name="leaveTime" class="px" id="leaveTime"
+                                <input name="leaveTime" class="px min-today" id="leaveTime"
+                                       :min="minLeaveDate"
                                        v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"
                                        v-model="order.leaveTime"
                                        type="date" placeholder="离店时间" />
@@ -477,9 +486,16 @@
             <!--<span v-if="$validation.id.minlength">Your ID is too short.</span>-->
             <!--<span v-if="$validation.id.maxlength">Your ID is too long.</span>-->
             <!--</div>-->
-            <div class="footReturn">
-                <input id="showcard" class="submit"  type="submit" value="提交订单" v-if="$roomValidation.valid">
-                <!--<a id="showcard" class="submit" v-if="$roomValidation.valid">提交订单</a>-->
+            <div class="footReturn" style="margin-bottom: 50px;">
+                <li class="footerbtn" v-if="order.status==0||order.status==2">
+                    <input  class="del right3"
+                           type="button" value="取消订单"  > </li>
+                <li :class="[order.status==-1?'full-btn':'footerbtn']" >
+                    <input id="showcard" class="submit" style="width: 100%"
+                           type="submit" value="提交订单" v-if="$roomValidation.valid">
+                </li>
+
+
 
             </div>
 

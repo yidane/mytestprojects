@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotel", "Hotel", "{3EB239AC-158A-48C8-8436-F9CFF075D85D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Plugins.Hotel", "SourceCode\Plugins\Hotel\WeixinPF.Plugins.Hotel\WeixinPF.Plugins.Hotel.csproj", "{A77FC8B8-2FCC-418B-99DB-AA1D749B2ADE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C4941BBF-0230-4F8E-8F54-EFCBA0C80344} = {C4941BBF-0230-4F8E-8F54-EFCBA0C80344}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{75DA46E1-B09C-4C90-AA37-1447D57D1211}"
 EndProject
