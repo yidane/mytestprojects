@@ -14,12 +14,12 @@ namespace WeixinPF.Plugins.Hotel
         
         protected void Application_Start(object sender, EventArgs e)
         {
-            BusConfiguration busConfiguration = new BusConfiguration();
-            busConfiguration.EndpointName("WeixinPF.Plugins.Hotel");
-            busConfiguration.PurgeOnStartup(true);
-            busConfiguration.ApplyCommonConfiguration();
-
-            Bus = NServiceBus.Bus.Create(busConfiguration).Start();
+//            BusConfiguration busConfiguration = new BusConfiguration();
+//            busConfiguration.EndpointName("WeixinPF.Plugins.Hotel");
+//            busConfiguration.PurgeOnStartup(true);
+//            busConfiguration.ApplyCommonConfiguration();
+//
+//            Bus = NServiceBus.Bus.Create(busConfiguration).Start();
         }
 
         public override void Dispose()

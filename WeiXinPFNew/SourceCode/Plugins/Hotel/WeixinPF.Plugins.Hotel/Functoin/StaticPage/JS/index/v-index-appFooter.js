@@ -1,13 +1,12 @@
 ﻿var AppFooter = Vue.extend({
     template: '#app-footer-template',
-    data: function () {
-        return { msg: 'view-room' }
-    },
+    props: ['currentView'],
+
     methods: {
         notify: function (msg) {
-            this.msg = msg
-            if (this.msg.trim()) {
-                this.$dispatch('child-msg', this.msg)
+            this.currentView = msg
+            if (this.currentView.trim()) {
+                this.$dispatch('onChangeView', this.currentView)
             }
         }
     }

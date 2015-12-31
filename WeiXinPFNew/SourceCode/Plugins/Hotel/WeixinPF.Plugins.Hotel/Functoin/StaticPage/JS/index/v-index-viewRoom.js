@@ -41,6 +41,7 @@ var ViewRoom = Vue.extend({
             //    wid:wid
             //};
             if (room) {
+                this.$dispatch('onChangeView', 'view-orderCreate');
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }
         }

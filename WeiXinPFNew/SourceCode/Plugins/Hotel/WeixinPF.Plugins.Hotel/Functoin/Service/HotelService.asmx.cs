@@ -149,19 +149,99 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
             this.WriteJson(roomDto);
         }
 
+        /// <summary>
+        /// 获取最新历史订单里用户信息
+        /// </summary>
         [WebMethod]
-        public void GetJson()
+        public void GetOrderLastUserInfo(int wid,string openid)
+        {
+            var orderUserDto = new OrderUserDto()
+            {
+                UserName = "jxiaox",
+                UserIdcard = "360430199002050611",
+                UserMobile = "18311300760"
+            };
+            Context.Response.Write(JSONHelper.Serialize(orderUserDto, true));
+            Context.Response.End();
+        }
+
+        /// <summary>
+        /// 保存订单
+        /// </summary>
+        /// <param name="wid"></param>
+        /// <param name="openid"></param>
+        /// <param name="hotelId"></param>
+        /// <param name="roomId"></param>
+        /// <param name="order"></param>
+        [WebMethod]
+        public void SaveOrder(int wid,string openid,int hotelId,int roomId, string order)
         {
 
-            Context.Response.Write("{\"firstName\":\"Brett\",\"lastName\":\"McLaughlin\",\"email\":\"aaaa\"}");
+            var orderDto = JSONHelper.Deserialize<OrderDto>(order);
+            if (orderDto.Id>0)
+            {
+                //update
+            }
+            else
+            {
+                //add
+            }
+        }
+
+        /// <summary>
+        /// 获取订单信息
+        /// </summary>
+        /// <param name="wid"></param>
+        /// <param name="openid"></param>
+        /// <param name="orderId"></param>
+        [WebMethod]
+        public void GetOrder(int wid, string openid, int orderId)
+        {
+            var orderDto = new OrderDto()
+            {
+                Id = orderId,
+                OrderUser = new OrderUserDto()
+                {
+                    UserName = "jxiaox",
+                    UserIdcard = "360430199002050611",
+                    UserMobile = "18311300760"
+                },
+                ArriveTime = DateTime.Today,
+                LeaveTime = DateTime.Today.AddDays(2),
+                OrderNum = 2,
+                Remark = "happy new year!",
+                Status = 0
+            };
+            Context.Response.Write(JSONHelper.Serialize(orderDto, true));
             Context.Response.End();
         }
 
         [WebMethod]
-        public void GetListJson()
+        public void GetOrderList(int wid, string openid, int hotelId)
         {
-            Context.Response.Write("{\"orders\":[{\"firstName\":\"Brett\",\"lastName\":\"McLaughlin\",\"email\":\"aaaa\"},{\"firstName\":\"Jason\",\"lastName\":\"Hunter\",\"email\":\"bbbb\"},{\"firstName\":\"Elliotte\",\"lastName\":\"Harold\",\"email\":\"cccc\"}]}");
-            Context.Response.End();
+            var orderList = new List<OrderDto>();
+            for (int i = 0; i < 9; i++)
+            {
+                var orderDto = new OrderDto()
+                {
+                    Id = i+1,
+                    OrderUser = new OrderUserDto()
+                    {
+                        UserName = "jxiaox",
+                        UserIdcard = "360430199002050611",
+                        UserMobile = "18311300760"
+                    },
+                    ArriveTime = DateTime.Today.AddDays(i),
+                    LeaveTime = DateTime.Today.AddDays(i+2),
+                    OrderNum = 2,
+                    Remark = "happy new year!",
+                    Status = i
+                };
+                orderList.Add(orderDto);
+
+                Context.Response.Write(JSONHelper.Serialize(orderList, true));
+                Context.Response.End();
+            }
         }
     }
 
@@ -193,4 +273,35 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         public string Url { get; set; }
         public string Name { get; set; }
     }
+
+    /// <summary>
+    /// 订单
+    /// </summary>
+    public class OrderDto
+    {
+        public int Id { get; set; }
+        public OrderUserDto OrderUser { get; set; }
+        public DateTime ArriveTime { get; set; }
+        public DateTime LeaveTime { get; set; }
+        public int OrderNum { get; set; }
+        public string Remark { get; set; }
+
+        public int Status { get; set; }
+
+//        //todo:这2个参数要加这么？
+//        public int HotelId { get; set; }
+//        public int RoomId { get; set; }
+    }
+
+    /// <summary>
+    /// 订单用户信息
+    /// </summary>
+    public class OrderUserDto
+    {
+        public string UserName { get; set; }
+        public string UserIdcard { get; set; }
+        public string UserMobile { get; set; }
+    }
+
+    
 }

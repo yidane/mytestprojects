@@ -36,8 +36,11 @@
 
     <app-image :view-images="imgDatas"></app-image>
 
+    <user-setting :id="id" :displayname="username"></user-setting>
+
     <component :is="currentView" keep-alive transition="fade"
-               transition-mode="out-in" :wid="wid" :openid="openid" :hotel="hotel" :room="room">
+               transition-mode="out-in" :current-view="currentView"
+               :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
     <app-footer :current-view="currentView"></app-footer>
@@ -76,7 +79,7 @@
         <ul>
             <li>
                 <a id="about" href="#about"
-                   :class="{ active: msg=='view-about' }"
+                   :class="{ active: currentView=='view-about' }"
                    v-on:click="notify('view-about')"
                    v-link="{ path: '/about' }"
 
@@ -88,7 +91,7 @@
             </li>
             <li>
                 <a id="choice" href="#room"
-                   :class="{ active: msg=='view-room' }"
+                   :class="{ active: currentView=='view-room' }"
                    v-on:click="notify('view-room')" v-link="{ path: '/room' }"
                         >
                     <img src="images/3YQLfzfunJ.png">
@@ -98,7 +101,7 @@
             </li>
             <li>
                 <a id="myOrder" href="#order"
-                   :class="{ active: msg=='view-order'||msg=='view-orderCreate' }"
+                   :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }"
                    v-on:click="notify('view-order')" v-link="{ path: '/order' }"
                         >
                     <span class="num">0</span> <img src="images/s22KaR0Wtc.png">
@@ -199,10 +202,8 @@
     <ul class="round">
         <li class="title"><span class="none">{{hotel.name}}</span></li>
         <li class="dandanb" v-for="room in rooms">
-            <!--<a v-on:click="viewOrderCreate(room,openid,wid)"-->
-               <!--href="hotelCreate.html?roomid={{room.id}}&amp;hotelid={{hotel.id}}&amp;openid={{openid}}"-->
-                    <!-->-->
-            <a v-on:click="viewOrderCreate"
+
+            <a v-on:click="viewOrderCreate(room)"
 
                     >
                 <span>
@@ -211,7 +212,7 @@
                         <tr>
                             <td>
                                 <div>{{room.roomType}}</div>
-                                <div><img src="{{room.roomImgs[0].url}}" class="showimg">
+                                <div><img :src="room.roomImgs[0].url" class="showimg">
 
                                     <p class="break-word">{{room.detail}}</p>
 
@@ -265,8 +266,6 @@
 </template>
 
 <template id="view-orderCreate-template">
-
-
     <ul class="round">
         <li class="biaotou bradius pad">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -280,7 +279,7 @@
         <li><span class="noneorder">
                 <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td>{{room.roomtype}}</td>
+                        <td>{{room.roomType}}</td>
                         <td class="yuanjia">￥{{room.costPrice}}</td>
                         <td class="youhuijia">￥{{room.totalPrice}}</td>
                     </tr>
@@ -338,8 +337,7 @@
 
 
 
-    <input type="hidden" name="formhash" id="formhash" value="7de8fa52" />
-    <input type="hidden" name="issub" id="issub" value="0" />
+
 
     <div class='alert alert-warning' role='alert'>
         <strong>提示</strong> 填写入住其中一人的真实信息即可。
@@ -348,10 +346,10 @@
 
         <p>
             <span class=" color-red">已优惠</span>
-            <span id="price3" class="color-red discount-money">￥{{order.discount}}</span>
+            <span id="price3" class="color-red discount-money">￥{{discount}}</span>
             <span>共</span>
-            <span id="price" class="  total-money color-red">￥{{order.totalPrice}}</span>
-            <span id="yuanjia" class="  cost-money">￥{{order.costPrice}}</span>
+            <span id="price" class="  total-money color-red">￥{{totalPrice}}</span>
+            <span id="yuanjia" class="  cost-money">￥{{costPrice}}</span>
 
         </p>
 
@@ -359,7 +357,7 @@
 
 
     <validator lazy name="roomValidation">
-        <form novalidate>
+        <form novalidate @submit.prevent="onSubmit">
 
             <ul class="round">
                 <li class="title mb"><span class="none">请认真填写在线订单</span></li>
@@ -369,7 +367,7 @@
                             <th>预订人</th>
                             <td>
                                 <input name="oderName" type="text" class="px" id="oderName"
-                                       v-validate:oderName="['required']" v-model="order.oderName"
+                                       v-validate:oderName="['required']" v-model="order.orderUser.userName"
                                        placeholder="请输入您的真实姓名" /></td>
                         </tr>
                     </table>
@@ -380,8 +378,9 @@
                             <th>身份证号</th>
                             <td>
                                 <input name="identityNumber" type="text" class="px"
-                                       v-validate:identityNumber="['idCard']"
-                                       id="identityNumber" v-model="order.identityNumber"
+                                       v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
+                                       , idcard: { rule: true, message: '请输入正确的身份证号' } }"
+                                       id="identityNumber" v-model="order.orderUser.userIdcard"
                                        placeholder="请输入您的身份证号" /></td>
                         </tr>
                     </table>
@@ -392,7 +391,9 @@
                             <th>联系电话</th>
                             <td>
                                 <input name="tel" type="tel" class="px" id="tel"
-                                       v-model="order.tel" required placeholder="请输入您的电话" /></td>
+                                       v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
+                                       , mobile: { rule: true, message: '请输入正确的手机号' } }"
+                                       v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" /></td>
                         </tr>
                     </table>
                 </li>
@@ -403,6 +404,7 @@
                             <td>
                                 <input name="arriveTime" class="px"
                                        id="arriveTime"
+                                       v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"
                                        v-model="order.arriveTime"
                                        type="date" placeholder="入住时间" />
                             </td>
@@ -414,7 +416,9 @@
                         <tr>
                             <th>离店时间</th>
                             <td>
-                                <input name="leaveTime" class="px" id="leaveTime"  v-model="order.leaveTime"
+                                <input name="leaveTime" class="px" id="leaveTime"
+                                       v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"
+                                       v-model="order.leaveTime"
                                        type="date" placeholder="离店时间" />
                             </td>
                         </tr>
@@ -424,10 +428,8 @@
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
                         <tr>
                             <th>类型</th>
-                            <td>
-                                <input class="px" id="roomtype"
-                                       v-model="room.roomtype"
-                                       type="text" readonly="true" /></td>
+                            <td class="userinfo">{{room.roomType}}</td>
+
                         </tr>
                     </table>
                 </li>
@@ -436,27 +438,11 @@
                         <tr>
                             <th>预订数量</th>
                             <td>
-                                <select name="orderNum" class="dropdown-select" id="orderNum"  v-model="order.orderNum">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
+                                <select name="orderNum" class="dropdown-select" id="orderNum"
+                                        v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"
+                                        v-model="order.orderNum">
+                                    <option v-for="n in 20" :value="n+1">{{n+1}}</option>
+
                                 </select></td>
                         </tr>
                     </table>
@@ -465,7 +451,7 @@
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
                         <tr>
                             <th>单价</th>
-                            <td class="userinfo price">￥{{ room.roomtype}}</td>
+                            <td class="userinfo price">￥{{room.totalPrice}}</td>
                         </tr>
                     </table>
                 </li>
@@ -492,7 +478,8 @@
             <!--<span v-if="$validation.id.maxlength">Your ID is too long.</span>-->
             <!--</div>-->
             <div class="footReturn">
-                <a id="showcard" class="submit" v-if="$roomValidation.valid">提交订单</a>
+                <input id="showcard" class="submit"  type="submit" value="提交订单" v-if="$roomValidation.valid">
+                <!--<a id="showcard" class="submit" v-if="$roomValidation.valid">提交订单</a>-->
 
             </div>
 
@@ -520,13 +507,15 @@
 
 </template>
 
+<script src="../../Common/JS/zepto.min.js"></script>
 <!--<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>-->
 <!--<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.8/js/sm.min.js' charset='utf-8'></script>-->
-<script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>
+<!--<script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>-->
+<script src="../../Common/JS/vue/vue.min.js"></script>
 <!--<script src="https://cdn.jsdelivr.net/vue.router/0.5.2/vue-router.min.js"></script>-->
 <script src="../../Common/JS/vue/vue-resource.min.js"></script>
-<script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>
-
+<!--<script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>-->
+<script src="../../Common/JS/vue/vue-validator.min.js"></script>
 <script src="../../Common/web_component/swiper/swiper.min.js"></script>
 <script>
     //根据QueryString参数名称获取值
