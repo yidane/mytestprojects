@@ -48,8 +48,20 @@
     <Compile Include="Agent\Manager_Log.cs" />
     <Compile Include="Agent\Manager_Role.cs" />
     <Compile Include="Agent\Manager_Role_Value.cs" />
+    <Compile Include="Agent\WX_Agent.cs" />
+    <Compile Include="Agent\WX_ManagerBill.cs" />
+    <Compile Include="Article\ArticleCategory.cs" />
+    <Compile Include="Article\ArticleImageSize.cs" />
+    <Compile Include="Channel\Channel.cs" />
+    <Compile Include="Channel\ChannelField.cs" />
+    <Compile Include="Common\District.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\Navigation.cs" />
     <Compile Include="System\sys_config.cs" />
+    <Compile Include="Weixin\WX_IndustryDefaultModule.cs" />
+    <Compile Include="Weixin\WX_Payment.cs" />
+    <Compile Include="Weixin\WX_Property.cs" />
+    <Compile Include="Weixin\WX_SystemConfig.cs" />
     <Compile Include="Weixin\WX_UserWeixin.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

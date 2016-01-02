@@ -91,7 +91,7 @@
     <Content Include="Common\web_component\swiper\swiper.animate1.0.2.min.js" />
     <Content Include="Common\web_component\swiper\swiper.min.css" />
     <Content Include="Common\web_component\swiper\swiper.min.js" />
-    <Content Include="Functoin\BackPage\commodity_detail.aspx" />
+    <Content Include="Functoin\BackPage\Hotel\commodity_detail.aspx" />
     <Content Include="Functoin\StaticPage\CSS\hotelOrderList.css" />
     <Content Include="Functoin\StaticPage\CSS\hotels.css" />
     <Content Include="Functoin\StaticPage\CSS\mystyle.css" />
@@ -119,7 +119,7 @@
     <Content Include="Functoin\StaticPage\JS\index\main.js" />
     <Content Include="Functoin\StaticPage\JS\paycallback.js" />
     <Content Include="Functoin\StaticPage\JS\plugback.js" />
-    <Content Include="Functoin\BackPage\dingdan_confirm.aspx" />
+    <Content Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx" />
     <Content Include="Functoin\StaticPage\JS\index\v-index-appFooter.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -144,21 +144,18 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Functoin\BackPage\BasePage\ManagePage.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Functoin\BackPage\commodity_detail.aspx.cs">
+    <Compile Include="Functoin\BackPage\Hotel\commodity_detail.aspx.cs">
       <DependentUpon>commodity_detail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Functoin\BackPage\commodity_detail.aspx.designer.cs">
+    <Compile Include="Functoin\BackPage\Hotel\commodity_detail.aspx.designer.cs">
       <DependentUpon>commodity_detail.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Functoin\BackPage\dingdan_confirm.aspx.cs">
+    <Compile Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx.cs">
       <DependentUpon>dingdan_confirm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Functoin\BackPage\dingdan_confirm.aspx.designer.cs">
+    <Compile Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx.designer.cs">
       <DependentUpon>dingdan_confirm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Functoin\Service\HotelService.asmx.cs">
@@ -173,9 +170,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Common\Image\" />
-    <Folder Include="Functoin\BackPage\CSS\" />
-    <Folder Include="Functoin\BackPage\Image\" />
-    <Folder Include="Functoin\BackPage\JS\" />
+    <Folder Include="Functoin\BackPage\Hotel\CSS\" />
+    <Folder Include="Functoin\BackPage\Hotel\Image\" />
+    <Folder Include="Functoin\BackPage\Hotel\JS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +195,10 @@
     <ProjectReference Include="..\..\..\WeixinPF\Model\WeixinPF.Model\WeixinPF.Model.csproj">
       <Project>{44d55bf4-ef1f-465d-810c-1be14910673f}</Project>
       <Name>WeixinPF.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WeixinPF\Web\WeixinPF.Web.UI\WeixinPF.Web.UI.csproj">
+      <Project>{fa21b2df-c6ae-431a-ae0f-f38ae2c2a2d4}</Project>
+      <Name>WeixinPF.Web.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\WeixinPF\WeixinPF.Shared\WeixinPF.Shared.csproj">
       <Project>{070f2c49-b23a-45a0-aad5-31c37af4aab0}</Project>

@@ -58,9 +58,20 @@
     <Compile Include="Agent\ManagerLogRepository.cs" />
     <Compile Include="Agent\ManagerRepository.cs" />
     <Compile Include="Agent\ManagerRoleRepository.cs" />
+    <Compile Include="Agent\WXAgentRepository.cs" />
+    <Compile Include="Agent\WXManagerBillRepository.cs" />
+    <Compile Include="Article\ArticleCategoryRepository.cs" />
+    <Compile Include="Article\ArticleImageSizeRepository.cs" />
     <Compile Include="BaseRepository\EFRepository.cs" />
+    <Compile Include="Channel\ChannelRepository.cs" />
+    <Compile Include="Common\DistrictRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\NavigationRepository.cs" />
     <Compile Include="System\SiteConfigRepository.cs" />
+    <Compile Include="Weixin\WXIndustryDefaultModuleRepository.cs" />
+    <Compile Include="Weixin\WXPaymentRepository.cs" />
+    <Compile Include="Weixin\WXPropertyRepository.cs" />
+    <Compile Include="Weixin\WXSystemConfigRepository.cs" />
     <Compile Include="Weixin\WXUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +96,7 @@
       <Name>WeixinPF.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
