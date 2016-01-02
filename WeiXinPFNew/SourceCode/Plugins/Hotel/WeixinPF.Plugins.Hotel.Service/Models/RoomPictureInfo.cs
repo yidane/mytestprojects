@@ -14,11 +14,11 @@ namespace WeixinPF.Plugins.Hotel.Service.Models
         /// <summary>
         /// 编号
         /// </summary>
-        public int id { set; get; }
-
+        public int id { set; get; } 
+         
         /// <summary>
         /// 房间号
-        /// </summary>
+        /// </summary> 
         public int? roomid { set; get; }
 
         /// <summary>
