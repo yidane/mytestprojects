@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Messages.RequestResponse.Room
 {
-    class GetRoomListResponse
+    public class GetRoomListResponse
     {
+        public List<GetRoomResponse> Rooms { get; set; }
     }
 }

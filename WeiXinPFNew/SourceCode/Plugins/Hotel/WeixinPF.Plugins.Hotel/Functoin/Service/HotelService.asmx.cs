@@ -59,37 +59,24 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         [WebMethod]
         public void GetHotelInfo(int wid, string openid,int hotelId)
         {
+            GetHotelResponse responseData = null;
+            IAsyncResult asyncResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelRequest() { HotelId = wid })
+                    .Register(response =>
+                    {
+                        CompletionResult result = response.AsyncState as CompletionResult;
+                        if (result != null)
+                        {
+                            responseData = result.Messages[0] as GetHotelResponse;
 
-            var hotelDto = new HotelDto()
+                        }
+
+            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+            asyncWaitHandle.WaitOne(100000);
+
+            if (asyncResult.IsCompleted)
             {
-                Id = 1,
-                Name = "七天连锁",
-                Tel = "18311300760",
-                Address = "神仙湾",
-                JieShao = "七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍七天商家介绍"
-            };
-            this.WriteJson(AjaxResult.Succeed(hotelDto));
-//                
-
-//            GetHotelResponse responseData = null;
-//            var asyncResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelRequest() { HotelId = wid })
-//                    .Register(response =>
-//                    {
-//                        CompletionResult result = response.AsyncState as CompletionResult;
-//                        if (result != null)
-//                        {
-//                            responseData = result.Messages[0] as GetHotelResponse;
-//
-//                        }
-//                    }, this);
-//
-//            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-//            asyncWaitHandle.WaitOne(10000);
-//
-//            if (asyncResult.IsCompleted)
-//            {
-//                this.WriteJson(AjaxResult.Succeed(responseData));
-//            }
+                this.WriteJson(AjaxResult.Succeed(responseData));
+            }
         }
 
         /// <summary>
@@ -99,7 +86,7 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         /// <param name="openid"></param>
         /// <param name="hotelId"></param>
         [WebMethod]
-        public void GetRooms(int wid, string openid, int hotelId)
+        public void GetRoomList(int wid, string openid, int hotelId)
         {
             var roomDtos = new List<RoomDto>()
             {
@@ -269,7 +256,7 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
               
             }
             this.WriteJson(AjaxResult.Succeed(orderList)); 
-        }
+            }
 
         /// <summary>
         /// 获取订单数量

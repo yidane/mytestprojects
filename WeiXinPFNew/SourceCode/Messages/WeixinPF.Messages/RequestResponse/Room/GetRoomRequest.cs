@@ -8,5 +8,6 @@ namespace WeixinPF.Messages.RequestResponse.Room
 {
     public class GetRoomRequest
     {
+        public int RoomId { get; set; }
     }
 }
