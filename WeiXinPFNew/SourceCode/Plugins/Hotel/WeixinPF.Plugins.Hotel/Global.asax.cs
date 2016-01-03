@@ -15,7 +15,7 @@ namespace WeixinPF.Plugins.Hotel
         protected void Application_Start(object sender, EventArgs e)
         {
             BusConfiguration busConfiguration = new BusConfiguration();
-            busConfiguration.EndpointName("WeixinPF.Plugins.Hotel");
+            busConfiguration.EndpointName("WeixinPF.Hotel.Plugins");
             busConfiguration.PurgeOnStartup(true);
             busConfiguration.ApplyCommonConfiguration();
 

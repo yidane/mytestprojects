@@ -54,7 +54,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             
 
 
-            IAsyncResult resIdentifyingCode = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetIdentifyingCodeRequest()
+            IAsyncResult resIdentifyingCode = Global.Bus.Send("WeixinPF.Hotel.Plugins", new GetIdentifyingCodeRequest()
             {
                 ShopId = this.hotelid,
                 Number = number,

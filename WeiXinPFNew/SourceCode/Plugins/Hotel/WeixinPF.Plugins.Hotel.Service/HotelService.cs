@@ -36,7 +36,7 @@ namespace WeixinPF.Hotel.Plugins.Service
         {
             BusConfiguration busConfiguration = new BusConfiguration();            
 
-            busConfiguration.EndpointName("WeixinPF.Plugins.Hotel.Service.HotelService");
+            busConfiguration.EndpointName("WeixinPF.Hotel.Plugins.Service.HotelService");
             busConfiguration.PurgeOnStartup(true);
             busConfiguration.ApplyCommonConfiguration();
 
