@@ -57,26 +57,27 @@ namespace WeixinPF.Plugins.Hotel.Functoin.Service
         /// <param name="openid"></param>
         /// <param name="hotelId"></param>
         [WebMethod]
-        public void GetHotelInfo(int wid, string openid,int hotelId)
+        public void GetHotelInfo(int wid, string openid, int hotelId)
         {
-            GetHotelResponse responseData = null;
-            IAsyncResult asyncResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelRequest() { HotelId = wid })
-                    .Register(response =>
-                    {
-                        CompletionResult result = response.AsyncState as CompletionResult;
-                        if (result != null)
-                        {
-                            responseData = result.Messages[0] as GetHotelResponse;
+            //GetHotelResponse responseData = null;
+            //IAsyncResult asyncResult = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelRequest() {HotelId = wid})
+            //    .Register(response =>
+            //    {
+            //        CompletionResult result = response.AsyncState as CompletionResult;
+            //        if (result != null)
+            //        {
+            //            responseData = result.Messages[0] as GetHotelResponse;
 
-                        }
+            //        }
 
-            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(100000);
+            //        WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+            //        asyncWaitHandle.WaitOne(100000);
 
-            if (asyncResult.IsCompleted)
-            {
-                this.WriteJson(AjaxResult.Succeed(responseData));
-            }
+            //        if (asyncResult.IsCompleted)
+            //        {
+            //            this.WriteJson(AjaxResult.Succeed(responseData));
+            //        }
+            //    });
         }
 
         /// <summary>
