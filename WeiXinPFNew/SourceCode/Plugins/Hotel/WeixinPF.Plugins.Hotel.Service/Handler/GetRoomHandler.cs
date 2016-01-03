@@ -1,9 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
-using WeixinPF.Hotel.Plugins.Service.Models;
-using WeixinPF.Messages.RequestResponse.Room;
+using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Plugins.Hotel.Service.Application.Service;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
@@ -14,12 +15,18 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         public GetRoomHandler(IBus bus)
         {
             _bus = bus;
-            Mapper.CreateMap<RoomInfo, GetRoomResponse>();
         }
         public void Handle(GetRoomRequest message)
         {
             var roomService = new RoomService();
-            _bus.Reply(roomService.GetModel(message.RoomId).MapTo<GetRoomResponse>());
+            var roomPictureService = new RoomPictureService();
+
+            var room = roomService.GetModel(message.RoomId);
+            var roomPictures = roomPictureService.GetModelList(string.Format("RoomId={0}", message.RoomId));
+
+            var response = room.MapTo<GetRoomResponse>();
+            response.RoomPictures = roomPictures.MapTo<List<RoomPictureDto>>();
+            _bus.Reply(response);
         }
     }
 }

@@ -16,10 +16,9 @@ var ViewRoom = Vue.extend({
         done();
     },
     methods: {
-
         getData: function (callBack) {
             // GET request
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetRooms',
+            this.$http.get('/Functoin/Service/HotelService.asmx/GetRoomList',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);

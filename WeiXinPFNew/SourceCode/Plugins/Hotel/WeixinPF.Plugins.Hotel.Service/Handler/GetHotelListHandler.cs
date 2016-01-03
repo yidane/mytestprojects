@@ -15,7 +15,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         public GetHotelListHandler(IBus bus)
         {
             _bus = bus;
-            Mapper.CreateMap<GetHotelResponse, HotelInfo>();
+           // Mapper.CreateMap<GetHotelResponse, HotelInfo>();
         }
         public void Handle(GetHotelListRequest message)
         {

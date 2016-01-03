@@ -45,7 +45,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Models
         /// <summary>
         /// 创建时间
         /// </summary>
-        public DateTime? createDate { set; get; }
+        public DateTime createDate { set; get; }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceProcess;
 using NServiceBus;
+using WeixinPF.Plugins.Hotel.Service.AutoMapper;
 
 namespace WeixinPF.Hotel.Plugins.Service
 {
@@ -34,6 +35,9 @@ namespace WeixinPF.Hotel.Plugins.Service
 
         protected override void OnStart(string[] args)
         {
+            //加载AutoMapper配置。
+            AutoMapperConfiguration.Configure();
+
             BusConfiguration busConfiguration = new BusConfiguration();            
 
             busConfiguration.EndpointName("WeixinPF.Hotel.Plugins.Service.HotelService");
