@@ -5,7 +5,6 @@ using WeixinPF.Application.Agent;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Messages.RequestResponse;
-using WeixinPF.Plugins.Hotel;
 using WeixinPF.Web.UI;
 
 //using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
@@ -54,7 +53,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             
 
 
-            IAsyncResult resIdentifyingCode = Global.Bus.Send("WeixinPF.Hotel.Plugins", new GetIdentifyingCodeRequest()
+            IAsyncResult resIdentifyingCode = Global.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetIdentifyingCodeRequest()
             {
                 ShopId = this.hotelid,
                 Number = number,
@@ -74,7 +73,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 return;
             }
 
-            IAsyncResult resOrder = Global.Bus.Send("WeixinPF.Plugins.Hotel", new GetHotelOrderByOrderIdRequest()
+            IAsyncResult resOrder = Global.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetHotelOrderByOrderIdRequest()
             {
                 OrderId = int.Parse(identifyingCode.OrderId)
             }).Register(response =>

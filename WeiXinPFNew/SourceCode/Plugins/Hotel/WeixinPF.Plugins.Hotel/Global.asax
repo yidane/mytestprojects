@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="WeixinPF.Plugins.Hotel.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="WeixinPF.Hotel.Plugins.Global" Language="C#" %>

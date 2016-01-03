@@ -66,6 +66,7 @@
     <Compile Include="Enum\StatusManager.cs" />
     <Compile Include="JsonException.cs" />
     <Compile Include="Helper\JSONHelper.cs" />
+    <Compile Include="LoadPlugins.cs" />
     <Compile Include="MessageBox.cs" />
     <Compile Include="Enum\MXEnums.cs" />
     <Compile Include="MXMail.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="MyCommFun.cs" />
     <Compile Include="PageTemplate.cs" />
     <Compile Include="PagingHelper.cs" />
+    <Compile Include="PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regexlib.cs" />
     <Compile Include="Helper\CacheHelper.cs" />
