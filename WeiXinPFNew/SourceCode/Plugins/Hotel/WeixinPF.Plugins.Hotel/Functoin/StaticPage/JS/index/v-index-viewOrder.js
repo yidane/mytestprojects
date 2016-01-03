@@ -52,7 +52,7 @@ var ViewOrder = Vue.extend({
             var room={
                 id:order.roomId
             };
-                this.$dispatch('onChangeView', 'view-orderCreate');
+              
              this.$dispatch('onOrderDispatch', order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }

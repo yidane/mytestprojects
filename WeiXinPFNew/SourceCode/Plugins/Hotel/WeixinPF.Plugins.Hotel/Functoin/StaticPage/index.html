@@ -36,14 +36,15 @@
 
     <app-image :view-images="imgDatas"></app-image>
 
-    <user-setting :id="id" :displayname="username"></user-setting>
 
     <component :is="currentView" keep-alive transition="fade"
                transition-mode="out-in" :current-view="currentView"
                :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
-    <app-footer :current-view="currentView" :order-count="orderCount"></app-footer>
+    <app-footer :current-view="currentView" :order-count="orderCount"
+:wid="wid" :openid="openid" :hotel="hotel"
+    ></app-footer>
 </div>
 
 
@@ -80,9 +81,8 @@
             <li>
                 <a id="about" href="#about"
                    :class="{ active: currentView=='view-about' }"
-                   v-on:click="notify('view-about')"
-                   v-link="{ path: '/about' }"
 
+                  :href="'#/about'+'/'+wid+'/'+hotel.id+'/'+openid"
                         >
                     <img src="images/xxyX63YryG.png">
 
@@ -92,7 +92,8 @@
             <li>
                 <a id="choice" href="#room"
                    :class="{ active: currentView=='view-room' }"
-                   v-on:click="notify('view-room')" v-link="{ path: '/room' }"
+
+  :href="'#/room'+'/'+wid+'/'+hotel.id+'/'+openid"
                         >
                     <img src="images/3YQLfzfunJ.png">
 
@@ -102,7 +103,7 @@
             <li>
                 <a id="myOrder" href="#order"
                    :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }"
-                   v-on:click="notify('view-order')" v-link="{ path: '/order' }"
+                  :href="'#/order'+'/'+wid+'/'+hotel.id+'/'+openid"
                         >
                     <span class="num">{{orderCount}}</span> <img src="images/s22KaR0Wtc.png">
 
@@ -203,7 +204,7 @@
         <li class="title"><span class="none">{{hotel.name}}</span></li>
         <li class="dandanb" v-for="room in rooms">
 
-            <a v-on:click="viewOrderCreate(room)" >
+            <a :href="'#/order'+'/0/'+wid+'/'+hotel.id+'/'+openid" v-on:click="viewOrderCreate(room)" >
                 <span>
                     <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tbody>
@@ -222,7 +223,7 @@
                         </tbody>
                     </table> </span></a></li>
     </ul>
- 
+
     <ul class="round">
         <li class="addr">
             <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>
@@ -243,7 +244,7 @@
         <!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
         <ul class="round" v-for="order in orders">
             <li class="title">
-                <a v-on:click="viewOrderCreate(order)">
+                <a :href="'#/order'+'/'+ order.id +'/'+wid+'/'+hotel.id+'/'+openid" v-on:click="viewOrderCreate(order)">
                 <span><b>{{order.orderTime}}</b>
                     <b style='margin-left:0.5rem'>{{hotel.name}}</b></span></a>
             </li>
@@ -503,23 +504,6 @@
         </form>
     </validator>
 
-    <script>
-        //        Vue.validator('idCard', {
-        //            message: '身份证号错误',
-        //            check: function (val) {
-        //                return /^[-+]?[0-9]+$/.test(val);
-        //            }
-        //        });
-        //
-        //        // build-in validator customizable
-        //        var required = Vue.validator('required');
-        //        Vue.validator('required', {
-        //            message: function (field) {
-        //                return '必填项 "' + field + '" 不能为空'
-        //            },
-        //            check: required
-        //        })
-    </script>
 
 </template>
 
@@ -530,9 +514,12 @@
 <script src="../../Common/JS/vue/vue.min.js"></script>
 <!--<script src="https://cdn.jsdelivr.net/vue.router/0.5.2/vue-router.min.js"></script>-->
 <script src="../../Common/JS/vue/vue-resource.min.js"></script>
-<!--<script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>-->
-<script src="../../Common/JS/vue/vue-validator.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>
+<!-- <script src="../../Common/JS/vue/vue-validator.min.js"></script> -->
 <script src="../../Common/web_component/swiper/swiper.min.js"></script>
+<script src="https://rawgit.com/flatiron/director/master/build/director.min.js">
+   </script>
+
 <script>
     //根据QueryString参数名称获取值
 
@@ -556,6 +543,8 @@
 <script src="JS/index/v-index-viewRoom.js"></script>
 <script src="JS/index/v-index-viewOrderCreate.js"></script>
 <script src="JS/index/main.js"></script>
+
+
 
 </body>
 </html>

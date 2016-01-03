@@ -11,22 +11,6 @@ Vue.validator('mobile', function (val) {
     return (/^1[3|4|5|8|9][0-9]\d{8}$/ .test(val));
 })
 
-
-// for fake fetch function
-function getDispalyName(id, cb) {
-    setTimeout(function () {
-        cb(null, 'username1')
-    }, 2000)
-}
-
-// for fake store function
-function saveDisplayName(id, val, cb) {
-    setTimeout(function () {
-        cb(null)
-    }, 2000)
-}
-
-
 var vm = new Vue({
     el: '#div_app',
 
@@ -35,6 +19,8 @@ var vm = new Vue({
         person: {},
         imgDatas: [],
         headerTitle: '',
+        wid:0,
+        openid:'',
         hotel: {},
         room: {},
         order:{
@@ -106,11 +92,20 @@ var vm = new Vue({
     },
     methods: {
         getData: function (callBack) {
+          var self = this;
+          this.getHotelData(function (data) {
+              self.hotel = data;
 
-            var data = [{no: 1, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'},
-                {no: 2, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg'},
-            ];
-            callBack(data);
+          });
+          this.getOrderCount(function (data) {
+              self.orderCount = data;
+
+          });
+
+            // var data = [{no: 1, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'},
+            //     {no: 2, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg'},
+            // ];
+            // callBack(data);
         },
         getOrderCount:function(callBack){
             this.$http.get('/Functoin/Service/HotelService.asmx/GetOrderCount'
@@ -150,28 +145,73 @@ var vm = new Vue({
                 // �����Ҫ������?
                 scrollbar: '.swiper-scrollbar'
             });
+        },
+
+        getOpenid:function(){
+          //todo:跳转获取openid
+          var openid='test';
+          return document.location.href+"/"+openid;
+        },
+        getQueryData:function(wid,hotelId, openid,orderId) {
+          if (!this.openid) {
+            this.openid = openid;
+            this.wid = wid;
+            this.hotel.id= hotelId;
+            this.getData();
+          }
+
+
+
+          if (orderId) {
+            this.order.id=orderId;
+          }
+        },
+
+
+
+
+
+        initRouter:function(){
+            var self = this;
+          var routes = {
+            '/:wid/:hotelId': function (wid,hotelId) {
+           console.log( '没有openid，跳转获取');
+           document.location.href=self.getOpenid();
+           },
+            '/:wid/:hotelId/:openid': function (wid,hotelId, openid) {
+              router.setRoute('/room'+'/'+wid+'/'+hotelId+'/'+openid);
+           },
+
+          '/room/:wid/:hotelId/:openid': function (wid,hotelId,openid) {
+            self.getQueryData(wid,hotelId,openid);
+            self.currentView='view-room';
+        },
+        '/about/:wid/:hotelId/:openid': function (wid,hotelId,openid) {
+          self.getQueryData(wid,hotelId,openid);
+            self.currentView='view-about';
+      },
+      '/order/:wid/:hotelId/:openid': function (wid,hotelId,openid) {
+        self.getQueryData(wid,hotelId,openid);
+        self.currentView='view-order';
+      },
+      '/order/:orderId/:wid/:hotelId/:openid': function (orderId,wid,hotelId,openid) {
+        self.getQueryData(wid,hotelId,openid,orderId);
+        self.currentView='view-orderCreate';
+
+      }
+          };
+
+          var router = Router(routes);
+
+          router.init();
         }
     },
+
     ready: function () {
         var self = this;
+        this.initRouter();
+       
 
-        this.openid = getQueryStringByName('openid');
-        this.wid = getQueryStringByName('wid');
-        this.hotel.id= getQueryStringByName('hotelId');
-
-        this.getHotelData(function (data) {
-            self.hotel = data;
-
-            self.currentView = 'view-room';
-
-            //setTimeout(function(){
-            //    self.initSwiper();
-            //},1000);
-        });
-        this.getOrderCount(function (data) {
-            self.orderCount = data;
-
-        });
 
     }
 })

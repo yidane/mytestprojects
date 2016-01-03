@@ -97,15 +97,27 @@ var ViewOrderCreate = Vue.extend({
                 hasOrder=true;
                 this.getOrder(function(data){
                     self.order=data;
-                    if(self.$activateValidator)
-                    {
-                        self.$activateValidator();
-                    }
+
+                    self.getRoom(function (data) {
+                        self.room=data;
+
+                            if(self.$activateValidator)
+                            {
+                                self.$activateValidator();
+                            }
+                            
+
+
+                    });
+                    // if(self.$activateValidator)
+                    // {
+                    //     self.$activateValidator();
+                    // }
 
                 });
             }
             //如果房间对象存在，则获取详细的房间信息
-            if(this.room&&this.room.id){
+            else if(this.room&&this.room.id){
                 this.getRoom(function (data) {
                     self.room=data;
                     if(!hasOrder)
@@ -129,10 +141,12 @@ var ViewOrderCreate = Vue.extend({
                     totalPrice:0,
                     costPrice:0,
                     orderNum:1,
-                    status:-1
+                    status:-1,
+                    orderUser:{}
                 };
                 this.getOrderLastUserInfo(function(data){
                     self.order.orderUser=data;
+                     self.$dispatch('onOrderDispatch', self.order);
                     //self.$activateValidator();
                 });
             }

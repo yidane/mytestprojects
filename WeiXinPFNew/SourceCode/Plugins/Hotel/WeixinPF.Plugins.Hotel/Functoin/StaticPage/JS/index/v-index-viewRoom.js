@@ -2,7 +2,7 @@
 
 var ViewRoom = Vue.extend({
     template: '#view-room-template',
-    props: ['wid','openid','hotel'],
+    props: ['wid','openid','hotel','order'],
     data: function () {
         return {
            rooms:[]
@@ -38,7 +38,18 @@ var ViewRoom = Vue.extend({
             //    wid:wid
             //};
             if (room) {
-                this.$dispatch('onChangeView', 'view-orderCreate');
+              console.log(this.order);
+               this.order={
+                 
+                 discount:0,
+                 totalPrice:0,
+                 costPrice:0,
+                 orderNum:1,
+                 status:-1,
+                 orderUser:this.order.orderUser
+               };
+
+                 this.$dispatch('onOrderDispatch', this.order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }
         }
