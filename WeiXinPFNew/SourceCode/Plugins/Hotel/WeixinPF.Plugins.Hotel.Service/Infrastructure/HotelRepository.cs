@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using WeixinPF.Common;
 using WeixinPF.DBUtility;
-using WeixinPF.Infrastructure.BaseRepository;
-using WeixinPF.Plugins.Hotel.Service.Application.Repository;
-using WeixinPF.Plugins.Hotel.Service.Models;
+using WeixinPF.Hotel.Plugins.Service.Application.Repository;
+using WeixinPF.Hotel.Plugins.Service.Models;
 
-namespace WeixinPF.Plugins.Hotel.Service.Infrastructure
+namespace WeixinPF.Hotel.Plugins.Service.Infrastructure
 {
     public class HotelRepository : IHotelRepository
     {

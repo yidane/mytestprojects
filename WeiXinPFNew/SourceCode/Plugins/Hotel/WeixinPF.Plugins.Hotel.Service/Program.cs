@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using NServiceBus;
-
-namespace WeixinPF.Plugins.Hotel.Service
+﻿namespace WeixinPF.Hotel.Plugins.Service
 {
     static class Program
     {

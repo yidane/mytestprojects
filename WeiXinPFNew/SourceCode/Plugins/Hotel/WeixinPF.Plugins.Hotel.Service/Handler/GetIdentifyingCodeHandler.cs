@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NServiceBus;
+﻿using NServiceBus;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.RequestResponse;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
 
-namespace WeixinPF.Plugins.Hotel.Service.Handler
+namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
     public class GetIdentifyingCodeHandler:IHandleMessages<GetIdentifyingCodeRequest>
     {

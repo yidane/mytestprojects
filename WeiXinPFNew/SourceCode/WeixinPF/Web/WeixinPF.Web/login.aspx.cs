@@ -4,12 +4,12 @@ using WeixinPF.Application.Agent.Service;
 using WeixinPF.Application.System;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
+using WeixinPF.Hotel.Plugins.Service.Application;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Infrastructure.System;
 using WeixinPF.Model.System;
-using WeixinPF.Plugins.Hotel.Service.Application;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
-using WeixinPF.Plugins.Hotel.Service.Infrastructure;
 
 namespace WeixinPF.Web
 {

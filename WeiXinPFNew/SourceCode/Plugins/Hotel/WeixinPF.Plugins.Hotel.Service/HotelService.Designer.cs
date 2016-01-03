@@ -1,4 +1,4 @@
-﻿namespace WeixinPF.Plugins.Hotel.Service
+﻿namespace WeixinPF.Hotel.Plugins.Service
 {
     partial class HotelService
     {

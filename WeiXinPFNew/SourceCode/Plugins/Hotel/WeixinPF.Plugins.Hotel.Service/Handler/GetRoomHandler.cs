@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using NServiceBus;
 using WeixinPF.Common;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Messages.RequestResponse.Room;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
-using WeixinPF.Plugins.Hotel.Service.Infrastructure;
-using WeixinPF.Plugins.Hotel.Service.Models;
 
-namespace WeixinPF.Plugins.Hotel.Service.Handler
+namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
     public class GetRoomHandler : IHandleMessages<GetRoomRequest>
     {

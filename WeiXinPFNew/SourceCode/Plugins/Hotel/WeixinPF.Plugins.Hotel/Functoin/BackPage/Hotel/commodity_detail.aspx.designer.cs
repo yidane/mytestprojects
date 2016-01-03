@@ -7,7 +7,7 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace WeixinPF.Plugins.Hotel.Functoin.BackPage {
+namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel {
     
     
     public partial class commodity_detail {

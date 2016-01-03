@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="dingdan_confirm.aspx.cs" Inherits="WeixinPF.Plugins.Hotel.Functoin.BackPage.dingdan_confirm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="dingdan_confirm.aspx.cs" Inherits="WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel.dingdan_confirm" %>
 
 <!DOCTYPE html>
 

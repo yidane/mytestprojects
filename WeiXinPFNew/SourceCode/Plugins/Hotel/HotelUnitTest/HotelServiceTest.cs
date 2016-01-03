@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WeixinPF.Plugins.Hotel.Service.Application;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
-using WeixinPF.Plugins.Hotel.Service.Infrastructure;
-using WeixinPF.Plugins.Hotel.Service.Models;
+using WeixinPF.Hotel.Plugins.Service.Application;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Infrastructure;
+using WeixinPF.Hotel.Plugins.Service.Models;
 
 namespace HotelTest
 {

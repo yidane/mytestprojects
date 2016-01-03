@@ -1,10 +1,10 @@
 ﻿using System;
 using WeixinPF.Application.Agent.Service;
 using WeixinPF.Common.Enum;
+using WeixinPF.Hotel.Plugins.Service.Application;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Infrastructure.Agent;
-using WeixinPF.Plugins.Hotel.Service.Application;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
-using WeixinPF.Plugins.Hotel.Service.Infrastructure;
 using WeixinPF.Web.UI;
 
 namespace WeixinPF.Web

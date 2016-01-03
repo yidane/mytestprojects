@@ -6,16 +6,16 @@ using WeixinPF.Application.System;
 using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
+using WeixinPF.Hotel.Plugins.Service.Application;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Infrastructure;
+using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Infrastructure.System;
 using WeixinPF.Infrastructure.Weixin;
 using WeixinPF.Model.Agent;
 using WeixinPF.Model.System;
 using WeixinPF.Model.Weixin;
-using WeixinPF.Plugins.Hotel.Service.Application;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
-using WeixinPF.Plugins.Hotel.Service.Infrastructure;
-using WeixinPF.Plugins.Hotel.Service.Models;
 
 namespace WeixinPF.Web.UI
 {

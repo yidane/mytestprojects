@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
 
-namespace WeixinPF.Plugins.Hotel.Service.Models
+namespace WeixinPF.Hotel.Plugins.Service.Models
 {
     [Table("wx_hotel_room")]
     public class RoomInfo

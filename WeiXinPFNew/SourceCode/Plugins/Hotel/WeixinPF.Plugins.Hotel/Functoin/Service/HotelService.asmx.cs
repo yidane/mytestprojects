@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Services;
 using NServiceBus;
 using WeixinPF.Common;
@@ -11,8 +8,9 @@ using WeixinPF.Common.Extension;
 using WeixinPF.Common.Helper;
 using WeixinPF.Messages.Command;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Plugins.Hotel;
 
-namespace WeixinPF.Plugins.Hotel.Functoin.Service
+namespace WeixinPF.Hotel.Plugins.Functoin.Service
 {
     /// <summary>
     /// HotelService 的摘要说明

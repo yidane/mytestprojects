@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using NServiceBus;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.Command;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
 
-namespace WeixinPF.Plugins.Hotel.Service.Handler
+namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
     public class MakeUseOfIdentifyingCodeHandler : IHandleMessages<MakeUseOfIdentifyingCode>
     {

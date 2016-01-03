@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Threading;
-using System.Web.UI;
 using NServiceBus;
 using WeixinPF.Application.Agent;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Plugins.Hotel;
 using WeixinPF.Web.UI;
 
 //using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
 
 //using WeixinPF.Plugins.Hotel.Functoin.BackPage.BasePage;
 
-namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
+namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 {
     public partial class dingdan_confirm : ManagePage
     {

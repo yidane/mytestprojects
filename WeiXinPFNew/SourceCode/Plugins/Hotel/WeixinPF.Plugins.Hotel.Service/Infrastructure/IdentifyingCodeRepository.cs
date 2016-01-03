@@ -5,14 +5,12 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Dapper;
 using WeixinPF.DBUtility;
+using WeixinPF.Hotel.Plugins.Service.Application.Repository;
+using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Infrastructure.BaseRepository;
-using WeixinPF.Plugins.Hotel.Service.Application;
-using WeixinPF.Plugins.Hotel.Service.Application.Repository;
-using WeixinPF.Plugins.Hotel.Service.Models;
 
-namespace WeixinPF.Plugins.Hotel.Service.Infrastructure
+namespace WeixinPF.Hotel.Plugins.Service.Infrastructure
 {
     public class IdentifyingCodeRepository:EFRepository<IdentifyingCodeInfo>,IIdentifyingCodeRepository
     {

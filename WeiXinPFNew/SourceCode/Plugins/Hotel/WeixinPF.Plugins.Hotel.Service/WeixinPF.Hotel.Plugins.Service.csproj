@@ -7,8 +7,8 @@
     <ProjectGuid>{FB015820-1374-4AF4-9CF8-40A7C37B344B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WeixinPF.Plugins.Hotel.Service</RootNamespace>
-    <AssemblyName>WeixinPF.Plugins.Hotel.Service</AssemblyName>
+    <RootNamespace>WeixinPF.Hotel.Plugins.Service</RootNamespace>
+    <AssemblyName>WeixinPF.Hotel.Plugins.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

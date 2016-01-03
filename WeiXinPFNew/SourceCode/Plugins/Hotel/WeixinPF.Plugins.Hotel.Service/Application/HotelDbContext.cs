@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeixinPF.Plugins.Hotel.Service.Models;
+﻿using System.Data.Entity;
+using WeixinPF.Hotel.Plugins.Service.Models;
 
-namespace WeixinPF.Plugins.Hotel.Service.Application
+namespace WeixinPF.Hotel.Plugins.Service.Application
 {
     public class HotelDbContext: DbContext
     {

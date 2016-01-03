@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WeixinPF.Hotel.Plugins.Service.Application.Repository;
+using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Infrastructure.BaseRepository;
-using WeixinPF.Plugins.Hotel.Service.Application.Repository;
-using WeixinPF.Plugins.Hotel.Service.Models;
 
-namespace WeixinPF.Plugins.Hotel.Service.Infrastructure
+namespace WeixinPF.Hotel.Plugins.Service.Infrastructure
 {
     public class HotelUserRepository : EFRepository<HotelUserInfo>,IHotelUserRepository
     {

@@ -62,9 +62,9 @@
     <Compile Include="UpLoad.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Plugins\Hotel\WeixinPF.Plugins.Hotel.Service\WeixinPF.Plugins.Hotel.Service.csproj">
+    <ProjectReference Include="..\..\..\Plugins\Hotel\WeixinPF.Plugins.Hotel.Service\WeixinPF.Hotel.Plugins.Service.csproj">
       <Project>{fb015820-1374-4af4-9cf8-40a7c37b344b}</Project>
-      <Name>WeixinPF.Plugins.Hotel.Service</Name>
+      <Name>WeixinPF.Hotel.Plugins.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Application\WeixinPF.Application\WeixinPF.Application.csproj">
       <Project>{c4941bbf-0230-4f8e-8f54-efcba0c80344}</Project>

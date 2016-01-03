@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
+using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.Command;
 using WeixinPF.Messages.RequestResponse;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
-using WeixinPF.Plugins.Hotel.Service.Models;
+using WeixinPF.Plugins.Hotel;
 using WeixinPF.Web.UI;
 
-namespace WeixinPF.Plugins.Hotel.Functoin.BackPage
+namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 {
     public partial class commodity_detail : ManagePage
     {
