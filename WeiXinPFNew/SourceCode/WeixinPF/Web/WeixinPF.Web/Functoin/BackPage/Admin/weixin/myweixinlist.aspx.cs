@@ -126,7 +126,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
 
                         Session["nowweixin"] = weixin;
                         Utils.WriteCookie("nowweixinId", "WeiXinPF", e.CommandArgument.ToString());
-                        Response.Write("<script>parent.location.href='/admin/index.aspx'</script>");
+                        Response.Write("<script>parent.location.href='../../../../index.aspx'</script>");
                     }
                     break;
             } 
