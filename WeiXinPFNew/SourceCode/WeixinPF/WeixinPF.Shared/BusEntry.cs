@@ -2,25 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
+using System.Text;
+using System.Threading.Tasks;
 using NServiceBus;
 using WeixinPF.Common;
 
-namespace WeixinPF.Web
+namespace WeixinPF.Shared
 {
-    public class Global : System.Web.HttpApplication
+    public class BusEntry
     {
-        public static IDictionary<string, IBus> dictBus;
-
-        protected void Application_Start(object sender, EventArgs e)
-        {
-            dictBus = new Dictionary<string, IBus>();
-            LoadPlugins();
-        }
-
-        public void LoadPlugins()
+        public static IDictionary<string, IBus> dictBus = new Dictionary<string, IBus>();
+        private static void LoadPlugins()
         {
             var files = new List<string>();
 
@@ -51,7 +43,15 @@ namespace WeixinPF.Web
             }
         }
 
-        public override void Dispose()
+        public static void Start()
+        {
+            if (!dictBus.Any())
+            {
+                LoadPlugins();
+            }            
+        }
+
+        public static void Dispose()
         {
             if (dictBus.Any())
             {
@@ -60,8 +60,6 @@ namespace WeixinPF.Web
                     item.Value.Dispose();
                 }
             }
-
-            base.Dispose();
         }
     }
 }

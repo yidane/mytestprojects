@@ -49,12 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusEntry.cs" />
     <Compile Include="CommonConfiguration.cs" />
     <Compile Include="ConfigErrorQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\WeixinPF.Common\WeixinPF.Common.csproj">
+      <Project>{4c6c3917-60e6-42ed-ac44-d8da3d82a37b}</Project>
+      <Name>WeixinPF.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

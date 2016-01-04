@@ -7,17 +7,16 @@ using AutoMapper.Internal;
 using NServiceBus;
 using WeixinPF.Plugins.Hotel.Service.AutoMapper;
 using WeixinPF.Common;
+using WeixinPF.Shared;
 
 namespace WeixinPF.Hotel.Plugins.Service
 {
     partial class HotelService : ServiceBase
     {
         //IBus bus;
-        public static System.Collections.Generic.IDictionary<string, IBus> dictBus;
         public HotelService()
         {
             InitializeComponent();
-            dictBus = new Dictionary<string, IBus>();
         }
 
         static void Main()
@@ -42,55 +41,17 @@ namespace WeixinPF.Hotel.Plugins.Service
 
         protected override void OnStart(string[] args)
         {
-            LoadPlugins();
+            BusEntry.Start();
             //加载AutoMapper配置。
             AutoMapperConfiguration.Configure();
             Console.WriteLine("Service start");
 
         }
 
-
-
-        public void LoadPlugins()
-        {
-            var files = new List<string>();
-
-            files.AddRange(Directory.GetFiles(PathHelper.GetRunningFolder(), "*.Plugins.dll"));
-            files.AddRange(Directory.GetFiles(PathHelper.GetRunningFolder(), "*.Plugins.Service.exe"));
-
-            if (files.Any())
-            {
-                foreach (var assemblyFileName in files)
-                {
-                    var fileName = assemblyFileName.Split('\\').Last();
-                    BusConfiguration busConfiguration = new BusConfiguration();
-
-                    busConfiguration.PurgeOnStartup(true);
-                    busConfiguration.ApplyCommonConfiguration();
-                    busConfiguration.EndpointName(fileName.Substring(0, fileName.Length - 4));
-
-                    if (fileName.Split('.').Contains("Service"))
-                    {
-                        dictBus.Add(fileName.Split('.')[1].ToLower() + "service", NServiceBus.Bus.Create(busConfiguration).Start());
-                    }
-                    else
-                    {
-                        dictBus.Add(fileName.Split('.')[1].ToLower(), NServiceBus.Bus.Create(busConfiguration).Start());
-
-                    }
-                }
-            }
-        }
-
         protected override void OnStop()
         {
-            if (dictBus.Any())
-            {
-                foreach (var item in dictBus)
-                {
-                    item.Value.Dispose();
-                }
-            }
+            BusEntry.Dispose();
+            base.Dispose();
             
             Console.WriteLine("Service stop");
         }
