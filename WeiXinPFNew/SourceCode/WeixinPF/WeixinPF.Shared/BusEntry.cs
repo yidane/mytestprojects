@@ -15,9 +15,19 @@ namespace WeixinPF.Shared
         private static void LoadPlugins()
         {
             var files = new List<string>();
+            var pathName = string.Empty;
 
-            files.AddRange(Directory.GetFiles(PathHelper.GetRunningFolder() + "bin", "*.Plugins.dll"));
-            files.AddRange(Directory.GetFiles(PathHelper.GetRunningFolder() + "bin", "*.Plugins.Service.exe"));
+            if (Directory.Exists(PathHelper.GetRunningFolder() + "bin"))
+            {
+                pathName = PathHelper.GetRunningFolder() + "bin";
+            }
+            else
+            {
+                pathName = PathHelper.GetRunningFolder();
+            }
+
+            files.AddRange(Directory.GetFiles(pathName, "*.Plugins.dll"));
+            files.AddRange(Directory.GetFiles(pathName, "*.Plugins.Service.exe"));
 
             if (files.Any())
             {
