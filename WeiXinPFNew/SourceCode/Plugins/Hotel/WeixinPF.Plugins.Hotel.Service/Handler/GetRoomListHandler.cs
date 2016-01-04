@@ -5,7 +5,6 @@ using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.RequestResponse;
-using WeixinPF.Plugins.Hotel.Service.Application.Service;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {

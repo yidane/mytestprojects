@@ -5,7 +5,6 @@ using System.Threading;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
-using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.Command;
 using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Shared;
@@ -71,13 +70,37 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                     return;
                 }
 
-                var order = HotelOrderService.GetOrderInfo(int.Parse(identifyingCodeObject.OrderId));
+
+                GetHotelOrderByOrderIdRequest orderRequest = new GetHotelOrderByOrderIdRequest()
+                {
+                    OrderId = int.Parse(identifyingCodeObject.OrderId)
+                };
+                GetHotelOrderResponse order = null;
+
+                IAsyncResult resOrder = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel", orderRequest).Register(response =>
+                {
+                    CompletionResult localResult = (CompletionResult)response.AsyncState;
+                    order = localResult.Messages[0] as GetHotelOrderResponse;
+                }, this);
+
+                WaitHandle asyncOrderWaitHandle = resOrder.AsyncWaitHandle;
+                asyncOrderWaitHandle.WaitOne(10000);
+
+                if (!resOrder.IsCompleted || order == null)
+                {
+                    this.Response.Write(
+                        "<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
+                    return;
+                }
+
+
+                //var order = HotelOrderService.GetOrderInfo(int.Parse(identifyingCodeObject.OrderId));
 
                 if (order != null)
                 {
-                    if (order.orderStatus.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId) ||
-                        order.orderStatus.Equals(HotelStatusManager.OrderStatus.Refunding.StatusId)
-                        || order.orderStatus.Equals(HotelStatusManager.OrderStatus.Completed))
+                    if (order.OrderStatus.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId) ||
+                        order.OrderStatus.Equals(HotelStatusManager.OrderStatus.Refunding.StatusId)
+                        || order.OrderStatus.Equals(HotelStatusManager.OrderStatus.Completed))
                     {
                         this.Response.Write(
                             "<script language='javascript' type='text/javascript'>alert('该订单已完成或进行退单处理，不能进行验证！')</script>");

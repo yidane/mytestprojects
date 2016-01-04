@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WeixinPF.Hotel.Plugins.Service.Application.Repository;
 using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Hotel.Plugins.Service.Models;
-using WeixinPF.Plugins.Hotel.Service.Application.Repository;
 
-namespace WeixinPF.Plugins.Hotel.Service.Application.Service
+namespace WeixinPF.Hotel.Plugins.Service.Application.Service
 {
     public class RoomPictureService
     {

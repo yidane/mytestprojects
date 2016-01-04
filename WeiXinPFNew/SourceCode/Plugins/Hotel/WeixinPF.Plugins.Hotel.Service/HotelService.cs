@@ -5,8 +5,8 @@ using System.Linq;
 using System.ServiceProcess;
 using AutoMapper.Internal;
 using NServiceBus;
-using WeixinPF.Plugins.Hotel.Service.AutoMapper;
 using WeixinPF.Common;
+using WeixinPF.Hotel.Plugins.Service.AutoMapper;
 using WeixinPF.Shared;
 
 namespace WeixinPF.Hotel.Plugins.Service

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using WeixinPF.Hotel.Plugins.Service.Models;
 
-namespace WeixinPF.Plugins.Hotel.Service.Application.Repository
+namespace WeixinPF.Hotel.Plugins.Service.Application.Repository
 {
     public interface IRoomPictureRepository
     {

@@ -2,7 +2,7 @@
 using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Messages.RequestResponse;
 
-namespace WeixinPF.Plugins.Hotel.Service.AutoMapper
+namespace WeixinPF.Hotel.Plugins.Service.AutoMapper.Profile
 {
     public class RoomProfile:global::AutoMapper.Profile
     {
