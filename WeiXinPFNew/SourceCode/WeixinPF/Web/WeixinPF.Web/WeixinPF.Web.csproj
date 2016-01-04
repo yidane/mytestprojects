@@ -63,6 +63,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NServiceBus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\NServiceBus.5.2.12\lib\net45\NServiceBus.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="OneGulp.WeChat.MP">
       <HintPath>..\..\..\..\Common\OneGulp.WeChat.MP.dll</HintPath>
     </Reference>
@@ -3534,6 +3538,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Messages\WeixinPF.Messages\WeixinPF.Messages.csproj">
+      <Project>{2ef4819a-7ecb-4cdd-a241-79f839125af8}</Project>
+      <Name>WeixinPF.Messages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Plugins\Hotel\WeixinPF.Plugins.Hotel.Service\WeixinPF.Hotel.Plugins.Service.csproj">
       <Project>{fb015820-1374-4af4-9cf8-40a7c37b344b}</Project>
       <Name>WeixinPF.Hotel.Plugins.Service</Name>
@@ -3553,6 +3561,10 @@
     <ProjectReference Include="..\..\Model\WeixinPF.Model\WeixinPF.Model.csproj">
       <Project>{44d55bf4-ef1f-465d-810c-1be14910673f}</Project>
       <Name>WeixinPF.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WeixinPF.Shared\WeixinPF.Shared.csproj">
+      <Project>{070f2c49-b23a-45a0-aad5-31c37af4aab0}</Project>
+      <Name>WeixinPF.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\WeixinPF.Web.UI\WeixinPF.Web.UI.csproj">
       <Project>{fa21b2df-c6ae-431a-ae0f-f38ae2c2a2d4}</Project>

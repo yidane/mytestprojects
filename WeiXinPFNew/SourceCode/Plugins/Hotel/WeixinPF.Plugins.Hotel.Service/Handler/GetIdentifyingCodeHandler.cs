@@ -1,4 +1,5 @@
-﻿using NServiceBus;
+﻿using System;
+using NServiceBus;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.RequestResponse;
 
@@ -15,6 +16,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
 
         public void Handle(GetIdentifyingCodeRequest message)
         {
+            Console.WriteLine("Receive GetIdentifyingCodeRequest MessageNumber is :{0}",message.Number);
             var info = IdentifyingCodeService.GetConfirmIdentifyingCodeInfo(message.ShopId, message.Number,
                 message.ModuleName, message.Wid);
 
@@ -35,6 +37,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
             };
 
             bus.Reply(response);
+            Console.WriteLine("Response GetIdentifyingCodeResponse Message");
         }
     }
 }
