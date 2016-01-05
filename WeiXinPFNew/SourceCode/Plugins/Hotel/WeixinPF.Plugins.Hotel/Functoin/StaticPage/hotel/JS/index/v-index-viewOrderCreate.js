@@ -176,7 +176,7 @@ var ViewOrderCreate = Vue.extend({
         },
         getRoom: function (callBack,errorCallBack) {
             // GET request
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetRoom',
+            this.$http.get('/weixinpf/Functoin/Service/HotelService.asmx/GetRoom',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id,roomId:this.room.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
@@ -188,7 +188,7 @@ var ViewOrderCreate = Vue.extend({
                 });
         },
         getOrderLastUserInfo:function(callBack){
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetOrderLastUserInfo',
+            this.$http.get('/weixinpf/Functoin/Service/HotelService.asmx/GetOrderLastUserInfo',
                 {wid:this.wid,openid:this.openid}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
@@ -201,7 +201,7 @@ var ViewOrderCreate = Vue.extend({
         },
         getOrder: function (callBack,errorCallBack) {
             // GET request
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetOrder',
+            this.$http.get('/weixinpf/Functoin/Service/HotelService.asmx/GetOrder',
                 {wid:this.wid,openid:this.openid,orderId:this.order.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
@@ -216,7 +216,7 @@ var ViewOrderCreate = Vue.extend({
 
             var jsonOrder=JSON.stringify(this.order);
 
-            this.$http.post('/Functoin/Service/HotelService.asmx/SaveOrder',
+            this.$http.post('/weixinpf/Functoin/Service/HotelService.asmx/SaveOrder',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id,roomId:this.room.id,order:jsonOrder})
                 .then(function (response) {
                     if (response.data) {

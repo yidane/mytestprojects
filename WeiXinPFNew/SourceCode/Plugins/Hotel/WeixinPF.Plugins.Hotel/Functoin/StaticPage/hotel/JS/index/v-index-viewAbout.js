@@ -27,7 +27,7 @@
         getData: function (callBack) {
             //this.$parent.getData(callBack);
 
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetHotelInfo'
+            this.$http.get('/weixinpf/Functoin/Service/HotelService.asmx/GetHotelInfo'
                 ,{wid:this.wid,openid:this.openid}).then(function (response) {
                     if(response)
                     {

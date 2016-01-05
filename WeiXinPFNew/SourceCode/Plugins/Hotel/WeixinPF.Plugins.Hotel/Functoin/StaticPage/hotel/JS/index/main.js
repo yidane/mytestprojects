@@ -125,7 +125,7 @@ var vm = new Vue({
             // callBack(data);
         },
         getOrderCount:function(callBack){
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetOrderCount'
+            this.$http.get('/weixinpf/Functoin/Service/HotelService.asmx/GetOrderCount'
                 , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
@@ -136,7 +136,7 @@ var vm = new Vue({
                 });
         },
         getHotelData: function (callBack) {
-            this.$http.get('/Functoin/Service/HotelService.asmx/GetHotelInfo'
+            this.$http.get('/weixinpf/Functoin/Service/HotelService.asmx/GetHotelInfo'
                 , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
