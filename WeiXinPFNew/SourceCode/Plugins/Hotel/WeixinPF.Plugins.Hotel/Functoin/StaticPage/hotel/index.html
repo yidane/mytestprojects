@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.9/css/sm.min.css">
     <!--<link href="../../../Common/CSS/weui/weui.min.css" rel="stylesheet"/>-->
     <link href="../../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>
 
 
-    <link href="CSS/hotels.css" rel="stylesheet"/>
+    <!--<link href="CSS/hotels.css" rel="stylesheet"/>-->
     <style>
         .fade-transition {
             transition: opacity .3s ease;
@@ -19,114 +23,162 @@
             opacity: 0;
         }
 
-
+        .bar-tab~.content{
+            padding: 0.1rem 0;
+        }
+        .list-block ul:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: auto;
+            right: auto;
+            height: 1px;
+            width: 100%;
+            background-color: black;
+            display: block;
+            z-index: 15;
+            -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+        }
+        .list-block ul:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: auto;
+            top: auto;
+            height: 1px;
+            width: 100%;
+            background-color:black;
+            display: block;
+            z-index: 15;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+        }
+        .list-block  .item-inner:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: auto;
+            top: auto;
+            height: 1px;
+            width: 100%;
+            background-color: black;
+            display: block;
+            z-index: 15;
+            -webkit-transform-origin: 50% 100%;
+            transform-origin: 50% 100%;
+        }
     </style>
 </head>
 <!-- index.html -->
 <body>
-<div id="div_app" class="content-padded" style="    padding-bottom: 60px;
-    padding-top: 60px;">
+<div id="div_app" class="page">
 
 
     <app-header :header-title="headerTitle"></app-header>
 
+
+    <app-footer :current-view="currentView" :order-count="orderCount"
+                :wid="wid" :openid="openid" :hotel="hotel"
+            ></app-footer>
+<div class="content">
+
     <app-image :view-images="imgDatas"></app-image>
-
-
-    <component :is="currentView" keep-alive transition="fade"
+    <component    :is="currentView" keep-alive transition="fade"
                transition-mode="out-in" :current-view="currentView"
                :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
-    <app-footer :current-view="currentView" :order-count="orderCount"
-:wid="wid" :openid="openid" :hotel="hotel"
-    ></app-footer>
+</div>
+
 </div>
 
 
 <!-- 子组件模板 -->
 <template id="app-header-template">
-    <div class="menu_header">
-        <div class="menu_topbar">
-            <strong class="head-title">{{headerTitle}}</strong>
-            <span class="head_btn_left"><a href="javascript:history.go(-1);"><span>返回</span></a><b></b></span>
-            <a class="head_btn_right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1">
-                <span><i class="menu_header_home"></i></span><b></b>
-            </a>
-        </div>
-    </div>
+<style>
 
-    <!--<header class="bar bar-nav">-->
-    <!--<a class="button button-link button-nav pull-left" href="javascript:history.go(-1);">-->
-    <!--<span class="icon icon-left"></span>-->
-    <!--返回-->
-    <!--</a>-->
-    <!--<a class="button button-link button-nav pull-right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1">-->
-    <!--<span class="icon icon-home"></span>-->
-    <!--</a>-->
-    <!--<h1 class="title">{{headerTitle}}</h1>-->
-    <!--</header>-->
+    .bar{
+        -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+        box-shadow: 0 0 1px rgba(0,0,0,.85);
+    }
+    .bar-nav
+     {
+         -webkit-box-shadow: 0 5px 6px #ccc;
+         box-shadow: 0 5px 6px #ccc;
+     }
+    .bar-tab
+    {
+        -webkit-box-shadow: 0 -5px 6px #ccc;
+        box-shadow: 0 -5px 6px #ccc;
+    }
+    .bar .fa{
+        position: relative;
+        z-index: 20;
+        padding: .6rem .1rem;
+
+        line-height: 1.2rem;
+    }
+
+    .bar-tab .tab-item .fa {
+        top: .15rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        font-size: 1.2rem;
+        line-height: 1.2rem;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .bar-tab .tab-item .fa~.tab-label {
+        display: block;
+        font-size: .55rem;
+        position: relative;
+        top: .15rem;
+    }
+</style>
+
+    <header class="bar bar-nav">
+        <a class="fa fa-chevron-left fa-lg pull-left"  href="javascript:history.go(-1);"></a>
+        <a class="fa fa-home fa-lg pull-right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1"></a>
+        <h1 class="title">{{headerTitle}}</h1>
+
+    </header>
 </template>
 
 <template id="app-footer-template">
 
 
-    <div class="footermenu">
-
-        <ul>
-            <li>
-                <a id="about" href="#about"
-                   :class="{ active: currentView=='view-about' }"
-                    @click="notify"
-                  :href="'#/about'"
-                        >
-                    <img src="images/xxyX63YryG.png">
-
-                    <p>关于</p>
-                </a>
-            </li>
-            <li>
-                <a id="choice" href="#room"
-                   :class="{ active: currentView=='view-room' }"
-                   @click="notify"
-  :href="'#/room'"
-                        >
-                    <img src="images/3YQLfzfunJ.png">
-
-                    <p>房型选择</p>
-                </a>
-            </li>
-            <li>
-                <a id="myOrder" href="#order"
-                   :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }" @click="notify"
-                  :href="'#/order'"
-                        >
-                    <span class="num">{{orderCount}}</span> <img src="images/s22KaR0Wtc.png">
-
-                    <p>订单</p>
-                </a>
-            </li>
-        </ul>
-    </div>
 
 
-    <!--<nav class="bar bar-tab">-->
-    <!--<a class="tab-item external" href="#">-->
-    <!--<span class="icon icon-cart"></span>-->
-    <!--<span class="tab-label">关于</span>-->
-    <!--</a>-->
-    <!--<a class="tab-item external active" href="#">-->
-    <!--<span class="icon icon-home"></span>-->
-    <!--<span class="tab-label">房型选择</span>-->
 
-    <!--</a>-->
-    <!--<a class="tab-item external" href="#">-->
-    <!--<span class="icon icon-cart"></span>-->
-    <!--<span class="tab-label">订单</span>-->
-    <!--<span class="badge">0</span>-->
-    <!--</a>-->
+    <nav class="bar bar-tab">
+    <a class="tab-item external" href="#/about"
+       :class="{ active: currentView=='view-about' }"
+       @click="notify">
+        <i class="fa fa-hospital-o"></i>
 
-    <!--</nav>-->
+    <span class="tab-label">关于</span>
+    </a>
+    <a class="tab-item external active" href="#/room"
+       :class="{ active: currentView=='view-room' }"
+       @click="notify">
+        <i class="fa fa-bed"></i>
+
+    <span class="tab-label">房型选择</span>
+
+    </a>
+    <a class="tab-item external" href="#/order"
+       :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }" @click="notify">
+        <i class="fa fa-list"></i>
+    <span class="tab-label">订单</span>
+    <span class="badge">{{orderCount}}</span>
+    </a>
+
+    </nav>
 </template>
 
 <template id="view-image-template">
@@ -170,61 +222,154 @@
         }
     </style>
 
-    <div class="cardexplain">
+    <!--<div class="cardexplain">-->
 
 
-        <ul class="round">
-            <li class="addr">
-                <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>
+        <!--<ul class="round">-->
+            <!--<li class="addr">-->
+                <!--<a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>-->
+            <!--</li>-->
+            <!--<li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>-->
+        <!--</ul>-->
+        <!--<div class="detailcontent">-->
+            <!--<h2>商家介绍</h2>-->
+
+            <!--<div class="content">-->
+                <!--<span class="jieshao">{{hotel.jieShao}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="content-block-title">商家信息</div>
+    <div class="list-block">
+        <ul>
+            <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}" class="item-content item-link">
+                <div class="item-media"><i class="fa fa-map-o"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">{{hotel.address}}</div>
+                    <div class="item-after">详情</div>
+                </div>
+            </a>
+            <li class="item-content item-link">
+                <div class="item-media"><i class="fa fa-phone"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">{{hotel.tel}}</div>
+                    <div class="item-after">电话预订</div>
+                </div>
             </li>
-            <li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>
         </ul>
-        <div class="detailcontent">
-            <h2>商家介绍</h2>
-
-            <div class="content">
-                <span class="jieshao">{{hotel.jieShao}}</span>
-            </div>
+    </div>
+    <div class="card">
+        <div class="card-header">商家介绍</div>
+        <div class="card-content">
+            <div class="card-content-inner">{{hotel.jieShao}}</div>
         </div>
     </div>
-
 </template>
 
 <template id="view-room-template">
-    <!--商家房价及类型-->
-    <ul class="round">
-        <li class="title"><span class="none">{{hotel.name}}</span></li>
-        <li class="dandanb" v-for="room in rooms">
+    <style>
 
-            <a :href="'#/order'+'/0'" @click="viewOrderCreate(room)" >
-                <span>
-                    <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <div>{{room.roomType}}</div>
-                                <div><img :src="room.RoomPictures[0].url" class="showimg">
 
-                                    <p class="break-word">{{room.detail}}</p>
+           .total-money {
 
-                                    <p>原价：<a class="yuanjia">￥{{room.costPrice}}</a></p>
+               font-size: .75rem;
+         }
+           .color-red {
+             color: #FF0000;
+         }
+          .cost-money {
+             color: #666666;
+              font-size: .65rem;
 
-                                    <p>优惠价：<a class="youhuijia">￥{{room.totalPrice}}</a></p></div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table> </span></a></li>
-    </ul>
+             text-decoration: line-through;
+         }
+    </style>
+    <div class="content">
+    <!--<ul class="round">-->
+        <!--<li class="title"><span class="none">{{hotel.name}}</span></li>-->
+        <!--<li class="dandanb" v-for="room in rooms">-->
 
-    <ul class="round">
-        <li class="addr">
-            <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>
-        </li>
-        <li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>
-        <li class="detail"><a href="hotel_detail.aspx?openid={{openid}}&hotelid={{hotel.id}}&wid={{wid}}"><span>查看商家详情</span></a>
-        </li>
-    </ul>
+            <!--<a :href="'#/order'+'/0'" @click="viewOrderCreate(room)" >-->
+                <!--<span>-->
+                    <!--<table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td>-->
+                                <!--<div>{{room.roomType}}</div>-->
+                                <!--<div><img :src="room.RoomPictures[0].url" class="showimg">-->
+
+                                    <!--<p class="break-word">{{room.detail}}</p>-->
+
+                                    <!--<p>原价：<a class="yuanjia">￥{{room.costPrice}}</a></p>-->
+
+                                    <!--<p>优惠价：<a class="youhuijia">￥{{room.totalPrice}}</a></p></div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table> </span></a></li>-->
+    <!--</ul>-->
+
+    <!--<ul class="round">-->
+        <!--<li class="addr">-->
+            <!--<a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>-->
+        <!--</li>-->
+        <!--<li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>-->
+        <!--<li class="detail"><a href="hotel_detail.aspx?openid={{openid}}&hotelid={{hotel.id}}&wid={{wid}}"><span>查看商家详情</span></a>-->
+        <!--</li>-->
+    <!--</ul>-->
     </div>
+
+
+    <div class="content-block-title">房型</div>
+    <div class="list-block media-list">
+        <ul>
+            <li v-for="room in rooms">
+                <a :href="'#/order'+'/0'" @click="viewOrderCreate(room)" class="item-link item-content">
+                    <div class="item-media"><img :src="room.roomImgs[0].url" style='width: 4rem;'></div>
+                    <div class="item-inner">
+                        <div class="item-title-row">
+                            <div class="item-title">{{room.roomType}}</div>
+                            <div class="item-after">
+                                <span class="total-money color-red">￥{{room.totalPrice}}</span>
+                                <span class="cost-money">￥{{room.totalPrice}}</span>
+                            </div>
+                        </div>
+                        <div class="item-text">{{room.detail}}</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="content-block-title">商家信息</div>
+    <div class="list-block">
+        <ul>
+            <li class="item-content item-link">
+                <div class="item-media"><i class="fa fa-map-o"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">{{hotel.address}}</div>
+                    <div class="item-after">详情</div>
+                </div>
+            </li>
+            <li class="item-content item-link">
+                <div class="item-media"><i class="fa fa-phone"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">{{hotel.tel}}</div>
+                    <div class="item-after">电话预订</div>
+                </div>
+            </li>
+
+            <a href="#about" class="item-content item-link">
+                <div class="item-media"><i class="fa fa-hotel"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">{{hotel.name}}</div>
+                    <div class="item-after">商家详情</div>
+                </div>
+            </a>
+        </ul>
+    </div>
+
+
 
 </template>
 
@@ -290,6 +435,10 @@
     </ul>
 
     <!--后台可控制是否显示-->
+
+
+
+
 
 
     <div class="detailcontent">
@@ -495,6 +644,8 @@
 
         </form>
     </validator>
+
+
 
 
 </template>
