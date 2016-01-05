@@ -85,6 +85,7 @@
     <Compile Include="Application\Service\RoomPictureService.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\Profiles\OrderProfile.cs" />
+    <Compile Include="Handler\CreateOrderHandler.cs" />
     <Compile Include="Handler\GetByIdentifyingCodeIdHandler.cs" />
     <Compile Include="Application\Service\RoomService.cs" />
     <Compile Include="Handler\GetHotelHandler.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Handler\GetIdentifyingCodeHandler.cs" />
     <Compile Include="Handler\GetOrderHandler.cs" />
     <Compile Include="Handler\GetOrderListHandler.cs" />
+    <Compile Include="Handler\GetOrderUserInfoHandler.cs" />
     <Compile Include="Handler\GetRoomHandler.cs" />
     <Compile Include="Handler\GetRoomListHandler.cs" />
     <Compile Include="Handler\MakeUseOfIdentifyingCodeHandler.cs" />
@@ -155,7 +157,6 @@
       <Name>WeixinPF.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

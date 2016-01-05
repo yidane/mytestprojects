@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeixinPF.Messages.RequestResponse.Dtos;
 
 namespace WeixinPF.Messages.RequestResponse
 {
-    public class GetOrderResponse
+    public class CreateOrderResponse
     {
-        public OrderDto Order { get; set; }
+        public int OrderId { get; set; }
     }
-
 }

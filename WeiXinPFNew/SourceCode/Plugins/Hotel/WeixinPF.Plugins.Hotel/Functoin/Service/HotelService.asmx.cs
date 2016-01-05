@@ -8,6 +8,7 @@ using WeixinPF.Common.Extension;
 using WeixinPF.Common.Helper;
 using WeixinPF.Messages.Command;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Messages.RequestResponse.Dtos;
 using WeixinPF.Shared;
 
 namespace WeixinPF.Hotel.Plugins.Functoin.Service
@@ -22,7 +23,11 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
     // [System.Web.Script.Services.ScriptService]
     public class HotelService : System.Web.Services.WebService
     {
-
+        [WebMethod]
+        public void Test()
+        {
+            this.WriteJson(new { success = true, message = "我是测试服务，请向我开炮！！！！" });
+        }
         [WebMethod]
         public void HelloWorld(int wid, int shopId)
         {
@@ -57,8 +62,13 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetHotelInfo(int wid, string openid, int hotelId)
         {
-            GetHotelResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins..Service", new GetHotelRequest() { HotelId = hotelId })
+
+            AjaxResult ajaxResult;
+            try
+            {
+                GetHotelResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service",
+                    new GetHotelRequest() { HotelId = hotelId })
                     .Register(response =>
                     {
                         CompletionResult result = response.AsyncState as CompletionResult;
@@ -69,13 +79,18 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }
                     }, this);
 
-            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
 
-            if (asyncResult.IsCompleted)
-            {
-                this.WriteJson(AjaxResult.Succeed(responseData));
+                ajaxResult = asyncResult.IsCompleted ?
+                    AjaxResult.Succeed(responseData) :
+                    AjaxResult.Fail("获取酒店信息失败。");
             }
+            catch
+            {
+                ajaxResult = AjaxResult.Fail("获取酒店信息失败。");
+            }
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -87,8 +102,12 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetRoomList(int wid, string openid, int hotelId)
         {
-            GetRoomListResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins..Service", new GetRoomListRequest() { HotelId = hotelId })
+            AjaxResult ajaxResult;
+            try
+            {
+                GetRoomListResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service",
+                    new GetRoomListRequest() { HotelId = hotelId })
                     .Register(response =>
                     {
                         CompletionResult result = response.AsyncState as CompletionResult;
@@ -99,13 +118,19 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }
                     }, this);
 
-            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
 
-            if (asyncResult.IsCompleted)
-            {
-                this.WriteJson(AjaxResult.Succeed(responseData));
+                ajaxResult = asyncResult.IsCompleted ?
+                  AjaxResult.Succeed(responseData) :
+                  AjaxResult.Fail("获取房间列表失败。");
             }
+            catch
+            {
+                ajaxResult = AjaxResult.Fail("获取房间列表失败。");
+            }
+
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -118,25 +143,34 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetRoom(int wid, string openid, int hotelId, int roomId)
         {
-            GetRoomResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetRoomRequest() { HotelId = hotelId, RoomId = roomId })
-                    .Register(response =>
-                    {
-                        CompletionResult result = response.AsyncState as CompletionResult;
-                        if (result != null)
-                        {
-                            responseData = result.Messages[0] as GetRoomResponse;
-
-                        }
-                    }, this);
-
-            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
-
-            if (asyncResult.IsCompleted)
+            AjaxResult ajaxResult;
+            try
             {
-                this.WriteJson(AjaxResult.Succeed(responseData));
+                GetRoomResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetRoomRequest() { HotelId = hotelId, RoomId = roomId })
+                        .Register(response =>
+                        {
+                            CompletionResult result = response.AsyncState as CompletionResult;
+                            if (result != null)
+                            {
+                                responseData = result.Messages[0] as GetRoomResponse;
+
+                            }
+                        }, this);
+
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                ajaxResult = asyncResult.IsCompleted ?
+                      AjaxResult.Succeed(responseData) :
+                      AjaxResult.Fail("获取房间信息失败。");
             }
+            catch
+            {
+                ajaxResult = AjaxResult.Fail("获取房间信息失败。");
+            }
+
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -145,14 +179,35 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetOrderLastUserInfo(int wid, string openid)
         {
-            var orderUserDto = new OrderUserDto()
+            AjaxResult ajaxResult = AjaxResult.Succeed(OrderUserDto.Empty());
+            try
             {
-                UserName = "jxiaox",
-                UserIdcard = "360430199002050611",
-                UserMobile = "18311300760"
-            };
-            this.WriteJson(AjaxResult.Succeed(orderUserDto));
+                GetOrderUserInfoResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderUserInfoRequest() { OpendId = openid })
+                        .Register(response =>
+                        {
+                            CompletionResult result = response.AsyncState as CompletionResult;
+                            if (result != null)
+                            {
+                                responseData = result.Messages[0] as GetOrderUserInfoResponse;
 
+                            }
+                        }, this);
+
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                if (asyncResult.IsCompleted)
+                {
+                    AjaxResult.Succeed(responseData.User);
+                }
+            }
+            catch
+            {
+                //ajaxResult = AjaxResult.Fail("获取房间信息失败。");
+            }
+
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -164,19 +219,44 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         /// <param name="roomId"></param>
         /// <param name="order"></param>
         [WebMethod]
-        public void SaveOrder(int wid, string openid, int hotelId, int roomId, string order)
+        public void SaveOrder(int wid, string openid, int hotelId, int roomId,string roomType, string order)
         {
+            AjaxResult ajaxResult;
+            try
+            {
+                CreateOrderResponse responseData = null;
+                CreateOrderRequest request = new CreateOrderRequest()
+                {
+                    OpenId = openid,
+                    HotelId = hotelId,
+                    RoomId = roomId,
+                    RoomType= roomType,
+                    Order = JSONHelper.Deserialize<OrderDto>(order)
+                };
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", request)
+                        .Register(response =>
+                        {
+                            CompletionResult result = response.AsyncState as CompletionResult;
+                            if (result != null)
+                            {
+                                responseData = result.Messages[0] as CreateOrderResponse;
 
-            var orderDto = JSONHelper.Deserialize<OrderDto>(order);
-            if (orderDto.Id > 0)
-            {
-                //update
+                            }
+                        }, this);
+
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                ajaxResult = asyncResult.IsCompleted ?
+                          AjaxResult.Succeed(responseData.OrderId) :
+                          AjaxResult.Fail("保存订失败。");
             }
-            else
+            catch
             {
-                //add
+                ajaxResult = AjaxResult.Fail("保存订失败。");
             }
-            this.WriteJson(AjaxResult.Succeed(orderDto.Id));
+
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -188,26 +268,34 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetOrder(int wid, string openid, int orderId)
         {
-            GetOrderResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId=orderId })
-                    .Register(response =>
-                    {
-                        CompletionResult result = response.AsyncState as CompletionResult;
-                        if (result != null)
-                        {
-                            responseData = result.Messages[0] as GetOrderResponse;
-
-                        }
-                    }, this);
-
-            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
-
-            if (asyncResult.IsCompleted)
+            AjaxResult ajaxResult;
+            try
             {
-                this.WriteJson(AjaxResult.Succeed(responseData));
+                GetOrderResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
+                        .Register(response =>
+                        {
+                            CompletionResult result = response.AsyncState as CompletionResult;
+                            if (result != null)
+                            {
+                                responseData = result.Messages[0] as GetOrderResponse;
+
+                            }
+                        }, this);
+
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                ajaxResult = asyncResult.IsCompleted ?
+                          AjaxResult.Succeed(responseData.Order) :
+                          AjaxResult.Fail("获取订单信息失败。");
             }
-            //this.WriteJson(AjaxResult.Succeed(orderDto));
+            catch
+            {
+                ajaxResult = AjaxResult.Fail("获取订单信息失败。");
+            }
+
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -219,25 +307,34 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetOrderList(int wid, string openid, int hotelId)
         {
-            GetOrderListResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderListRequest() { HotelId = hotelId })
-                    .Register(response =>
-                    {
-                        CompletionResult result = response.AsyncState as CompletionResult;
-                        if (result != null)
-                        {
-                            responseData = result.Messages[0] as GetOrderListResponse;
-
-                        }
-                    }, this);
-
-            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
-
-            if (asyncResult.IsCompleted)
+            AjaxResult ajaxResult;
+            try
             {
-                this.WriteJson(AjaxResult.Succeed(responseData));
+                GetOrderListResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderListRequest() { HotelId = hotelId })
+                        .Register(response =>
+                        {
+                            CompletionResult result = response.AsyncState as CompletionResult;
+                            if (result != null)
+                            {
+                                responseData = result.Messages[0] as GetOrderListResponse;
+
+                            }
+                        }, this);
+
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                ajaxResult = asyncResult.IsCompleted ?
+                              AjaxResult.Succeed(responseData.Orders) :
+                              AjaxResult.Fail("获取订单列表失败。");
             }
+            catch
+            {
+                ajaxResult = AjaxResult.Fail("获取订单列表失败。");
+            }
+
+            this.WriteJson(ajaxResult);
         }
 
         /// <summary>
@@ -249,77 +346,34 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetOrderCount(int wid, string openid, int hotelId)
         {
-            this.WriteJson(AjaxResult.Succeed(8));
+            AjaxResult ajaxResult;
+            try
+            {
+                GetOrderListResponse responseData = null;
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderListRequest() { HotelId = hotelId })
+                        .Register(response =>
+                        {
+                            CompletionResult result = response.AsyncState as CompletionResult;
+                            if (result != null)
+                            {
+                                responseData = result.Messages[0] as GetOrderListResponse;
+
+                            }
+                        }, this);
+
+                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+                asyncWaitHandle.WaitOne(10000);
+
+                ajaxResult = asyncResult.IsCompleted ?
+                              AjaxResult.Succeed(responseData.Orders.Count) :
+                              AjaxResult.Fail("获取订单数量失败。");
+            }
+            catch
+            {
+                ajaxResult = AjaxResult.Fail("获取订单数量失败。");
+            }
+
+            this.WriteJson(ajaxResult);
         }
     }
-
-    public class HotelDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-
-        public string Tel { get; set; }
-        public string JieShao { get; set; }
-    }
-
-    public class RoomDto
-    {
-        public int Id { get; set; }
-        public string RoomType { get; set; }
-        public List<RoomImgDto> RoomImgs { get; set; }
-        public double CostPrice { get; set; }
-        public double TotalPrice { get; set; }
-        public string Detail { get; set; }
-        public string Instruction { get; set; }
-        public string RefundRule { get; set; }
-    }
-
-    public class RoomImgDto
-    {
-
-        public string Url { get; set; }
-        public string Name { get; set; }
-    }
-
-    /// <summary>
-    /// 订单
-    /// </summary>
-    public class OrderDto
-    {
-        public int Id { get; set; }
-        public string OrderNumber { get; set; }
-        public OrderUserDto OrderUser { get; set; }
-        public DateTime ArriveTime { get; set; }
-        public DateTime LeaveTime { get; set; }
-        public DateTime OrderTime { get; set; }
-        public int OrderNum { get; set; }
-        public string Remark { get; set; }
-
-        /// <summary>
-        /// 最后订单的总金额
-        /// </summary>
-        public double OrderPrice { get; set; }
-
-        public int Status { get; set; }
-        public string StatusName { get; set; }
-
-        //        //todo:这2个参数要加这么,还是换成对应的dto？
-        public int HotelId { get; set; }
-        public string HotelName { get; set; }
-        public int RoomId { get; set; }
-        public string RoomType { get; set; }
-    }
-
-    /// <summary>
-    /// 订单用户信息
-    /// </summary>
-    public class OrderUserDto
-    {
-        public string UserName { get; set; }
-        public string UserIdcard { get; set; }
-        public string UserMobile { get; set; }
-    }
-
-
 }

@@ -7,9 +7,8 @@ using WeixinPF.Messages.RequestResponse.Dtos;
 
 namespace WeixinPF.Messages.RequestResponse
 {
-    public class GetOrderResponse
+    public class GetOrderUserInfoResponse
     {
-        public OrderDto Order { get; set; }
+        public OrderUserDto User { get; set; }
     }
-
 }

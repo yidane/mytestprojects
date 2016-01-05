@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NServiceBus;
+using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Messages.RequestResponse.Dtos;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
@@ -19,7 +21,10 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         }
         public void Handle(GetOrderRequest message)
         {
-            _bus.Reply(new HotelOrderService().GetOrderList(order => order.id == message.OrderId));
+            var service = new HotelOrderService();
+            var order = service.GetModel(message.OrderId);
+
+            _bus.Reply(new GetOrderResponse() { Order = order.MapTo<OrderDto>() });
         }
     }
 }

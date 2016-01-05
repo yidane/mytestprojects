@@ -7,6 +7,7 @@ using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Messages.RequestResponse.Dtos;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
@@ -20,9 +21,10 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         }
         public void Handle(GetOrderListRequest message)
         {
-            _bus.Reply(
-                new HotelOrderService().GetOrderList(order => order.hotelid == message.HotelId
-                ).MapTo<List<GetOrderResponse>>());
+            var service = new HotelOrderService();
+            var orderDtos = service.GetModelList(string.Format("hotelid={0}",message.HotelId)).MapTo<List<OrderDto>>();
+
+            _bus.Reply(new GetOrderListResponse() { Orders = orderDtos });
         }
     }
 }
