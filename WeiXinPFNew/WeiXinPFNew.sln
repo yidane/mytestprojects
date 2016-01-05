@@ -37,6 +37,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{50EF5608-6335-48DC-B160-E14FF036E7AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Infrastructure", "SourceCode\WeixinPF\Infrastructure\WeixinPF.Infrastructure\WeixinPF.Infrastructure.csproj", "{04186677-71C9-4400-A294-02176774C5F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C4941BBF-0230-4F8E-8F54-EFCBA0C80344} = {C4941BBF-0230-4F8E-8F54-EFCBA0C80344}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{5DAD00D4-17D2-4676-8813-D765DB9FA243}"
 EndProject

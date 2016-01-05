@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace WeixinPF.Application.BaseRepository
 {
@@ -11,8 +13,8 @@ namespace WeixinPF.Application.BaseRepository
 
         bool Update(IEnumerable<TEntity> entities);
 
-        IList<TEntity> Get(Func<TEntity, bool> conditions);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
 
-        IList<TEntity> Get(int pageIndex, int pageSize, Func<TEntity, bool> conditions);
+        IQueryable<TEntity> Get(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> predicate);
     }
 }

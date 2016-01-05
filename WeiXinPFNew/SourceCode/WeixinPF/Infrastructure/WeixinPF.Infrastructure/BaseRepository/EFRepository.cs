@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Transactions;
 using WeixinPF.Application.BaseRepository;
 
@@ -80,19 +81,19 @@ namespace WeixinPF.Infrastructure.BaseRepository
         /// <summary>
         ///     查询
         /// </summary>
-        /// <param name="conditions"></param>
+        /// <param name="predicate"></param>
         /// <returns></returns>
-        public IList<TEntity> Get(Func<TEntity, bool> conditions)
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
         {
-            if (conditions != null)
-                return Context.Set<TEntity>().Where<TEntity>(conditions).ToList();
-            return Context.Set<TEntity>().ToList();
+            if (predicate != null)
+                return Context.Set<TEntity>().Where<TEntity>(predicate);
+            return Context.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> GetReturnEnumerable(Func<TEntity, bool> conditions)
+        public IEnumerable<TEntity> GetReturnEnumerable(Expression<Func<TEntity, bool>> predicate)
         {
-            if (conditions != null)
-                return Context.Set<TEntity>().Where<TEntity>(conditions);
+            if (predicate != null)
+                return Context.Set<TEntity>().Where<TEntity>(predicate);
             return Context.Set<TEntity>();
         }
 
@@ -103,19 +104,17 @@ namespace WeixinPF.Infrastructure.BaseRepository
         /// <param name="pageSize"></param>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public IList<TEntity> Get(int pageIndex, int pageSize, Func<TEntity, bool> conditions)
+        public IQueryable<TEntity> Get(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> predicate)
         {
             var skinCount = (pageIndex - 1)*pageSize;
-            if (conditions != null)
+            if (predicate != null)
                 return Context.Set<TEntity>()
-                    .Where<TEntity>(conditions)
+                    .Where<TEntity>(predicate)
                     .Skip(skinCount)
-                    .Take(pageSize)
-                    .ToList();
+                    .Take(pageSize);
             return Context.Set<TEntity>()
                 .Skip(skinCount)
-                .Take(pageSize)
-                .ToList();
+                .Take(pageSize);
         }
     }
 }

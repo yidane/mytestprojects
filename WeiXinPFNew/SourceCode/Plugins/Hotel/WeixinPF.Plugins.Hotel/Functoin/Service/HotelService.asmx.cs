@@ -30,7 +30,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
 
             IAsyncResult responseData =
                 BusEntry.dictBus["hotel"]
-                .Send("WeixinPF.Plugins.Hotel.Service.HotelService", new ShowAllRoom() { ShopId = shopId, Wid = wid })
+                .Send("WeixinPF.Hotel.Plugins..Service", new ShowAllRoom() { ShopId = shopId, Wid = wid })
                 .Register(response =>
                 {
                     CompletionResult localResult = (CompletionResult)response.AsyncState;
@@ -58,7 +58,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         public void GetHotelInfo(int wid, string openid, int hotelId)
         {
             GetHotelResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel.Service.HotelService", new GetHotelRequest() { HotelId = hotelId })
+            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins..Service", new GetHotelRequest() { HotelId = hotelId })
                     .Register(response =>
                     {
                         CompletionResult result = response.AsyncState as CompletionResult;
@@ -88,7 +88,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         public void GetRoomList(int wid, string openid, int hotelId)
         {
             GetRoomListResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel.Service.HotelService", new GetRoomListRequest() { HotelId = hotelId })
+            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins..Service", new GetRoomListRequest() { HotelId = hotelId })
                     .Register(response =>
                     {
                         CompletionResult result = response.AsyncState as CompletionResult;
@@ -119,7 +119,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         public void GetRoom(int wid, string openid, int hotelId, int roomId)
         {
             GetRoomResponse responseData = null;
-            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel.Service.HotelService", new GetRoomRequest() { HotelId = hotelId, RoomId = roomId })
+            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetRoomRequest() { HotelId = hotelId, RoomId = roomId })
                     .Register(response =>
                     {
                         CompletionResult result = response.AsyncState as CompletionResult;
@@ -188,23 +188,26 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetOrder(int wid, string openid, int orderId)
         {
-            var orderDto = new OrderDto()
+            GetOrderResponse responseData = null;
+            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId=orderId })
+                    .Register(response =>
+                    {
+                        CompletionResult result = response.AsyncState as CompletionResult;
+                        if (result != null)
+                        {
+                            responseData = result.Messages[0] as GetOrderResponse;
+
+                        }
+                    }, this);
+
+            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+            asyncWaitHandle.WaitOne(10000);
+
+            if (asyncResult.IsCompleted)
             {
-                Id = orderId,
-                OrderUser = new OrderUserDto()
-                {
-                    UserName = "jxiaox",
-                    UserIdcard = "360430199002050611",
-                    UserMobile = "18311300760"
-                },
-                OrderTime = DateTime.Now,
-                ArriveTime = DateTime.Today,
-                LeaveTime = DateTime.Today.AddDays(2),
-                OrderNum = 2,
-                Remark = "happy new year!",
-                Status = 0
-            };
-            this.WriteJson(AjaxResult.Succeed(orderDto));
+                this.WriteJson(AjaxResult.Succeed(responseData));
+            }
+            //this.WriteJson(AjaxResult.Succeed(orderDto));
         }
 
         /// <summary>
@@ -216,34 +219,25 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetOrderList(int wid, string openid, int hotelId)
         {
-            var orderList = new List<OrderDto>();
-            for (int i = 0; i < 9; i++)
-            {
-                var orderDto = new OrderDto()
-                {
-                    Id = i + 1,
-                    OrderNumber = "H" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + Utils.Number(5),
-                    OrderUser = new OrderUserDto()
+            GetOrderListResponse responseData = null;
+            IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderListRequest() { HotelId = hotelId })
+                    .Register(response =>
                     {
-                        UserName = "jxiaox",
-                        UserIdcard = "360430199002050611",
-                        UserMobile = "18311300760"
-                    },
-                    OrderTime = DateTime.Now,
-                    ArriveTime = DateTime.Today.AddDays(i),
-                    LeaveTime = DateTime.Today.AddDays(i + 2),
-                    OrderNum = 2,
-                    RoomId = i + 1,
-                    HotelId = hotelId,
-                    Remark = "happy new year!",
-                    Status = i,
-                    StatusName = "订单状态" + i,
-                    OrderPrice = i * 3,
-                    RoomType = "大床房"
-                };
-                orderList.Add(orderDto);
+                        CompletionResult result = response.AsyncState as CompletionResult;
+                        if (result != null)
+                        {
+                            responseData = result.Messages[0] as GetOrderListResponse;
+
+                        }
+                    }, this);
+
+            WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
+            asyncWaitHandle.WaitOne(10000);
+
+            if (asyncResult.IsCompleted)
+            {
+                this.WriteJson(AjaxResult.Succeed(responseData));
             }
-            this.WriteJson(AjaxResult.Succeed(orderList));
         }
 
         /// <summary>

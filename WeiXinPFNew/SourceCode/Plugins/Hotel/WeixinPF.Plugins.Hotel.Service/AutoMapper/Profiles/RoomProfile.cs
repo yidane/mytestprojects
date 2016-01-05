@@ -2,9 +2,9 @@
 using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Messages.RequestResponse;
 
-namespace WeixinPF.Hotel.Plugins.Service.AutoMapper.Profile
+namespace WeixinPF.Hotel.Plugins.Service.AutoMapper.Profiles
 {
-    public class RoomProfile:global::AutoMapper.Profile
+    public class RoomProfile:Profile
     {
         protected override void Configure()
         {

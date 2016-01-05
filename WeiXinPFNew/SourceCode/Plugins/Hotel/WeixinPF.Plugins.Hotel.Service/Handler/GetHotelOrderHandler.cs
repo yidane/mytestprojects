@@ -26,7 +26,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
 
         public void Handle(GetHotelOrderByOrderIdRequest message)
         {
-            var info = HotelOrderService.GetOrderInfo(message.OrderId);
+            var info = new HotelOrderService().GetOrderInfo(message.OrderId);
 
             var response = TransformToResponse(info);
             try

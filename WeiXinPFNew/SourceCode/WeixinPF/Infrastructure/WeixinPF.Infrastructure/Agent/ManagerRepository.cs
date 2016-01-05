@@ -152,10 +152,10 @@ namespace WeixinPF.Infrastructure.Agent
             }
         }
 
-        bool IRepository<ManagerInfo>.Add(ManagerInfo entity)
-        {
-            throw new NotImplementedException();
-        }
+        //bool IRepository<ManagerInfo>.Add(ManagerInfo entity)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// 更新一条数据
@@ -239,20 +239,20 @@ namespace WeixinPF.Infrastructure.Agent
             }
         }
 
-        public bool Update(IEnumerable<ManagerInfo> entities)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool Update(IEnumerable<ManagerInfo> entities)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IList<ManagerInfo> Get(Func<ManagerInfo, bool> conditions)
-        {
-            throw new NotImplementedException();
-        }
+        //public IList<ManagerInfo> Get(Func<ManagerInfo, bool> conditions)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IList<ManagerInfo> Get(int pageIndex, int pageSize, Func<ManagerInfo, bool> conditions)
-        {
-            throw new NotImplementedException();
-        }
+        //public IList<ManagerInfo> Get(int pageIndex, int pageSize, Func<ManagerInfo, bool> conditions)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// 删除一条数据管理员/代理商/用户

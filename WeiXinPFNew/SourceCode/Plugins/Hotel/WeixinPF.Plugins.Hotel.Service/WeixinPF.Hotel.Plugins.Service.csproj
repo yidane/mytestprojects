@@ -70,7 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Dtos\RoomPictureDto.cs" />
     <Compile Include="Application\HotelDbContext.cs" />
     <Compile Include="Application\Repository\IHotelAdminRepository.cs" />
     <Compile Include="Application\Repository\IHotelOrderRepository.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="Application\Service\IdentifyingCodeService.cs" />
     <Compile Include="Application\Service\RoomPictureService.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="AutoMapper\Profiles\OrderProfile.cs" />
     <Compile Include="Handler\GetByIdentifyingCodeIdHandler.cs" />
     <Compile Include="Application\Service\RoomService.cs" />
     <Compile Include="Handler\GetHotelHandler.cs" />
@@ -92,6 +92,8 @@
     <Compile Include="Handler\GetHotelOrderHandler.cs" />
     <Compile Include="Handler\GetIdentifyingCodeDetailHandler.cs" />
     <Compile Include="Handler\GetIdentifyingCodeHandler.cs" />
+    <Compile Include="Handler\GetOrderHandler.cs" />
+    <Compile Include="Handler\GetOrderListHandler.cs" />
     <Compile Include="Handler\GetRoomHandler.cs" />
     <Compile Include="Handler\GetRoomListHandler.cs" />
     <Compile Include="Handler\MakeUseOfIdentifyingCodeHandler.cs" />
@@ -116,8 +118,8 @@
     <Compile Include="Models\IdentifyingCodeInfo.cs" />
     <Compile Include="Models\RoomInfo.cs" />
     <Compile Include="Models\RoomPictureInfo.cs" />
-    <Compile Include="AutoMapper\Profile\HotelProfile.cs" />
-    <Compile Include="AutoMapper\Profile\RoomProfile.cs" />
+    <Compile Include="AutoMapper\Profiles\HotelProfile.cs" />
+    <Compile Include="AutoMapper\Profiles\RoomProfile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\IdentifyingCodeRepository.cs" />

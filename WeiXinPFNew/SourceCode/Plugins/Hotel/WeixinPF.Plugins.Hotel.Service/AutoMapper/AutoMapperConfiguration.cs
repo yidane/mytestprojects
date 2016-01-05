@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using WeixinPF.Hotel.Plugins.Service.AutoMapper.Profile;
+using WeixinPF.Hotel.Plugins.Service.AutoMapper.Profiles;
 
 namespace WeixinPF.Hotel.Plugins.Service.AutoMapper
 {
@@ -11,6 +11,7 @@ namespace WeixinPF.Hotel.Plugins.Service.AutoMapper
             {
                 cfg.AddProfile<RoomProfile>();
                 cfg.AddProfile<HotelProfile>();
+                cfg.AddProfile<OrderProfile>();
             });
         }
     }

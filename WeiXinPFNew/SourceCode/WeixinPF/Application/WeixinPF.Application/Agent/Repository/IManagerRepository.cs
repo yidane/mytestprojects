@@ -4,7 +4,7 @@ using WeixinPF.Model.Agent;
 
 namespace WeixinPF.Application.Agent.Repository
 {
-    public interface IManagerRepository : IRepository<ManagerInfo>
+    public interface IManagerRepository //: IRepository<ManagerInfo>
     {
         bool Exists(int id);
         bool Exists(string user_name);
