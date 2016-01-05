@@ -115,6 +115,8 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 }
                 else
                 {
+                    //this.Response.Write("<script language='javascript' type='text/javascript'>alert('请确认！')</script>");
+
                     this.Response.Redirect("commodity_detail.aspx?cid=" + identifyingCode.IdentifyingCodeId + "&shopid=" + identifyingCode.ShopId + "&id=" + identifyingCode.OrderId);
                 }
             }

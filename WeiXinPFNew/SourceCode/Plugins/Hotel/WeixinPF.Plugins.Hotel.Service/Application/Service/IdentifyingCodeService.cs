@@ -18,18 +18,28 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
                 return null;
             }
 
-            using (var context = new HotelDbContext())
+            try
             {
-                IIdentifyingCodeRepository repository = new IdentifyingCodeRepository(context); //改造方向：依赖注入，彻底去除对Infrastructure层的依赖
+                using (var context = new HotelDbContext())
+                {
+                    IIdentifyingCodeRepository repository = new IdentifyingCodeRepository(context); //改造方向：依赖注入，彻底去除对Infrastructure层的依赖
 
-                return
-                    repository.Get(
-                        item =>
-                        item.ShopId == shopId.ToString(CultureInfo.InvariantCulture)
-                        && item.IdentifyingCode.Equals(identifyingCode)
-                        && item.ModuleName.Equals(moduleName)
-                        && item.Wid.Equals(wid)).FirstOrDefault();
+                    var strShop = shopId.ToString(CultureInfo.InvariantCulture);
+                    return
+                        repository.Get(
+                            item =>
+                            item.ShopId == strShop
+                            && item.IdentifyingCode.Equals(identifyingCode)
+                            && item.ModuleName.Equals(moduleName)
+                            && item.Wid.Equals(wid)).FirstOrDefault();
+                }
             }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            
         }
 
         public static IdentifyingCodeInfo GetIdentifyingCodeInfoByIdentifyingCodeId(Guid identifyingCodeId, string moduleName, int wid)
@@ -39,16 +49,25 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
                 return null;
             }
 
-            using (var context = new HotelDbContext())
+            try
             {
-                IIdentifyingCodeRepository repository = new IdentifyingCodeRepository(context); //改造方向：依赖注入，彻底去除对Infrastructure层的依赖
+                using (var context = new HotelDbContext())
+                {
+                    IIdentifyingCodeRepository repository = new IdentifyingCodeRepository(context); //改造方向：依赖注入，彻底去除对Infrastructure层的依赖
 
-                return
-                    repository.Get(
-                            item => item.IdentifyingCodeId.Equals(identifyingCodeId)
-                                    && item.ModuleName.Equals(moduleName)
-                                    && item.Wid.Equals(wid)).FirstOrDefault();
+                    return
+                        repository.Get(
+                                item => item.IdentifyingCodeId.Equals(identifyingCodeId)
+                                        && item.ModuleName.Equals(moduleName)
+                                        && item.Wid.Equals(wid)).FirstOrDefault();
+                }
             }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
+            
         }
 
         public static bool MakeUseOfIdentifyingCode(Guid identifyingCodeId)

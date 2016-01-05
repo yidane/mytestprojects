@@ -20,7 +20,7 @@ namespace WeixinPF.Web
 
         public override void Dispose()
         {
-            BusEntry.Dispose();
+            //BusEntry.Dispose();
 
             base.Dispose();
         }

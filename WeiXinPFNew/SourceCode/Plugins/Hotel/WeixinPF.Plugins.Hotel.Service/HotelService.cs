@@ -50,7 +50,7 @@ namespace WeixinPF.Hotel.Plugins.Service
 
         protected override void OnStop()
         {
-            BusEntry.Dispose();
+            //BusEntry.Dispose();
             base.Dispose();
             
             Console.WriteLine("Service stop");

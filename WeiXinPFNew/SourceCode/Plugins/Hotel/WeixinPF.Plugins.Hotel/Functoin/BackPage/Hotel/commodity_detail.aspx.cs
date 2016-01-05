@@ -49,7 +49,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             {
                 GetIdentifyingCodeResponse identifyingCodeObject = null;
 
-                IAsyncResult resIdentifyingCode = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel", new GetByIdnetifyingCodeIdRequest()
+                IAsyncResult resIdentifyingCode = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetByIdnetifyingCodeIdRequest()
                 {
                     IdentifyingCodeId = identifyingCodeId,
                     ModuleName = ModuleName,
@@ -77,7 +77,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 };
                 GetHotelOrderResponse order = null;
 
-                IAsyncResult resOrder = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel", orderRequest).Register(response =>
+                IAsyncResult resOrder = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", orderRequest).Register(response =>
                 {
                     CompletionResult localResult = (CompletionResult)response.AsyncState;
                     order = localResult.Messages[0] as GetHotelOrderResponse;
@@ -110,7 +110,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                     {
                         var useIdentifyingCode = new MakeUseOfIdentifyingCode() {IdentifyingCodeId = identifyingCodeId};
 
-                        BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel", useIdentifyingCode)
+                        BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", useIdentifyingCode)
                             .Register<int>(response =>
                             {
                                 if (response == 1)
@@ -161,7 +161,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
             GetIdentifyingCodeDetailResponse searchResponse = null;
 
-            IAsyncResult resSearchResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel", searchRequest).Register(response =>
+            IAsyncResult resSearchResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", searchRequest).Register(response =>
             {
                 CompletionResult localResult = (CompletionResult)response.AsyncState;
                 searchResponse = localResult.Messages[0] as GetIdentifyingCodeDetailResponse;
@@ -200,7 +200,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
             GetHotelOrderResponse orderResponse = null;
 
-            IAsyncResult resOrderResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Plugins.Hotel", new GetHotelOrderByOrderIdRequest() {OrderId = int.Parse(id)})
+            IAsyncResult resOrderResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetHotelOrderByOrderIdRequest() {OrderId = int.Parse(id)})
                 .Register(response =>
                 {
                     CompletionResult localResult = (CompletionResult)response.AsyncState;

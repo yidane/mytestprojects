@@ -34,31 +34,36 @@ namespace WeixinPF.Shared
                 foreach (var assemblyFileName in files)
                 {
                     var fileName = assemblyFileName.Split('\\').Last();
+                    var busName = string.Empty;
+
+                    if (fileName.Split('.').Contains("Service"))
+                    {
+                        busName = fileName.Split('.')[1].ToLower() + "service";
+                    }
+                    else
+                    {
+                        busName = fileName.Split('.')[1].ToLower();
+                    }
+
+                    if (dictBus.Keys.Contains(busName))
+                    {
+                        continue;
+                    }
+
                     BusConfiguration busConfiguration = new BusConfiguration();
 
                     busConfiguration.PurgeOnStartup(true);
                     busConfiguration.ApplyCommonConfiguration();
                     busConfiguration.EndpointName(fileName.Substring(0, fileName.Length - 4));
-
-                    if (fileName.Split('.').Contains("Service"))
-                    {
-                        dictBus.Add(fileName.Split('.')[1].ToLower() + "service", NServiceBus.Bus.Create(busConfiguration).Start());
-                    }
-                    else
-                    {
-                        dictBus.Add(fileName.Split('.')[1].ToLower(), NServiceBus.Bus.Create(busConfiguration).Start());
-
-                    }
+                    
+                    dictBus.Add(busName, NServiceBus.Bus.Create(busConfiguration).Start());
                 }
             }
         }
 
         public static void Start()
         {
-            if (!dictBus.Any())
-            {
-                LoadPlugins();
-            }            
+            LoadPlugins();
         }
 
         public static void Dispose()

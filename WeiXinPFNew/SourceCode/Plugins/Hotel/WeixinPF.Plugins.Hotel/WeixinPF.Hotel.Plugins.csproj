@@ -120,7 +120,8 @@
     <Content Include="Functoin\StaticPage\hotel\JS\paycallback.js" />
     <Content Include="Functoin\StaticPage\hotel\JS\plugback.js" />
     <Content Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx" />
-    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-appFooter.js" />
+    <Content Include="Functoin\StaticPage\JS\index\v-index-appFooter.js" />
+    <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -139,7 +140,6 @@
   <ItemGroup>
     <Content Include="Functoin\Service\HotelService.asmx" />
     <Content Include="Functoin\StaticPage\hotel\TestPage.html" />
-    <Content Include="Global.asax" />
     <Content Include="Functoin\StaticPage\hotel\routeTest.html" />
     <Content Include="Web.config" />
   </ItemGroup>
