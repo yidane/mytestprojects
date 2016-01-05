@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -26,50 +26,99 @@
         .bar-tab~.content{
             padding: 0.1rem 0;
         }
-        .list-block ul:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: auto;
-            right: auto;
-            height: 1px;
-            width: 100%;
-            background-color: black;
-            display: block;
-            z-index: 15;
-            -webkit-transform-origin: 50% 0%;
-            transform-origin: 50% 0%;
+      
+
+
+
+    </style>
+
+    <style>
+        .detailcontent {
+            border: 1px solid #C6C6C6;
+            background-color: rgba(255, 255, 255, 1);
+            text-align: left;
+
+            box-shadow: 0 1px 1px #f6f6f6;
+
         }
-        .list-block ul:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            right: auto;
-            top: auto;
-            height: 1px;
-            width: 100%;
-            background-color:black;
-            display: block;
-            z-index: 15;
-            -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
+        .detailcontent h2 {
+            border-bottom: 1px solid #C6C6C6;
+            background-color: #E1E1E1;
+            background: -webkit-gradient( linear, left bottom, left top, color-stop(0, #E7E7E7), color-stop(1, #f9f9f9) );
+            box-shadow: 0 1px 0 #FFFFFF inset, 0 1px 0 #EEEEEE;
+            border-radius: 5px 5px 0 0;
+            padding: 0px 10px 0px 10px;
+            font-size: 14px;
+            text-shadow: 0 1px #FFF;
         }
-        .list-block  .item-inner:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            right: auto;
-            top: auto;
-            height: 1px;
-            width: 100%;
-            background-color: black;
+        .gpd-item-title .detailicon-ticket, .gpd-item-title .gpd-item-title-name {
+            float: left;
+        }
+        .detailicon-ticket {
+            height: 32px;
+            width: 32px;
+        }
+
+        .gpd-up-icon {
+            float: right;
+            width: 44px;
+            height: 32px;
+            /* position: absolute; */
+            right: 0;
+            top: -2px;
+            /* top: 0; */
+            background-position: -34px -41px;
+        }
+        .gp-icons {
+            background-image: url(http://www.cloudorg.com.cn/weixin/restaurant/images/gp_icons.png);
+            background-size: 320px auto;
+        }
+        .gpd-up-icon {
+            float: right;
+            width: 44px;
+            height: 32px;
+            /* position: absolute; */
+            right: 0;
+            top: -2px;
+            /* top: 0; */
+            background-position: -34px -41px;
+        }
+        .detailcontent .content {
+            padding: 10px;
+            font-size: 14px;
+            line-height: 22px;
+        }
+        .gdp-curr .gpd-content {
             display: block;
-            z-index: 15;
-            -webkit-transform-origin: 50% 100%;
-            transform-origin: 50% 100%;
+        }
+        .detailcontent .content {
+            padding: 10px;
+            font-size: 14px;
+            line-height: 22px;
+        }
+        .gpd-content {
+            display: none;
+            padding: 20px;
+        }
+        .gpd-item-title {
+            height: 32px;
+            line-height: 32px;
+            vertical-align: middle;
+        }
+    </style>
+
+    <!-- alert-->
+    <style>
+        .alert {
+            padding: 15px;
+            margin-bottom: 11px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+        }
+        .alert-warning {
+            color: #8a6d3b;
+            background-color: #fcf8e3;
+            border-color: #faebcc;
         }
     </style>
 </head>
@@ -107,8 +156,8 @@
     }
     .bar-nav
      {
-         -webkit-box-shadow: 0 5px 6px #ccc;
-         box-shadow: 0 5px 6px #ccc;
+         -webkit-box-shadow: 0 1px 6px #ccc;
+         box-shadow: 0 1px 6px #ccc;
      }
     .bar-tab
     {
@@ -141,6 +190,58 @@
     }
 </style>
 
+    <style>
+
+
+        .total-money {
+
+            font-size: .85rem;
+            font-weight: bold;
+        }
+        .color-red {
+            color: #FF0000;
+        }
+        .cost-money {
+            color: #666666;
+            font-size: .65rem;
+            line-height: 1.3rem;
+            text-decoration: line-through;
+        }
+    </style>
+
+    <style>
+        .badge-status
+        {
+            /* position: absolute; */
+            /* top: .1rem; */
+            /* left: 50%; */
+            /* z-index: 100; */
+            height: .8rem;
+            min-width: .8rem;
+            /* padding: 0 .2rem; */
+            font-size: .6rem;
+            /* line-height: .8rem; */
+            color: #fff;
+            vertical-align: top;
+            /* background: red; */
+            border-radius: .5rem;
+            margin-left: .1rem;
+        }
+
+        .badge-success
+         {
+             background-color: #04BE02;
+         }
+        .badge-danger
+        {
+            background-color: #EF4F4F;
+        }
+
+        .badge-warn
+        {
+            background-color: #FFBE00;
+        }
+    </style>
     <header class="bar bar-nav">
         <a class="fa fa-chevron-left fa-lg pull-left"  href="javascript:history.go(-1);"></a>
         <a class="fa fa-home fa-lg pull-right" href="http://www.cloudorg.com.cn/weixin/map/poilist.html?type=hotel&wid=1"></a>
@@ -250,13 +351,13 @@
                     <div class="item-after">详情</div>
                 </div>
             </a>
-            <li class="item-content item-link">
+            <a class="item-content item-link" href="tel:{{hotel.tel}}">
                 <div class="item-media"><i class="fa fa-phone"></i></div>
                 <div class="item-inner">
                     <div class="item-title">{{hotel.tel}}</div>
                     <div class="item-after">电话预订</div>
                 </div>
-            </li>
+            </a>
         </ul>
     </div>
     <div class="card">
@@ -268,23 +369,7 @@
 </template>
 
 <template id="view-room-template">
-    <style>
 
-
-           .total-money {
-
-               font-size: .75rem;
-         }
-           .color-red {
-             color: #FF0000;
-         }
-          .cost-money {
-             color: #666666;
-              font-size: .65rem;
-
-             text-decoration: line-through;
-         }
-    </style>
     <div class="content">
     <!--<ul class="round">-->
         <!--<li class="title"><span class="none">{{hotel.name}}</span></li>-->
@@ -374,7 +459,42 @@
 </template>
 
 <template id="view-order-template">
+    <div class="card" v-for="order in orders">
+        <div class="card-header">
+            <span><b>{{order.orderTime}}</b>
+                    <b style='margin-left:0.5rem'>{{hotel.name}}</b></span>
+        </div>
+        <div class="card-content">
+            <div class="list-block media-list">
+                <ul>
+                    <li>
+                        <a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)"
+                           class="item-link item-content">
+                            <div class="item-media">
+                                <img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" style='width: 4rem;'></div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">{{order.orderNumber}}</div>
+                                    <div class="item-after">
+                                        <span class="total-money color-red">￥{{order.orderPrice}}</span>
 
+                                         </div>
+                                </div>
+                                <div class="item-subtitle"><span class="badge badge-status badge-success">{{order.statusName}}</span></div>
+                                <div class="item-text">
+                                     {{order.orderTime}}
+
+
+
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
 
     <div class="cardexplain">
 
@@ -401,6 +521,8 @@
             </table>
         </ul>
     </div>
+
+
 </template>
 
 <template id="view-orderCreate-template">
@@ -410,8 +532,46 @@
         }
     </style>
 
+    <style>
+        .footer-money {
+            /* padding: 15px 0 8px 0; */
+            display: block;
 
-    <ul class="round">
+            position: relative;
+            width: 100%;
+            z-index: 3;
+            height: 35px;
+            /* top: 40px; */
+        }
+        .footer-money p {
+            color: #666666;
+            float: right;
+            height: 35px;
+            line-height: 35px;
+            vertical-align: middle;
+            position: relative;
+            margin-right: 12px;
+            font-size: 15px;
+        }
+        .footer-money p .color-red {
+            color: #FF0000;
+        }
+        .footer-money p .discount-money {
+            margin-right: 5px;
+            font-size: 15px;
+        }
+        .footer-money p .total-money {
+            margin-left: -6px;
+            font-size: 25px;
+        }
+        .footer-money p .cost-money {
+            color: #666666;
+            /* font-size: 25px; */
+            text-decoration: line-through;
+        }
+    </style>
+
+    <ul class="round" style="display: none">
         <li class="biaotou bradius pad">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -433,13 +593,6 @@
         </li>
 
     </ul>
-
-    <!--后台可控制是否显示-->
-
-
-
-
-
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
@@ -479,10 +632,18 @@
         </div>
     </div>
 
+    <div class="list-block">
+        <ul>
+            <a class="item-content item-link" href="tel:{{hotel.tel}}">
+                <div class="item-media"><i class="fa fa-phone"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">{{hotel.tel}}</div>
+                    <div class="item-after">电话预订</div>
+                </div>
+            </a>
+        </ul>
+    </div>
 
-    <ul class="round">
-        <li class="tel"><a href="tel: {{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>
-    </ul>
 
 
 
@@ -507,131 +668,147 @@
 
     <validator lazy name="roomValidation">
         <form novalidate @submit.prevent="onSubmit">
-
-            <ul class="round">
-                <li class="title mb"><span class="none">请认真填写在线订单</span></li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>预订人</th>
-                            <td>
-                                <input name="oderName" type="text" class="px" id="oderName"
-                                       v-validate:oderName="['required']" v-model="order.orderUser.userName"
-                                       placeholder="请输入您的真实姓名" /></td>
-                        </tr>
-                    </table>
-                </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>身份证号</th>
-                            <td>
-                                <input name="identityNumber" type="text" class="px"
-                                       v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">预订人</div>
+                                <div class="item-input">
+                                    <input name="oderName" type="text" class="px"
+                                           v-validate:oderName="['required']" v-model="order.orderUser.userName"
+                                           placeholder="请输入您的真实姓名" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-email"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">身份证号</div>
+                                <div class="item-input">
+                                    <input name="identityNumber" type="text" class="px"
+                                           v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
                                        , idcard: { rule: true, message: '请输入正确的身份证号' } }"
-                                       id="identityNumber" v-model="order.orderUser.userIdcard"
-                                       placeholder="请输入您的身份证号" /></td>
-                        </tr>
-                    </table>
-                </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>联系电话</th>
-                            <td>
-                                <input name="tel" type="tel" class="px" id="tel"
+                                            v-model="order.orderUser.userIdcard"
+                                           placeholder="请输入您的身份证号" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-name"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">联系电话</div>
+                            <div class="item-input">
+                                <input name="tel" type="tel" class="px"
                                        v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
                                        , mobile: { rule: true, message: '请输入正确的手机号' } }"
-                                       v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" /></td>
-                        </tr>
-                    </table>
+                                       v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
+                            </div>
+                        </div>
+                    </div>
                 </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>入住时间</th>
-                            <td>
-                                <input name="arriveTime" class="px min-today"
-                                       id="arriveTime"
-                                       :min="today"
-                                       v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"
-                                       v-model="order.arriveTime"
-                                       type="date" placeholder="入住时间" />
-                            </td>
-                        </tr>
-                    </table>
-                </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>离店时间</th>
-                            <td>
-                                <input name="leaveTime" class="px min-today" id="leaveTime"
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">入住时间</div>
+                                <div class="item-input">
+                                    <input name="arriveTime" class="px min-today"
+
+                                           :min="today"
+                                           v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"
+                                           v-model="order.arriveTime"
+                                           type="date" placeholder="入住时间" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">离店时间</div>
+                            <div class="item-input">
+                                <input name="leaveTime" class="px min-today"
                                        :min="minLeaveDate"
                                        v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"
                                        v-model="order.leaveTime"
                                        type="date" placeholder="离店时间" />
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>类型</th>
-                            <td class="userinfo">{{room.roomType}}</td>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">类型</div>
+                                <div class="item-input">
+                                    {{room.roomType}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">预订数量</div>
+                                <div class="item-input">
+                                    <select name="orderNum" class="dropdown-select"
+                                            v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"
+                                            v-model="order.orderNum">
+                                        <option v-for="n in 20" :value="n+1">{{n+1}}</option>
 
-                        </tr>
-                    </table>
-                </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>预订数量</th>
-                            <td>
-                                <select name="orderNum" class="dropdown-select" id="orderNum"
-                                        v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"
-                                        v-model="order.orderNum">
-                                    <option v-for="n in 20" :value="n+1">{{n+1}}</option>
-
-                                </select></td>
-                        </tr>
-                    </table>
-                </li>
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th>单价</th>
-                            <td class="userinfo price">￥{{room.totalPrice}}</td>
-                        </tr>
-                    </table>
-                </li>
-
-
-
-
-                <li class="nob">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
-                        <tr>
-                            <th valign="middle" class="thtop">备注</th>
-                            <td>
-                                <textarea name="remark" class="pxtextarea"
-                                          style="height: 99px; overflow-y: visible"
-                                          v-model="order.remark"
-                                          id="remark" placeholder="请输入备注信息"></textarea></td>
-                        </tr>
-                    </table>
-                </li>
-            </ul>
-            <!--<div>-->
-            <!--<span v-if="$roomValidation.id.required">Required Your ID.</span>-->
-            <!--<span v-if="$validation.id.minlength">Your ID is too short.</span>-->
-            <!--<span v-if="$validation.id.maxlength">Your ID is too long.</span>-->
-            <!--</div>-->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">单价</div>
+                                <div class="item-input">
+                                    ￥{{room.totalPrice}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">备注</div>
+                                <div class="item-input">
+                                     <textarea name="remark" class="pxtextarea"
+                                               style="height: 99px; overflow-y: visible"
+                                               v-model="order.remark"
+                                               placeholder="请输入备注信息"></textarea>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-50" v-if="order.status==0||order.status==2"><a href="#" class="button button-big button-fill button-danger">取消订单</a></div>
+                    <div  :class="[order.status==-1?'col-100':'col-50']"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+                </div>
+            </div>
             <div class="footReturn" style="margin-bottom: 50px;">
                 <li class="footerbtn" v-if="order.status==0||order.status==2">
                     <input  class="del right3"
-                           type="button" value="取消订单"  > </li>
+                            type="button" value="取消订单"  > </li>
                 <li :class="[order.status==-1?'full-btn':'footerbtn']" >
                     <input id="showcard" class="submit" style="width: 100%"
                            type="submit" value="提交订单" v-if="$roomValidation.valid">
@@ -641,11 +818,138 @@
 
             </div>
 
+            <!--<ul class="round">-->
+                <!--<li class="title mb"><span class="none">请认真填写在线订单</span></li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>预订人</th>-->
+                            <!--<td>-->
+                                <!--<input name="oderName" type="text" class="px" id="oderName"-->
+                                       <!--v-validate:oderName="['required']" v-model="order.orderUser.userName"-->
+                                       <!--placeholder="请输入您的真实姓名" /></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>身份证号</th>-->
+                            <!--<td>-->
+                                <!--<input name="identityNumber" type="text" class="px"-->
+                                       <!--v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }-->
+                                       <!--, idcard: { rule: true, message: '请输入正确的身份证号' } }"-->
+                                       <!--id="identityNumber" v-model="order.orderUser.userIdcard"-->
+                                       <!--placeholder="请输入您的身份证号" /></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>联系电话</th>-->
+                            <!--<td>-->
+                                <!--<input name="tel" type="tel" class="px" id="tel"-->
+                                       <!--v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }-->
+                                       <!--, mobile: { rule: true, message: '请输入正确的手机号' } }"-->
+                                       <!--v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" /></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>入住时间</th>-->
+                            <!--<td>-->
+                                <!--<input name="arriveTime" class="px min-today"-->
+                                       <!--id="arriveTime"-->
+                                       <!--:min="today"-->
+                                       <!--v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"-->
+                                       <!--v-model="order.arriveTime"-->
+                                       <!--type="date" placeholder="入住时间" />-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>离店时间</th>-->
+                            <!--<td>-->
+                                <!--<input name="leaveTime" class="px min-today" id="leaveTime"-->
+                                       <!--:min="minLeaveDate"-->
+                                       <!--v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"-->
+                                       <!--v-model="order.leaveTime"-->
+                                       <!--type="date" placeholder="离店时间" />-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>类型</th>-->
+                            <!--<td class="userinfo">{{room.roomType}}</td>-->
+
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>预订数量</th>-->
+                            <!--<td>-->
+                                <!--<select name="orderNum" class="dropdown-select" id="orderNum"-->
+                                        <!--v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"-->
+                                        <!--v-model="order.orderNum">-->
+                                    <!--<option v-for="n in 20" :value="n+1">{{n+1}}</option>-->
+
+                                <!--</select></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th>单价</th>-->
+                            <!--<td class="userinfo price">￥{{room.totalPrice}}</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+
+
+
+
+                <!--<li class="nob">-->
+                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
+                        <!--<tr>-->
+                            <!--<th valign="middle" class="thtop">备注</th>-->
+                            <!--<td>-->
+                                <!--<textarea name="remark" class="pxtextarea"-->
+                                          <!--style="height: 99px; overflow-y: visible"-->
+                                          <!--v-model="order.remark"-->
+                                          <!--id="remark" placeholder="请输入备注信息"></textarea></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+            <!--</ul>-->
+
+            <!--<div class="footReturn" style="margin-bottom: 50px;">-->
+                <!--<li class="footerbtn" v-if="order.status==0||order.status==2">-->
+                    <!--<input  class="del right3"-->
+                           <!--type="button" value="取消订单"  > </li>-->
+                <!--<li :class="[order.status==-1?'full-btn':'footerbtn']" >-->
+                    <!--<input id="showcard" class="submit" style="width: 100%"-->
+                           <!--type="submit" value="提交订单" v-if="$roomValidation.valid">-->
+                <!--</li>-->
+
+
+
+            <!--</div>-->
+
 
         </form>
     </validator>
-
-
 
 
 </template>
