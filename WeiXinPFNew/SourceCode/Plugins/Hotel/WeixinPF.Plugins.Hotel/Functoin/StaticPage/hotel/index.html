@@ -805,18 +805,18 @@
                     <div  :class="[order.status==-1?'col-100':'col-50']"><a href="#" class="button button-big button-fill button-success">提交</a></div>
                 </div>
             </div>
-            <div class="footReturn" style="margin-bottom: 50px;">
-                <li class="footerbtn" v-if="order.status==0||order.status==2">
-                    <input  class="del right3"
-                            type="button" value="取消订单"  > </li>
-                <li :class="[order.status==-1?'full-btn':'footerbtn']" >
-                    <input id="showcard" class="submit" style="width: 100%"
-                           type="submit" value="提交订单" v-if="$roomValidation.valid">
-                </li>
+            <!--<div class="footReturn" style="margin-bottom: 50px;">-->
+                <!--<li class="footerbtn" v-if="order.status==0||order.status==2">-->
+                    <!--<input  class="del right3"-->
+                            <!--type="button" value="取消订单"  > </li>-->
+                <!--<li :class="[order.status==-1?'full-btn':'footerbtn']" >-->
+                    <!--<input id="showcard" class="submit" style="width: 100%"-->
+                           <!--type="submit" value="提交订单" v-if="$roomValidation.valid">-->
+                <!--</li>-->
 
 
 
-            </div>
+            <!--</div>-->
 
             <!--<ul class="round">-->
                 <!--<li class="title mb"><span class="none">请认真填写在线订单</span></li>-->
