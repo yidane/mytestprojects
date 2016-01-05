@@ -2,7 +2,7 @@
 
 Vue.validator('idcard', function (val) {
     val = val.toUpperCase();
-    //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
+    //身份证号码为15位或�?18位，15位时全为数字�?18位前17位为数字，最后一位是校验位，可能为数字或字符X�?
     return (/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(val));
 })
 
@@ -22,11 +22,22 @@ var vm = new Vue({
         wid:0,
         openid:'',
         hotel: {},
-        room: {},
-        order:{
-            id:0
+        room: {
+            totalPrice:0,
+            costPrice:0,
+            roomType:''
         },
-        orderCount:0
+        order:{
+            id:0,
+            discount:0,
+            totalPrice:0,
+            costPrice:0,
+            orderNum:1,
+            status:-1,
+            orderUser:{}
+        },
+        orderCount:0,
+        swiper:{}
     },
     components: {
         'app-header': {
@@ -52,7 +63,9 @@ var vm = new Vue({
 
         },
         'onimgDataDispatch': function (data) {
+
             this.imgDatas = data;
+            this.changeImgs();
         },
         'onviewOrderCreateDispatch': function (data) {
             //this.currentView='view-orderCreate';
@@ -95,7 +108,11 @@ var vm = new Vue({
           var self = this;
           this.getHotelData(function (data) {
               self.hotel = data;
-
+              self.hotel.imgDatas = [{name: 1, url: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'}
+              ];
+              self.imgDatas=[{name: 1, url: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'}
+              ];
+              self.changeImgs();
           });
           this.getOrderCount(function (data) {
               self.orderCount = data;
@@ -129,30 +146,42 @@ var vm = new Vue({
                     // handle error
                 });
         },
-
+        getQueryString:function(){
+            var wid=getQueryStringByName('wid');
+            var hotelId=getQueryStringByName('hotelId');
+            var openid=getQueryStringByName('openid');
+            if(!openid)
+            {
+                console.log( '没有openid，跳转获�?');
+                document.location.href=this.getOpenid();
+                return;
+            }
+            this.getQueryData(wid,hotelId,openid);
+        },
         initSwiper: function () {
-            var mySwiper = new Swiper('.swiper-container', {
-                direction: 'vertical',
-                loop: true,
-
-                // �����Ҫ��ҳ��?
+            this.swiper = new Swiper('.swiper-container', {
                 pagination: '.swiper-pagination',
-
-                // �����Ҫǰ�����˰��?
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-
-                // �����Ҫ������?
-                scrollbar: '.swiper-scrollbar'
+                centeredSlides: true,
+                paginationClickable: true
             });
+        },
+        changeImgs:function(){
+            this.swiper.removeAllSlides(); //�Ƴ�ȫ��
+            var data=[];
+            for(var i=0;i<this.imgDatas.length;i++)
+            {
+                var div='<div class="swiper-slide"><img class="header-img" src="'+ this.imgDatas[i].url +'"></div>';
+                data.push(div);
+            }
+            this.swiper.appendSlide(data);
         },
 
         getOpenid:function(){
           //todo:跳转获取openid
           var openid='test';
-          return document.location.href+"/"+openid;
+          return document.location.href+"&openid="+openid;
         },
-        getQueryData:function(wid,hotelId, openid,orderId) {
+        getQueryData:function(wid,hotelId, openid) {
           if (!this.openid) {
             this.openid = openid;
             this.wid = wid;
@@ -160,42 +189,29 @@ var vm = new Vue({
             this.getData();
           }
 
-
-
-          if (orderId) {
-            this.order.id=orderId;
-          }
         },
-
-
-
-
-
         initRouter:function(){
             var self = this;
           var routes = {
-            '/:wid/:hotelId': function (wid,hotelId) {
-           console.log( '没有openid，跳转获取');
-           document.location.href=self.getOpenid();
-           },
-            '/:wid/:hotelId/:openid': function (wid,hotelId, openid) {
-              router.setRoute('/room'+'/'+wid+'/'+hotelId+'/'+openid);
-           },
 
-          '/room/:wid/:hotelId/:openid': function (wid,hotelId,openid) {
-            self.getQueryData(wid,hotelId,openid);
+
+          '/room': function () {
+
             self.currentView='view-room';
         },
-        '/about/:wid/:hotelId/:openid': function (wid,hotelId,openid) {
-          self.getQueryData(wid,hotelId,openid);
+        '/about': function () {
+
             self.currentView='view-about';
       },
-      '/order/:wid/:hotelId/:openid': function (wid,hotelId,openid) {
-        self.getQueryData(wid,hotelId,openid);
+      '/order': function () {
+
         self.currentView='view-order';
       },
-      '/order/:orderId/:wid/:hotelId/:openid': function (orderId,wid,hotelId,openid) {
-        self.getQueryData(wid,hotelId,openid,orderId);
+      '/order/:orderId': function (orderId) {
+
+          if (orderId) {
+              self.order.id=orderId;
+          }
         self.currentView='view-orderCreate';
 
       }
@@ -203,14 +219,17 @@ var vm = new Vue({
 
           var router = Router(routes);
 
-          router.init();
+          router.init('/room');
         }
     },
 
     ready: function () {
         var self = this;
+        this.initSwiper();
+        this.getQueryString();
         this.initRouter();
-       
+
+
 
 
     }

@@ -1,16 +1,12 @@
 ﻿<!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-validate="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>在线预订</title>
-    <meta name="viewport"
-          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <!--    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.8/css/sm.min.css">-->
-    <!--<link href="../../Common/CSS/weui/weui.min.css" rel="stylesheet"/>-->
-    <link href="../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title></title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.9/css/sm.min.css">
+    <!--<link href="../../../Common/CSS/weui/weui.min.css" rel="stylesheet"/>-->
+    <link href="../../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>
 
 
     <link href="CSS/hotels.css" rel="stylesheet"/>
@@ -81,8 +77,8 @@
             <li>
                 <a id="about" href="#about"
                    :class="{ active: currentView=='view-about' }"
-
-                  :href="'#/about'+'/'+wid+'/'+hotel.id+'/'+openid"
+                    @click="notify"
+                  :href="'#/about'"
                         >
                     <img src="images/xxyX63YryG.png">
 
@@ -92,8 +88,8 @@
             <li>
                 <a id="choice" href="#room"
                    :class="{ active: currentView=='view-room' }"
-
-  :href="'#/room'+'/'+wid+'/'+hotel.id+'/'+openid"
+                   @click="notify"
+  :href="'#/room'"
                         >
                     <img src="images/3YQLfzfunJ.png">
 
@@ -102,8 +98,8 @@
             </li>
             <li>
                 <a id="myOrder" href="#order"
-                   :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }"
-                  :href="'#/order'+'/'+wid+'/'+hotel.id+'/'+openid"
+                   :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }" @click="notify"
+                  :href="'#/order'"
                         >
                     <span class="num">{{orderCount}}</span> <img src="images/s22KaR0Wtc.png">
 
@@ -149,17 +145,13 @@
     <div class="swiper-container">
         <div class="swiper-wrapper">
 
-            <div class="swiper-slide" v-for="imgData in viewImages">
+            <!--<div class="swiper-slide" v-for="imgData in viewImages">-->
 
-                <img class="header-img" :src="imgData.img">
-            </div>
+                <!--<img class="header-img" :src="imgData.img">-->
+            <!--</div>-->
         </div>
-        <!-- 如果需要分页器 -->
+        <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
-
-        <!-- 如果需要导航按钮 -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
     </div>
 
 
@@ -204,7 +196,7 @@
         <li class="title"><span class="none">{{hotel.name}}</span></li>
         <li class="dandanb" v-for="room in rooms">
 
-            <a :href="'#/order'+'/0/'+wid+'/'+hotel.id+'/'+openid" v-on:click="viewOrderCreate(room)" >
+            <a :href="'#/order'+'/0'" @click="viewOrderCreate(room)" >
                 <span>
                     <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tbody>
@@ -244,7 +236,7 @@
         <!--超过预订时间3天后自动删掉预订记录，免得占服务器资源！-->
         <ul class="round" v-for="order in orders">
             <li class="title">
-                <a :href="'#/order'+'/'+ order.id +'/'+wid+'/'+hotel.id+'/'+openid" v-on:click="viewOrderCreate(order)">
+                <a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)">
                 <span><b>{{order.orderTime}}</b>
                     <b style='margin-left:0.5rem'>{{hotel.name}}</b></span></a>
             </li>
@@ -302,7 +294,7 @@
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
+            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
             <span class="gpd-item-title-name">商品说明</span>
             <span class="gp-icons gpd-up-icon"></span>
         </h2>
@@ -311,7 +303,7 @@
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
+            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
             <span class="gpd-item-title-name">使用须知</span>
             <span class="gp-icons gpd-up-icon"></span>
 
@@ -326,7 +318,7 @@
 
     <div class="detailcontent">
         <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="www.cloudorg.com.cn/weixin/restaurant/images/undo.png" />
+            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/undo.png" />
             <span class="gpd-item-title-name">退单规则</span>
             <span class="gp-icons gpd-up-icon"></span>
 
@@ -507,16 +499,16 @@
 
 </template>
 
-<script src="../../Common/JS/zepto.min.js"></script>
-<!--<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>-->
-<!--<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.8/js/sm.min.js' charset='utf-8'></script>-->
+<!--<script src="../../../Common/JS/zepto.min.js"></script>-->
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.9/js/sm.min.js' charset='utf-8'></script>
 <!--<script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>-->
-<script src="../../Common/JS/vue/vue.min.js"></script>
+<script src="../../../Common/JS/vue/vue.min.js"></script>
 <!--<script src="https://cdn.jsdelivr.net/vue.router/0.5.2/vue-router.min.js"></script>-->
-<script src="../../Common/JS/vue/vue-resource.min.js"></script>
+<script src="../../../Common/JS/vue/vue-resource.min.js"></script>
 <script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>
 <!-- <script src="../../Common/JS/vue/vue-validator.min.js"></script> -->
-<script src="../../Common/web_component/swiper/swiper.min.js"></script>
+<script src="../../../Common/web_component/swiper/swiper.min.js"></script>
 <script src="https://rawgit.com/flatiron/director/master/build/director.min.js">
    </script>
 

@@ -108,12 +108,22 @@ var ViewOrderCreate = Vue.extend({
                             
 
 
+                    },function(){
+                        if(self.$activateValidator)
+                        {
+                            self.$activateValidator();
+                        }
                     });
                     // if(self.$activateValidator)
                     // {
                     //     self.$activateValidator();
                     // }
 
+                },function(){
+                    if(self.$activateValidator)
+                    {
+                        self.$activateValidator();
+                    }
                 });
             }
             //如果房间对象存在，则获取详细的房间信息
@@ -128,7 +138,19 @@ var ViewOrderCreate = Vue.extend({
                         }
 
                     }
+                },function(){
+                    if(self.$activateValidator)
+                    {
+                        self.$activateValidator();
+                    }
                 });
+            }
+            else
+            {
+                if(self.$activateValidator)
+                {
+                    self.$activateValidator();
+                }
             }
         },
         getNoOrderData: function () {
@@ -144,6 +166,7 @@ var ViewOrderCreate = Vue.extend({
                     status:-1,
                     orderUser:{}
                 };
+
                 this.getOrderLastUserInfo(function(data){
                     self.order.orderUser=data;
                      self.$dispatch('onOrderDispatch', self.order);
@@ -151,7 +174,7 @@ var ViewOrderCreate = Vue.extend({
                 });
             }
         },
-        getRoom: function (callBack) {
+        getRoom: function (callBack,errorCallBack) {
             // GET request
             this.$http.get('/Functoin/Service/HotelService.asmx/GetRoom',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id,roomId:this.room.id}).then(function (response) {
@@ -160,7 +183,7 @@ var ViewOrderCreate = Vue.extend({
                     }
 
                 }, function (response) {
-
+                    errorCallBack(response);
                     // handle error
                 });
         },
@@ -176,7 +199,7 @@ var ViewOrderCreate = Vue.extend({
                     // handle error
                 });
         },
-        getOrder: function (callBack) {
+        getOrder: function (callBack,errorCallBack) {
             // GET request
             this.$http.get('/Functoin/Service/HotelService.asmx/GetOrder',
                 {wid:this.wid,openid:this.openid,orderId:this.order.id}).then(function (response) {
@@ -185,7 +208,7 @@ var ViewOrderCreate = Vue.extend({
                     }
 
                 }, function (response) {
-
+                    errorCallBack(response);
                     // handle error
                 });
         },

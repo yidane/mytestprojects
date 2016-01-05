@@ -8,6 +8,7 @@
             // if (this.currentView.trim()) {
             //     this.$dispatch('onChangeView', this.currentView);
             // }
+            this.$dispatch('onimgDataDispatch', this.hotel.imgDatas);
         }
     }
 })

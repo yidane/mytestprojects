@@ -92,35 +92,35 @@
     <Content Include="Common\web_component\swiper\swiper.min.css" />
     <Content Include="Common\web_component\swiper\swiper.min.js" />
     <Content Include="Functoin\BackPage\Hotel\commodity_detail.aspx" />
-    <Content Include="Functoin\StaticPage\CSS\hotelOrderList.css" />
-    <Content Include="Functoin\StaticPage\CSS\hotels.css" />
-    <Content Include="Functoin\StaticPage\CSS\mystyle.css" />
-    <Content Include="Functoin\StaticPage\CSS\orderstyle.css" />
-    <Content Include="Functoin\StaticPage\hotelCreate.html" />
-    <Content Include="Functoin\StaticPage\Images\3YQLfzfunJ.png" />
-    <Content Include="Functoin\StaticPage\Images\9uKCykhUSh.png" />
-    <Content Include="Functoin\StaticPage\Images\addr.png" />
-    <Content Include="Functoin\StaticPage\Images\arrow3.png" />
-    <Content Include="Functoin\StaticPage\Images\detail.png" />
-    <Content Include="Functoin\StaticPage\Images\RTqs2yHIc9.jpg" />
-    <Content Include="Functoin\StaticPage\Images\s22KaR0Wtc.png" />
-    <Content Include="Functoin\StaticPage\Images\tel.png" />
-    <Content Include="Functoin\StaticPage\Images\xxyX63YryG.png" />
-    <Content Include="Functoin\StaticPage\index.html" />
+    <Content Include="Functoin\StaticPage\hotel\CSS\hotelOrderList.css" />
+    <Content Include="Functoin\StaticPage\hotel\CSS\hotels.css" />
+    <Content Include="Functoin\StaticPage\hotel\CSS\mystyle.css" />
+    <Content Include="Functoin\StaticPage\hotel\CSS\orderstyle.css" />
+    <Content Include="Functoin\StaticPage\hotel\hotelCreate.html" />
+    <Content Include="Functoin\StaticPage\hotel\Images\3YQLfzfunJ.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\9uKCykhUSh.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\addr.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\arrow3.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\detail.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\RTqs2yHIc9.jpg" />
+    <Content Include="Functoin\StaticPage\hotel\Images\s22KaR0Wtc.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\tel.png" />
+    <Content Include="Functoin\StaticPage\hotel\Images\xxyX63YryG.png" />
+    <Content Include="Functoin\StaticPage\hotel\index.html" />
     <Content Include="Common\JS\vue\vue-resource.min.js" />
     <Content Include="Common\JS\vue\vue-router.min.js" />
     <Content Include="Common\JS\vue\vue.min.js" />
-    <Content Include="Functoin\StaticPage\JS\index\v-index-viewAbout.js" />
-    <Content Include="Functoin\StaticPage\JS\index\v-index-viewOrder.js" />
-    <Content Include="Functoin\StaticPage\JS\index\v-index-viewOrderCreate.js" />
-    <Content Include="Functoin\StaticPage\JS\index\v-index-viewRoom.js" />
-    <Content Include="Functoin\StaticPage\JS\iscroll.js" />
-    <Content Include="Functoin\StaticPage\JS\jquery.min.js" />
-    <Content Include="Functoin\StaticPage\JS\index\main.js" />
-    <Content Include="Functoin\StaticPage\JS\paycallback.js" />
-    <Content Include="Functoin\StaticPage\JS\plugback.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewAbout.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewOrder.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewOrderCreate.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewRoom.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\iscroll.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\jquery.min.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\index\main.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\paycallback.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\plugback.js" />
     <Content Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx" />
-    <Content Include="Functoin\StaticPage\JS\index\v-index-appFooter.js" />
+    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-appFooter.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -138,9 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Functoin\Service\HotelService.asmx" />
-    <Content Include="Functoin\StaticPage\TestPage.html" />
+    <Content Include="Functoin\StaticPage\hotel\TestPage.html" />
     <Content Include="Global.asax" />
-    <Content Include="Functoin\StaticPage\routeTest.html" />
+    <Content Include="Functoin\StaticPage\hotel\routeTest.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

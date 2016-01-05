@@ -12,6 +12,7 @@ var ViewRoom = Vue.extend({
         var self = this;
         this.getData(function (data) {
             self.rooms=data;
+
         });
         done();
     },
@@ -48,7 +49,7 @@ var ViewRoom = Vue.extend({
                  status:-1,
                  orderUser:this.order.orderUser
                };
-
+                this.$dispatch('onimgDataDispatch', room.roomImgs);
                  this.$dispatch('onOrderDispatch', this.order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }
