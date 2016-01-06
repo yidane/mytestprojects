@@ -10,8 +10,8 @@
     <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.9/css/sm.min.css">
     <!--<link href="../../../Common/CSS/weui/weui.min.css" rel="stylesheet"/>-->
-    <link href="../../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>
-
+    <!--<link href="../../../Common/web_component/swiper/swiper.min.css" rel="stylesheet"/>-->
+    <link href="//cdn.bootcss.com/Swiper/3.2.7/css/swiper.min.css" rel="stylesheet">
 
     <!--<link href="CSS/hotels.css" rel="stylesheet"/>-->
     <style>
@@ -676,7 +676,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">预订人</div>
                                 <div class="item-input">
-                                    <input name="oderName" type="text" class="px"
+                                    <input name="oderName" type="text"
                                            v-validate:oderName="['required']" v-model="order.orderUser.userName"
                                            placeholder="请输入您的真实姓名" />
                                 </div>
@@ -689,7 +689,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">身份证号</div>
                                 <div class="item-input">
-                                    <input name="identityNumber" type="text" class="px"
+                                    <input name="identityNumber" type="text"
                                            v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
                                        , idcard: { rule: true, message: '请输入正确的身份证号' } }"
                                             v-model="order.orderUser.userIdcard"
@@ -704,7 +704,7 @@
                         <div class="item-inner">
                             <div class="item-title label">联系电话</div>
                             <div class="item-input">
-                                <input name="tel" type="tel" class="px"
+                                <input name="tel" type="tel"
                                        v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
                                        , mobile: { rule: true, message: '请输入正确的手机号' } }"
                                        v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
@@ -718,7 +718,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">入住时间</div>
                                 <div class="item-input">
-                                    <input name="arriveTime" class="px min-today"
+                                    <input name="arriveTime"
 
                                            :min="today"
                                            v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"
@@ -735,7 +735,7 @@
                         <div class="item-inner">
                             <div class="item-title label">离店时间</div>
                             <div class="item-input">
-                                <input name="leaveTime" class="px min-today"
+                                <input name="leaveTime"
                                        :min="minLeaveDate"
                                        v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"
                                        v-model="order.leaveTime"
@@ -761,7 +761,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">预订数量</div>
                                 <div class="item-input">
-                                    <select name="orderNum" class="dropdown-select"
+                                    <select name="orderNum"
                                             v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"
                                             v-model="order.orderNum">
                                         <option v-for="n in 20" :value="n+1">{{n+1}}</option>
@@ -788,7 +788,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">备注</div>
                                 <div class="item-input">
-                                     <textarea name="remark" class="pxtextarea"
+                                     <textarea name="remark"
                                                style="height: 99px; overflow-y: visible"
                                                v-model="order.remark"
                                                placeholder="请输入备注信息"></textarea>
@@ -801,151 +801,13 @@
             </div>
             <div class="content-block">
                 <div class="row">
-                    <div class="col-50" v-if="order.status==0||order.status==2"><a href="#" class="button button-big button-fill button-danger">取消订单</a></div>
-                    <div  :class="[order.status==-1?'col-100':'col-50']"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+                    <div class="col-50" v-if="order.status==0||order.status==2">
+                        <a href="#" class="button button-big button-fill button-danger">取消订单</a></div>
+                    <div  :class="[order.status==-1?'col-100':'col-50']">
+                        <a href="#" class="button button-big button-fill button-success">提交</a></div>
                 </div>
             </div>
-            <!--<div class="footReturn" style="margin-bottom: 50px;">-->
-                <!--<li class="footerbtn" v-if="order.status==0||order.status==2">-->
-                    <!--<input  class="del right3"-->
-                            <!--type="button" value="取消订单"  > </li>-->
-                <!--<li :class="[order.status==-1?'full-btn':'footerbtn']" >-->
-                    <!--<input id="showcard" class="submit" style="width: 100%"-->
-                           <!--type="submit" value="提交订单" v-if="$roomValidation.valid">-->
-                <!--</li>-->
 
-
-
-            <!--</div>-->
-
-            <!--<ul class="round">-->
-                <!--<li class="title mb"><span class="none">请认真填写在线订单</span></li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>预订人</th>-->
-                            <!--<td>-->
-                                <!--<input name="oderName" type="text" class="px" id="oderName"-->
-                                       <!--v-validate:oderName="['required']" v-model="order.orderUser.userName"-->
-                                       <!--placeholder="请输入您的真实姓名" /></td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>身份证号</th>-->
-                            <!--<td>-->
-                                <!--<input name="identityNumber" type="text" class="px"-->
-                                       <!--v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }-->
-                                       <!--, idcard: { rule: true, message: '请输入正确的身份证号' } }"-->
-                                       <!--id="identityNumber" v-model="order.orderUser.userIdcard"-->
-                                       <!--placeholder="请输入您的身份证号" /></td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>联系电话</th>-->
-                            <!--<td>-->
-                                <!--<input name="tel" type="tel" class="px" id="tel"-->
-                                       <!--v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }-->
-                                       <!--, mobile: { rule: true, message: '请输入正确的手机号' } }"-->
-                                       <!--v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" /></td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>入住时间</th>-->
-                            <!--<td>-->
-                                <!--<input name="arriveTime" class="px min-today"-->
-                                       <!--id="arriveTime"-->
-                                       <!--:min="today"-->
-                                       <!--v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"-->
-                                       <!--v-model="order.arriveTime"-->
-                                       <!--type="date" placeholder="入住时间" />-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>离店时间</th>-->
-                            <!--<td>-->
-                                <!--<input name="leaveTime" class="px min-today" id="leaveTime"-->
-                                       <!--:min="minLeaveDate"-->
-                                       <!--v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"-->
-                                       <!--v-model="order.leaveTime"-->
-                                       <!--type="date" placeholder="离店时间" />-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>类型</th>-->
-                            <!--<td class="userinfo">{{room.roomType}}</td>-->
-
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>预订数量</th>-->
-                            <!--<td>-->
-                                <!--<select name="orderNum" class="dropdown-select" id="orderNum"-->
-                                        <!--v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"-->
-                                        <!--v-model="order.orderNum">-->
-                                    <!--<option v-for="n in 20" :value="n+1">{{n+1}}</option>-->
-
-                                <!--</select></td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th>单价</th>-->
-                            <!--<td class="userinfo price">￥{{room.totalPrice}}</td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-
-
-
-
-                <!--<li class="nob">-->
-                    <!--<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">-->
-                        <!--<tr>-->
-                            <!--<th valign="middle" class="thtop">备注</th>-->
-                            <!--<td>-->
-                                <!--<textarea name="remark" class="pxtextarea"-->
-                                          <!--style="height: 99px; overflow-y: visible"-->
-                                          <!--v-model="order.remark"-->
-                                          <!--id="remark" placeholder="请输入备注信息"></textarea></td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</li>-->
-            <!--</ul>-->
-
-            <!--<div class="footReturn" style="margin-bottom: 50px;">-->
-                <!--<li class="footerbtn" v-if="order.status==0||order.status==2">-->
-                    <!--<input  class="del right3"-->
-                           <!--type="button" value="取消订单"  > </li>-->
-                <!--<li :class="[order.status==-1?'full-btn':'footerbtn']" >-->
-                    <!--<input id="showcard" class="submit" style="width: 100%"-->
-                           <!--type="submit" value="提交订单" v-if="$roomValidation.valid">-->
-                <!--</li>-->
-
-
-
-            <!--</div>-->
 
 
         </form>
@@ -957,13 +819,15 @@
 <!--<script src="../../../Common/JS/zepto.min.js"></script>-->
 <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.9/js/sm.min.js' charset='utf-8'></script>
-<!--<script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>-->
-<script src="../../../Common/JS/vue/vue.min.js"></script>
+<script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>
+<!--<script src="../../../Common/JS/vue/vue.min.js"></script>-->
 <!--<script src="https://cdn.jsdelivr.net/vue.router/0.5.2/vue-router.min.js"></script>-->
-<script src="../../../Common/JS/vue/vue-resource.min.js"></script>
-<script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/0.6.0/vue-resource.min.js"></script>
+<!--<script src="../../../Common/JS/vue/vue-resource.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/vue.validator/2.0.0-alpha.8/vue-validator.min.js"></script>-->
 <!-- <script src="../../Common/JS/vue/vue-validator.min.js"></script> -->
-<script src="../../../Common/web_component/swiper/swiper.min.js"></script>
+<!--<script src="../../../Common/web_component/swiper/swiper.min.js"></script>-->
+<script src="//cdn.bootcss.com/Swiper/3.2.7/js/swiper.min.js"></script>
 <script src="https://rawgit.com/flatiron/director/master/build/director.min.js">
    </script>
 
@@ -983,6 +847,7 @@
         return result[1];
 
     }
+
 </script>
 <script src="JS/index/v-index-appFooter.js"></script>
 <script src="JS/index/v-index-viewAbout.js"></script>
