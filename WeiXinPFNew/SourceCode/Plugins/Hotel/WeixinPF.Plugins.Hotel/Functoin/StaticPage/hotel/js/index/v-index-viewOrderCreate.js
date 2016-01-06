@@ -47,6 +47,30 @@ var ViewOrderCreate = Vue.extend({
             }
             leave.setDate(leave.getDate() + 1);
             return leave.toJSON().split('T')[0];
+        },
+        idCardRequired:function(){
+            var result=false;
+            if(this.order.orderUser&&this.order.orderUser.userIdcard)
+            {
+                if(!this.isEmpty(this.order.orderUser.userIdcard)&&this.isIdCard(this.order.orderUser.userIdcard))
+                {
+                    result=true;
+                }
+            }
+
+            return result;
+        },
+        userMobileRequired:function(){
+            var result=false;
+            if(this.order.orderUser&&this.order.orderUser.userMobile)
+            {
+                if(!this.isEmpty(this.order.orderUser.userMobile)&&this.isMobile(this.order.orderUser.userMobile))
+                {
+                    result=true;
+                }
+            }
+
+            return result;
         }
 
 
@@ -87,6 +111,16 @@ var ViewOrderCreate = Vue.extend({
         //});
     },
     methods: {
+        isIdCard:function(val){
+            return (/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(val));
+        },
+        isMobile:function(val){
+            return (/^1[3|4|5|8|9][0-9]\d{8}$/ .test(val));
+        },
+        isEmpty:function(val){
+           var str= val.trim();
+           return (!str || 0 === str.length);
+        },
         activateValidator:function(){
             //if(this.$activateValidator)
             //{

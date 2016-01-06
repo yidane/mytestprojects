@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>在线预订管理</title>
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.5.9/css/sm.min.css">
+	<link href="css/orderlist.css" rel="stylesheet"/>
+    <style>
+         .personal_center #myTab0 li {
+             width: 33.333333333%;
+         }
+     </style>
+</head>
+
+<body >
+<div id="div_app" class="page">
+    <app-header :header-title="headerTitle"></app-header>
+    <view-order></view-order>
+</div>
+
+
+
+
+<template id="app-header-template">
+    <style>
+
+        .bar{
+            -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+            box-shadow: 0 0 1px rgba(0,0,0,.85);
+        }
+        .bar-nav
+        {
+            -webkit-box-shadow: 0 1px 6px #ccc;
+            box-shadow: 0 1px 6px #ccc;
+        }
+        .bar-tab
+        {
+            -webkit-box-shadow: 0 -5px 6px #ccc;
+            box-shadow: 0 -5px 6px #ccc;
+        }
+        .bar .fa{
+            position: relative;
+            z-index: 20;
+            padding: .6rem .1rem;
+
+            line-height: 1.2rem;
+        }
+
+        .bar-tab .tab-item .fa {
+            top: .15rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .bar-tab .tab-item .fa~.tab-label {
+            display: block;
+            font-size: .55rem;
+            position: relative;
+            top: .15rem;
+        }
+    </style>
+
+    <style>
+
+
+        .total-money {
+
+            font-size: .85rem;
+            font-weight: bold;
+        }
+        .color-red {
+            color: #FF0000;
+        }
+        .cost-money {
+            color: #666666;
+            font-size: .65rem;
+            line-height: 1.3rem;
+            text-decoration: line-through;
+        }
+    </style>
+
+    <style>
+        .badge-status
+        {
+            /* position: absolute; */
+            /* top: .1rem; */
+            /* left: 50%; */
+            /* z-index: 100; */
+            height: .8rem;
+            min-width: .8rem;
+            /* padding: 0 .2rem; */
+            font-size: .6rem;
+            /* line-height: .8rem; */
+            color: #fff;
+            vertical-align: top;
+            /* background: red; */
+            border-radius: .5rem;
+            margin-left: .1rem;
+        }
+
+        .badge-success
+        {
+            background-color: #04BE02;
+        }
+        .badge-danger
+        {
+            background-color: #EF4F4F;
+        }
+
+        .badge-warn
+        {
+            background-color: #FFBE00;
+        }
+    </style>
+    <header class="bar bar-nav">
+
+        <div class="buttons-row">
+            <a href="#all" class="tab-link active button">全部</a>
+            <a href="#pay" class="tab-link button">已付款</a>
+            <a href="#refund" class="tab-link button">退单</a>
+        </div>
+    </header>
+</template>
+<template id="view-order-template">
+
+    <div class="personal_info">
+        <div class="order_list">
+            <ul>
+
+                <li v-for="order in orders">
+                    <a href="hotel_order_edite.aspx?dingdanid={{order.id}}&hotelid={{order.hotelId}}&roomid={{order.roomId}}&openid={{openid}}">
+                    <div class="info_01">
+                        <h3>{{order.hotelName}}</h3>
+                        <p>实付<b>￥{{order.orderPrice}}</b>共<b>{{order.orderNum}}</b>件商品</p>
+                        <span class="wave_blue_icon"></span>
+                        </div>
+                    <div class="info_02">
+                        <dl>
+                            <dd><b class="i_gray_icon"></b>订单编号{{order.orderNumber}}</dd>
+                            <dd><b class="time_gray_icon"></b>购票日期{{order.orderTime}}</dd>
+                        </dl>
+                    </div>
+                    <div class="info_03">
+                        <span>{{order.statusName}}</span>
+                    </div>
+                    </a>
+                </li>
+                </ul>
+        </div>
+    </div>
+
+</template>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.5.9/js/sm.min.js' charset='utf-8'></script>
+<script src="http://cdn.jsdelivr.net/vue/1.0.13/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/0.6.0/vue-resource.min.js"></script>
+<script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
+</body>
+</html>

@@ -2,17 +2,17 @@
 Vue.http.options.root = '/Functoin';
 Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk';
 
-//ȫ�����ã�vue-validator
-Vue.validator('idcard', function (val) {
-    val = val.toUpperCase();
-    //身份证号码为15位或�?18位，15位时全为数字�?18位前17位为数字，最后一位是校验位，可能为数字或字符X�?
-    return (/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(val));
-})
-
-Vue.validator('mobile', function (val) {
-
-    return (/^1[3|4|5|8|9][0-9]\d{8}$/ .test(val));
-})
+////ȫ�����ã�vue-validator
+//Vue.validator('idcard', function (val) {
+//    val = val.toUpperCase();
+//    //身份证号码为15位或�?18位，15位时全为数字�?18位前17位为数字，最后一位是校验位，可能为数字或字符X�?
+//    return (/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(val));
+//})
+//
+//Vue.validator('mobile', function (val) {
+//
+//    return (/^1[3|4|5|8|9][0-9]\d{8}$/ .test(val));
+//})
 
 
 var vm = new Vue({

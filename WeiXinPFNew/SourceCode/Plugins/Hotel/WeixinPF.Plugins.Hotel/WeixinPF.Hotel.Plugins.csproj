@@ -95,16 +95,17 @@
     <Content Include="Functoin\StaticPage\hotel\css\hotelOrderList.css" />
     <Content Include="Functoin\StaticPage\hotel\css\hotels.css" />
     <Content Include="Functoin\StaticPage\hotel\css\mystyle.css" />
+    <Content Include="Functoin\StaticPage\hotel\css\orderlist.css" />
     <Content Include="Functoin\StaticPage\hotel\css\orderstyle.css" />
-    <Content Include="Functoin\StaticPage\hotel\Images\3YQLfzfunJ.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\9uKCykhUSh.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\addr.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\arrow3.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\detail.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\RTqs2yHIc9.jpg" />
-    <Content Include="Functoin\StaticPage\hotel\Images\s22KaR0Wtc.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\tel.png" />
-    <Content Include="Functoin\StaticPage\hotel\Images\xxyX63YryG.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\3YQLfzfunJ.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\9uKCykhUSh.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\addr.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\arrow3.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\detail.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\RTqs2yHIc9.jpg" />
+    <Content Include="Functoin\StaticPage\hotel\images\s22KaR0Wtc.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\tel.png" />
+    <Content Include="Functoin\StaticPage\hotel\images\xxyX63YryG.png" />
     <Content Include="Functoin\StaticPage\hotel\index.html" />
     <Content Include="Common\JS\vue\vue-resource.min.js" />
     <Content Include="Common\JS\vue\vue-router.min.js" />
@@ -114,12 +115,9 @@
     <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewOrder.js" />
     <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewOrderCreate.js" />
     <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewRoom.js" />
-    <Content Include="Functoin\StaticPage\hotel\js\iscroll.js" />
-    <Content Include="Functoin\StaticPage\hotel\js\jquery.min.js" />
     <Content Include="Functoin\StaticPage\hotel\js\index\main.js" />
-    <Content Include="Functoin\StaticPage\hotel\js\paycallback.js" />
-    <Content Include="Functoin\StaticPage\hotel\js\plugback.js" />
     <Content Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx" />
+    <Content Include="Functoin\StaticPage\hotel\userOrder.html" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -172,6 +170,7 @@
     <Folder Include="Functoin\BackPage\Hotel\CSS\" />
     <Folder Include="Functoin\BackPage\Hotel\Image\" />
     <Folder Include="Functoin\BackPage\Hotel\JS\" />
+    <Folder Include="Functoin\StaticPage\hotel\js\userOrder\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

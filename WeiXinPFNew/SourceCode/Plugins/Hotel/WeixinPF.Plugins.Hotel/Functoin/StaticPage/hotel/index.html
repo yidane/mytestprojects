@@ -677,8 +677,11 @@
                                 <div class="item-title label">预订人</div>
                                 <div class="item-input">
                                     <input name="oderName" type="text"
-                                           v-validate:oderName="['required']" v-model="order.orderUser.userName"
+
                                            placeholder="请输入您的真实姓名" />
+                                    <span class="button-dark">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -690,8 +693,7 @@
                                 <div class="item-title label">身份证号</div>
                                 <div class="item-input">
                                     <input name="identityNumber" type="text"
-                                           v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
-                                       , idcard: { rule: true, message: '请输入正确的身份证号' } }"
+
                                             v-model="order.orderUser.userIdcard"
                                            placeholder="请输入您的身份证号" />
                                 </div>
@@ -705,8 +707,8 @@
                             <div class="item-title label">联系电话</div>
                             <div class="item-input">
                                 <input name="tel" type="tel"
-                                       v-validate:identityNumber="{  required: { rule: true, message: '该项为必填项' }
-                                       , mobile: { rule: true, message: '请输入正确的手机号' } }"
+
+
                                        v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
                             </div>
                         </div>
@@ -721,7 +723,7 @@
                                     <input name="arriveTime"
 
                                            :min="today"
-                                           v-validate:arriveTime="{  required: { rule: true, message: '该项为必填项' }}"
+
                                            v-model="order.arriveTime"
                                            type="date" placeholder="入住时间" />
                                 </div>
@@ -737,7 +739,7 @@
                             <div class="item-input">
                                 <input name="leaveTime"
                                        :min="minLeaveDate"
-                                       v-validate:leaveTime="{  required: { rule: true, message: '该项为必填项' }}"
+
                                        v-model="order.leaveTime"
                                        type="date" placeholder="离店时间" />
                             </div>
@@ -762,7 +764,7 @@
                                 <div class="item-title label">预订数量</div>
                                 <div class="item-input">
                                     <select name="orderNum"
-                                            v-validate:orderNum="{  required: { rule: true, message: '该项为必填项' }}"
+
                                             v-model="order.orderNum">
                                         <option v-for="n in 20" :value="n+1">{{n+1}}</option>
 
