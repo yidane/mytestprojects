@@ -92,11 +92,10 @@
     <Content Include="Common\web_component\swiper\swiper.min.css" />
     <Content Include="Common\web_component\swiper\swiper.min.js" />
     <Content Include="Functoin\BackPage\Hotel\commodity_detail.aspx" />
-    <Content Include="Functoin\StaticPage\hotel\CSS\hotelOrderList.css" />
-    <Content Include="Functoin\StaticPage\hotel\CSS\hotels.css" />
-    <Content Include="Functoin\StaticPage\hotel\CSS\mystyle.css" />
-    <Content Include="Functoin\StaticPage\hotel\CSS\orderstyle.css" />
-    <Content Include="Functoin\StaticPage\hotel\hotelCreate.html" />
+    <Content Include="Functoin\StaticPage\hotel\css\hotelOrderList.css" />
+    <Content Include="Functoin\StaticPage\hotel\css\hotels.css" />
+    <Content Include="Functoin\StaticPage\hotel\css\mystyle.css" />
+    <Content Include="Functoin\StaticPage\hotel\css\orderstyle.css" />
     <Content Include="Functoin\StaticPage\hotel\Images\3YQLfzfunJ.png" />
     <Content Include="Functoin\StaticPage\hotel\Images\9uKCykhUSh.png" />
     <Content Include="Functoin\StaticPage\hotel\Images\addr.png" />
@@ -110,17 +109,17 @@
     <Content Include="Common\JS\vue\vue-resource.min.js" />
     <Content Include="Common\JS\vue\vue-router.min.js" />
     <Content Include="Common\JS\vue\vue.min.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewAbout.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewOrder.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewOrderCreate.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\index\v-index-viewRoom.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\iscroll.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\jquery.min.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\index\main.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\paycallback.js" />
-    <Content Include="Functoin\StaticPage\hotel\JS\plugback.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\index\v-index-appFooter.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewAbout.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewOrder.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewOrderCreate.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewRoom.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\iscroll.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\jquery.min.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\index\main.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\paycallback.js" />
+    <Content Include="Functoin\StaticPage\hotel\js\plugback.js" />
     <Content Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx" />
-    <Content Include="Functoin\StaticPage\JS\index\v-index-appFooter.js" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -139,9 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Functoin\Service\HotelService.asmx" />
-    <Content Include="Functoin\StaticPage\hotel\TestPage.html" />
-    <Content Include="Functoin\StaticPage\hotel\routeTest.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Functoin\BackPage\Hotel\commodity_detail.aspx.cs">
