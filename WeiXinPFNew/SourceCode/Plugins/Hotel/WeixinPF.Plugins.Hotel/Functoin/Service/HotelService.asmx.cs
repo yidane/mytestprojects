@@ -23,6 +23,8 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
     // [System.Web.Script.Services.ScriptService]
     public class HotelService : System.Web.Services.WebService
     {
+        private const int WaitSeconds = 10000000;
+
         [WebMethod]
         public void Test()
         {
@@ -62,7 +64,6 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void GetHotelInfo(int wid, string openid, int hotelId)
         {
-
             AjaxResult ajaxResult;
             try
             {
@@ -80,7 +81,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                     }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                     AjaxResult.Succeed(responseData) :
@@ -119,7 +120,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                     }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                   AjaxResult.Succeed(responseData) :
@@ -159,7 +160,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                       AjaxResult.Succeed(responseData) :
@@ -195,7 +196,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 if (asyncResult.IsCompleted)
                 {
@@ -245,7 +246,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                           AjaxResult.Succeed(responseData.OrderId) :
@@ -284,7 +285,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                           AjaxResult.Succeed(responseData.Order) :
@@ -323,7 +324,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                               AjaxResult.Succeed(responseData.Orders) :
@@ -362,7 +363,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                         }, this);
 
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
+                asyncWaitHandle.WaitOne(WaitSeconds);
 
                 ajaxResult = asyncResult.IsCompleted ?
                               AjaxResult.Succeed(responseData.Orders.Count) :

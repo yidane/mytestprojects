@@ -13,7 +13,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
     public class GetOrderHandler : IHandleMessages<GetOrderRequest>
     {
-        public readonly IBus _bus;
+        private readonly IBus _bus;
 
         public GetOrderHandler(IBus bus)
         {
@@ -23,6 +23,11 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         {
             var service = new HotelOrderService();
             var order = service.GetModel(message.OrderId);
+
+            if (order == null)
+            {
+                throw new Exception("订单不存在或者已删除。");
+            }
 
             _bus.Reply(new GetOrderResponse() { Order = order.MapTo<OrderDto>() });
         }
