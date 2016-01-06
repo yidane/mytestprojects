@@ -22,7 +22,18 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         public void Handle(GetOrderListRequest message)
         {
             var service = new HotelOrderService();
-            var orderDtos = service.GetModelList(string.Format("hotelid={0}",message.HotelId)).MapTo<List<OrderDto>>();
+
+            string strWhere = "1=1 ";
+            if (!string.IsNullOrEmpty(message.OpenId))
+            {
+                strWhere = string.Format("And OpenId='{0}", message.OpenId);
+            }
+
+            if (message.HotelId > 0)
+            {
+                strWhere += string.Format("And hotelid={0}", message.HotelId);
+            }
+            var orderDtos = service.GetModelList(strWhere).MapTo<List<OrderDto>>();
 
             _bus.Reply(new GetOrderListResponse() { Orders = orderDtos });
         }
