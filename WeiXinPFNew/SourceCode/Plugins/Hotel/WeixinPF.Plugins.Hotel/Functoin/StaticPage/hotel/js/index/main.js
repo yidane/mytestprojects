@@ -15,6 +15,7 @@ Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk';
 //})
 
 
+
 var vm = new Vue({
     el: '#div_app',
 
@@ -238,4 +239,4 @@ var vm = new Vue({
 
 
     }
-})
+});

@@ -11,4 +11,4 @@
             this.$dispatch('onimgDataDispatch', this.hotel.imgDatas);
         }
     }
-})
+});

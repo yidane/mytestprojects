@@ -264,4 +264,4 @@ var ViewOrderCreate = Vue.extend({
             });
         }
     }
-})
+});

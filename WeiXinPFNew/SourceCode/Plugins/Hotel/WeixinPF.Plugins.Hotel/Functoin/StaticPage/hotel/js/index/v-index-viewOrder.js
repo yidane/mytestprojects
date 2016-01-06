@@ -22,7 +22,7 @@ var ViewOrder = Vue.extend({
     //    done()
     //},
     ready:function(){
-        var self = this
+        var self = this;
         this.getOrderList(function (data) {
 
             self.orders = data;
@@ -58,4 +58,4 @@ var ViewOrder = Vue.extend({
             }
         }
     }
-})
+});

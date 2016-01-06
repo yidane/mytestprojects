@@ -55,4 +55,4 @@ var ViewRoom = Vue.extend({
             }
         }
     }
-})
+});
