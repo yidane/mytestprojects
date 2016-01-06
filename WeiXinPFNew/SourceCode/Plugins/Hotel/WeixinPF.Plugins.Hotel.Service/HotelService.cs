@@ -43,7 +43,7 @@ namespace WeixinPF.Hotel.Plugins.Service
         {
             BusEntry.Start();
             //加载AutoMapper配置。
-            AutoMapperConfiguration.Configure();
+            //AutoMapperConfiguration.Configure();
             Console.WriteLine("Service start");
 
         }

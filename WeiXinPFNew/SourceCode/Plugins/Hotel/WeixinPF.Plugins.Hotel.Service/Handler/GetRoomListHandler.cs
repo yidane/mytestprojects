@@ -4,11 +4,12 @@ using AutoMapper;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Handler.Base;
 using WeixinPF.Messages.RequestResponse;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
-    public class GetRoomListHandler : IHandleMessages<GetRoomListRequest>
+    public class GetRoomListHandler : BaseHandler, IHandleMessages<GetRoomListRequest>
     {
         private readonly IBus _bus;
 

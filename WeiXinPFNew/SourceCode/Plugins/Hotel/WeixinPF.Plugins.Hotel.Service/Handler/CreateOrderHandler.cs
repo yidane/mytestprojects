@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Handler.Base;
 using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Messages.RequestResponse;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
-    public class CreateOrderHandler : IHandleMessages<CreateOrderRequest>
+    public class CreateOrderHandler :BaseHandler, IHandleMessages<CreateOrderRequest>
     {
         private readonly IBus _bus;
 

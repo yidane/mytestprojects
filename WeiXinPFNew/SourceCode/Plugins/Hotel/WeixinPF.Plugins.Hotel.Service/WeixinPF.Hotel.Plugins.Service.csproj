@@ -85,6 +85,7 @@
     <Compile Include="Application\Service\RoomPictureService.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\Profiles\OrderProfile.cs" />
+    <Compile Include="Handler\Base\BaseHandler.cs" />
     <Compile Include="Handler\CreateOrderHandler.cs" />
     <Compile Include="Handler\GetByIdentifyingCodeIdHandler.cs" />
     <Compile Include="Application\Service\RoomService.cs" />

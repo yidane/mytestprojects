@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using NServiceBus;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Handler.Base;
 using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Messages.RequestResponse.Dtos;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
-    public class GetOrderUserInfoHandler : IHandleMessages<GetOrderUserInfoRequest>
+    public class GetOrderUserInfoHandler : BaseHandler, IHandleMessages<GetOrderUserInfoRequest>
     {
         public readonly IBus _bus;
 

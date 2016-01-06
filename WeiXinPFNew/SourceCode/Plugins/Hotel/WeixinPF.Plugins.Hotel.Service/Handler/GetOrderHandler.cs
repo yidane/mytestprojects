@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
+using WeixinPF.Hotel.Plugins.Service.Handler.Base;
 using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Messages.RequestResponse.Dtos;
 
 namespace WeixinPF.Hotel.Plugins.Service.Handler
 {
-    public class GetOrderHandler : IHandleMessages<GetOrderRequest>
+    public class GetOrderHandler : BaseHandler, IHandleMessages<GetOrderRequest>
     {
         private readonly IBus _bus;
 
@@ -23,12 +24,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         {
             var service = new HotelOrderService();
             var order = service.GetModel(message.OrderId);
-
-            if (order == null)
-            {
-                throw new Exception("订单不存在或者已删除。");
-            }
-
+            
             _bus.Reply(new GetOrderResponse() { Order = order.MapTo<OrderDto>() });
         }
     }
