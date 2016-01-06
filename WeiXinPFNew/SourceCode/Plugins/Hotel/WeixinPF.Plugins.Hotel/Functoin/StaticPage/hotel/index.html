@@ -530,6 +530,14 @@
         .full-btn{
             width: 100%;
         }
+
+        .item-input .item-input-icon
+        {
+            position: absolute;
+            right: 0;
+            top: .3rem;
+            font-size: 1.2rem;
+        }
     </style>
 
     <style>
@@ -677,9 +685,10 @@
                                 <div class="item-title label">预订人</div>
                                 <div class="item-input">
                                     <input name="oderName" type="text"
-
+                                           v-model="order.orderUser.userName"
                                            placeholder="请输入您的真实姓名" />
-                                    <span class="button-dark">
+                                    <span class="button-danger item-input-icon"
+                                          v-if="isEmpty(order.orderUser.userName)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
                                 </div>
@@ -696,6 +705,10 @@
 
                                             v-model="order.orderUser.userIdcard"
                                            placeholder="请输入您的身份证号" />
+                                     <span class="button-danger item-input-icon"
+                                           v-if="idCardRequired||isEmpty(order.orderUser.userIdcard)">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -710,6 +723,10 @@
 
 
                                        v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
+                                <span class="button-danger item-input-icon"
+                                      v-if="userMobileRequired||isEmpty(order.orderUser.userMobile)">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -726,6 +743,10 @@
 
                                            v-model="order.arriveTime"
                                            type="date" placeholder="入住时间" />
+                                     <span class="button-danger item-input-icon"
+                                           v-if="isEmpty(order.arriveTime)">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -742,6 +763,10 @@
 
                                        v-model="order.leaveTime"
                                        type="date" placeholder="离店时间" />
+                                  <span class="button-danger item-input-icon"
+                                        v-if="isEmpty(order.leaveTime)">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -806,7 +831,9 @@
                     <div class="col-50" v-if="order.status==0||order.status==2">
                         <a href="#" class="button button-big button-fill button-danger">取消订单</a></div>
                     <div  :class="[order.status==-1?'col-100':'col-50']">
-                        <a href="#" class="button button-big button-fill button-success">提交</a></div>
+                        <a href="#" class="button button-big button-fill button-success"
+                                :class="[canSubmit?'button-success':'disabled']"
+                                >提交</a></div>
                 </div>
             </div>
 

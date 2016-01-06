@@ -52,7 +52,7 @@ var ViewOrderCreate = Vue.extend({
             var result=false;
             if(this.order.orderUser&&this.order.orderUser.userIdcard)
             {
-                if(!this.isEmpty(this.order.orderUser.userIdcard)&&this.isIdCard(this.order.orderUser.userIdcard))
+                if(!this.isIdCard(this.order.orderUser.userIdcard))
                 {
                     result=true;
                 }
@@ -60,16 +60,33 @@ var ViewOrderCreate = Vue.extend({
 
             return result;
         },
-        userMobileRequired:function(){
+        userMobdileRequired:function(){
             var result=false;
             if(this.order.orderUser&&this.order.orderUser.userMobile)
             {
-                if(!this.isEmpty(this.order.orderUser.userMobile)&&this.isMobile(this.order.orderUser.userMobile))
+                if(!this.isMobile(this.order.orderUser.userMobile))
                 {
                     result=true;
                 }
             }
 
+            return result;
+        },
+        canSubmit:function(){
+            var result=true;
+                if(this.isEmpty(this.order.orderUser.userName)
+                    ||this.isEmpty(this.order.orderUser.userIdcard)
+                    ||this.isEmpty(this.order.orderUser.userMobile)
+                    ||this.isEmpty(this.order.arriveTime)
+                    ||this.isEmpty(this.order.leaveTime)
+                )
+                {
+                    return false;
+                }
+                else if(this.userMobileRequired||this.idCardRequired)
+                {
+                    return false;
+                }
             return result;
         }
 
@@ -90,7 +107,7 @@ var ViewOrderCreate = Vue.extend({
                     this.getNoOrderData();
                 }
             }
-        }
+        },
     },
     activate: function (done) {
         var self = this;
@@ -118,6 +135,10 @@ var ViewOrderCreate = Vue.extend({
             return (/^1[3|4|5|8|9][0-9]\d{8}$/ .test(val));
         },
         isEmpty:function(val){
+            if(!val)
+            {
+                return true;
+            }
            var str= val.trim();
            return (!str || 0 === str.length);
         },
