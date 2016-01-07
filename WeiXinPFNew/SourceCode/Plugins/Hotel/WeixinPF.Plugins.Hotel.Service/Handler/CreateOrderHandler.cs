@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NServiceBus;
 using WeixinPF.Common;
+using WeixinPF.Common.Enum;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Hotel.Plugins.Service.Handler.Base;
 using WeixinPF.Hotel.Plugins.Service.Models;
@@ -31,6 +32,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
             entity.roomType = message.RoomType;
             entity.createDate = DateTime.Now;
             entity.orderTime = DateTime.Now;
+            entity.orderStatus = HotelStatusManager.OrderStatus.Pending.StatusId;
             entity.orderNumber = "H" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + Utils.Number(5);
             int id;
             if (entity.id == 0)
