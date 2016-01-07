@@ -27,12 +27,12 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
             string strWhere = "1=1 ";
             if (!string.IsNullOrEmpty(message.OpenId))
             {
-                strWhere = string.Format("And OpenId='{0}", message.OpenId);
+                strWhere = string.Format("And OpenId='{0}' ", message.OpenId);
             }
 
             if (message.HotelId > 0)
             {
-                strWhere += string.Format("And hotelid={0}", message.HotelId);
+                strWhere += string.Format(" And hotelid={0}", message.HotelId);
             }
             var orderDtos = service.GetModelList(strWhere).MapTo<List<OrderDto>>();
 
