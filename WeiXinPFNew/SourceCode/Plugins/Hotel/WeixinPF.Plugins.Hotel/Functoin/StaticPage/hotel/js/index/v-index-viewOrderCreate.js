@@ -2,7 +2,7 @@
 
 var ViewOrderCreate = Vue.extend({
     template: '#view-orderCreate-template',
-    props: ['wid','openid','hotel','room','order'],
+    props: ['wid','openid','hotel','room','order','orderCount'],
     //data: function () {
     //    return {
     //        order:{
@@ -11,6 +11,42 @@ var ViewOrderCreate = Vue.extend({
     //    }
     //},
     computed: {
+        formCanEdit:function(){
+            var result=false;
+            if(!this.order||!this.order.status||this.order.status<=1)
+            {
+                result=true;
+            }
+
+            return result;
+        },
+        formCanSubmit:function(){
+            var result=false;
+            if(this.room.id&&this.room.id>0&&this.order&&this.order.status<=0)
+            {
+                result=true;
+            }
+
+            return result;
+        },
+        formCanCancel:function(){
+            var result=false;
+            if(this.order&&this.order.status>=0&&this.order.status<=2)
+            {
+                result=true;
+            }
+
+            return result;
+        },
+        formCanPay:function(){
+            var result=false;
+            if(this.order&&this.order.status==1)
+            {
+                result=true;
+            }
+
+            return result;
+        },
         dateSpan:function(){
             var days=1;
             if(this.order.arriveTime&&this.order.leaveTime)
@@ -60,7 +96,7 @@ var ViewOrderCreate = Vue.extend({
 
             return result;
         },
-        userMobdileRequired:function(){
+        userMobileRequired:function(){
             var result=false;
             if(this.order.orderUser&&this.order.orderUser.userMobile)
             {
@@ -107,7 +143,7 @@ var ViewOrderCreate = Vue.extend({
                     this.getNoOrderData();
                 }
             }
-        },
+        }
     },
     activate: function (done) {
         var self = this;
@@ -120,8 +156,8 @@ var ViewOrderCreate = Vue.extend({
     ready:function(){
         var self = this;
        this.getOrdrderData();
-
-        this.toggleItemShow();
+        this.initItemCollapse();
+        //this.toggleItemShow();
 
         //$('[type="date"].min-today').prop('min', function(){
         //    return new Date().toJSON().split('T')[0];
@@ -132,7 +168,7 @@ var ViewOrderCreate = Vue.extend({
             return (/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(val));
         },
         isMobile:function(val){
-            return (/^1[3|4|5|8|9][0-9]\d{8}$/ .test(val));
+            return (/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8]))\d{8}$/ .test(val));
         },
         isEmpty:function(val){
             if(!val)
@@ -158,11 +194,13 @@ var ViewOrderCreate = Vue.extend({
                 hasOrder=true;
                 this.getOrder(function(data){
                     self.order=data;
-
+                    self.formReadonly();
+                    self.room.id=data.roomId;
                     self.getRoom(function (data) {
                         self.room=data;
-
-                            self.activateValidator();
+                        self.$dispatch('onimgDataDispatch', self.room.roomPictures);
+                        $.hidePreloader();
+                        self.activateValidator();
                             
 
 
@@ -182,6 +220,7 @@ var ViewOrderCreate = Vue.extend({
             else if(this.room&&this.room.id){
                 this.getRoom(function (data) {
                     self.room=data;
+                    $.hidePreloader();
                     if(!hasOrder)
                     {
                         self.activateValidator();
@@ -198,7 +237,7 @@ var ViewOrderCreate = Vue.extend({
         },
         getNoOrderData: function () {
             var self = this;
-            if(!this.order||!this.order.id)
+            if(!this.order||!this.order.id||this.order.id<=0)
             {
                 self.order={
                     id:0,
@@ -212,6 +251,7 @@ var ViewOrderCreate = Vue.extend({
 
                 this.getOrderLastUserInfo(function(data){
                     self.order.orderUser=data;
+                    $.hidePreloader();
                      self.$dispatch('onOrderDispatch', self.order);
                     //self.$activateValidator();
                 });
@@ -248,22 +288,39 @@ var ViewOrderCreate = Vue.extend({
                 {wid:this.wid,openid:this.openid,orderId:this.order.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
-                    }
 
+                    }
+                    else{
+                        $.toast("获取订单失败!");
+                    }
                 }, function (response) {
                     errorCallBack(response);
                     // handle error
                 });
         },
         onSubmit: function () {
-
+            var self=this;
+            if(!this.canSubmit)
+            {
+                return;
+            }
             var jsonOrder=JSON.stringify(this.order);
 
             this.$http.post('Service/HotelService.asmx/SaveOrder',
-                {wid:this.wid,openid:this.openid,hotelId:this.hotel.id,roomId:this.room.id,order:jsonOrder})
+                {   wid:this.wid,
+                    openid:this.openid,
+                    hotelId:this.hotel.id,
+                    roomId:this.room.id,
+                    roomType:this.room.roomType,
+                    order:jsonOrder})
                 .then(function (response) {
-                    if (response.data) {
-                        alert('保存成功！');
+                    if (response.data&&response.data.success) {
+                        self.orderCount++;
+                        self.updateOrderNumber(self.orderCount);
+                        $.toast("保存成功!");
+                    }
+                    else{
+                        $.toast("保存失败!");
                     }
                 }, function (response) {
 
@@ -283,6 +340,16 @@ var ViewOrderCreate = Vue.extend({
                 zThisParent.toggleClass("gdp-curr");
                 zThisParent.siblings(".detailcontent").removeClass("gdp-curr");
             });
+        },
+        initItemCollapse:function(){
+            $(".item-content.item-collapse .item-header").click(function () {
+                var zThis = $(this).parent();
+
+                zThis.toggleClass("in");
+            });
+        },
+        formReadonly:function(){
+            $("form").find('input,select,textarea').prop("readonly",!this.formCanEdit);
         }
     }
 });

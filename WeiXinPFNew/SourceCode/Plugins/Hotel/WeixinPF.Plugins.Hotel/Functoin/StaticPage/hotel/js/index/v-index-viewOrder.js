@@ -24,7 +24,7 @@ var ViewOrder = Vue.extend({
     ready:function(){
         var self = this;
         this.getOrderList(function (data) {
-
+            $.hidePreloader();
             self.orders = data;
             self.updateOrderNumber(data.length);
         });
@@ -37,6 +37,7 @@ var ViewOrder = Vue.extend({
 
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
+
                     }
 
             }, function (response) {

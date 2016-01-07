@@ -17,7 +17,7 @@ namespace WeixinPF.Common.Extension
 
             context.Response.ContentType = "application/json";
             context.Response.Write(JSONHelper.Serialize(data, dateTimeFormat));
-            context.Response.End();
+//            context.Response.End();
         }
     }
 }

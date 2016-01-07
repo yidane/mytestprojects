@@ -12,7 +12,7 @@ var ViewRoom = Vue.extend({
         var self = this;
         this.getData(function (data) {
             self.rooms=data;
-
+            $.hidePreloader();
         });
         done();
     },
@@ -23,6 +23,7 @@ var ViewRoom = Vue.extend({
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
+
                     }
 
 
@@ -49,7 +50,7 @@ var ViewRoom = Vue.extend({
                  status:-1,
                  orderUser:this.order.orderUser
                };
-                this.$dispatch('onimgDataDispatch', room.roomImgs);
+                this.$dispatch('onimgDataDispatch', room.roomPictures);
                  this.$dispatch('onOrderDispatch', this.order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }

@@ -138,7 +138,7 @@
     <app-image :view-images="imgDatas"></app-image>
     <component    :is="currentView" keep-alive transition="fade"
                transition-mode="out-in" :current-view="currentView"
-               :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order">
+               :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order" :order-count="orderCount">
         <!-- 组件在 vm.currentview 变化时改变 -->
     </component>
 </div>
@@ -212,18 +212,15 @@
     <style>
         .badge-status
         {
-            /* position: absolute; */
-            /* top: .1rem; */
-            /* left: 50%; */
-            /* z-index: 100; */
+
             height: .8rem;
             min-width: .8rem;
-            /* padding: 0 .2rem; */
-            font-size: .6rem;
-            /* line-height: .8rem; */
+
+            font-size: .7rem;
+
             color: #fff;
-            vertical-align: top;
-            /* background: red; */
+            vertical-align: middle;
+
             border-radius: .5rem;
             margin-left: .1rem;
         }
@@ -323,28 +320,11 @@
         }
     </style>
 
-    <!--<div class="cardexplain">-->
-
-
-        <!--<ul class="round">-->
-            <!--<li class="addr">-->
-                <!--<a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>-->
-            <!--</li>-->
-            <!--<li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>-->
-        <!--</ul>-->
-        <!--<div class="detailcontent">-->
-            <!--<h2>商家介绍</h2>-->
-
-            <!--<div class="content">-->
-                <!--<span class="jieshao">{{hotel.jieShao}}</span>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
     <div class="content-block-title">商家信息</div>
     <div class="list-block">
         <ul>
-            <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}" class="item-content item-link">
+            <a href="www.cloudorg.com.cn/weixin/map/map_address.html?type=hotel&id={{hotel.id}}" class="item-content item-link">
                 <div class="item-media"><i class="fa fa-map-o"></i></div>
                 <div class="item-inner">
                     <div class="item-title">{{hotel.address}}</div>
@@ -363,7 +343,7 @@
     <div class="card">
         <div class="card-header">商家介绍</div>
         <div class="card-content">
-            <div class="card-content-inner">{{hotel.jieShao}}</div>
+            <div class="card-content-inner">{{{hotel.introduction}}}</div>
         </div>
     </div>
 </template>
@@ -410,7 +390,7 @@
     <div class="list-block media-list">
         <ul>
             <li v-for="room in rooms">
-                <a :href="'#/order'+'/0'" @click="viewOrderCreate(room)" class="item-link item-content">
+                <a :href="'#/order'+'/0'+'/'+room.id" @click="viewOrderCreate(room)" class="item-link item-content">
                     <div class="item-media"><img :src="room.roomImgs[0].url" style='width: 4rem;'></div>
                     <div class="item-inner">
                         <div class="item-title-row">
@@ -420,7 +400,7 @@
                                 <span class="cost-money">￥{{room.totalPrice}}</span>
                             </div>
                         </div>
-                        <div class="item-text">{{room.detail}}</div>
+                        <div class="item-text">{{{room.detail}}}</div>
                     </div>
                 </a>
             </li>
@@ -461,8 +441,11 @@
 <template id="view-order-template">
     <div class="card" v-for="order in orders">
         <div class="card-header">
-            <span><b>{{order.orderTime}}</b>
-                    <b style='margin-left:0.5rem'>{{hotel.name}}</b></span>
+            <span>
+                <b>{{order.orderTime}}</b>
+                <b style='margin-left:0.5rem'>{{hotel.name}}</b>
+                 <b style='margin-left:0.5rem'>{{order.roomType}}</b>
+            </span>
         </div>
         <div class="card-content">
             <div class="list-block media-list">
@@ -480,9 +463,12 @@
 
                                          </div>
                                 </div>
-                                <div class="item-subtitle"><span class="badge badge-status badge-success">{{order.statusName}}</span></div>
+                                <div class="item-subtitle">
+                                    <span class="badge badge-status badge-success">{{order.statusName}}</span>
+                                    <span>{{order.orderTime}}</span>
+                                </div>
                                 <div class="item-text">
-                                     {{order.orderTime}}
+
 
 
 
@@ -579,71 +565,169 @@
         }
     </style>
 
-    <ul class="round" style="display: none">
-        <li class="biaotou bradius pad">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>类型</td>
-                    <td class="yuanjia">原价</td>
-                    <td class="youhuijia">优惠价</td>
-                </tr>
-            </table>
-        </li>
-        <li><span class="noneorder">
-                <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td>{{room.roomType}}</td>
-                        <td class="yuanjia">￥{{room.costPrice}}</td>
-                        <td class="youhuijia">￥{{room.totalPrice}}</td>
-                    </tr>
-                </table>
-            </span>
-        </li>
+    <!-- collapse-->
+    <style>
+        .list-block .item-content
+        {
+            padding-left:0;
+        }
+        .list-block .item-content>.item-header, .list-block .item-content>.item-media,
+        .list-block .item-content>.item-inner:first-child
+        {
+            padding-left:.75rem;
+        }
 
-    </ul>
-
-    <div class="detailcontent">
-        <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
-            <span class="gpd-item-title-name">商品说明</span>
-            <span class="gp-icons gpd-up-icon"></span>
-        </h2>
-        <div class="content  gpd-content">{{room.detail}} </div>
-    </div>
-
-    <div class="detailcontent">
-        <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
-            <span class="gpd-item-title-name">使用须知</span>
-            <span class="gp-icons gpd-up-icon"></span>
-
-        </h2>
-
-        <div class="content gpd-content">
-            {{room.instruction}}
-
-        </div>
-    </div>
+        .item-media .fa{
+            margin-top: .15rem;
+        }
 
 
-    <div class="detailcontent">
-        <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/undo.png" />
-            <span class="gpd-item-title-name">退单规则</span>
-            <span class="gp-icons gpd-up-icon"></span>
+        .list-block .item-media+.item-inner {
+            margin-left: .25rem;
+        }
+        .item-collapse .item-inner .item-collapse-icon{
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
 
-        </h2>
+        }
+       .list-block  .item-collapse .item-inner .item-collapse-icon{
+            color: #c9c9ce;
+            font-size: 1.4em;
+            position: absolute;
+            top: .55rem;
+            right: .52rem;
+        }
+        .list-block  .item-content.item-collapse
+        {
+            display: block;
+        }
 
-        <div class="content gpd-content">
+        .list-block  .item-content.item-collapse .item-header
+        {
+            color: inherit;
+            text-overflow: ellipsis;
+            display: flex;
+        }
 
-            {{room.refundRule}}
-        </div>
-    </div>
+        .list-block  .item-content.item-collapse.in .item-header {
+            background-color: #DFDFDF;
+        }
+
+
+        .item-collapse.in  .item-inner  .item-collapse-icon:after
+        {
+            content: "\f106";
+        }
+
+        .item-collapse  .item-inner  .item-collapse-icon:after
+        {
+            content: "\f107";
+        }
+
+        .item-collapse .item-collapse-content {
+            position: relative;
+            display: none;
+            padding: 8px 15px;
+
+            overflow: hidden;
+            background: #fff;
+            -webkit-transition: height .35s ease;
+            -o-transition: height .35s ease;
+            transition: height .35s ease;
+        }
+        .list-block .item-content.item-collapse .item-header+.item-collapse-content {
+            margin-left: .75rem;
+        }
+        .item-collapse .item-collapse-content
+        {
+            display: none;
+        }
+
+        .item-collapse.in .item-collapse-content
+        {
+            display: block;
+        }
+
+        .item-collapse.in .item-collapse-content:after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 15px;
+            height: 1px;
+            content: '';
+            background-color: #c8c7cc;
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+        }
+
+
+    </style>
+
 
     <div class="list-block">
         <ul>
+            <li class="item-content">
+                <div class="item-inner">
+                    <div class="item-title">房间类型</div>
+                    <div class="item-after">{{room.roomType}}</div>
+                </div>
+            </li>
+            <li class="item-content">
+                <div class="item-inner">
+                    <div class="item-title">原价</div>
+                    <div class="item-after">￥{{room.costPrice}}</div>
+                </div>
+            </li>
+            <li class="item-content">
+                <div class="item-inner">
+                    <div class="item-title">优惠价</div>
+                    <div class="item-after">￥{{room.totalPrice}}</div>
+                </div>
+            </li>
+            <li class="item-content item-collapse">
+                <a class="item-header">
+                <div class="item-media"><i class="fa fa-info-circle  fa-lg"></i></div>
+                <div class="item-inner">
+                    <div class="item-title">商品说明</div>
+                    <i class="item-collapse-icon"></i>
+
+                </div>
+                </a>
+                <div class="item-collapse-content">
+                    {{{room.detail}}}
+                </div>
+            </li>
+            <li class="item-content item-collapse">
+                <a class="item-header">
+                    <div class="item-media"><i class="fa fa-question-circle  fa-lg"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title">使用须知</div>
+                        <i class="item-collapse-icon"></i>
+
+                    </div>
+                </a>
+                <div class="item-collapse-content">
+                    {{{room.instruction}}}
+                </div>
+            </li>
+            <li class="item-content item-collapse">
+                <a class="item-header">
+                    <div class="item-media"><i class="fa fa-undo  fa-lg"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title">退单规则</div>
+                        <i class="item-collapse-icon"></i>
+
+                    </div>
+                </a>
+                <div class="item-collapse-content">
+                    {{{room.refundRule}}}
+                </div>
+            </li>
             <a class="item-content item-link" href="tel:{{hotel.tel}}">
-                <div class="item-media"><i class="fa fa-phone"></i></div>
+                <div class="item-media"><i class="fa fa-phone  fa-lg"></i></div>
                 <div class="item-inner">
                     <div class="item-title">{{hotel.tel}}</div>
                     <div class="item-after">电话预订</div>
@@ -657,9 +741,19 @@
 
 
 
-    <div class='alert alert-warning' role='alert'>
+    <div class='alert alert-warning' role='alert' v-if="oder.status==-1">
         <strong>提示</strong> 填写入住其中一人的真实信息即可。
     </div>
+    <div class='alert alert-warning' role='alert' v-if="oder.status==2">
+        <strong> 抱歉!</strong> 您选购的房型商家已确认无房！欢迎您重新订购。
+    </div>
+    <div class='alert alert-warning' role='alert' v-if="oder.status==1">
+        <strong> 特别提醒!</strong> 订单只为您保留1个小时，请您尽快支付！
+    </div>
+    <div class='alert alert-warning' role='alert' v-if="oder.status==3">
+        <strong> 特别提醒!</strong> 抱歉，由于景区酒店房源紧张，已付款订单不能申请退款，需电话联系酒店工作人员解决。
+    </div>
+
     <div class="footer-money">
 
         <p>
@@ -684,13 +778,17 @@
                             <div class="item-inner">
                                 <div class="item-title label">预订人</div>
                                 <div class="item-input">
-                                    <input name="oderName" type="text"
-                                           v-model="order.orderUser.userName"
-                                           placeholder="请输入您的真实姓名" />
+
+                                        <input  name="oderName" type="text"
+
+                                                v-model="order.orderUser.userName"
+                                                placeholder="请输入您的真实姓名" />
                                     <span class="button-danger item-input-icon"
                                           v-if="isEmpty(order.orderUser.userName)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
+
+
                                 </div>
                             </div>
                         </div>
@@ -815,10 +913,13 @@
                             <div class="item-inner">
                                 <div class="item-title label">备注</div>
                                 <div class="item-input">
-                                     <textarea name="remark"
-                                               style="height: 99px; overflow-y: visible"
-                                               v-model="order.remark"
-                                               placeholder="请输入备注信息"></textarea>
+
+                                           <textarea name="remark"
+
+                                                 v-model="order.remark"
+                                                 placeholder="请输入备注信息"></textarea>
+
+
                                     </select>
                                 </div>
                             </div>
@@ -828,12 +929,19 @@
             </div>
             <div class="content-block">
                 <div class="row">
-                    <div class="col-50" v-if="order.status==0||order.status==2">
-                        <a href="#" class="button button-big button-fill button-danger">取消订单</a></div>
-                    <div  :class="[order.status==-1?'col-100':'col-50']">
-                        <a href="#" class="button button-big button-fill button-success"
-                                :class="[canSubmit?'button-success':'disabled']"
-                                >提交</a></div>
+                    <div :class="[!formCanSubmit&&!formCanPay?'col-100':'col-50']" v-if="formCanCancel">
+                        <input type="button"  value="取消订单" class="button button-big button-fill button-danger">
+
+                    </div>
+                    <div  :class="[!formCanCancel?'col-100':'col-50']" v-if="formCanSubmit">
+                        <input type="submit"  value="提交" class="button button-big button-fill "
+                               :class="[canSubmit?'button-success':'disabled']">
+                        </div>
+                    <div  :class="[!formCanCancel?'col-100':'col-50']" v-if="formCanPay">
+
+                        <input type="button"  value="微信支付" class="button button-big button-fill button-success"
+                                >
+                    </div>
                 </div>
             </div>
 
