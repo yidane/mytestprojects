@@ -314,6 +314,7 @@ var ViewOrderCreate = Vue.extend({
                     roomType:this.room.roomType,
                     order:jsonOrder})
                 .then(function (response) {
+                    response.data=JSON.parse(response.data);
                     if (response.data&&response.data.success) {
                         self.orderCount++;
                         self.updateOrderNumber(self.orderCount);
