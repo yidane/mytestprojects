@@ -354,9 +354,13 @@ namespace WeixinPF.Hotel.Plugins.Service.Infrastructure
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select aa.*,bb.hotelName as hotelName FROM wx_hotel_dingdan  as aa right join wx_hotels_info as bb on aa.hotelid=bb.id ");
+            strSql.Append("select aa.*,bb.hotelName as hotelName FROM wx_hotel_dingdan  as aa right join wx_hotels_info as bb on aa.hotelid=bb.id and aa.isDelete=0 ");
 
-            strSql.Append(" and aa.openid='" + strWhere + "' and aa.isDelete='0' ");
+            if (!string.IsNullOrEmpty(strWhere))
+            {
+                strSql.Append(" Where " + strWhere);
+            }
+            //strSql.Append(" and aa.openid='" + strWhere + "' and aa.isDelete='0' ");
 
             return DbHelperSQL.Query(strSql.ToString());
         }
