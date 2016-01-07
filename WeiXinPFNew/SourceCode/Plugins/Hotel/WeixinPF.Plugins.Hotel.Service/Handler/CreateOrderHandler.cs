@@ -34,6 +34,12 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
             entity.orderTime = DateTime.Now;
             entity.orderStatus = HotelStatusManager.OrderStatus.Pending.StatusId;
             entity.orderNumber = "H" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + Utils.Number(5);
+
+            //获取房间的加个
+            var room = new RoomService().GetModel(entity.roomid);
+            entity.yuanjia = (double)room.roomPrice.Value;
+            entity.price = (double)room.salePrice;
+
             int id;
             if (entity.id == 0)
             {
