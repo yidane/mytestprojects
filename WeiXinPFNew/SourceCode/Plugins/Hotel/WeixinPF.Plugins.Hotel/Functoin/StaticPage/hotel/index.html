@@ -741,16 +741,20 @@
 
 
 
-    <div class='alert alert-warning' role='alert' v-if="oder.status==-1">
+    <div class='alert alert-warning' role='alert' v-if="order.status==-1">
         <strong>提示</strong> 填写入住其中一人的真实信息即可。
     </div>
-    <div class='alert alert-warning' role='alert' v-if="oder.status==2">
-        <strong> 抱歉!</strong> 您选购的房型商家已确认无房！欢迎您重新订购。
+    <div class='alert alert-warning' role='alert' v-if="order.status==0">
+        <strong>提示</strong> 此订单可重新修改后再提交！
     </div>
-    <div class='alert alert-warning' role='alert' v-if="oder.status==1">
+    <div class='alert alert-warning' role='alert' v-if="order.status==1">
         <strong> 特别提醒!</strong> 订单只为您保留1个小时，请您尽快支付！
     </div>
-    <div class='alert alert-warning' role='alert' v-if="oder.status==3">
+    <div class='alert alert-warning' role='alert' v-if="order.status==2">
+        <strong> 抱歉!</strong> 您选购的房型商家已确认无房！欢迎您重新订购。
+    </div>
+
+    <div class='alert alert-warning' role='alert' v-if="order.status==3">
         <strong> 特别提醒!</strong> 抱歉，由于景区酒店房源紧张，已付款订单不能申请退款，需电话联系酒店工作人员解决。
     </div>
 
