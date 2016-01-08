@@ -24,6 +24,8 @@ var ViewRoom = Vue.extend({
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
 
+                    } else{
+                        $.toast("获取房间失败!");
                     }
 
 

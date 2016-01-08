@@ -1,11 +1,11 @@
-//ȫ�����ã�vue-resource
+//ȫ�����ã�vue-resource
 Vue.http.options.root = '/Functoin';
 Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk';
 
-////ȫ�����ã�vue-validator
+////ȫ�����ã�vue-validator
 //Vue.validator('idcard', function (val) {
 //    val = val.toUpperCase();
-//    //身份证号码为15位或�?18位，15位时全为数字�?18位前17位为数字，最后一位是校验位，可能为数字或字符X�?
+//    //身份证号码为15位或�?18位，15位时全为数字�?18位前17位为数字，最后一位是校验位，可能为数字或字符X�?
 //    return (/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(val));
 //})
 //
@@ -63,7 +63,6 @@ var vm = new Vue({
 
     events: {
         'onChangeView': function (msg) {
-            // �¼��ص��ڵ� `this` �Զ��󶨵�ע������ʵ����
             this.currentView = msg;
 
         },
@@ -141,6 +140,8 @@ var vm = new Vue({
                 , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
+                    } else{
+                        $.toast("获取订单数量失败!");
                     }
                 }, function (response) {
 
@@ -153,6 +154,8 @@ var vm = new Vue({
                 , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
                     if (response.data&&response.data.success) {
                         callBack(response.data.data);
+                    } else{
+                        $.toast("获取酒店信息失败!");
                     }
                 }, function (response) {
 
@@ -165,7 +168,7 @@ var vm = new Vue({
             var openid=getQueryStringByName('openid');
             if(!openid)
             {
-                console.log( '没有openid，跳转获�?');
+                console.log( '没有openid，跳转获取openid?');
                 document.location.href=this.getOpenid();
                 return;
             }
@@ -181,7 +184,7 @@ var vm = new Vue({
         changeImgs:function(){
             if(this.imgDatas)
             {
-                this.swiper.removeAllSlides(); //�Ƴ�ȫ��
+                this.swiper.removeAllSlides(); //�Ƴ�ȫ��
                 var data=[];
                 for(var i=0;i<this.imgDatas.length;i++)
                 {

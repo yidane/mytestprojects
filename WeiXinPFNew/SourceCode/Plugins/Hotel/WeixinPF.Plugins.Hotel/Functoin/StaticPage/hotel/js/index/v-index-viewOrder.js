@@ -39,6 +39,9 @@ var ViewOrder = Vue.extend({
                         callBack(response.data.data);
 
                     }
+                    else{
+                        $.toast("获取订单失败!");
+                    }
 
             }, function (response) {
 

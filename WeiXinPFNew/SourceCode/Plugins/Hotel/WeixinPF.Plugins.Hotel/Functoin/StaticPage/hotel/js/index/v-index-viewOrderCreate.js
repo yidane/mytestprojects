@@ -328,6 +328,9 @@ var ViewOrderCreate = Vue.extend({
                     // handle error
                 });
         },
+        updateOrderNumber:function(num){
+            this.$dispatch('onUpdateOrderNumberDispatch', num);
+        },
         viewOrderCreate: function (room,$event) {
             if (room) {
                 this.$dispatch('onviewOrderCreateDispatch', room);

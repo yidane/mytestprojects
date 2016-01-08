@@ -454,7 +454,7 @@
                         <a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)"
                            class="item-link item-content">
                             <div class="item-media">
-                                <img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" style='width: 4rem;'></div>
+                                <img :src="order.roomPicture" style='width: 4rem;'></div>
                             <div class="item-inner">
                                 <div class="item-title-row">
                                     <div class="item-title">{{order.orderNumber}}</div>
@@ -464,7 +464,9 @@
                                          </div>
                                 </div>
                                 <div class="item-subtitle">
-                                    <span class="badge badge-status badge-success">{{order.statusName}}</span>
+                                    <span class="badge badge-status"
+                                            :class="order.status==0?'badge-dark':(order.status==2?'badge-danger':'badge-success')"
+                                            >{{order.statusName}}</span>
                                     <span>{{order.orderTime}}</span>
                                 </div>
                                 <div class="item-text">
@@ -482,31 +484,6 @@
 
     </div>
 
-    <!--<div class="cardexplain">-->
-
-        <!--&lt;!&ndash;超过预订时间3天后自动删掉预订记录，免得占服务器资源！&ndash;&gt;-->
-        <!--<ul class="round" v-for="order in orders">-->
-            <!--<li class="title">-->
-                <!--<a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)">-->
-                <!--<span><b>{{order.orderTime}}</b>-->
-                    <!--<b style='margin-left:0.5rem'>{{hotel.name}}</b></span></a>-->
-            <!--</li>-->
-            <!--<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cpbiaoge">-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                    <!--<th>订单编号</th>-->
-                    <!--<th width="70" class="cc">订单金额</th>-->
-                    <!--<th width="60" class="cc">订单状态</th>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>{{order.orderNumber}}</td>-->
-                    <!--<td class="cc">{{order.orderPrice}}</td>-->
-                    <!--<td class="cc"><em class="ok">{{order.statusName}}</em></td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</ul>-->
-    <!--</div>-->
 
 
 </template>
@@ -663,7 +640,15 @@
             transform: scaleY(.5);
         }
 
-
+        .item-input-readonly{
+            padding: 0 0 0 .25rem;
+            margin: 0;
+            width: 100%;
+            height: 2.15rem;
+            color: #3d4145;
+            font-size: .85rem;
+            font-family: inherit;
+        }
     </style>
 
 
@@ -783,15 +768,19 @@
                                 <div class="item-title label">预订人</div>
                                 <div class="item-input">
 
-                                        <input  name="oderName" type="text"
+                                <div v-if="formCanEdit">
+                                    <input  name="oderName" type="text"
 
-                                                v-model="order.orderUser.userName"
-                                                placeholder="请输入您的真实姓名" />
+                                            v-model="order.orderUser.userName"
+                                            placeholder="请输入您的真实姓名" />
                                     <span class="button-danger item-input-icon"
                                           v-if="isEmpty(order.orderUser.userName)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
-
+                                </div>
+                                <div v-else>
+                                 <span class="item-input-readonly">  {{order.orderUser.userName}}</span>
+                                </div>
 
                                 </div>
                             </div>
@@ -803,14 +792,20 @@
                             <div class="item-inner">
                                 <div class="item-title label">身份证号</div>
                                 <div class="item-input">
-                                    <input name="identityNumber" type="text"
-
-                                            v-model="order.orderUser.userIdcard"
-                                           placeholder="请输入您的身份证号" />
+                                    <div v-if="formCanEdit">
+                                        <input name="identityNumber" type="text"
+                                               v-model="order.orderUser.userIdcard"
+                                               placeholder="请输入您的身份证号" />
                                      <span class="button-danger item-input-icon"
                                            v-if="idCardRequired||isEmpty(order.orderUser.userIdcard)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.orderUser.userIdcard}}</span>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -821,14 +816,18 @@
                         <div class="item-inner">
                             <div class="item-title label">联系电话</div>
                             <div class="item-input">
-                                <input name="tel" type="tel"
-
-
-                                       v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
+                                <div v-if="formCanEdit">
+                                    <input name="tel" type="tel"
+                                           v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
                                 <span class="button-danger item-input-icon"
                                       v-if="userMobileRequired||isEmpty(order.orderUser.userMobile)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
+                                </div>
+                                <div v-else>
+                                    <span class="item-input-readonly">  {{order.orderUser.userMobile}}</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -839,16 +838,20 @@
                             <div class="item-inner">
                                 <div class="item-title label">入住时间</div>
                                 <div class="item-input">
-                                    <input name="arriveTime"
-
-                                           :min="today"
-
-                                           v-model="order.arriveTime"
-                                           type="date" placeholder="入住时间" />
+                                    <div v-if="formCanEdit">
+                                        <input name="arriveTime"
+                                               :min="today"
+                                               v-model="order.arriveTime"
+                                               type="date" placeholder="入住时间" />
                                      <span class="button-danger item-input-icon"
                                            v-if="isEmpty(order.arriveTime)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.arriveTime}}</span>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -860,15 +863,21 @@
                         <div class="item-inner">
                             <div class="item-title label">离店时间</div>
                             <div class="item-input">
-                                <input name="leaveTime"
-                                       :min="minLeaveDate"
+                                <div v-if="formCanEdit">
+                                    <input name="leaveTime"
+                                           :min="minLeaveDate"
 
-                                       v-model="order.leaveTime"
-                                       type="date" placeholder="离店时间" />
+                                           v-model="order.leaveTime"
+                                           type="date" placeholder="离店时间" />
                                   <span class="button-danger item-input-icon"
                                         v-if="isEmpty(order.leaveTime)">
                                         <i class="fa fa-exclamation-circle"></i>
                                     </span>
+                                </div>
+                                <div v-else>
+                                    <span class="item-input-readonly">  {{order.leaveTime}}</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -879,7 +888,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">类型</div>
                                 <div class="item-input">
-                                    {{room.roomType}}
+                                   <span class="item-input-readonly"> {{room.roomType}}</span>
                                 </div>
                             </div>
                         </div>
@@ -890,12 +899,18 @@
                             <div class="item-inner">
                                 <div class="item-title label">预订数量</div>
                                 <div class="item-input">
-                                    <select name="orderNum"
+                                    <div v-if="formCanEdit">
+                                        <select name="orderNum"
 
-                                            v-model="order.orderNum">
-                                        <option v-for="n in 20" :value="n+1">{{n+1}}</option>
+                                                v-model="order.orderNum">
+                                            <option v-for="n in 20" :value="n+1">{{n+1}}</option>
 
-                                    </select>
+                                        </select>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.orderNum}}</span>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -906,7 +921,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">单价</div>
                                 <div class="item-input">
-                                    ￥{{room.totalPrice}}
+                                   <span class="item-input-readonly"> ￥{{room.totalPrice}}</span>
                                 </div>
                             </div>
                         </div>
@@ -917,14 +932,19 @@
                             <div class="item-inner">
                                 <div class="item-title label">备注</div>
                                 <div class="item-input">
+                                    <div v-if="formCanEdit">
+                                         <textarea name="remark"
 
-                                           <textarea name="remark"
+                                                   v-model="order.remark"
+                                                   placeholder="请输入备注信息"></textarea>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.remark}}</span>
+                                    </div>
 
-                                                 v-model="order.remark"
-                                                 placeholder="请输入备注信息"></textarea>
 
 
-                                    </select>
+
                                 </div>
                             </div>
                         </div>
