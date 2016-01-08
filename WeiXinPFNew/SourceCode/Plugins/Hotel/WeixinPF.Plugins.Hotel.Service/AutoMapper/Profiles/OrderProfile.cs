@@ -26,9 +26,10 @@ namespace WeixinPF.Hotel.Plugins.Service.AutoMapper.Profiles
                 .ForMember(des => des.OrderPrice, opt => opt.ResolveUsing<OrderPriceResolver>())
                 .ForMember(des => des.Status, source => source.MapFrom(s => s.orderStatus))
                 .ForMember(des => des.StatusName, source => source.MapFrom(s => HotelStatusManager.OrderStatus.GetStatusDict(s.orderStatus).StatusName))
-                //.ForMember(des => des.HotelName, source => source.MapFrom(s => s.hotelNa))
+                .ForMember(des => des.HotelName, source => source.MapFrom(s => s.HotelName))
                 .ForMember(des => des.RoomId, source => source.MapFrom(s => s.roomid))
                 .ForMember(des => des.RoomType, source => source.MapFrom(s => s.roomType))
+                .ForMember(des => des.RoomPicture, source => source.MapFrom(s => s.RoomPicture))
                 .AfterMap((source, des) => des.OrderUser = new OrderUserDto
                 {
                     UserName = source.oderName,

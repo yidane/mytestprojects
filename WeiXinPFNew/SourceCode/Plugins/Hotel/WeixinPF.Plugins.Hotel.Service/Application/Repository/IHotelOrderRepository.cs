@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -53,7 +54,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Repository
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        DataSet GetList(string strWhere);
+        List<HotelOrderInfo> GetList(string strWhere);
 
         /// <summary>
         /// 获得前几行数据

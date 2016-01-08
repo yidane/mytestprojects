@@ -25,5 +25,7 @@ namespace WeixinPF.Messages.RequestResponse.Dtos
         public string HotelName { get; set; }
         public int RoomId { get; set; }
         public string RoomType { get; set; }
+
+        public string RoomPicture { get; set; }
     }
 }

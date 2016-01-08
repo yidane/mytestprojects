@@ -79,10 +79,10 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
-        {
-            return _repository.GetList(strWhere);
-        }
+        //public DataSet GetList(string strWhere)
+        //{
+        //    return _repository.GetList(strWhere);
+        //}
         /// <summary>
         /// 获得前几行数据
         /// </summary>
@@ -95,8 +95,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
         /// </summary>
         public List<HotelOrderInfo> GetModelList(string strWhere)
         {
-            DataSet ds = _repository.GetList(strWhere);
-            return DataTableToList(ds.Tables[0]);
+            return  _repository.GetList(strWhere);
         }
         /// <summary>
         /// 获得数据列表
@@ -120,13 +119,13 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
             return modelList;
         }
 
-        /// <summary>
-        /// 获得数据列表
-        /// </summary>
-        public DataSet GetAllList()
-        {
-            return GetList("");
-        }
+        // <summary>
+        // 获得数据列表
+        // </summary>
+        //public DataSet GetAllList()
+        //{
+        //    return GetList("");
+        //}
 
         /// <summary>
         /// 分页获取数据列表
