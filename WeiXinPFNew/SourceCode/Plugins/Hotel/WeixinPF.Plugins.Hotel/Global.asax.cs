@@ -22,15 +22,5 @@ namespace WeixinPF.Hotel.Plugins
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
         }
-
-
-        public override void Dispose()
-        {
-            Bus?.Dispose();
-
-            base.Dispose();
-        }
-
-        
     }
 }
