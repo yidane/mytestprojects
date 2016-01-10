@@ -14,9 +14,8 @@ namespace WeixinPF.Hotel.Plugins.Controller
 {
     public class OrderController : ApiController
     {
-        public AjaxResult Save(CreateOrderRequest request)
+        public CreateOrderResponse Save(CreateOrderRequest request)
         {
-            AjaxResult ajaxResult;
             try
             {
                 CreateOrderResponse responseData = null;
@@ -35,16 +34,20 @@ namespace WeixinPF.Hotel.Plugins.Controller
                 WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
                 asyncWaitHandle.WaitOne(1000000000);
 
-                ajaxResult = asyncResult.IsCompleted ?
-                          AjaxResult.Succeed(responseData.OrderId) :
-                          AjaxResult.Fail("保存订失败。");
+               if(asyncResult.IsCompleted)
+               {
+                   return responseData;
+               }
+               else
+               {
+                   throw  new Exception("保存订失败。");
+               }
             }
             catch
             {
-                return AjaxResult.Fail("保存订失败。");
+                throw new Exception("保存订失败。");
             }
-
-            return ajaxResult;
+            
         }
 
         public AjaxResult Get()
