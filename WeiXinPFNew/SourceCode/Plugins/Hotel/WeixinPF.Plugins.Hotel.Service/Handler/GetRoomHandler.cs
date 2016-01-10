@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using NServiceBus;
 using WeixinPF.Common;
@@ -25,7 +26,11 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
             var roomPictures = roomPictureService.GetModelList(string.Format("RoomId={0}", message.RoomId));
 
             var response = room.MapTo<GetRoomResponse>();
-            response.RoomPictures = roomPictures.MapTo<List<RoomPictureDto>>();
+            if (roomPictures.Any())
+            {
+                response.RoomPictures = roomPictures.MapTo<List<RoomPictureDto>>();
+            }
+
             _bus.Reply(response);
         }
     }
