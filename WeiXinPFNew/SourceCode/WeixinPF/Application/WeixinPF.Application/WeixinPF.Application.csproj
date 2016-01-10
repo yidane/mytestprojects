@@ -41,6 +41,13 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\..\..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="OneGulp.WeChat">
       <HintPath>..\..\..\..\Common\OneGulp.WeChat.dll</HintPath>
     </Reference>
@@ -58,14 +65,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agent\AgentDbContext.cs" />
     <Compile Include="Agent\Repository\IManagerLogRepository.cs" />
-    <Compile Include="Agent\Repository\IManagerRepository.cs" />
+    <Compile Include="Agent\Repository\IManagerInfoRepository.cs" />
     <Compile Include="Agent\Repository\IManagerRoleRepository.cs" />
     <Compile Include="Agent\Repository\IWXAgentRepository.cs" />
     <Compile Include="Agent\Repository\IWXManagerBillRepository.cs" />
     <Compile Include="Agent\Service\ManagerLogService.cs" />
     <Compile Include="Agent\Service\ManagerRoleService.cs" />
-    <Compile Include="Agent\Service\ManagerService.cs" />
+    <Compile Include="Agent\Service\ManagerInfoService.cs" />
     <Compile Include="Agent\Service\WXAgentService.cs" />
     <Compile Include="Agent\Service\WXManagerBillService.cs" />
     <Compile Include="Article\Repository\IArticleCategoryRepository.cs" />
@@ -102,6 +110,7 @@
     <Compile Include="Weixin\Token\Service\JsApiTicketService.cs" />
     <Compile Include="Weixin\User\Repository\IUserRepository.cs" />
     <Compile Include="Weixin\User\Service\UserService.cs" />
+    <Compile Include="Weixin\WeiXinDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\WeixinPF.Common\WeixinPF.Common.csproj">

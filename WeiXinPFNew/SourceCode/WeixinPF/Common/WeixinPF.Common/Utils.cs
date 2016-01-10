@@ -45,7 +45,7 @@ namespace WeixinPF.Common
         }
         public static string GetVersion()
         {
-            return MXKeys.ASSEMBLY_VERSION;
+            return SystemKeys.ASSEMBLY_VERSION;
         }
         #endregion
 

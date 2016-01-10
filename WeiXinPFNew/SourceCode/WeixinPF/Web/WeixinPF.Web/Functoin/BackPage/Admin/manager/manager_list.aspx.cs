@@ -30,13 +30,13 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             {
                 ChkAdminLevel("manager_list", MXEnums.ActionEnum.View.ToString()); //检查权限
                 var model = GetAdminInfo(); //取得当前管理员信息
-                if (model.agentLevel > 0)
+                if (model.AgentLevel > 0)
                 {
-                    RptBind("agentId=" + model.id + CombSqlTxt(keywords), "add_time desc,id desc");
+                    RptBind("agentId=" + model.Id + CombSqlTxt(keywords), "add_time desc,id desc");
                 }
                 else
                 {
-                    RptBind("agentId=" + model.id + " and agentLevel<0 " + CombSqlTxt(keywords), "add_time desc,id desc");
+                    RptBind("agentId=" + model.Id + " and agentLevel<0 " + CombSqlTxt(keywords), "add_time desc,id desc");
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         {
             this.page = MXRequest.GetQueryInt("page", 1);
             txtKeywords.Text = this.keywords;
-            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerInfoService();
             this.rptList.DataSource = bll.GetList(this.pageSize, this.page, _strWhere, _orderby, out this.totalCount);
             this.rptList.DataBind();
 
@@ -114,18 +114,18 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             bool isAgent = false;
             var aBll = new WXAgentService(new WXAgentRepository());
             var adminEntity = GetAdminInfo(); //取得管理员信息
-            var agent = new WX_AgentInfo();
-            if (adminEntity.agentLevel > 0)
+            var agent = new AgentInfo();
+            if (adminEntity.AgentLevel > 0)
             {
                 isAgent = true;
-                agent = aBll.GetAgentModel(adminEntity.id);
+                agent = aBll.GetAgentModel(adminEntity.Id);
             }
 
             var wBll = new AppInfoService(); 
             int sucCount = 0;
             int errorCount = 0;
             
-            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerInfoService();
             for (int i = 0; i < rptList.Items.Count; i++)
             {
                 int id = Convert.ToInt32(((HiddenField)rptList.Items[i].FindControl("hidId")).Value);

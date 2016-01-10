@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.SessionState;
@@ -225,7 +226,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
                 context.Response.Write("{ \"info\":\"请输入用户名\", \"status\":\"n\" }");
                 return;
             }
-            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerInfoService();
             if (bll.Exists(user_name))
             {
                 context.Response.Write("{ \"info\":\"用户名已被占用，请更换！\", \"status\":\"n\" }");
@@ -275,8 +276,8 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
             {
                 return;
             }
-            var roleModel = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix))
-                .GetModel(adminModel.role_id); //获得管理角色信息
+            var roleModel = new ManagerRoleService()
+                .GetModel(adminModel.RoleId); //获得管理角色信息
 
             if (roleModel == null)
             {
@@ -284,10 +285,10 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
             }
             DataTable dt = new NavigationService(new NavigationRepository(siteConfig.sysdatabaseprefix))
                 .GetDataList(0, MXEnums.NavigationEnum.System.ToString());
-            this.get_navigation_childs(context, dt, 0, "", roleModel.role_type, roleModel.manager_role_values);
+            this.get_navigation_childs(context, dt, 0, "", roleModel.RoleType, roleModel.ManagerRoleValues.ToList());
 
         }
-        private void get_navigation_childs(HttpContext context, DataTable oldData, int parent_id, string parent_name, int role_type, List<Manager_Role_ValueInfo> ls)
+        private void get_navigation_childs(HttpContext context, DataTable oldData, int parent_id, string parent_name, int role_type, List<ManagerRoleValueInfo> ls)
         {
             DataRow[] dr = oldData.Select("parent_id=" + parent_id);
             bool isWrite = false;
@@ -308,7 +309,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
                         //如果存在显示权限资源，则检查是否拥有该权限
                         if (action_type_str == "Show")
                         {
-                            var modelt = ls.Find(p => p.nav_name == dr[i]["name"].ToString() && p.action_type == "Show");
+                            var modelt = ls.Find(p => p.NavName == dr[i]["name"].ToString() && p.ActionType == "Show");
                             if (modelt == null)
                             {
                                 isActionPass = false;
@@ -1137,8 +1138,8 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
             var adminInfo = new ManagePage().GetAdminInfo();
             if (adminInfo == null)
                 return -1;
-            else if (!new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix))
-                .Exists(adminInfo.role_id, "app_builder_html", MXEnums.ActionEnum.Build.ToString()))
+            else if (!new ManagerRoleService()
+                .Exists(adminInfo.RoleId, "app_builder_html", MXEnums.ActionEnum.Build.ToString()))
                 return -2;
             else if (siteConfig.staticstatus != 2)
                 return -3;

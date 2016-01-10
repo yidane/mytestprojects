@@ -15,7 +15,7 @@ namespace WeixinPF.Web
             if (!Page.IsPostBack)
             {
                 admin_info = GetAdminInfo();
-                if (admin_info.agentLevel > 0)
+                if (admin_info.AgentLevel > 0)
                 {
                     //说明为代理商
                     mygzh.Style.Add("display", "none");
@@ -32,15 +32,15 @@ namespace WeixinPF.Web
         //安全退出
         protected void lbtnExit_Click(object sender, EventArgs e)
         {
-            Session[MXKeys.SESSION_ADMIN_INFO] = null;
+            Session[SystemKeys.SESSION_ADMIN_INFO] = null;
             Utils.WriteCookie("AdminName", "WeiXinPF", -14400);
             Utils.WriteCookie("AdminPwd", "WeiXinPF", -14400);
 
             Session["uweixinId"] = null;
             Utils.WriteCookie("uweixinId", "WeiXinPF", -14400);
 
-            Session[MXKeys.WEIXIN_DIANCAI_SHOPID] = null;
-            Utils.WriteCookie(MXKeys.WEIXIN_DIANCAI_SHOPID, "WeiXinPF", -14400);
+            Session[SystemKeys.WEIXIN_DIANCAI_SHOPID] = null;
+            Utils.WriteCookie(SystemKeys.WEIXIN_DIANCAI_SHOPID, "WeiXinPF", -14400);
 
             Response.Redirect("login.aspx");
         }

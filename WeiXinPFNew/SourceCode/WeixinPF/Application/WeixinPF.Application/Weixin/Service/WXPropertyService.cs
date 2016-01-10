@@ -22,7 +22,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     增加一条数据
+        /// 增加一条数据
         /// </summary>
         public int Add(PropertyInfo model)
         {
@@ -30,7 +30,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     更新一条数据
+        /// 更新一条数据
         /// </summary>
         public bool Update(PropertyInfo model)
         {
@@ -38,7 +38,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public DataSet GetList(string strWhere)
         {
@@ -46,7 +46,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public List<PropertyInfo> GetModelList(string strWhere)
         {
@@ -55,7 +55,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public List<PropertyInfo> DataTableToList(DataTable dt)
         {
@@ -77,7 +77,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     添加access_token值
+        /// 添加access_token值
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="access_token"></param>
@@ -113,7 +113,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     添加属性值
+        /// 添加属性值
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="key">对应这里的值 MXEnums.WXPropertyKeyName</param>
@@ -152,7 +152,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     该微帐号是否存在记录
+        /// 该微帐号是否存在记录
         /// </summary>
         /// <param name="wid"></param>
         /// <returns></returns>
@@ -162,7 +162,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     该微帐号是否存在记录
+        /// 该微帐号是否存在记录
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="iName">键值</param>
@@ -173,7 +173,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     得到一个对象实体
+        /// 得到一个对象实体
         /// </summary>
         public PropertyInfo GetModelByIName(int wid, string iName)
         {

@@ -21,7 +21,7 @@ namespace WeixinPF.Infrastructure.Agent
         /// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(WX_ManagerBillInfo model)
+		public int Add(ManagerBillInfo model)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into wx_manager_bill(");
@@ -37,13 +37,13 @@ namespace WeixinPF.Infrastructure.Agent
                     new SqlParameter("@operPersonId", SqlDbType.Int,4),
                     new SqlParameter("@operDate", SqlDbType.DateTime),
                     new SqlParameter("@remark", SqlDbType.VarChar,1500)};
-            parameters[0].Value = model.managerId;
-            parameters[1].Value = model.moneyType;
-            parameters[2].Value = model.billMoney;
-            parameters[3].Value = model.billUsed;
-            parameters[4].Value = model.operPersonId;
-            parameters[5].Value = model.operDate;
-            parameters[6].Value = model.remark;
+            parameters[0].Value = model.ManagerId;
+            parameters[1].Value = model.MoneyType;
+            parameters[2].Value = model.BillMoney;
+            parameters[3].Value = model.BillUsed;
+            parameters[4].Value = model.OperPersonId;
+            parameters[5].Value = model.OperDate;
+            parameters[6].Value = model.Remark;
 
             object obj = DbHelperSQL.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -59,42 +59,42 @@ namespace WeixinPF.Infrastructure.Agent
         /// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public WX_ManagerBillInfo DataRowToModel(DataRow row)
+		public ManagerBillInfo DataRowToModel(DataRow row)
         {
-            var model = new WX_ManagerBillInfo();
+            var model = new ManagerBillInfo();
             if (row != null)
             {
                 if (row["id"] != null && row["id"].ToString() != "")
                 {
-                    model.id = int.Parse(row["id"].ToString());
+                    model.Id = int.Parse(row["id"].ToString());
                 }
                 if (row["managerId"] != null && row["managerId"].ToString() != "")
                 {
-                    model.managerId = int.Parse(row["managerId"].ToString());
+                    model.ManagerId = int.Parse(row["managerId"].ToString());
                 }
                 if (row["moneyType"] != null)
                 {
-                    model.moneyType = row["moneyType"].ToString();
+                    model.MoneyType = row["moneyType"].ToString();
                 }
                 if (row["billMoney"] != null && row["billMoney"].ToString() != "")
                 {
-                    model.billMoney = int.Parse(row["billMoney"].ToString());
+                    model.BillMoney = int.Parse(row["billMoney"].ToString());
                 }
                 if (row["billUsed"] != null)
                 {
-                    model.billUsed = row["billUsed"].ToString();
+                    model.BillUsed = row["billUsed"].ToString();
                 }
                 if (row["operPersonId"] != null && row["operPersonId"].ToString() != "")
                 {
-                    model.operPersonId = int.Parse(row["operPersonId"].ToString());
+                    model.OperPersonId = int.Parse(row["operPersonId"].ToString());
                 }
                 if (row["operDate"] != null && row["operDate"].ToString() != "")
                 {
-                    model.operDate = DateTime.Parse(row["operDate"].ToString());
+                    model.OperDate = DateTime.Parse(row["operDate"].ToString());
                 }
                 if (row["remark"] != null)
                 {
-                    model.remark = row["remark"].ToString();
+                    model.Remark = row["remark"].ToString();
                 }
             }
             return model;

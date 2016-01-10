@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using WeixinPF.Application.Weixin;
 using WeixinPF.Application.Weixin.Token.Repository;
 using WeixinPF.Infrastructure.BaseRepository;
+using WeixinPF.Model;
 using WeixinPF.Model.WeiXin;
 using WeixinPF.Model.WeiXin.Token;
 

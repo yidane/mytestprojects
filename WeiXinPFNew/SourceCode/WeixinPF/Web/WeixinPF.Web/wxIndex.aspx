@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="wxIndex.aspx.cs" Inherits="WeixinPF.Web.wxIndex" %>
+
 <%@ Import Namespace="WeixinPF.Application.Agent.Service" %>
 <%@ Import Namespace="WeixinPF.Infrastructure.Agent" %>
 
@@ -6,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>微信帐号管理 版本号：<%=WeixinPF.Common.Enum.MXKeys.ASSEMBLY_VERSION %></title>
+    <title>微信帐号管理 版本号：<%=WeixinPF.Common.Enum.SystemKeys.ASSEMBLY_VERSION %></title>
     <link href="Common/bootstrap/css/bootstrap.min.css" />
     <link href="skin/default/style.css" rel="stylesheet" type="text/css" />
 
@@ -194,15 +195,15 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="user-image"></i>
                                 <!--<img src="/images/avatar.png" class="user-image" alt="User Image">-->
-                                <span class="hidden-xs">您好，<%=admin_info.real_name %><br />
-                                    <%=new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix)).GetTitle(admin_info.role_id) %></span>
+                                <span class="hidden-xs">您好，<%=admin_info.RealName %><br />
+                                    <%=new ManagerRoleService().GetTitle(admin_info.RoleId) %></span>
                                 <!--<i  class="user-icon-dropdown"></i>-->
                                 <i class="user-icon-dropdown fa fa-angle-down fa-2x"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <div class="arrow-background"></div>
                                 <div class="arrow"></div>
-                                <li><a class="item"  onclick="linkMenuTree(false, '');" href="Functoin/BackPage/Admin/manager/manager_pwd.aspx" target="mainframe">修改密码</a></li>
+                                <li><a class="item" onclick="linkMenuTree(false, '');" href="Functoin/BackPage/Admin/manager/manager_pwd.aspx" target="mainframe">修改密码</a></li>
                                 <li>
                                     <asp:LinkButton CssClass="item" ID="lbtnExit" runat="server" OnClick="lbtnExit_Click">注销登录</asp:LinkButton></li>
                             </ul>
@@ -250,14 +251,14 @@
         <div class="main-container">
             <iframe id="mainframe" name="mainframe" frameborder="0" src="Functoin/BackPage/Admin/weixin/myweixinlist.aspx"></iframe>
         </div>
-    </form> 
+    </form>
     <script type="text/javascript">
-        var systemMenu; 
+        var systemMenu;
         $(function () {
 
             userMenuWidth();
 
-             
+
         });
 
         function userMenuWidth() {

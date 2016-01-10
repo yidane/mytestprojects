@@ -20,20 +20,20 @@ namespace WeixinPF.Web
                 //登录信息
                 if (admin_info != null)
                 {
-                    var managerLogService = new ManagerLogService(new ManagerLogRepository(siteConfig.sysdatabaseprefix));
+                    var managerLogService = new ManagerLogService();
                     //BLL.manager_log bll = new BLL.manager_log();
-                    var log = managerLogService.GetModel(admin_info.user_name, 1, MXEnums.ActionEnum.Login.ToString());
+                    var log = managerLogService.GetModel(admin_info.UserName, 1, MXEnums.ActionEnum.Login.ToString());
                     if (log != null)
                     {
                         //本次登录
-                        litIP.Text = log.user_ip;
+                        litIP.Text = log.UserIp;
                     }
-                    var log2 = managerLogService.GetModel(admin_info.user_name, 2, MXEnums.ActionEnum.Login.ToString());
+                    var log2 = managerLogService.GetModel(admin_info.UserName, 2, MXEnums.ActionEnum.Login.ToString());
                     if (log2 != null)
                     {
                         //上一次登录
-                        litBackIP.Text = log2.user_ip;
-                        litBackTime.Text = log2.add_time.ToString();
+                        litBackIP.Text = log2.UserIp;
+                        litBackTime.Text = log2.AddTime.ToString();
                     }
 
                     if (IsWeiXinCode())
@@ -44,7 +44,7 @@ namespace WeixinPF.Web
                     //{
                     //    _userType = "ShopAdmin";//餐饮管理员
                     //}
-                    else if (IsHotelAdmin(admin_info.id))
+                    else if (IsHotelAdmin(admin_info.Id))
                     {
                         _userType = "HotelAdmin";//酒店管理员
                     }

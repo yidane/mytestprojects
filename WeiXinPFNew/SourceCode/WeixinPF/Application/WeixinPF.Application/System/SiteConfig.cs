@@ -25,12 +25,12 @@ namespace WeixinPF.Application.System
         /// </summary>
         public siteconfig loadConfig()
         {
-            var model = CacheHelper.Get<siteconfig>(MXKeys.CACHE_SITE_CONFIG);
+            var model = CacheHelper.Get<siteconfig>(SystemKeys.CACHE_SITE_CONFIG);
             if (model == null)
             {
-                CacheHelper.Insert(MXKeys.CACHE_SITE_CONFIG, this._repository.loadConfig(Utils.GetXmlMapPath(MXKeys.FILE_SITE_XML_CONFING)),
-                    Utils.GetXmlMapPath(MXKeys.FILE_SITE_XML_CONFING));
-                model = CacheHelper.Get<siteconfig>(MXKeys.CACHE_SITE_CONFIG);
+                CacheHelper.Insert(SystemKeys.CACHE_SITE_CONFIG, this._repository.loadConfig(Utils.GetXmlMapPath(SystemKeys.FILE_SITE_XML_CONFING)),
+                    Utils.GetXmlMapPath(SystemKeys.FILE_SITE_XML_CONFING));
+                model = CacheHelper.Get<siteconfig>(SystemKeys.CACHE_SITE_CONFIG);
             }
             return model;
         }
@@ -40,7 +40,7 @@ namespace WeixinPF.Application.System
         /// </summary>
         public siteconfig saveConifg(siteconfig model)
         {
-            return this._repository.saveConifg(model, Utils.GetXmlMapPath(MXKeys.FILE_SITE_XML_CONFING));
+            return this._repository.saveConifg(model, Utils.GetXmlMapPath(SystemKeys.FILE_SITE_XML_CONFING));
         }
     }
 }

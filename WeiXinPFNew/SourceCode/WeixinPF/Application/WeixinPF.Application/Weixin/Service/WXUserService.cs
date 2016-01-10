@@ -16,7 +16,7 @@ namespace WeixinPF.Application.Weixin.Service
         #region  BasicMethod
 
         /// <summary>
-        ///     得到最大ID
+        /// 得到最大ID
         /// </summary>
         public int GetMaxId()
         {
@@ -24,7 +24,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     是否存在该记录
+        /// 是否存在该记录
         /// </summary>
         public bool Exists(int id)
         {
@@ -32,7 +32,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     增加一条数据
+        /// 增加一条数据
         /// </summary>
         public int Add(AppInfo model)
         {
@@ -40,7 +40,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     更新一条数据
+        /// 更新一条数据
         /// </summary>
         public bool Update(AppInfo model)
         {
@@ -48,7 +48,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     删除一条数据
+        /// 删除一条数据
         /// </summary>
         public bool Delete(int id)
         {
@@ -56,7 +56,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     删除一条数据
+        /// 删除一条数据
         /// </summary>
         public bool DeleteList(string idlist)
         {
@@ -64,7 +64,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     得到一个对象实体
+        /// 得到一个对象实体
         /// </summary>
         public AppInfo GetModel(int id)
         {
@@ -73,7 +73,7 @@ namespace WeixinPF.Application.Weixin.Service
 
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public List<AppInfo> GetList(string strWhere)
         {
@@ -81,7 +81,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得前几行数据
+        /// 获得前几行数据
         /// </summary>
         public List<AppInfo> GetList(int Top, string strWhere, string filedOrder)
         {
@@ -89,7 +89,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public List<AppInfo> GetModelList(string strWhere)
         {
@@ -97,7 +97,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public List<AppInfo> GetAllList()
         {
@@ -105,7 +105,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     分页获取数据列表
+        /// 分页获取数据列表
         /// </summary>
         public int GetRecordCount(string strWhere)
         {
@@ -113,7 +113,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     分页获取数据列表
+        /// 分页获取数据列表
         /// </summary>
         public List<AppInfo> GetListByPage(string strWhere, string orderby, int startIndex, int endIndex)
         {
@@ -121,10 +121,10 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     分页获取数据列表
+        /// 分页获取数据列表
         /// </summary>
         /// <summary>
-        ///     修改一列数据
+        /// 修改一列数据
         /// </summary>
         public void UpdateField(int id, string strValue)
         {
@@ -133,7 +133,7 @@ namespace WeixinPF.Application.Weixin.Service
 
 
         /// <summary>
-        ///     删除一条数据,假删除
+        /// 删除一条数据,假删除
         /// </summary>
         public bool DeleteWeixin(int id)
         {
@@ -141,7 +141,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得查询分页数据
+        /// 获得查询分页数据
         /// </summary>
         public List<AppInfo> GetList(int pageSize, int pageIndex, string strWhere, string filedOrder,
             out int recordCount)
@@ -151,7 +151,7 @@ namespace WeixinPF.Application.Weixin.Service
 
 
         /// <summary>
-        ///     获得用户的微信帐号信息【查询分页数据】
+        /// 获得用户的微信帐号信息【查询分页数据】
         /// </summary>
         public List<AppInfo> GetUserWeiXinList(int pageSize, int pageIndex, string strWhere, string filedOrder,
             out int recordCount)
@@ -161,7 +161,7 @@ namespace WeixinPF.Application.Weixin.Service
 
 
         /// <summary>
-        ///     得到一个token
+        /// 得到一个token
         /// </summary>
         public string GetWeiXinToken(int id)
         {
@@ -169,7 +169,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     得到一个原始id
+        /// 得到一个原始id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -180,8 +180,8 @@ namespace WeixinPF.Application.Weixin.Service
 
 
         /// <summary>
-        ///     取该用户已经有的微信个数
-        ///     1e2124dd04e11d01b9df2865f85944be
+        /// 取该用户已经有的微信个数
+        /// 1e2124dd04e11d01b9df2865f85944be
         /// </summary>
         public int GetUserWxNumCount(int uId)
         {
@@ -189,7 +189,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     判断微账号是否有效
+        /// 判断微账号是否有效
         /// </summary>
         /// <param name="wid"></param>
         /// <returns></returns>

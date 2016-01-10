@@ -8,7 +8,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>后台管理中心 版本号：<%=WeixinPF.Common.Enum.MXKeys.ASSEMBLY_VERSION %></title>
+    <title>后台管理中心 版本号：<%=WeixinPF.Common.Enum.SystemKeys.ASSEMBLY_VERSION %></title>
     <link href="Common/bootstrap/css/bootstrap.min.css" />
     <link href="skin/default/style.css" rel="stylesheet" type="text/css" />
     <link href="Common/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -415,8 +415,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="user-image"></i>
                                 <!--<img src="/images/avatar.png" class="user-image" alt="User Image">-->
-                                <span class="hidden-xs">您好，<%= this.admin_info.real_name %><br />
-                                    <%=new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix)).GetTitle(admin_info.role_id) %></span>
+                                <span class="hidden-xs">您好，<%= this.admin_info.RealName %><br />
+                                    <%=new ManagerRoleService().GetTitle(admin_info.RoleId) %></span>
                                 <!--<i  class="user-icon-dropdown"></i>-->
                                 <i class="user-icon-dropdown fa fa-angle-down fa-2x"></i>
                             </a>

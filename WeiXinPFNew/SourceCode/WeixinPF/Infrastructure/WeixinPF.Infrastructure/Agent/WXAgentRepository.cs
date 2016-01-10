@@ -21,7 +21,7 @@ namespace WeixinPF.Infrastructure.Agent
         /// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(WX_AgentInfo model)
+		public int Add(AgentInfo model)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into wx_agent_info(");
@@ -78,7 +78,7 @@ namespace WeixinPF.Infrastructure.Agent
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WX_AgentInfo model)
+        public bool Update(AgentInfo model)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update wx_agent_info set ");
@@ -152,9 +152,9 @@ namespace WeixinPF.Infrastructure.Agent
         /// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public WX_AgentInfo DataRowToModel(DataRow row)
+		public AgentInfo DataRowToModel(DataRow row)
         {
-            var model = new WX_AgentInfo();
+            var model = new AgentInfo();
             if (row != null)
             {
                 if (row["id"] != null && row["id"].ToString() != "")
@@ -267,7 +267,7 @@ namespace WeixinPF.Infrastructure.Agent
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WX_AgentInfo GetAgentModel(int managerId)
+        public AgentInfo GetAgentModel(int managerId)
         {
 
             StringBuilder strSql = new StringBuilder();
@@ -278,7 +278,7 @@ namespace WeixinPF.Infrastructure.Agent
             };
             parameters[0].Value = managerId;
 
-            var model = new WX_AgentInfo();
+            var model = new AgentInfo();
             DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {

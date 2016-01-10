@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using WeixinPF.Application.Agent;
+using WeixinPF.Application.Agent.Service;
 using WeixinPF.Application.Common.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
@@ -23,7 +24,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 BindDdlCity(ddlCity);
 
                 var model = GetAdminInfo();
-                ShowInfo(model.id);
+                ShowInfo(model.Id);
             }
         }
 
@@ -34,19 +35,19 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         {
             lblid.Text = _id.ToString();
 
-            var managerService = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var managerService = new ManagerInfoService();
             var model = managerService.GetModel(_id);
 
-            lblUserName.Text = model.user_name;
+            lblUserName.Text = model.UserName;
 
 
-            txtRealName.Text = model.real_name;
-            txtTelephone.Text = model.telephone;
-            txtEmail.Text = model.email;
-            txtqq.Text = model.qq;
-            ddlProvince.SelectedValue = model.province;
-            ddlCity.SelectedValue = model.city;
-            txtArea.Text = model.county;
+            txtRealName.Text = model.RealName;
+            txtTelephone.Text = model.Telephone;
+            txtEmail.Text = model.Email;
+            txtqq.Text = model.QQ;
+            ddlProvince.SelectedValue = model.Province;
+            ddlCity.SelectedValue = model.City;
+            txtArea.Text = model.County;
            
 
         }
@@ -62,24 +63,24 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
 
 
             bool result = false;
-            var managerService = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var managerService = new ManagerInfoService();
             var model = managerService.GetModel(_id);
 
 
-            model.real_name = txtRealName.Text.Trim();
-            model.telephone = txtTelephone.Text.Trim();
-            model.email = txtEmail.Text.Trim();
-            model.qq = txtqq.Text;
-            model.email = txtEmail.Text;
+            model.RealName = txtRealName.Text.Trim();
+            model.Telephone = txtTelephone.Text.Trim();
+            model.Email = txtEmail.Text.Trim();
+            model.QQ = txtqq.Text;
+            model.Email = txtEmail.Text;
 
-            model.province = prov;
-            model.city = city;
-            model.county = dist;
+            model.Province = prov;
+            model.City = city;
+            model.County = dist;
 
 
             if (managerService.Update(model))
             {
-                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改个人资料:" + model.user_name); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改个人资料:" + model.UserName); //记录日志
                 result = true;
             }
 

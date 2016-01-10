@@ -32,10 +32,10 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         private void RptBind(string _strWhere, string _orderby)
         {
             var model = GetAdminInfo(); //取得当前管理员信息
-            _strWhere = "uId=" + model.id + " and isDelete=0 " + _strWhere + " order by " + _orderby;
+            _strWhere = "uId=" + model.Id + " and isDelete=0 " + _strWhere + " order by " + _orderby;
 
             txtKeywords.Text = this.keywords;
-            var wxList = bll.GetModelList(model.id, _strWhere);
+            var wxList = bll.GetModelList(model.Id, _strWhere);
 
             if (wxList != null)
             {
@@ -65,7 +65,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                 }
             }
 
-            lblTotNum.Text = model.wxNum.ToString();
+            lblTotNum.Text = model.WxNum.ToString();
 
             this.rptList.DataSource = wxList;
             this.rptList.DataBind();

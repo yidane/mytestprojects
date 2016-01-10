@@ -43,7 +43,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             var adminEntity = GetAdminInfo(); //取得当前管理员信息
             //_strWhere += " and (agentId=" + adminEntity.id + " or uId=" + adminEntity.id + " )";
 
-            var result = bll.GetAppInfoListByAgentIdAdnUId(this.pageSize, this.page, adminEntity.id, out this.totalCount);
+            var result = bll.GetAppInfoListByAgentIdAdnUId(this.pageSize, this.page, adminEntity.Id, out this.totalCount);
 
             if (result.Count > 0)
             {

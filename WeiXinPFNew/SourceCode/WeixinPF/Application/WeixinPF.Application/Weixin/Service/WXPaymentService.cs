@@ -21,7 +21,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     增加一条数据
+        /// 增加一条数据
         /// </summary>
         public int Add(PaymentInfo model)
         {
@@ -29,7 +29,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     更新一条数据
+        /// 更新一条数据
         /// </summary>
         public bool Update(PaymentInfo model)
         {
@@ -37,7 +37,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     得到一个对象实体
+        /// 得到一个对象实体
         /// </summary>
         public PaymentInfo GetModel(int id)
         {
@@ -45,7 +45,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public DataSet GetList(string strWhere)
         {
@@ -53,7 +53,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     获得数据列表
+        /// 获得数据列表
         /// </summary>
         public List<PaymentInfo> DataTableToList(DataTable dt)
         {
@@ -75,7 +75,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        ///     得到wid的微信支付配置信息一个对象实体
+        /// 得到wid的微信支付配置信息一个对象实体
         /// </summary>
         public PaymentInfo GetModelByWid(int wid)
         {

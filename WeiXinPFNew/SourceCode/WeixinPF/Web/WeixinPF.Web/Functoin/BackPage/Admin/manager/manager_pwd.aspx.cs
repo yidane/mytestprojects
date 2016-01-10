@@ -1,5 +1,6 @@
 ﻿using System;
 using WeixinPF.Application.Agent;
+using WeixinPF.Application.Agent.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
@@ -14,16 +15,16 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             if (!Page.IsPostBack)
             {
                 var model = GetAdminInfo();
-                ShowInfo(model.id);
+                ShowInfo(model.Id);
             }
         }
 
         #region 赋值操作=================================
         private void ShowInfo(int _id)
         {
-            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerInfoService();
             var model = bll.GetModel(_id);
-           lblUserName.Text = model.user_name;
+           lblUserName.Text = model.UserName;
             
         }
         #endregion
@@ -31,10 +32,10 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         //保存
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerInfoService();
             var model = GetAdminInfo();
 
-            if (DESEncrypt.Encrypt(txtOldPassword.Text.Trim(), model.salt) != model.password)
+            if (DESEncrypt.Encrypt(txtOldPassword.Text.Trim(), model.Salt) != model.Password)
             {
                 JscriptMsg("旧密码不正确！", "", "Warning");
                 return;
@@ -44,13 +45,13 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 JscriptMsg("两次密码不一致！", "", "Warning");
                 return;
             }
-            model.password = DESEncrypt.Encrypt(txtPassword.Text.Trim(), model.salt);
+            model.Password = DESEncrypt.Encrypt(txtPassword.Text.Trim(), model.Salt);
             if (!bll.Update(model))
             {
                 JscriptMsg("保存过程中发生错误！", "", "Error");
                 return;
             }
-            Session[MXKeys.SESSION_ADMIN_INFO] = null;
+            Session[SystemKeys.SESSION_ADMIN_INFO] = null;
             JscriptMsg("密码修改成功！", "manager_pwd.aspx", "Success");
         }
     }

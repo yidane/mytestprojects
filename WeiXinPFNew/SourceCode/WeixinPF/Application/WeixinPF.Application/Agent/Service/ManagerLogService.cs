@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeixinPF.Application.Agent.Repository;
 using WeixinPF.Common;
 using WeixinPF.Model.Agent;
@@ -13,62 +9,68 @@ namespace WeixinPF.Application.Agent.Service
     public class ManagerLogService
     {
         private readonly IManagerLogRepository _repository;
-        public ManagerLogService(IManagerLogRepository repository)
+
+        public ManagerLogService()
         {
-            this._repository = repository;
-            //dal = new DAL.manager(siteConfig.sysdatabaseprefix);
+            _repository = DependencyManager.Resolve<IManagerLogRepository>();
         }
+
         #region 基本方法==============================
+
         /// <summary>
         /// 是否存在该记录
         /// </summary>
         public bool Exists(int id)
         {
-            return this._repository.Exists(id);
+            return _repository.Exists(id);
         }
 
         /// <summary>
         /// 增加管理日志
         /// </summary>
-        /// <param name="用户id"></param>
-        /// <param name="用户名"></param>
-        /// <param name="操作类型"></param>
-        /// <param name="备注"></param>
+        /// <param name="userId"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="userName"></param>
+        /// <param name="actionType"></param>
+        /// <param name="remark"></param>
         /// <returns></returns>
-        public int Add(int user_id, string user_name, string action_type, string remark)
+        public int Add(int userId, string sessionId, string userName, string actionType, string remark)
         {
-            var manager_log_model = new Manager_LogInfo();
-            manager_log_model.user_id = user_id;
-            manager_log_model.user_name = user_name;
-            manager_log_model.action_type = action_type;
-            manager_log_model.remark = remark;
-            manager_log_model.user_ip = MXRequest.GetIP();
+            var managerLogInfo = new ManagerLogInfo
+            {
+                UserId = userId,
+                UserName = userName,
+                ActionType = actionType,
+                Remark = remark,
+                AddTime = DateTime.Now,
+                UserIp = MXRequest.GetIP()
+            };
 
-            return this._repository.Add(manager_log_model);
+            return _repository.Add(managerLogInfo);
         }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(Manager_LogInfo model)
+        public int Add(ManagerLogInfo model)
         {
-            return this._repository.Add(model);
+            return _repository.Add(model);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Manager_LogInfo GetModel(int id)
+        public ManagerLogInfo GetModel(int id)
         {
-            return this._repository.GetModel(id);
+            return _repository.GetModel(id);
         }
 
         /// <summary>
         /// 根据用户名返回上一次登录记录
         /// </summary>
-        public Manager_LogInfo GetModel(string user_name, int top_num, string action_type)
+        public ManagerLogInfo GetModel(string userName, int topNum, string actionType)
         {
-            return this._repository.GetModel(user_name, top_num, action_type);
+            return _repository.GetModel(userName, topNum, actionType);
         }
 
         /// <summary>
@@ -76,7 +78,7 @@ namespace WeixinPF.Application.Agent.Service
         /// </summary>
         public int Delete(int dayCount)
         {
-            return this._repository.Delete(dayCount);
+            return _repository.Delete(dayCount);
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace WeixinPF.Application.Agent.Service
         /// </summary>
         public DataSet GetList(int Top, string strWhere, string filedOrder)
         {
-            return this._repository.GetList(Top, strWhere, filedOrder);
+            return _repository.GetList(Top, strWhere, filedOrder);
         }
 
         /// <summary>
@@ -92,7 +94,7 @@ namespace WeixinPF.Application.Agent.Service
         /// </summary>
         public DataSet GetList(int pageSize, int pageIndex, string strWhere, string filedOrder, out int recordCount)
         {
-            return this._repository.GetList(pageSize, pageIndex, strWhere, filedOrder, out recordCount);
+            return _repository.GetList(pageSize, pageIndex, strWhere, filedOrder, out recordCount);
         }
 
         #endregion

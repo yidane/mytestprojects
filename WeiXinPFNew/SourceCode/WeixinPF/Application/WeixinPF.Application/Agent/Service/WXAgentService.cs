@@ -19,7 +19,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WX_AgentInfo model)
+        public int Add(AgentInfo model)
         {
             return this._repository.Add(model);
         }
@@ -27,7 +27,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WX_AgentInfo model)
+        public bool Update(AgentInfo model)
         {
             return this._repository.Update(model);
         }
@@ -43,13 +43,13 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WX_AgentInfo> DataTableToList(DataTable dt)
+        public List<AgentInfo> DataTableToList(DataTable dt)
         {
-            var modelList = new List<WX_AgentInfo>();
+            var modelList = new List<AgentInfo>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WX_AgentInfo model = null;
+                AgentInfo model = null;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = this._repository.DataRowToModel(dt.Rows[n]);
@@ -74,7 +74,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WX_AgentInfo GetAgentModel(int managerid)
+        public AgentInfo GetAgentModel(int managerid)
         {
 
             return this._repository.GetAgentModel(managerid);

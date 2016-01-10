@@ -15,14 +15,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         private AppInfoService bll;
         private WXAgentService aBll;
         private ManagerInfo adminEntity;
-        private WX_AgentInfo agent;
+        private AgentInfo agent;
         protected string returnPage = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             bll = new AppInfoService();
             aBll = new WXAgentService(new WXAgentRepository());
             adminEntity = GetAdminInfo(); //取得管理员信息
-            agent = aBll.GetAgentModel(adminEntity.id);
+            agent = aBll.GetAgentModel(adminEntity.Id);
             if (!Page.IsPostBack)
             {
                 int id = 0;
@@ -173,13 +173,13 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 }
 
                 bool isAgent = false;
-                if (adminEntity.agentLevel < 0)
+                if (adminEntity.AgentLevel < 0)
                 {
                     return false;
                 }
-                if (adminEntity.agentLevel > 0)
+                if (adminEntity.AgentLevel > 0)
                 {
-                    agent = aBll.GetAgentModel(adminEntity.id);
+                    agent = aBll.GetAgentModel(adminEntity.Id);
                     isAgent = true;
                     if (agent.remainMony < agent.agentPrice)
                     {
@@ -196,14 +196,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                         if (updateRet)
                         {
                             var bBll = new WXManagerBillService(new WXManagerBillRepository());
-                            var bill = new WX_ManagerBillInfo
+                            var bill = new ManagerBillInfo
                             {
-                                billMoney = xfjine,
-                                managerId = agent.managerId,
-                                operPersonId = agent.managerId,
-                                operDate = DateTime.Now,
-                                billUsed = "微帐号" + model.wxName + "增加时间" + addYear + "年",
-                                moneyType = "扣减"
+                                BillMoney = xfjine,
+                                ManagerId = agent.managerId,
+                                OperPersonId = agent.managerId,
+                                OperDate = DateTime.Now,
+                                BillUsed = "微帐号" + model.wxName + "增加时间" + addYear + "年",
+                                MoneyType = "扣减"
                             };
 
                             bBll.Add(bill);

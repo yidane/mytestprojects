@@ -31,7 +31,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
                 chkCode += character[rnd.Next(character.Length)];
             }
             //写入Session
-            context.Session[MXKeys.SESSION_CODE] = chkCode;
+            context.Session[SystemKeys.SESSION_CODE] = chkCode;
             //创建画布
             Bitmap bmp = new Bitmap(codeW, codeH);
             Graphics g = Graphics.FromImage(bmp);

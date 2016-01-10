@@ -18,17 +18,17 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        int Add(Manager_LogInfo model);
+        int Add(ManagerLogInfo model);
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        Manager_LogInfo GetModel(int id);
+        ManagerLogInfo GetModel(int id);
 
         /// <summary>
         /// 根据用户名返回上一次登录记录
         /// </summary>
-        Manager_LogInfo GetModel(string user_name, int top_num, string action_type);
+        ManagerLogInfo GetModel(string userName, int topNum, string actionType);
         ///// <summary>
         ///// 删除7天前的日志数据
         ///// </summary>
@@ -37,7 +37,7 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 获得前几行数据
         /// </summary>
-        DataSet GetList(int Top, string strWhere, string filedOrder);
+        DataSet GetList(int top, string strWhere, string filedOrder);
 
         /// <summary>
         /// 获得查询分页数据

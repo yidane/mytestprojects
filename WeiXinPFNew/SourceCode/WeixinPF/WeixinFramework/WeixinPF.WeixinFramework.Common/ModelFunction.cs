@@ -140,25 +140,25 @@ namespace WeixinPF.WeixinFramework.Common
             //                responseEntity.rcType = Model.ReponseContentType.text;
             //                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
             //            }
-            ////            else if (DateTime.Parse(actModel.endDate) <= DateTime.Now)
-            ////            {
-            ////                //活动结束
-            ////                responseEntity.rcType = Model.ReponseContentType.txtpic;
-            ////                responseEntity.rContent = actModel.endNotice;
-            ////                responseEntity.rContent2 = actModel.endContent;
-            ////                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/end.aspx?wid=" + apiid + "&aid=" + id;
-            ////                responseEntity.picUrl = actModel.endPic;
+            ////    else if (DateTime.Parse(actModel.endDate) <= DateTime.Now)
+            ////    {
+            ////        //活动结束
+            ////        responseEntity.rcType = Model.ReponseContentType.txtpic;
+            ////        responseEntity.rContent = actModel.endNotice;
+            ////        responseEntity.rContent2 = actModel.endContent;
+            ////        responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/end.aspx?wid=" + apiid + "&aid=" + id;
+            ////        responseEntity.picUrl = actModel.endPic;
             ////
-            ////            }
-            ////            else
-            ////            { 
+            ////    }
+            ////    else
+            ////    { 
             //                //活动正在进行中 
             //                responseEntity.rcType = Model.ReponseContentType.txtpic;
             //                responseEntity.rContent = actModel.actName;
             //                responseEntity.rContent2 = actModel.brief;
             //                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/MakePhoto.html?wid=" + apiid + "&aid=" + id;
-            ////                responseEntity.picUrl = actModel.beginPic;
-            ////            }
+            ////        responseEntity.picUrl = actModel.beginPic;
+            ////    }
             //            responselist.Add(responseEntity);
             return responselist;
 

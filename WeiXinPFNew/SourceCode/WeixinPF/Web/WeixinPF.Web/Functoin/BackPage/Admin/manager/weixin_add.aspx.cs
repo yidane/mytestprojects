@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
 using WeixinPF.Application.Agent;
+using WeixinPF.Application.Agent.Service;
 using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
@@ -40,9 +41,9 @@ namespace WeiXinPF.Web.admin.manager
             {
                 ChkAdminLevel("wcodemgr", MXEnums.ActionEnum.View.ToString()); //检查权限
                 txtEndData.Text = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
-                var mBll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+                var mBll = new ManagerInfoService();
                 var user = mBll.GetModel(uid);
-                lblUserName.Text = user.user_name + " " + user.real_name;
+                lblUserName.Text = user.UserName + " " + user.RealName;
 
             }
         }
@@ -81,7 +82,7 @@ namespace WeiXinPF.Web.admin.manager
             }
 
             var manager = GetAdminInfo();
-            int uId = manager.id;
+            int uId = manager.Id;
             string wxName = this.txtwxName.Text;
             string wxId = this.txtwxId.Text;
 
@@ -146,10 +147,10 @@ namespace WeiXinPF.Web.admin.manager
                 if (obj != null && obj.ToString() == "true")
                 {
                     //为微账户添加行业默认模块
-                    var mBll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+                    var mBll = new ManagerInfoService();
                     var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
                     var user = mBll.GetModel(uid);
-                    int roleid = user.role_id;
+                    int roleid = user.RoleId;
                     idBll.addMouduleByRoleid(roleid, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
                 }
 
@@ -180,13 +181,13 @@ namespace WeiXinPF.Web.admin.manager
         /// <returns>超过为true,未超过为false</returns>
         private bool IsChaoGuoWxNum()
         {
-            var mBll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var mBll = new ManagerInfoService();
             var manager = mBll.GetModel(this.uid);
 
             int hasNum = bll.GetUserWxNumCount(this.uid);
-            if (hasNum >= manager.wxNum)
+            if (hasNum >= manager.WxNum)
             {
-                JscriptMsg("该用户只能添加" + manager.wxNum + "个微信公众帐号,若想添加多个，请联系管理员！", "weixin_list.aspx?id=" + uid, "Error");
+                JscriptMsg("该用户只能添加" + manager.WxNum + "个微信公众帐号,若想添加多个，请联系管理员！", "weixin_list.aspx?id=" + uid, "Error");
                 return true;
             }
             else

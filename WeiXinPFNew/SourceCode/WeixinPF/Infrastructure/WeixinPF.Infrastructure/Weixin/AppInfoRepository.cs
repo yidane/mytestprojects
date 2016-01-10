@@ -7,6 +7,8 @@ using WeixinPF.Infrastructure.BaseRepository;
 using WeixinPF.Model.WeiXin;
 using System.Linq;
 using System.Linq.Expressions;
+using WeixinPF.Application.Weixin;
+using WeixinPF.Model;
 
 namespace WeixinPF.Infrastructure.Weixin
 {
@@ -92,7 +94,7 @@ namespace WeixinPF.Infrastructure.Weixin
 
 
             var query = from s in weiXinContext.AppInfoContext
-                        join sd in weiXinContext.ManagerInfoContext on s.uId equals sd.id into g
+                        join sd in weiXinContext.ManagerInfoContext on s.uId equals sd.Id into g
                         from stuDesc in g.DefaultIfEmpty()
                         where s.IsDelete == false
                         where s.uId == uId

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeixinPF.Application.Agent.Repository;
+using WeixinPF.Common;
 using WeixinPF.Model.Agent;
 
 namespace WeixinPF.Application.Agent.Service
@@ -12,10 +13,9 @@ namespace WeixinPF.Application.Agent.Service
     public class ManagerRoleService
     {
         private readonly IManagerRoleRepository _repository;
-        public ManagerRoleService(IManagerRoleRepository repository)
+        public ManagerRoleService()
         {
-            this._repository = repository;
-            //dal = new DAL.manager(siteConfig.sysdatabaseprefix);
+            this._repository = DependencyManager.Resolve<IManagerRoleRepository>();
         }
         #region  Method
         /// <summary>
@@ -37,11 +37,14 @@ namespace WeixinPF.Application.Agent.Service
             var model = this._repository.GetModel(role_id);
             if (model != null)
             {
-                if (model.role_type == 1)
+                if (model.RoleType == 1)
                 {
                     return true;
                 }
-                var modelt = model.manager_role_values.Find(p => p.nav_name == nav_name && p.action_type == action_type);
+
+
+                var modelt = model.ManagerRoleValues.Where(p => p.NavName == nav_name && p.ActionType == action_type);
+
                 if (modelt != null)
                 {
                     return true;
@@ -61,7 +64,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(Manager_RoleInfo model)
+        public int Add(ManagerRoleInfo model)
         {
             return this._repository.Add(model);
         }
@@ -69,7 +72,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(Manager_RoleInfo model)
+        public bool Update(ManagerRoleInfo model)
         {
             return this._repository.Update(model);
         }
@@ -85,7 +88,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Manager_RoleInfo GetModel(int id)
+        public ManagerRoleInfo GetModel(int id)
         {
             return this._repository.GetModel(id);
         }

@@ -71,7 +71,7 @@
                     <td><%# Eval("real_name") %></td>
                     <td><%# Eval("hasnum") %></td>
                     <td><%# Eval("wxNum") %></td>
-                    <td><%#new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix)).GetTitle(Convert.ToInt32(Eval("role_id")))%></td>
+                    <td><%#new ManagerRoleService().GetTitle(Convert.ToInt32(Eval("role_id")))%></td>
                     <td><%# Eval("telephone") %></td>
                     <td><%#string.Format("{0:g}",Eval("add_time"))%></td>
                     <td align="center"><%#Eval("is_lock").ToString().Trim() == "0" ? "正常" : "禁用"%></td>

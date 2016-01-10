@@ -20,7 +20,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             {
                 ChkAdminLevel("manager_role", MXEnums.ActionEnum.View.ToString()); //检查权限
                 var model = GetAdminInfo(); //取得当前管理员信息
-                RptBind("agentId=" + model.id + CombSqlTxt(this.keywords));
+                RptBind("agentId=" + model.Id + CombSqlTxt(this.keywords));
             }
         }
 
@@ -28,7 +28,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         private void RptBind(string _strWhere)
         {
             this.txtKeywords.Text = this.keywords;
-            var bll = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerRoleService();
             this.rptList.DataSource = bll.GetList(_strWhere);
             this.rptList.DataBind();
         }
@@ -77,7 +77,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             ChkAdminLevel("manager_role", MXEnums.ActionEnum.Delete.ToString()); //检查权限
             int sucCount = 0; //成功数量
             int errorCount = 0; //失败数量
-            var bll = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerRoleService();
             for (int i = 0; i < rptList.Items.Count; i++)
             {
                 int id = Convert.ToInt32(((HiddenField)rptList.Items[i].FindControl("hidId")).Value);

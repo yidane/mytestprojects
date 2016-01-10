@@ -20,7 +20,7 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public int Add(WX_ManagerBillInfo model)
+		public int Add(ManagerBillInfo model)
         {
             return this._repository.Add(model);
         }
@@ -34,13 +34,13 @@ namespace WeixinPF.Application.Agent.Service
         /// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<WX_ManagerBillInfo> DataTableToList(DataTable dt)
+		public List<ManagerBillInfo> DataTableToList(DataTable dt)
         {
-            var modelList = new List<WX_ManagerBillInfo>();
+            var modelList = new List<ManagerBillInfo>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WX_ManagerBillInfo model = null;
+                ManagerBillInfo model = null;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = this._repository.DataRowToModel(dt.Rows[n]);

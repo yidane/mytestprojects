@@ -51,12 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent\Manager.cs" />
-    <Compile Include="Agent\Manager_Log.cs" />
-    <Compile Include="Agent\Manager_Role.cs" />
-    <Compile Include="Agent\Manager_Role_Value.cs" />
-    <Compile Include="Agent\WX_Agent.cs" />
-    <Compile Include="Agent\WX_ManagerBill.cs" />
+    <Compile Include="Agent\ManagerInfo.cs" />
+    <Compile Include="Agent\ManagerLogInfo.cs" />
+    <Compile Include="Agent\ManagerRoleInfo.cs" />
+    <Compile Include="Agent\ManagerRoleValue.cs" />
+    <Compile Include="Agent\Agent.cs" />
+    <Compile Include="Agent\ManagerBillInfo.cs" />
     <Compile Include="Article\ArticleCategory.cs" />
     <Compile Include="Article\ArticleImageSize.cs" />
     <Compile Include="Channel\Channel.cs" />
@@ -78,7 +78,6 @@
     <Compile Include="WeiXin\Payment.cs" />
     <Compile Include="WeiXin\Property.cs" />
     <Compile Include="WeiXin\SystemConfig.cs" />
-    <Compile Include="WeiXin\WeiXinDbContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

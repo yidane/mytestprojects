@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeixinPF.Application.Weixin;
 using WeixinPF.Application.Weixin.User.Repository;
 using WeixinPF.Infrastructure.BaseRepository;
+using WeixinPF.Model;
 using WeixinPF.Model.WeiXin;
 using WeixinPF.Model.WeiXin.User;
 

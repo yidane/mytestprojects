@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent\ManagerLogRepository.cs" />
-    <Compile Include="Agent\ManagerRepository.cs" />
+    <Compile Include="Agent\ManagerInfoRepository.cs" />
     <Compile Include="Agent\ManagerRoleRepository.cs" />
     <Compile Include="Agent\WXAgentRepository.cs" />
     <Compile Include="Agent\WXManagerBillRepository.cs" />

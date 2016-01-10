@@ -18,7 +18,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         public DbContext Context { get; protected set; }
 
         /// <summary>
-        ///     新增操作
+        /// 新增操作
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
@@ -37,7 +37,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         }
 
         /// <summary>
-        ///     更新操作
+        /// 更新操作
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         }
 
         /// <summary>
-        ///     批量更新
+        /// 批量更新
         /// </summary>
         /// <param name="entities"></param>
         /// <returns></returns>
@@ -79,7 +79,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         }
 
         /// <summary>
-        ///     查询
+        /// 查询
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -98,7 +98,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         }
 
         /// <summary>
-        ///     带分页的查询
+        /// 带分页的查询
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>

@@ -49,7 +49,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         {
             this.page = MXRequest.GetQueryInt("page", 1);
             txtKeywords.Text = this.keywords;
-            var bll = new ManagerLogService(new ManagerLogRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerLogService();
             this.rptList.DataSource = bll.GetList(this.pageSize, this.page, _strWhere, _orderby, out this.totalCount);
             this.rptList.DataBind();
 
@@ -99,7 +99,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             ChkAdminLevel("manager_log", MXEnums.ActionEnum.Delete.ToString()); //检查权限
-            var bll = new ManagerLogService(new ManagerLogRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerLogService();
             int sucCount = bll.Delete(7);
             AddAdminLog(MXEnums.ActionEnum.Delete.ToString(), "删除管理日志" + sucCount + "条"); //记录日志
             JscriptMsg("删除日志" + sucCount + "条", Utils.CombUrlTxt("manager_log.aspx", "keywords={0}", this.keywords), "Success");

@@ -2,6 +2,7 @@
 using System.Threading;
 using NServiceBus;
 using WeixinPF.Application.Agent;
+using WeixinPF.Application.Agent.Service;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Messages.RequestResponse;
@@ -27,14 +28,14 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
         protected void Page_Load(object sender, EventArgs e)
         {
 #if DEBUG
-            var bll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerInfoService();
             var model = bll.GetModel("ht", "123456", true);
             if (model == null)
             {
                 //msgtip.InnerHtml = "用户名或密码有误，请重试！";
                 return;
             }
-            Session[MXKeys.SESSION_ADMIN_INFO] = model;
+            Session[SystemKeys.SESSION_ADMIN_INFO] = model;
             Session.Timeout = 45;
 #endif
 

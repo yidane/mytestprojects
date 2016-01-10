@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web.UI.WebControls;
 using WeixinPF.Application.Agent.Service;
 using WeixinPF.Application.System.Service;
@@ -21,7 +22,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         private ManagerRoleService rBll;
         protected void Page_Load(object sender, EventArgs e)
         {
-            rBll = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
+            rBll = new ManagerRoleService();
             string _action = MXRequest.GetQueryString("action");
             this.id = MXRequest.GetQueryInt("id");
 
@@ -34,7 +35,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                     return;
                 }
                 var adminEntity = GetAdminInfo();
-                if (!rBll.Exists(this.id,adminEntity.id))
+                if (!rBll.Exists(this.id,adminEntity.Id))
                 {
                     JscriptMsg("角色不存在或已被删除！", "back", "Error");
                     return;
@@ -74,7 +75,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             var bll = new NavigationService(new NavigationRepository(siteConfig.sysdatabaseprefix));
             DataTable dt = new DataTable();
             bool isAgent = false;
-            if (adminEntity.agentLevel > 0)
+            if (adminEntity.AgentLevel > 0)
             {
                 isAgent = true;
             }
@@ -87,12 +88,12 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         #region 赋值操作=================================
         private void ShowInfo(int _id)
         {
-            var bll = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerRoleService();
             var model = bll.GetModel(_id);
-            txtRoleName.Text = model.role_name;
+            txtRoleName.Text = model.RoleName;
             //ddlRoleType.SelectedValue = model.role_type.ToString();
             //管理权限
-            if (model.manager_role_values != null)
+            if (model.ManagerRoleValues != null)
             {
                 for (int i = 0; i < rptList.Items.Count; i++)
                 {
@@ -100,7 +101,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                     CheckBoxList cblActionType = (CheckBoxList)rptList.Items[i].FindControl("cblActionType");
                     for (int n = 0; n < cblActionType.Items.Count; n++)
                     {
-                        var modelt = model.manager_role_values.Find(p => p.nav_name == navName && p.action_type == cblActionType.Items[n].Value);
+                        var modelt = model.ManagerRoleValues.Where(p => p.NavName == navName && p.ActionType == cblActionType.Items[n].Value);
                         if (modelt != null)
                         {
                             cblActionType.Items[n].Selected = true;
@@ -116,14 +117,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         {
             var adminEntity=GetAdminInfo();
             bool result = false;
-            var model = new Manager_RoleInfo();
-            model.agentId = adminEntity.id;
-            model.role_name = txtRoleName.Text.Trim();
+            var model = new ManagerRoleInfo();
+            model.AgentId = adminEntity.Id;
+            model.RoleName = txtRoleName.Text.Trim();
             //model.role_type = int.Parse(ddlRoleType.SelectedValue);
-            model.role_type = 2;
+            model.RoleType = 2;
 
             //管理权限
-            var ls = new List<Manager_Role_ValueInfo>();
+            var ls = new List<ManagerRoleValueInfo>();
             for (int i = 0; i < rptList.Items.Count; i++)
             {
                 string navName = ((HiddenField)rptList.Items[i].FindControl("hidName")).Value;
@@ -132,15 +133,15 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 {
                     if (cblActionType.Items[n].Selected == true)
                     {
-                        ls.Add(new Manager_Role_ValueInfo { nav_name = navName, action_type = cblActionType.Items[n].Value });
+                        ls.Add(new ManagerRoleValueInfo { NavName = navName, ActionType = cblActionType.Items[n].Value });
                     }
                 }
             }
-            model.manager_role_values = ls;
+            model.ManagerRoleValues = ls;
 
             if (rBll.Add(model) > 0)
             {
-                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加角色:" + model.role_name); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加角色:" + model.RoleName); //记录日志
                 result = true;
             }
             return result;
@@ -151,14 +152,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         private bool DoEdit(int _id)
         {
             bool result = false;
-            var bll = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
+            var bll = new ManagerRoleService();
             var model = bll.GetModel(_id);
 
-            model.role_name = txtRoleName.Text.Trim();
+            model.RoleName = txtRoleName.Text.Trim();
             //  model.role_type = int.Parse(ddlRoleType.SelectedValue);
 
             //管理权限
-            var ls = new List<Manager_Role_ValueInfo>();
+            var ls = new List<ManagerRoleValueInfo>();
             for (int i = 0; i < rptList.Items.Count; i++)
             {
                 string navName = ((HiddenField)rptList.Items[i].FindControl("hidName")).Value;
@@ -167,15 +168,15 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 {
                     if (cblActionType.Items[n].Selected == true)
                     {
-                        ls.Add(new Manager_Role_ValueInfo { role_id = _id, nav_name = navName, action_type = cblActionType.Items[n].Value });
+                        ls.Add(new ManagerRoleValueInfo { RoleId = _id, NavName = navName, ActionType = cblActionType.Items[n].Value });
                     }
                 }
             }
-            model.manager_role_values = ls;
+            model.ManagerRoleValues = ls;
 
             if (bll.Update(model))
             {
-                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改角色:" + model.role_name); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改角色:" + model.RoleName); //记录日志
                 result = true;
             }
             return result;

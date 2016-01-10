@@ -23,7 +23,7 @@ namespace WeixinPF.Web
         //安全退出
         protected void lbtnExit_Click(object sender, EventArgs e)
         {
-            Session[MXKeys.SESSION_ADMIN_INFO] = null;
+            Session[SystemKeys.SESSION_ADMIN_INFO] = null;
             Utils.WriteCookie("AdminName", "WeiXinPF", -14400);
             Utils.WriteCookie("AdminPwd", "WeiXinPF", -14400);
             Response.Redirect("login.aspx");

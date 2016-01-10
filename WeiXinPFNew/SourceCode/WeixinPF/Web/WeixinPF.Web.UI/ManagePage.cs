@@ -46,7 +46,7 @@ namespace WeixinPF.Web.UI
         public bool IsAdminLogin()
         {
             //如果Session为Null
-            if (Session[MXKeys.SESSION_ADMIN_INFO] != null)
+            if (Session[SystemKeys.SESSION_ADMIN_INFO] != null)
             {
                 return true;
             }
@@ -57,11 +57,11 @@ namespace WeixinPF.Web.UI
                 var adminpwd = Utils.GetCookie("AdminPwd", "WeiXinPF");
                 if (adminname != "" && adminpwd != "")
                 {
-                    var service = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+                    var service = new ManagerInfoService();
                     var model = service.GetModel(adminname, adminpwd);
                     if (model != null)
                     {
-                        Session[MXKeys.SESSION_ADMIN_INFO] = model;
+                        Session[SystemKeys.SESSION_ADMIN_INFO] = model;
                         return true;
                     }
                 }
@@ -76,7 +76,7 @@ namespace WeixinPF.Web.UI
         {
             if (IsAdminLogin())
             {
-                var model = Session[MXKeys.SESSION_ADMIN_INFO] as ManagerInfo;
+                var model = Session[SystemKeys.SESSION_ADMIN_INFO] as ManagerInfo;
                 return model;
             }
             return null;
@@ -92,8 +92,8 @@ namespace WeixinPF.Web.UI
         public void ChkAdminLevel(string nav_name, string action_type)
         {
             var model = GetAdminInfo();
-            var service = new ManagerRoleService(new ManagerRoleRepository(siteConfig.sysdatabaseprefix));
-            bool result = service.Exists(model.role_id, nav_name, action_type);
+            var service = new ManagerRoleService();
+            bool result = service.Exists(model.RoleId, nav_name, action_type);
 
             if (!result)
             {
@@ -106,15 +106,15 @@ namespace WeixinPF.Web.UI
         /// <summary>
         /// 写入管理日志
         /// </summary>
-        /// <param name="action_type"></param>
+        /// <param name="actionType"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public bool AddAdminLog(string action_type, string remark)
+        public bool AddAdminLog(string actionType, string remark)
         {
             if (siteConfig.logstatus > 0)
             {
                 var model = GetAdminInfo();
-                int newId = new ManagerLogService(new ManagerLogRepository(siteConfig.sysdatabaseprefix)).Add(model.id, model.user_name, action_type, remark);
+                int newId = new ManagerLogService().Add(model.Id, Session.SessionID, model.UserName, actionType, remark);
                 if (newId > 0)
                 {
                     return true;
@@ -269,7 +269,7 @@ namespace WeixinPF.Web.UI
                 {
                     var adminService = new HotelAdminService(new HotelAdminRepository(dbContext));
 
-                    var hotelAdmin = adminService.GetModel(admin.id);
+                    var hotelAdmin = adminService.GetModel(admin.Id);
                     if (hotelAdmin != null)
                     {
                         return hotelAdmin.HotelId;
@@ -277,7 +277,7 @@ namespace WeixinPF.Web.UI
 
                     var userService = new HotelUserService(new HotelUserRepository(dbContext));
 
-                    var hotelUser = userService.GetModel(admin.id);
+                    var hotelUser = userService.GetModel(admin.Id);
 
                     if (hotelUser != null)
                     {

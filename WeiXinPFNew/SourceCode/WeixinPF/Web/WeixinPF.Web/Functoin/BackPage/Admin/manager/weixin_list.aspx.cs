@@ -3,6 +3,7 @@ using System.Data;
 using System.Text;
 using System.Web.UI.WebControls;
 using WeixinPF.Application.Agent;
+using WeixinPF.Application.Agent.Service;
 using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
@@ -36,9 +37,9 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             this.pageSize = GetPageSize(10); //每页数量
             if (!Page.IsPostBack)
             {
-                var mBll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
+                var mBll = new ManagerInfoService();
                 var user = mBll.GetModel(uid);
-                lblUserName.Text = "[" + user.user_name + " " + user.real_name + "]";
+                lblUserName.Text = "[" + user.UserName + " " + user.RealName + "]";
 
                 ChkAdminLevel("wcodemgr", MXEnums.ActionEnum.View.ToString()); //检查权限
                 RptBind(CombSqlTxt(keywords), "wStatus desc, createDate desc");

@@ -20,7 +20,7 @@ namespace WeixinPF.Application.Weixin.Token.Service
         }
 
         /// <summary>
-        ///     获取当前账号的AccessToken
+        /// 获取当前账号的AccessToken
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="errorMessage"></param>

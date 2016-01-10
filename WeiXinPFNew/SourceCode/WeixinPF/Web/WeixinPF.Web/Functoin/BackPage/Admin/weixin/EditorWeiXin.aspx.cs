@@ -134,7 +134,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                 return false;
             }
             var manager = GetAdminInfo();
-            int uId = manager.id;
+            int uId = manager.Id;
             string wxName = this.txtwxName.Text;
             string wxId = this.txtwxId.Text;
 
@@ -206,7 +206,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                     //根据登录者所在行业为微帐号添加相应默认模块
                     var mModel = GetAdminInfo(); //取得管理员信息
                     var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
-                    idBll.addMouduleByRoleid(mModel.role_id, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
+                    idBll.addMouduleByRoleid(mModel.RoleId, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
                 }
 
                 AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
@@ -323,10 +323,10 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         private bool IsChaoGuoWxNum()
         {
             var manager = GetAdminInfo();
-            int hasNum = _appInfoService.GetUserWxNumCount(manager.id);
-            if (hasNum >= manager.wxNum)
+            int hasNum = _appInfoService.GetUserWxNumCount(manager.Id);
+            if (hasNum >= manager.WxNum)
             {
-                JscriptMsg("你只能添加" + manager.wxNum + "个微信公众帐号,若想添加多个，请联系管理员！", "myweixinlist.aspx", "Error");
+                JscriptMsg("你只能添加" + manager.WxNum + "个微信公众帐号,若想添加多个，请联系管理员！", "myweixinlist.aspx", "Error");
                 return true;
             }
             else

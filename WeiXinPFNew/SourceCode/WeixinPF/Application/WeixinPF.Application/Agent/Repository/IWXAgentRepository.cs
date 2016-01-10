@@ -8,17 +8,17 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        int Add(WX_AgentInfo model);
+        int Add(AgentInfo model);
 
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        bool Update(WX_AgentInfo model);
+        bool Update(AgentInfo model);
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        WX_AgentInfo DataRowToModel(DataRow row);
+        AgentInfo DataRowToModel(DataRow row);
 
         /// <summary>
         /// 获得数据列表
@@ -33,6 +33,6 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        WX_AgentInfo GetAgentModel(int managerId);
+        AgentInfo GetAgentModel(int managerId);
     }
 }

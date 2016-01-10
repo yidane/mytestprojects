@@ -8,12 +8,12 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        int Add(WX_ManagerBillInfo model);
+        int Add(ManagerBillInfo model);
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        WX_ManagerBillInfo DataRowToModel(DataRow row);
+        ManagerBillInfo DataRowToModel(DataRow row);
 
         /// <summary>
         /// 获得数据列表

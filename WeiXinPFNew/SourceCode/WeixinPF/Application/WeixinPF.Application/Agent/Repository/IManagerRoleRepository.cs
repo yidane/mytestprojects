@@ -29,12 +29,12 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        int Add(Manager_RoleInfo model);
+        int Add(ManagerRoleInfo model);
 
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        bool Update(Manager_RoleInfo model);
+        bool Update(ManagerRoleInfo model);
 
         /// <summary>
         /// 删除一条数据，及子表所有相关数据
@@ -44,7 +44,7 @@ namespace WeixinPF.Application.Agent.Repository
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        Manager_RoleInfo GetModel(int id);
+        ManagerRoleInfo GetModel(int id);
 
         /// <summary>
         /// 获得数据列表
