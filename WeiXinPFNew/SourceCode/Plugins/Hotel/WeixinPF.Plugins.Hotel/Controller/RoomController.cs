@@ -16,37 +16,24 @@ namespace WeixinPF.Hotel.Plugins.Controller
     {
         private const int WaitSeconds = 10000000;
 
+        private string ServiceName = "WeixinPF.Hotel.Plugins.Service";
+
 
         /// <summary>
         /// 获取房间列表
         /// </summary>
-        public GetRoomListResponse GetRoomList(GetRoomListRequest request)
+        public GetRoomListResponse GetRoomList([FromUri]GetRoomListRequest request)
         {
             try
             {
-                GetRoomListResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service",
-                    request)
-                    .Register(response =>
-                    {
-                        CompletionResult result = response.AsyncState as CompletionResult;
-                        if (result != null)
-                        {
-                            responseData = result.Messages[0] as GetRoomListResponse;
-
-                        }
-                    }, this);
-
-                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(WaitSeconds);
-
-                if (!asyncResult.IsCompleted)
+                var result = Global.Bus.Send<GetRoomListResponse>(ServiceName, request);
+                if (!result.IsSuccess)
                 {
                     throw new HttpResponseException(
                      Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                      "获取房间信息失败。"));
                 }
-                return responseData;
+                return result.Data;
             }
             catch
             {
@@ -60,31 +47,18 @@ namespace WeixinPF.Hotel.Plugins.Controller
         /// 获取房间明细
         /// </summary>
 
-        public GetRoomResponse GetRoom(GetRoomRequest request)
+        public GetRoomResponse GetRoom([FromUri]GetRoomRequest request)
         {
             try
             {
-                GetRoomResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", request)
-                        .Register(response =>
-                        {
-                            CompletionResult result = response.AsyncState as CompletionResult;
-                            if (result != null)
-                            {
-                                responseData = result.Messages[0] as GetRoomResponse;
-
-                            }
-                        }, this);
-
-                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(WaitSeconds);
-
-                if (asyncResult.IsCompleted)
+                var result = Global.Bus.Send<GetRoomResponse>(ServiceName, request);
+                if (!result.IsSuccess)
                 {
-                    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                        "获取房间信息失败。"));
+                    throw new HttpResponseException(
+                     Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                     "获取房间信息失败。"));
                 }
-                return responseData;
+                return result.Data;
             }
             catch
             {

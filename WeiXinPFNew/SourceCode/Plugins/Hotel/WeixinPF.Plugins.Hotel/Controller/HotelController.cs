@@ -14,38 +14,23 @@ namespace WeixinPF.Hotel.Plugins.Controller
     public class HotelController : ApiController
     {
         private const int WaitSeconds = 10000000;
+        private const string ServiceName = "WeixinPF.Hotel.Plugins.Service";
 
         /// <summary>
         /// 获取酒店基本信息
         /// </summary>
-        public GetHotelResponse GetHotelInfo(GetHotelRequest request)
+        public GetHotelResponse GetHotelInfo([FromUri]GetHotelRequest request)
         {
             try
             {
-                GetHotelResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send(
-                    "WeixinPF.Hotel.Plugins.Service",
-                    request
-                ).Register(response =>
-                {
-                    CompletionResult result = response.AsyncState as CompletionResult;
-                    if (result != null)
-                    {
-                        responseData = result.Messages[0] as GetHotelResponse;
-
-                    }
-                }, this);
-
-                WaitHandle asyncWaitHandle = asyncResult.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(WaitSeconds);
-
-                if (!asyncResult.IsCompleted)
+                var result = Global.Bus.Send<GetHotelResponse>(ServiceName, request);
+                if (!result.IsSuccess)
                 {
                     throw new HttpResponseException(
                      Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                      "获取酒店信息失败。"));
                 }
-                return responseData;
+                return result.Data;
             }
             catch (Exception ex)
             {
