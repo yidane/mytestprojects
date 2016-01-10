@@ -219,6 +219,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         /// <param name="openid"></param>
         /// <param name="hotelId"></param>
         /// <param name="roomId"></param>
+        /// <param name="roomType"></param>
         /// <param name="order"></param>
         [WebMethod]
         public void SaveOrder(int wid, string openid, int hotelId, int roomId, string roomType, string order)
@@ -229,6 +230,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                 CreateOrderResponse responseData = null;
                 CreateOrderRequest request = new CreateOrderRequest()
                 {
+                    Wid = wid,
                     OpenId = openid,
                     HotelId = hotelId,
                     RoomId = roomId,
@@ -274,7 +276,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderResponse responseData = null;
-                IAsyncResult asyncResult= BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
+                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Repository;
 using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Hotel.Plugins.Service.Models;
@@ -102,6 +105,32 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
 
                 return repository.GetIdentifyingCodeDetailById(identifyingCode);
             }
+        }
+
+        public static   bool AddIdentifyingCode(IdentifyingCodeInfo code)
+        {
+            if (code != null)
+            {
+                var addResult = false;
+                code.IdentifyingCode = Utils.Number(12);
+
+                using (var context = new HotelDbContext())
+                {
+                    addResult = new IdentifyingCodeRepository(context).AddIdentifyingCode(code);
+                }
+
+                // 如果IdentifyingCode在数据库中存在，则递归执行此方法重新获取编号
+                if (!addResult)
+                {
+                    AddIdentifyingCode(code);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

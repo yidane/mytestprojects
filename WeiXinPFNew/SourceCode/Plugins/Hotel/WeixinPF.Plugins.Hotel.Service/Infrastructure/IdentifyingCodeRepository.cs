@@ -58,5 +58,27 @@ namespace WeixinPF.Hotel.Plugins.Service.Infrastructure
 
             return this._context.Database.SqlQuery<IdentifyingCodeDetailSearchDTO>(strSql.ToString()).ToList();
         }
+        public bool AddIdentifyingCode(IdentifyingCodeInfo code)
+        {
+            var sqlParams = new List<SqlParameter>
+            {
+                new SqlParameter("@IdentifyingCodeId", SqlDbType.UniqueIdentifier) {Value = code.IdentifyingCodeId},
+                new SqlParameter("@ModuleName", SqlDbType.NVarChar, 50) {Value = code.ModuleName},
+                new SqlParameter("@OrderId", SqlDbType.NVarChar, 50) {Value = code.OrderId},
+                new SqlParameter("@OrderCode", SqlDbType.NVarChar, 50) {Value = code.OrderCode},
+                new SqlParameter("@ProductId", SqlDbType.NVarChar, 50) {Value = code.ProductId},
+                new SqlParameter("@ProductCode", SqlDbType.NVarChar, 50) {Value = code.ProductCode},
+                new SqlParameter("@IdentifyingCode", SqlDbType.NVarChar, 100) {Value = code.IdentifyingCode},
+                new SqlParameter("@CreateTime", SqlDbType.DateTime) {Value = code.CreateTime},
+                new SqlParameter("@ModifyTime", SqlDbType.DateTime) {Value = code.ModifyTime},
+                new SqlParameter("@STATUS", SqlDbType.Int) {Value = code.Status},
+                new SqlParameter("@Wid", SqlDbType.Int) {Value = code.Wid},
+                new SqlParameter("@ShopId", SqlDbType.NVarChar, 50) {Value = code.ShopId}
+            };
+
+
+            var strSql = @"USP_Verification_AddIdentifyingCode @IdentifyingCodeId, @ModuleName, @OrderId, @OrderCode, @ProductId, @ProductCode, @IdentifyingCode, @CreateTime, @ModifyTime, @STATUS, @Wid, @ShopId";
+            return this.Context.Database.SqlQuery<int>(strSql, sqlParams.ToArray()).First() == 1;
+        }
     }
 }

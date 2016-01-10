@@ -9,6 +9,7 @@ namespace WeixinPF.Messages.RequestResponse
 {
     public class CreateOrderRequest
     {
+        public int Wid { get; set; }
         public string OpenId { get; set; }
         public int HotelId { get; set; }
         public int RoomId { get; set; }
