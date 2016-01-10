@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Services;
 using NServiceBus;
 using WeixinPF.Common;
@@ -273,14 +274,13 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
+                IAsyncResult asyncResult= BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;
                             if (result != null)
                             {
                                 responseData = result.Messages[0] as GetOrderResponse;
-
                             }
                         }, this);
 
