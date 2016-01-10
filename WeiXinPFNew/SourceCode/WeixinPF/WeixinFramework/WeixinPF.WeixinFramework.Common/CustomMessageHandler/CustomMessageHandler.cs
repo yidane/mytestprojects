@@ -1,22 +1,11 @@
-﻿
-
-
-using System;
-using System.Configuration;
-using System.IO;
-using System.Text;
-using System.Web.Configuration;
-using OneGulp.WeChat.MP.Agent;
-using OneGulp.WeChat.Context;
+﻿using System.IO;
 using OneGulp.WeChat.MP.Entities;
-using OneGulp.WeChat.MP.MessageHandlers;
-using OneGulp.WeChat.MP.Helpers;
-using System.Xml;
-using System.Xml.Linq;
-using WeiXinPF.Common;
 using OneGulp.WeChat.MP.Entities.Request;
+using OneGulp.WeChat.MP.MessageHandlers;
+using WeiXinPF.WeiXinComm;
+using WeiXinPF.WeiXinComm.CustomMessageHandler;
 
-namespace WeiXinPF.WeiXinComm.CustomMessageHandler
+namespace WeixinPF.WeixinFramework.Common.CustomMessageHandler
 {
     /// <summary>
     /// 自定义MessageHandler

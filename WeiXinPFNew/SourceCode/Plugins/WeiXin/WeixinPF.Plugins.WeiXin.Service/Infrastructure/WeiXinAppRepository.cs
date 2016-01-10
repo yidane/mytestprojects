@@ -18,5 +18,11 @@ namespace WeixinPF.Plugins.WeiXin.Service.Infrastructure
         {
             this._context = dbContext;
         }
+
+        public WeiXinAppInfo GetWeiXinAppInfo(int id)
+        {
+            var appList = this.Get(item => item.id == id);
+            return appList.FirstOrDefault();
+        }
     }
 }

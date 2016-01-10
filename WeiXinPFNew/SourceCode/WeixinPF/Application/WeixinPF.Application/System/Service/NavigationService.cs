@@ -126,7 +126,7 @@ namespace WeixinPF.Application.System.Service
         /// <param name="parent_id">父ID</param>
         /// <param name="nav_type">导航类别</param>
         /// <returns>DataTable</returns>
-        public DataTable GetList(int parent_id, string nav_type, bool isAgent, IWXSystemConfigRepository wxSystemConfigRepository)
+        public DataTable GetList(int parent_id, string nav_type, bool isAgent, ISystemConfigRepository wxSystemConfigRepository)
         {
             return this._repository.GetList(parent_id, nav_type, isAgent, wxSystemConfigRepository);
         }

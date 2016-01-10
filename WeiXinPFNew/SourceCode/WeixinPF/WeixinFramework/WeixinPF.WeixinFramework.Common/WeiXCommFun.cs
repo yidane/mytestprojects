@@ -1,20 +1,17 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data;
-using WeiXinPF.Common;
 using OneGulp.WeChat.MP.Entities;
-using OneGulp.WeChat.MP.Helpers;
-using OneGulp.WeChat.MP;
-using System.Diagnostics;
+using WeixinPF.Application;
+using WeixinPF.Application.Weixin.Message.Repository;
+using WeixinPF.Application.Weixin.Repository;
 using WeixinPF.Common;
-using WeiXinPF.BLL;
-using WeiXinPF.DAL;
+using WeixinPF.Model.Weixin.Message;
+using WeixinPF.Model.WeiXin.Message;
+using WeiXinPF.WeiXinComm;
 
-namespace WeiXinPF.WeiXinComm
+namespace WeixinPF.WeixinFramework.Common
 {
     public partial class WeiXCommFun
     {
@@ -33,7 +30,7 @@ namespace WeiXinPF.WeiXinComm
             string openid = requestMessage.FromUserName;
             string token = ConvertDateTimeInt(DateTime.Now).ToString();
             responseMessage.Content = getDataTxtComm(wid, Indexid, openid, token);
-            wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", responseMessage.Content, requestMessage.ToUserName);
+            DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", responseMessage.Content, requestMessage.ToUserName);
             return responseMessage;
         }
 
@@ -48,24 +45,24 @@ namespace WeiXinPF.WeiXinComm
         {
 
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageMusic>(requestMessage);
-            Model.wx_requestRuleContent model_wx = getDataMusicComm(wid, Indexid);
+            RequestRuleContent model_wx = getDataMusicComm(wid, Indexid);
             if (model_wx == null)
             {
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "-1", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "-1", requestMessage.ToUserName);
             }
             else
             {
-                if (model_wx.mediaUrl.StartsWith("http"))
+                if (model_wx.MediaUrl.StartsWith("http"))
                 {
-                    responseMessage.Music.MusicUrl = model_wx.mediaUrl;
+                    responseMessage.Music.MusicUrl = model_wx.MediaUrl;
                 }
                 else
                 {
-                    responseMessage.Music.MusicUrl = MyCommFun.getWebSite() + model_wx.mediaUrl;
+                    responseMessage.Music.MusicUrl = MyCommFun.getWebSite() + model_wx.MediaUrl;
                 }
-                responseMessage.Music.Title = model_wx.rContent;
-                responseMessage.Music.Description = model_wx.rContent2;
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "音乐链接：" + model_wx.mediaUrl + "|标题：" + model_wx.rContent + "|描述：" + model_wx.rContent2, requestMessage.ToUserName);
+                responseMessage.Music.Title = model_wx.RContent;
+                responseMessage.Music.Description = model_wx.RContent2;
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "音乐链接：" + model_wx.MediaUrl + "|标题：" + model_wx.RContent + "|描述：" + model_wx.RContent2, requestMessage.ToUserName);
 
             }
 
@@ -77,15 +74,15 @@ namespace WeiXinPF.WeiXinComm
         {
 
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageVoice>(requestMessage);
-            Model.wx_requestRuleContent model_wx = getDataMusicComm(wid, Indexid);
+            RequestRuleContent model_wx = getDataMusicComm(wid, Indexid);
             if (model_wx == null)
             {
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "-1", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "-1", requestMessage.ToUserName);
             }
             else
             {
-                responseMessage.Voice = new Voice() { MediaId = model_wx.extStr };
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "音乐链接：" + model_wx.mediaUrl + "|标题：" + model_wx.rContent + "|描述：" + model_wx.rContent2, requestMessage.ToUserName);
+                responseMessage.Voice = new Voice() { MediaId = model_wx.ExtStr };
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "music", "音乐链接：" + model_wx.MediaUrl + "|标题：" + model_wx.RContent + "|描述：" + model_wx.RContent2, requestMessage.ToUserName);
 
             }
 
@@ -108,14 +105,14 @@ namespace WeiXinPF.WeiXinComm
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
             string openid = requestMessage.FromUserName;
             string token = ConvertDateTimeInt(DateTime.Now).ToString();
-            List<Article> picTxtList = getDataPicTxtComm(wid, Indexid, openid, token);
+            List<Article> picTxtList = GetDataPicTxtComm(wid, Indexid, openid, token);
             if (picTxtList == null || picTxtList.Count <= 0)
             {
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "txtpic", "-1", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "txtpic", "-1", requestMessage.ToUserName);
             }
             else
             {
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "txtpic", "这次发了" + picTxtList.Count + "条图文", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "txtpic", "这次发了" + picTxtList.Count + "条图文", requestMessage.ToUserName);
             }
             responseMessage.Articles.AddRange(picTxtList);
             return responseMessage;
@@ -135,7 +132,7 @@ namespace WeiXinPF.WeiXinComm
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
             var locationService = new LocationService();
             responseMessage.Content = content;
-            wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", "文字请求，推送纯粹文字，内容为：" + content, requestMessage.ToUserName);
+            DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", "文字请求，推送纯粹文字，内容为：" + content, requestMessage.ToUserName);
             return responseMessage;
         }
         /// <summary>
@@ -151,7 +148,7 @@ namespace WeiXinPF.WeiXinComm
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
             var locationService = new LocationService();
 
-            //wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", "文字请求，推送纯粹文字，内容为：" + content, requestMessage.ToUserName);
+            //DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", "文字请求，推送纯粹文字，内容为：" + content, requestMessage.ToUserName);
             return responseMessage;
         }
 
@@ -168,7 +165,7 @@ namespace WeiXinPF.WeiXinComm
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
             var locationService = new LocationService();
             responseMessage.Content = content;
-            wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), "微信上墙", "text", "文字请求，推送纯粹文字，内容为：" + content, requestMessage.ToUserName);
+            DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), "微信上墙", "text", "文字请求，推送纯粹文字，内容为：" + content, requestMessage.ToUserName);
             return responseMessage;
         }
 
@@ -198,7 +195,7 @@ namespace WeiXinPF.WeiXinComm
             //    EventName += requestMessage.EventKey.ToString();
             //}
 
-            wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "text", responseMessage.Content, requestMessage.ToUserName);
+            DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "text", responseMessage.Content, requestMessage.ToUserName);
 
             return responseMessage;
         }
@@ -210,41 +207,43 @@ namespace WeiXinPF.WeiXinComm
         /// <returns></returns>
         public IResponseMessageBase GetResponseMessageeMusic(RequestMessageEventBase requestMessage, int Indexid, int wid, string EventName)
         {
-            var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageMusic>(requestMessage);
-            //string EventName = "";
-            //if (requestMessage.Event.ToString().Trim() != "")
+            //var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageMusic>(requestMessage);
+            ////string EventName = "";
+            ////if (requestMessage.Event.ToString().Trim() != "")
+            ////{
+            ////    EventName = requestMessage.Event.ToString();
+            ////}
+            ////else if (requestMessage.EventKey != null)
+            ////{
+            ////    EventName += requestMessage.EventKey.ToString();
+            ////}
+
+
+            //Model.wx_requestRuleContent model = getDataMusicComm(wid, Indexid);
+            //if (model == null)
             //{
-            //    EventName = requestMessage.Event.ToString();
+
+            //    DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "music", "-1", requestMessage.ToUserName);
             //}
-            //else if (requestMessage.EventKey != null)
+            //else
             //{
-            //    EventName += requestMessage.EventKey.ToString();
+            //    if (model.mediaUrl.StartsWith("http"))
+            //    {
+
+            //        responseMessage.Music.MusicUrl = model.mediaUrl;
+            //    }
+            //    else
+            //    {
+            //        responseMessage.Music.MusicUrl = MyCommFun.getWebSite() + model.mediaUrl;
+            //    }
+            //    responseMessage.Music.Title = model.rContent;
+            //    responseMessage.Music.Description = model.rContent2;
+            //    DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "music", "音乐链接：" + model.mediaUrl + "|标题：" + model.rContent + "|描述：" + model.rContent2, requestMessage.ToUserName);
+
             //}
+            //return responseMessage;
 
-
-            Model.wx_requestRuleContent model = getDataMusicComm(wid, Indexid);
-            if (model == null)
-            {
-
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "music", "-1", requestMessage.ToUserName);
-            }
-            else
-            {
-                if (model.mediaUrl.StartsWith("http"))
-                {
-
-                    responseMessage.Music.MusicUrl = model.mediaUrl;
-                }
-                else
-                {
-                    responseMessage.Music.MusicUrl = MyCommFun.getWebSite() + model.mediaUrl;
-                }
-                responseMessage.Music.Title = model.rContent;
-                responseMessage.Music.Description = model.rContent2;
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "music", "音乐链接：" + model.mediaUrl + "|标题：" + model.rContent + "|描述：" + model.rContent2, requestMessage.ToUserName);
-
-            }
-            return responseMessage;
+            return null;
         }
 
         /// <summary>
@@ -263,7 +262,7 @@ namespace WeiXinPF.WeiXinComm
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
             string openid = requestMessage.FromUserName;
             string token = ConvertDateTimeInt(DateTime.Now).ToString();
-            List<Article> picTxtList = getDataPicTxtComm(wid, Indexid, openid, token);
+            List<Article> picTxtList = GetDataPicTxtComm(wid, Indexid, openid, token);
             //string EventName = "";
             //if (requestMessage.Event.ToString().Trim() != "")
             //{
@@ -276,11 +275,11 @@ namespace WeiXinPF.WeiXinComm
 
             if (picTxtList == null || picTxtList.Count <= 0)
             {
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "txtpic", "-1", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "txtpic", "-1", requestMessage.ToUserName);
             }
             else
             {
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "txtpic", "这次发了" + picTxtList.Count + "条图文", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "txtpic", "这次发了" + picTxtList.Count + "条图文", requestMessage.ToUserName);
             }
 
             responseMessage.Articles.AddRange(picTxtList);
@@ -308,7 +307,7 @@ namespace WeiXinPF.WeiXinComm
             //{
             //    EventName += requestMessage.EventKey.ToString();
             //}
-            wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "text", "事件：推送纯粹的文字，内容为:" + content, requestMessage.ToUserName);
+            DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "text", "事件：推送纯粹的文字，内容为:" + content, requestMessage.ToUserName);
 
             return responseMessage;
         }
@@ -325,31 +324,31 @@ namespace WeiXinPF.WeiXinComm
         {
             var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageVoice>(requestMessage);
 
-            Model.wx_requestRuleContent model = getDataMusicComm(wid, indexid);
-            if (model == null)
-            {
+            //Model.wx_requestRuleContent model = getDataMusicComm(wid, indexid);
+            //if (model == null)
+            //{
 
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), enevtName, "voice", "-1", requestMessage.ToUserName);
-            }
-            else
-            {
-                //if (model.mediaUrl.StartsWith("http"))
-                //{
+            //    DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), enevtName, "voice", "-1", requestMessage.ToUserName);
+            //}
+            //else
+            //{
+            //    //if (model.mediaUrl.StartsWith("http"))
+            //    //{
 
-                //    responseMessage.Music.MusicUrl = model.mediaUrl;
-                //}
-                //else
-                //{
-                //    responseMessage.Music.MusicUrl = MyCommFun.getWebSite() + model.mediaUrl;
-                //}
-                //responseMessage.Music.Title = model.rContent;
-                //responseMessage.Music.Description = model.rContent2;
-                //wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), enevtName, "voice", "音乐链接：" + model.mediaUrl + "|标题：" + model.rContent + "|描述：" + model.rContent2, requestMessage.ToUserName);
+            //    //    responseMessage.Music.MusicUrl = model.mediaUrl;
+            //    //}
+            //    //else
+            //    //{
+            //    //    responseMessage.Music.MusicUrl = MyCommFun.getWebSite() + model.mediaUrl;
+            //    //}
+            //    //responseMessage.Music.Title = model.rContent;
+            //    //responseMessage.Music.Description = model.rContent2;
+            //    //DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), enevtName, "voice", "音乐链接：" + model.mediaUrl + "|标题：" + model.rContent + "|描述：" + model.rContent2, requestMessage.ToUserName);
 
-                responseMessage.Voice = new Voice() { MediaId = model.extStr};
+            //    responseMessage.Voice = new Voice() { MediaId = model.extStr };
 
-                wxResponseBaseMgr.Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), enevtName, "voice", "音乐链接：" + model.mediaUrl + "|标题：" + model.rContent + "|描述：" + model.rContent2, requestMessage.ToUserName);
-            }
+            //    DependencyManager.Resolve<IResponseMessageLogRepository>().Add(wid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), enevtName, "voice", "音乐链接：" + model.mediaUrl + "|标题：" + model.rContent + "|描述：" + model.rContent2, requestMessage.ToUserName);
+            //}
             return responseMessage;
         }
 
@@ -367,69 +366,69 @@ namespace WeiXinPF.WeiXinComm
         /// <returns></returns>
         public IResponseMessageBase GetModuleResponse(RequestMessageText requestMessage, string modelFunctionName, int modelFunctionId, int apiid)
         {
-            string openid = requestMessage.FromUserName;
-            string token = ConvertDateTimeInt(DateTime.Now).ToString();
+            //string openid = requestMessage.FromUserName;
+            //string token = ConvertDateTimeInt(DateTime.Now).ToString();
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            //IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
-            responselist = PanDuanMoudle(modelFunctionName, modelFunctionId, openid, apiid);
-            if (responselist == null || responselist.Count <= 0)
-            {
-                var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-                responseMessage.Content = "【" + modelFunctionName + "】功能模块未获得到数据";
-                return responseMessage;
-            }
-            Model.ReponseContentType responseType = responselist[0].rcType;
-            if (responseType == Model.ReponseContentType.text)
-            {
-                var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
+            //responselist = PanDuanMoudle(modelFunctionName, modelFunctionId, openid, apiid);
+            //if (responselist == null || responselist.Count <= 0)
+            //{
+            //    var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
+            //    responseMessage.Content = "【" + modelFunctionName + "】功能模块未获得到数据";
+            //    return responseMessage;
+            //}
+            //Model.ReponseContentType responseType = responselist[0].rcType;
+            //if (responseType == Model.ReponseContentType.text)
+            //{
+            //    var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
 
-                responseMessage.Content = responselist[0].rContent.ToString();
-                wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", responseMessage.Content, requestMessage.ToUserName);
-                return responseMessage;
-            }
-            else if (responseType == Model.ReponseContentType.txtpic)
-            {
-                var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
-                IList<Article> rArticlelist = new List<Article>();
-                Article article = new Article();
-                foreach (Model.ResponseContentEntity response in responselist)
-                {
-                    article = new Article();
-                    article.Title = response.rContent;
-                    article.Description = response.rContent2;
-                    article.Url = getWXApiUrl(response.detailUrl, token, openid) + getWxUrl_suffix();
-                    if (response.picUrl == null || response.picUrl.ToString().Trim() == "")
-                    {
-                        article.PicUrl = "";
-                    }
-                    else
-                    {
-                        if (!response.picUrl.Contains("http://"))
-                        {
-                            article.PicUrl = MyCommFun.getWebSite() + response.picUrl;
-                        }
-                        else
-                        {
-                            article.PicUrl = response.picUrl;
-                        }
-                    }
-                    rArticlelist.Add(article);
+            //    responseMessage.Content = responselist[0].rContent.ToString();
+            //    DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "text", responseMessage.Content, requestMessage.ToUserName);
+            //    return responseMessage;
+            //}
+            //else if (responseType == Model.ReponseContentType.txtpic)
+            //{
+            //    var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
+            //    IList<Article> rArticlelist = new List<Article>();
+            //    Article article = new Article();
+            //    foreach (ResponseContentEntity response in responselist)
+            //    {
+            //        article = new Article();
+            //        article.Title = response.rContent;
+            //        article.Description = response.rContent2;
+            //        article.Url = getWXApiUrl(response.detailUrl, token, openid) + getWxUrl_suffix();
+            //        if (response.picUrl == null || response.picUrl.ToString().Trim() == "")
+            //        {
+            //            article.PicUrl = "";
+            //        }
+            //        else
+            //        {
+            //            if (!response.picUrl.Contains("http://"))
+            //            {
+            //                article.PicUrl = MyCommFun.getWebSite() + response.picUrl;
+            //            }
+            //            else
+            //            {
+            //                article.PicUrl = response.picUrl;
+            //            }
+            //        }
+            //        rArticlelist.Add(article);
 
-                }
+            //    }
 
-                responseMessage.Articles.AddRange(rArticlelist);
-                wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "txtpic", "这次发了" + rArticlelist.Count + "条图文", requestMessage.ToUserName);
+            //    responseMessage.Articles.AddRange(rArticlelist);
+            //    DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), requestMessage.Content, "txtpic", "这次发了" + rArticlelist.Count + "条图文", requestMessage.ToUserName);
 
-                return responseMessage;
+            //    return responseMessage;
 
-            }
-            else
-            {
-                return null;
-            }
+            //}
+            //else
+            //{
+            //    return null;
+            //}
 
-
+            return null;
         }
 
 
@@ -443,66 +442,67 @@ namespace WeiXinPF.WeiXinComm
         /// <returns></returns>
         public IResponseMessageBase GetModuleResponse(RequestMessageEventBase requestMessage, string modelFunctionName, int modelFunctionId, int apiid)
         {
-            string openid = requestMessage.FromUserName;
-            string token = ConvertDateTimeInt(DateTime.Now).ToString();
+            //string openid = requestMessage.FromUserName;
+            //string token = ConvertDateTimeInt(DateTime.Now).ToString();
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            //IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
-            responselist = PanDuanMoudle(modelFunctionName, modelFunctionId, openid, apiid);
-            if (responselist == null || responselist.Count <= 0)
-            {
-                var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
-                responseMessage.Content = "【" + modelFunctionName + "】功能模块未获得到数据";
-                return responseMessage;
-            }
+            //responselist = PanDuanMoudle(modelFunctionName, modelFunctionId, openid, apiid);
+            //if (responselist == null || responselist.Count <= 0)
+            //{
+            //    var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
+            //    responseMessage.Content = "【" + modelFunctionName + "】功能模块未获得到数据";
+            //    return responseMessage;
+            //}
 
-            Model.ReponseContentType responseType = responselist[0].rcType;
+            //Model.ReponseContentType responseType = responselist[0].rcType;
 
-            if (responseType == Model.ReponseContentType.text)
-            {
-                var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
+            //if (responseType == Model.ReponseContentType.text)
+            //{
+            //    var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageText>(requestMessage);
 
-                responseMessage.Content = responselist[0].rContent.ToString();
-                return responseMessage;
-            }
-            else if (responseType == Model.ReponseContentType.txtpic)
-            {
-                var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
-                IList<Article> rArticlelist = new List<Article>();
-                Article article = new Article();
-                foreach (Model.ResponseContentEntity response in responselist)
-                {
-                    article = new Article();
-                    article.Title = response.rContent;
-                    article.Description = response.rContent2;
-                    article.Url = getWXApiUrl(response.detailUrl, token, openid) + getWxUrl_suffix();
-                    if (response.picUrl == null || response.picUrl.ToString().Trim() == "")
-                    {
-                        article.PicUrl = "";
-                    }
-                    else
-                    {
-                        if (!response.picUrl.Contains("http://"))
-                        {
-                            article.PicUrl = MyCommFun.getWebSite() + response.picUrl;
-                        }
-                        else
-                        {
-                            article.PicUrl = response.picUrl;
-                        }
-                    }
-                    rArticlelist.Add(article);
+            //    responseMessage.Content = responselist[0].rContent.ToString();
+            //    return responseMessage;
+            //}
+            //else if (responseType == Model.ReponseContentType.txtpic)
+            //{
+            //    var responseMessage = ResponseMessageBase.CreateFromRequestMessage<ResponseMessageNews>(requestMessage);
+            //    IList<Article> rArticlelist = new List<Article>();
+            //    Article article = new Article();
+            //    foreach (ResponseContentEntity response in responselist)
+            //    {
+            //        article = new Article();
+            //        article.Title = response.rContent;
+            //        article.Description = response.rContent2;
+            //        article.Url = getWXApiUrl(response.detailUrl, token, openid) + getWxUrl_suffix();
+            //        if (response.picUrl == null || response.picUrl.ToString().Trim() == "")
+            //        {
+            //            article.PicUrl = "";
+            //        }
+            //        else
+            //        {
+            //            if (!response.picUrl.Contains("http://"))
+            //            {
+            //                article.PicUrl = MyCommFun.getWebSite() + response.picUrl;
+            //            }
+            //            else
+            //            {
+            //                article.PicUrl = response.picUrl;
+            //            }
+            //        }
+            //        rArticlelist.Add(article);
 
-                }
-                responseMessage.Articles.AddRange(rArticlelist);
-                return responseMessage;
-            }
-            else
-            {
-                return null;
-            }
+            //    }
+            //    responseMessage.Articles.AddRange(rArticlelist);
+            //    return responseMessage;
+            //}
+            //else
+            //{
+            //    return null;
+            //}
 
 
+            return null;
         }
 
 
@@ -514,7 +514,7 @@ namespace WeiXinPF.WeiXinComm
 
         #region 从数据库里读取数据
 
-        BLL.wx_requestRuleContent rcBll = new BLL.wx_requestRuleContent();
+        private IRequestRuleContentRepository rcBll = DependencyManager.Resolve<IRequestRuleContentRepository>();
 
         /// <summary>
         /// 从数据库里取文本类型的值
@@ -540,12 +540,10 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="wid">微帐号主键Id</param>
         /// <param name="Indexid"></param>
         /// <returns></returns>
-        public Model.wx_requestRuleContent getDataMusicComm(int wid, int Indexid)
+        public RequestRuleContent getDataMusicComm(int wid, int Indexid)
         {
-
-            Model.wx_requestRuleContent model = rcBll.GetMusicContent(Indexid);
+            RequestRuleContent model = rcBll.GetMusicContent(Indexid);
             return model;
-
         }
 
         /// <summary>
@@ -554,10 +552,10 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="wid">微帐号主键Id</param>
         /// <param name="Indexid"></param>
         /// <returns></returns>
-        public Model.wx_requestRuleContent getDataVoiceComm(int wid, int Indexid)
+        public RequestRuleContent GetDataVoiceComm(int wid, int Indexid)
         {
 
-            Model.wx_requestRuleContent model = rcBll.GetMusicContent(Indexid);
+            RequestRuleContent model = rcBll.GetMusicContent(Indexid);
             return model;
 
         }
@@ -570,37 +568,37 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="openid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public List<Article> getDataPicTxtComm(int wid, int Indexid, string openid, string token)
+        public List<Article> GetDataPicTxtComm(int wid, int Indexid, string openid, string token)
         {
             List<Article> retlist = new List<Article>();
             string website = MyCommFun.getWebSite();
 
 
 
-            IList<Model.wx_requestRuleContent> twList = rcBll.GetTuWenContent(Indexid);
+            IList<RequestRuleContent> twList = rcBll.GetTuWenContent(Indexid);
 
 
             Article article = new Article();
             for (int i = 0; i < twList.Count(); i++)
             {
                 article = new Article();
-                article.Title = ProcTitle(twList[i].rContent, openid);
-                article.Description = twList[i].rContent2;
-                article.Url = getWXApiUrl(twList[i].detailUrl, token, openid) + rcBll.cardnoStr(wid, openid) + getWxUrl_suffix();
-                if (twList[i].picUrl == null || twList[i].picUrl.ToString().Trim() == "")
+                article.Title = ProcTitle(twList[i].RContent, openid);
+                article.Description = twList[i].RContent2;
+                article.Url = getWXApiUrl(twList[i].DetailUrl, token, openid) + rcBll.CardnoStr(wid, openid) + getWxUrl_suffix();
+                if (twList[i].PicUrl == null || twList[i].PicUrl.ToString().Trim() == "")
                 {
                     article.PicUrl = "";
                 }
                 else
                 {
-                    if (twList[i].picUrl.Contains("http://"))
+                    if (twList[i].PicUrl.Contains("http://"))
                     {
-                        article.PicUrl = twList[i].picUrl;
+                        article.PicUrl = twList[i].PicUrl;
 
                     }
                     else
                     {
-                        article.PicUrl = website + twList[i].picUrl;
+                        article.PicUrl = website + twList[i].PicUrl;
                     }
                 }
                 retlist.Add(article);
@@ -619,7 +617,7 @@ namespace WeiXinPF.WeiXinComm
         public bool ExistApiidAndWxId(int apiid, string wxid)
         {
             bool exists = true;
-            DAL.wx_userweixin weixinDal = new DAL.wx_userweixin();
+            IUserRepository weixinDal = DependencyManager.Resolve<IUserRepository>();
             if (weixinDal.ExistsWidAndWxId(apiid, wxid))
             {
                 exists = true;
@@ -639,8 +637,8 @@ namespace WeiXinPF.WeiXinComm
         /// <returns></returns>
         public bool wxCodeLegal(int wid)
         {
-            DAL.wx_userweixin weixinDal = new DAL.wx_userweixin();
-            return weixinDal.wxCodeLegal(wid);
+            IUserRepository weixinDal = DependencyManager.Resolve<IUserRepository>();
+            return weixinDal.WxCodeLegal(wid);
         }
 
         /// <summary>
@@ -650,8 +648,8 @@ namespace WeiXinPF.WeiXinComm
         /// <returns></returns>
         public bool wxCloseKW(int wid)
         {
-            DAL.wx_userweixin weixinDal = new DAL.wx_userweixin();
-            return weixinDal.wxCloseKW(wid);
+            IUserRepository weixinDal = DependencyManager.Resolve<IUserRepository>();
+            return weixinDal.WxCloseKw(wid);
         }
 
 

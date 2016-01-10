@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\..\..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper">
       <HintPath>..\..\..\..\Common\AutoMapper.dll</HintPath>
     </Reference>
@@ -57,6 +63,8 @@
   <ItemGroup>
     <Compile Include="AjaxResult.cs" />
     <Compile Include="ColumnAttribute.cs" />
+    <Compile Include="DependencyManager.cs" />
+    <Compile Include="EncryptionManager.cs" />
     <Compile Include="Extension\WebServiceExtension.cs" />
     <Compile Include="Helper\CSVHelper.cs" />
     <Compile Include="DatatablesResult.cs" />

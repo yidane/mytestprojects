@@ -9,15 +9,20 @@ using WeixinPF.Application.Article.Service;
 using WeixinPF.Application.Weixin.Repository;
 using WeixinPF.Common;
 using WeixinPF.Model.Article;
-using WeixinPF.Model.Weixin;
+using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
     public class WXIndustryDefaultModuleService
     {
-        private readonly IWXIndustryDefaultModuleRepository _repository;
+        private readonly IIndustryDefaultModuleRepository _repository;
 
-        public WXIndustryDefaultModuleService(IWXIndustryDefaultModuleRepository repository)
+        public WXIndustryDefaultModuleService()
+        {
+            this._repository = DependencyManager.Resolve<IIndustryDefaultModuleRepository>();
+        }
+
+        public WXIndustryDefaultModuleService(IIndustryDefaultModuleRepository repository)
         {
             this._repository = repository;
         }
@@ -32,13 +37,13 @@ namespace WeixinPF.Application.Weixin.Service
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WX_IndustryDefaultModuleInfo> DataTableToList(DataTable dt)
+        public List<IndustryDefaultModuleInfo> DataTableToList(DataTable dt)
         {
-            var modelList = new List<WX_IndustryDefaultModuleInfo>();
+            var modelList = new List<IndustryDefaultModuleInfo>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                var model = new WX_IndustryDefaultModuleInfo();
+                var model = new IndustryDefaultModuleInfo();
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = this._repository.DataRowToModel(dt.Rows[n]);
@@ -84,10 +89,10 @@ namespace WeixinPF.Application.Weixin.Service
         /// </summary>
         /// <param name="strwhere">查询条件</param>
         /// <returns></returns>
-        public List<WX_IndustryDefaultModuleInfo> getModelList(string strwhere)
+        public List<IndustryDefaultModuleInfo> getModelList(string strwhere)
         {
             DataSet ds = this._repository.GetList(strwhere);
-            var idList = new List<WX_IndustryDefaultModuleInfo>();
+            var idList = new List<IndustryDefaultModuleInfo>();
             if (ds.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)

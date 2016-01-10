@@ -63,11 +63,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Repository\IWeiXinTicketRepository.cs" />
     <Compile Include="Application\Repository\IWeiXinAppRepository.cs" />
+    <Compile Include="Application\Service\TicketRepository.cs" />
     <Compile Include="Application\Service\WeiXinAppService.cs" />
     <Compile Include="Application\WeiXinDbContext.cs" />
     <Compile Include="Common\EncryptionManager.cs" />
+    <Compile Include="Facade\WeiXinTokenFacade.cs" />
     <Compile Include="Infrastructure\WeiXinAppRepository.cs" />
+    <Compile Include="Infrastructure\WeiXinTicketRepository.cs" />
+    <Compile Include="Models\Common\WeiXinAccessToken.cs" />
+    <Compile Include="Models\Common\WeiXinJsApiTicket.cs" />
     <Compile Include="Models\Group\WeiXinGroupInfo.cs" />
     <Compile Include="Models\User\WeiXinUserModel.cs" />
     <Compile Include="Models\WeiXinAppInfo.cs" />
@@ -86,6 +92,9 @@
       <Project>{04186677-71c9-4400-a294-02176774c5f7}</Project>
       <Name>WeixinPF.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

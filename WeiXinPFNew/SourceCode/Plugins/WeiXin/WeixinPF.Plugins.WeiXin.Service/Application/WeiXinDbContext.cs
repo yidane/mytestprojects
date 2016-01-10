@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using WeixinPF.Plugins.WeiXin.Service.Models;
+using WeixinPF.Plugins.WeiXin.Service.Models.Common;
 using WeixinPF.Plugins.WeiXin.Service.Models.Group;
 using WeixinPF.Plugins.WeiXin.Service.Models.User;
 
@@ -26,13 +27,14 @@ namespace WeixinPF.Plugins.WeiXin.Service.Application
         }
 
         #region 微信基础对象
+        public DbSet<WeiXinAccessToken> WeiXinAccessTokenContext { get; set; }
         public DbSet<WeiXinAppInfo> WeiXinAppInfoContext { get; set; }
         public DbSet<WeiXinUserInfo> WeiXinUserInfoContext { get; set; }
         public DbSet<WeiXinGroupInfo> WeiXinGroupInfoContext { get; set; }
         #endregion
 
         #region 微信支付对象
-        
+
         #endregion
     }
 }

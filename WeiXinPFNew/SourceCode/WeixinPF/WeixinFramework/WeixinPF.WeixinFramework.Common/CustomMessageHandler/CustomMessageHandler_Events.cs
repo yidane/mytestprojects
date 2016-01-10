@@ -1,26 +1,19 @@
-﻿
-
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-using OneGulp.WeChat.MP.Agent;
-using OneGulp.WeChat;
+﻿using System;
 using OneGulp.WeChat.MP.Entities;
-using OneGulp.WeChat.MP.Helpers;
-using OneGulp.WeChat.MP.MessageHandlers;
-using WeiXinPF.BLL;
-using WeiXinPF.WeiXinComm.threeInterface;
+using WeixinPF.Application;
+using WeixinPF.Application.Weixin.Message.Repository;
+using WeixinPF.Common;
+using WeixinPF.Model.WeiXin.Message;
 
-namespace WeiXinPF.WeiXinComm.CustomMessageHandler
+namespace WeixinPF.WeixinFramework.Common.CustomMessageHandler
 {
     /// <summary>
     /// 自定义MessageHandler
     /// </summary>
     public partial class CustomMessageHandler
     {
-        wx_requestRule rBll = new wx_requestRule();
-        wx_requestRuleContent rcBll = new wx_requestRuleContent();
+        private IRequestRuleRepository rBll = DependencyManager.Resolve<IRequestRuleRepository>();
+        RequestRuleContent rcBll = new RequestRuleContent();
         WeiXCommFun wxcomm = new WeiXCommFun();
 
         /// <summary>
@@ -123,13 +116,13 @@ namespace WeiXinPF.WeiXinComm.CustomMessageHandler
 
             if (!wxcomm.ExistApiidAndWxId(apiid, requestMessage.ToUserName))
             {  //验证接收方是否为我们系统配置的帐号，即验证微帐号与微信原始帐号id是否一致，如果不一致，说明【1】配置错误，【2】数据来源有问题
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, "验证微帐号与微信原始帐号id不一致，可能原因【1】系统配置错误，【2】非法的数据来源有问题", apiid, "系统错误提醒");
             }
             bool isExist = wxcomm.wxCodeLegal(apiid);
             if (!isExist)
             {
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "账号已过期或已被禁用", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "账号已过期或已被禁用", requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, "账号已过期或已被禁用！", apiid, "系统错误提醒");
             }
 
@@ -142,7 +135,7 @@ namespace WeiXinPF.WeiXinComm.CustomMessageHandler
             string fStr = FilterTxtRequest(apiid, keywords, requestMessage.FromUserName);
             if (fStr.Trim() != "")
             {
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", fStr, requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", fStr, requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, fStr, apiid, keywords);
             }
             //------关键词钻取  微拍的文字提示 end- -------
@@ -154,7 +147,7 @@ namespace WeiXinPF.WeiXinComm.CustomMessageHandler
             if (rid <= 0 || responseType <= 0)
             {
 
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, "未找到对应的内容", apiid, "未取到关键词对应的数据");
             }
 
@@ -218,15 +211,19 @@ namespace WeiXinPF.WeiXinComm.CustomMessageHandler
         /// <returns></returns>
         public override IResponseMessageBase OnEvent_SubscribeRequest(RequestMessageEvent_Subscribe requestMessage)
         {
-            int apiid = wxcomm.getApiid();
-            //------印美图接口 begin------
-            //threeInterface.weipaiInterface wxcf = new threeInterface.weipaiInterface();
+            //TODO:订阅红包被注释了
 
-            //wxcf.weipaiSubscribe(requestMessage.FromUserName, apiid);
-            //------印美图接口 end------
-            xjHongBao xjMgr = new xjHongBao();
-            xjMgr.SubscribeHongBao(requestMessage.FromUserName, apiid);
-            return EventProcess(6, requestMessage);
+            //int apiid = wxcomm.getApiid();
+            ////------印美图接口 begin------
+            ////threeInterface.weipaiInterface wxcf = new threeInterface.weipaiInterface();
+
+            ////wxcf.weipaiSubscribe(requestMessage.FromUserName, apiid);
+            ////------印美图接口 end------
+            //XjHongBao xjMgr = new XjHongBao();
+            //xjMgr.SubscribeHongBao(requestMessage.FromUserName, apiid);
+            //return EventProcess(6, requestMessage);
+
+            return null;
         }
 
         /// <summary>
@@ -254,13 +251,13 @@ namespace WeiXinPF.WeiXinComm.CustomMessageHandler
 
             if (!wxcomm.ExistApiidAndWxId(apiid, requestMessage.ToUserName))
             {  //验证接收方是否为我们系统配置的帐号，即验证微帐号与微信原始帐号id是否一致，如果不一致，说明【1】配置错误，【2】数据来源有问题
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, "验证微帐号与微信原始帐号id不一致，可能原因【1】系统配置错误，【2】非法的数据来源", apiid, "系统错误提示");
             }
             bool isExist = wxcomm.wxCodeLegal(apiid);
             if (!isExist)
             {
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "账号已过期或已被禁用", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "账号已过期或已被禁用", requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, "账号已过期或已被禁用！", apiid, "系统错误提示");
             }
 
@@ -268,7 +265,7 @@ namespace WeiXinPF.WeiXinComm.CustomMessageHandler
             int rid = rBll.GetRuleIdAndResponseType(apiid, "reqestType=" + type, out responseType);  //取消关注
             if (rid <= 0 || responseType <= 0)
             {
-                DAL.wxResponseBaseMgr.Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
+                DependencyManager.Resolve<IResponseMessageLogRepository>().Add(apiid, requestMessage.FromUserName, requestMessage.MsgType.ToString(), EventName, "none", "未取到关键词对应的数据", requestMessage.ToUserName);
                 return wxcomm.GetResponseMessageTxtByContent(requestMessage, "欢迎您再次关注！", apiid, "系统错误提示");
             }
 

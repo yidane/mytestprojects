@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeixinPF.Application.Weixin.Repository;
-using WeixinPF.Model.Weixin;
+using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
     public class WXSystemConfigService
     {
-        private readonly IWXSystemConfigRepository _repository;
+        private readonly ISystemConfigRepository _repository;
 
-        public WXSystemConfigService(IWXSystemConfigRepository repository)
+        public WXSystemConfigService(ISystemConfigRepository repository)
         {
             this._repository = repository;
         }
@@ -29,13 +29,13 @@ namespace WeixinPF.Application.Weixin.Service
         /// <summary>
 		/// 获得数据列表
 		/// </summary>
-		public List<WX_SystemConfigInfo> DataTableToList(DataTable dt)
+		public List<SystemConfigInfo> DataTableToList(DataTable dt)
         {
-            var modelList = new List<WX_SystemConfigInfo>();
+            var modelList = new List<SystemConfigInfo>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WX_SystemConfigInfo model = null;
+                SystemConfigInfo model = null;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = this._repository.DataRowToModel(dt.Rows[n]);

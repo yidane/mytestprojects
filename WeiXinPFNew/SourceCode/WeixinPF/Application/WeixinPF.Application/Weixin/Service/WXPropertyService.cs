@@ -1,69 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using WeixinPF.Application.Weixin.Repository;
-using WeixinPF.Model.Weixin;
+using WeixinPF.Common;
+using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
     public class WXPropertyService
     {
-        private readonly IWXPropertyRepository _repository;
+        private readonly IPropertyRepository _repository;
 
-        public WXPropertyService(IWXPropertyRepository repository)
+        public WXPropertyService()
         {
-            this._repository = repository;
+            _repository = DependencyManager.Resolve<IPropertyRepository>();
         }
-        /// <summary>
-		/// 增加一条数据
-		/// </summary>
-		public int Add(WX_PropertyInfo model)
+
+        public WXPropertyService(IPropertyRepository repository)
         {
-            return this._repository.Add(model);
+            _repository = repository;
         }
 
         /// <summary>
-		/// 更新一条数据
-		/// </summary>
-		public bool Update(WX_PropertyInfo model)
+        ///     增加一条数据
+        /// </summary>
+        public int Add(PropertyInfo model)
         {
-            return this._repository.Update(model);
+            return _repository.Add(model);
         }
 
         /// <summary>
-		/// 获得数据列表
-		/// </summary>
-		public DataSet GetList(string strWhere)
+        ///     更新一条数据
+        /// </summary>
+        public bool Update(PropertyInfo model)
         {
-            return this._repository.GetList(strWhere);
+            return _repository.Update(model);
         }
 
         /// <summary>
-		/// 获得数据列表
-		/// </summary>
-		public List<WX_PropertyInfo> GetModelList(string strWhere)
+        ///     获得数据列表
+        /// </summary>
+        public DataSet GetList(string strWhere)
         {
-            DataSet ds = this._repository.GetList(strWhere);
+            return _repository.GetList(strWhere);
+        }
+
+        /// <summary>
+        ///     获得数据列表
+        /// </summary>
+        public List<PropertyInfo> GetModelList(string strWhere)
+        {
+            var ds = _repository.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
         }
 
         /// <summary>
-		/// 获得数据列表
-		/// </summary>
-		public List<WX_PropertyInfo> DataTableToList(DataTable dt)
+        ///     获得数据列表
+        /// </summary>
+        public List<PropertyInfo> DataTableToList(DataTable dt)
         {
-            var modelList = new List<WX_PropertyInfo>();
-            int rowsCount = dt.Rows.Count;
+            var modelList = new List<PropertyInfo>();
+            var rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WX_PropertyInfo model = null;
-                for (int n = 0; n < rowsCount; n++)
+                PropertyInfo model = null;
+                for (var n = 0; n < rowsCount; n++)
                 {
-                    model = this._repository.DataRowToModel(dt.Rows[n]);
+                    model = _repository.DataRowToModel(dt.Rows[n]);
                     if (model != null)
                     {
                         modelList.Add(model);
@@ -74,7 +77,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        /// 添加access_token值
+        ///     添加access_token值
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="access_token"></param>
@@ -82,23 +85,23 @@ namespace WeixinPF.Application.Weixin.Service
         /// <returns></returns>
         public string AddAccess_Token(int wid, string access_token, int expires_in = 1200)
         {
-            string ret = "";
+            var ret = "";
             try
             {
                 if (expires_in == 0)
                 {
                     expires_in = 1200;
                 }
-                var wxProperty = new WX_PropertyInfo
+                var wxProperty = new PropertyInfo
                 {
                     iName = "access_token",
-                    typeId = 1,
+                    TypeId = 1,
                     typeName = "base",
                     iContent = access_token,
                     expires_in = expires_in,
                     createDate = DateTime.Now,
                     count = 1,
-                    wid = wid
+                    Wid = wid
                 };
                 Add(wxProperty);
             }
@@ -110,7 +113,7 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        /// 添加属性值
+        ///     添加属性值
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="key">对应这里的值 MXEnums.WXPropertyKeyName</param>
@@ -118,20 +121,20 @@ namespace WeixinPF.Application.Weixin.Service
         /// <returns></returns>
         public string AddProperty(int wid, string key, string value)
         {
-            string ret = "";
+            var ret = "";
             try
             {
-                var wxProperty = new WX_PropertyInfo();
+                var wxProperty = new PropertyInfo();
                 if (!ExistsWid(wid, key))
                 {
                     wxProperty.iName = key;
-                    wxProperty.typeId = 1;
+                    wxProperty.TypeId = 1;
                     wxProperty.typeName = "base";
                     wxProperty.iContent = value;
                     wxProperty.expires_in = 0;
                     wxProperty.createDate = DateTime.Now;
                     wxProperty.count = 1;
-                    wxProperty.wid = wid;
+                    wxProperty.Wid = wid;
                     Add(wxProperty);
                 }
                 else
@@ -140,8 +143,6 @@ namespace WeixinPF.Application.Weixin.Service
                     wxProperty.iContent = value;
                     Update(wxProperty);
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -151,33 +152,32 @@ namespace WeixinPF.Application.Weixin.Service
         }
 
         /// <summary>
-        /// 该微帐号是否存在记录
+        ///     该微帐号是否存在记录
         /// </summary>
         /// <param name="wid"></param>
         /// <returns></returns>
         public bool ExistsWid(int wid)
         {
-            return this._repository.ExistsWid(wid);
+            return _repository.ExistsWid(wid);
         }
 
         /// <summary>
-        /// 该微帐号是否存在记录
+        ///     该微帐号是否存在记录
         /// </summary>
         /// <param name="wid"></param>
         /// <param name="iName">键值</param>
         /// <returns></returns>
         public bool ExistsWid(int wid, string iName)
         {
-
-            return this._repository.ExistsWid(wid, iName);
+            return _repository.ExistsWid(wid, iName);
         }
 
         /// <summary>
-        /// 得到一个对象实体
+        ///     得到一个对象实体
         /// </summary>
-        public WX_PropertyInfo GetModelByIName(int wid, string iName)
+        public PropertyInfo GetModelByIName(int wid, string iName)
         {
-            return this._repository.GetModelByIName(wid, iName);
+            return _repository.GetModelByIName(wid, iName);
         }
     }
 }

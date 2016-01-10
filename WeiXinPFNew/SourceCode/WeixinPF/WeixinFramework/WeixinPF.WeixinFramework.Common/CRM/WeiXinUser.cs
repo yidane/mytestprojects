@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WeixinPF.WeixinFramework.Common.CRM;
 
 namespace WeiXinPF.WeiXinComm
 {
@@ -31,7 +32,7 @@ namespace WeiXinPF.WeiXinComm
         {
             IList<string> ret = new List<string>();
 
-            string access_token = WeiXinCRMComm.getAccessToken(wid, out error);
+            string access_token = WeiXinCrmComm.GetAccessToken(wid, out error);
             if (error != "")
             {
                 return null;
@@ -57,7 +58,7 @@ namespace WeiXinPF.WeiXinComm
         private void getNextUserOpenid(int wid, string nexOpenid, IList<string> openidList)
         {
             string err = "";
-            string access_token = WeiXinCRMComm.getAccessToken(wid, out err);
+            string access_token = WeiXinCrmComm.GetAccessToken(wid, out err);
             OpenIdResultJson openidJson = UserApi.Get(access_token, nexOpenid);
 
             if (openidJson == null || openidJson.count <= 0)

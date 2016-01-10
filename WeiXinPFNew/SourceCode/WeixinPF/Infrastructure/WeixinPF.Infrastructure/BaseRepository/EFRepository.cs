@@ -102,7 +102,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <param name="conditions"></param>
+        /// <param name="predicate"></param>
         /// <returns></returns>
         public IQueryable<TEntity> Get(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> predicate)
         {

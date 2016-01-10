@@ -13,12 +13,12 @@ namespace WeiXinPF.Plugins.WeiXinPay.Service.Models
         /// <summary>
         /// 微信号ID
         /// </summary>
-        public int wid { get; set; }
+        public int Wid { get; set; }
 
         /// <summary>
         /// 支付模块ID
         /// </summary>
-        public int PayModuleID { get; set; }
+        public int PayModuleId { get; set; }
 
         /// <summary>
         /// 业务系统订单号
@@ -28,22 +28,22 @@ namespace WeiXinPF.Plugins.WeiXinPay.Service.Models
         /// <summary>
         /// 商品信息
         /// </summary>
-        public string body { get; set; }
+        public string Body { get; set; }
 
         /// <summary>
         /// 商户订单号
         /// </summary>
-        public string out_trade_no { get; set; }
+        public string OutTradeNo { get; set; }
 
         /// <summary>
         /// 支付费用，单位：分
         /// </summary>
-        public int total_fee { get; set; }
+        public int TotalFee { get; set; }
 
         /// <summary>
         /// 支付的OpenID
         /// </summary>
-        public string openid { get; set; }
+        public string Openid { get; set; }
 
         /// <summary>
         /// 支付前
@@ -84,25 +84,25 @@ namespace WeiXinPF.Plugins.WeiXinPay.Service.Models
         {
             var stringBuilder = new StringBuilder();
             const string msg = "{0}必须赋值{1}";
-            if (wid <= 0)
+            if (Wid <= 0)
                 stringBuilder.AppendFormat(msg, "wid", Environment.NewLine);
 
-            if (PayModuleID < 0)
+            if (PayModuleId < 0)
                 stringBuilder.AppendFormat(msg, "PayModuleID", Environment.NewLine);
 
             if (string.IsNullOrEmpty(OrderId))
                 stringBuilder.AppendFormat(msg, "OrderId", Environment.NewLine);
 
-            if (string.IsNullOrEmpty(body))
+            if (string.IsNullOrEmpty(Body))
                 stringBuilder.AppendFormat(msg, "body", Environment.NewLine);
 
-            if (string.IsNullOrEmpty(out_trade_no))
+            if (string.IsNullOrEmpty(OutTradeNo))
                 stringBuilder.AppendFormat(msg, "out_trade_no", Environment.NewLine);
 
-            if (total_fee <= 0)
+            if (TotalFee <= 0)
                 stringBuilder.AppendFormat(msg, "total_fee", Environment.NewLine);
 
-            if (string.IsNullOrEmpty(openid))
+            if (string.IsNullOrEmpty(Openid))
                 stringBuilder.AppendFormat(msg, "openid", Environment.NewLine);
 
             if (stringBuilder.Length > 0)

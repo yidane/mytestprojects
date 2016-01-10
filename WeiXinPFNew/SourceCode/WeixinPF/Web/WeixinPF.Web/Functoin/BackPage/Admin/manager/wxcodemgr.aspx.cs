@@ -6,6 +6,7 @@ using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Weixin;
+using WeixinPF.Model.WeiXin;
 using WeixinPF.Web.UI;
 
 namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
@@ -15,13 +16,13 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         protected int totalCount;
         protected int page;
         protected int pageSize;
-        private WXUserService bll;
+        private AppInfoService bll;
         protected string keywords = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             this.keywords = MXRequest.GetQueryString("keywords");
-            bll = new WXUserService(new WXUserRepository());
+            bll = new AppInfoService();
             this.pageSize = GetPageSize(10); //每页数量
 
             if (!Page.IsPostBack)
@@ -35,39 +36,36 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         private void RptBind(string _strWhere, string _orderby)
         {
             var model = GetAdminInfo(); //取得当前管理员信息
-            _strWhere = "isDelete=0 " + _strWhere;
+            //_strWhere = "isDelete=0 " + _strWhere;
             this.page = MXRequest.GetQueryInt("page", 1);
             txtKeywords.Text = this.keywords;
 
             var adminEntity = GetAdminInfo(); //取得当前管理员信息
-            _strWhere += " and (agentId=" + adminEntity.id + " or uId=" + adminEntity.id+" )";
+            //_strWhere += " and (agentId=" + adminEntity.id + " or uId=" + adminEntity.id + " )";
 
-            DataSet ds = bll.GetUserWeiXinList(this.pageSize, this.page, _strWhere, _orderby, out this.totalCount);
+            var result = bll.GetAppInfoListByAgentIdAdnUId(this.pageSize, this.page, adminEntity.id, out this.totalCount);
 
-            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            if (result.Count > 0)
             {
-                DataRow dr;
-                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                foreach (AppInfo appInfo in result)
                 {
-                    dr = ds.Tables[0].Rows[i];
-                    DateTime endDate = MyCommFun.Obj2DateTime(dr["endDate"]);
-                    if (endDate < DateTime.Now)
-                    {
-                        dr["daoqistr"] = "<span class='guoqi'>" + endDate.ToString("yyyy-MM-dd") + "[已过期]</span>";
-                    }
-                    else if (endDate < DateTime.Now.AddDays(20))
-                    {
-                        dr["daoqistr"] = "<span class='kuaidaoqi'>" + endDate.ToString("yyyy-MM-dd") + "[需尽快充值]</span>";
-                    }
-                    else
-                    {
-                        dr["daoqistr"] = "<span class='weiguoqi'>" + endDate.ToString("yyyy-MM-dd") + "</span>";
-                    }
-
+                    //DateTime endDate = MyCommFun.Obj2DateTime(dr["endDate"]);
+                    //if (appInfo.EndDate < DateTime.Now)
+                    //{
+                    //    dr["daoqistr"] = "<span class='guoqi'>" + endDate.ToString("yyyy-MM-dd") + "[已过期]</span>";
+                    //}
+                    //else if (endDate < DateTime.Now.AddDays(20))
+                    //{
+                    //    dr["daoqistr"] = "<span class='kuaidaoqi'>" + endDate.ToString("yyyy-MM-dd") + "[需尽快充值]</span>";
+                    //}
+                    //else
+                    //{
+                    //    dr["daoqistr"] = "<span class='weiguoqi'>" + endDate.ToString("yyyy-MM-dd") + "</span>";
+                    //}
                 }
             }
 
-            this.rptList.DataSource = ds;
+            this.rptList.DataSource = result;
             this.rptList.DataBind();
 
             //绑定页码
@@ -128,17 +126,17 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
 
         //批量删除
         protected void btnDelete_Click(object sender, EventArgs e)
-        {         
+        {
             int sucCount = 0;
             int errorCount = 0;
-            var bll = new WXUserService(new WXUserRepository());
+            var bll = new AppInfoService();
             for (int i = 0; i < rptList.Items.Count; i++)
             {
                 int id = Convert.ToInt32(((HiddenField)rptList.Items[i].FindControl("hidId")).Value);
                 CheckBox cb = (CheckBox)rptList.Items[i].FindControl("chkId");
                 if (cb.Checked)
                 {
-                    if (bll.DeleteWeixin(id))
+                    if (bll.Delete(id))
                     {
                         sucCount += 1;
                     }

@@ -120,8 +120,8 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 isAgent = true;
                 agent = aBll.GetAgentModel(adminEntity.id);
             }
-          
-            var wBll = new WXUserService(new WXUserRepository()); 
+
+            var wBll = new AppInfoService(); 
             int sucCount = 0;
             int errorCount = 0;
             

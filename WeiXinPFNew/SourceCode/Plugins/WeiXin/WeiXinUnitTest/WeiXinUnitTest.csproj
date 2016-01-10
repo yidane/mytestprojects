@@ -72,6 +72,7 @@
     <Compile Include="PayTest.cs" />
     <Compile Include="MenuTest.cs" />
     <Compile Include="MessageTest.cs" />
+    <Compile Include="DependencyManagerTest.cs" />
     <Compile Include="UserInfoTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,14 +83,20 @@
       <Project>{c4941bbf-0230-4f8e-8f54-efcba0c80344}</Project>
       <Name>WeixinPF.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\WeixinPF\Common\WeixinPF.Common\WeixinPF.Common.csproj">
+      <Project>{4c6c3917-60e6-42ed-ac44-d8da3d82a37b}</Project>
+      <Name>WeixinPF.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\WeixinPF\Infrastructure\WeixinPF.Infrastructure\WeixinPF.Infrastructure.csproj">
       <Project>{04186677-71c9-4400-a294-02176774c5f7}</Project>
       <Name>WeixinPF.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WeixinPF.Plugins.WeiXin.Service\WeixinPF.Plugins.WeiXin.Service.csproj">
-      <Project>{a7bc41e6-c297-4b50-98ac-962cae1474a0}</Project>
-      <Name>WeixinPF.Plugins.WeiXin.Service</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\autofac.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

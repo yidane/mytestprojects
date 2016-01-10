@@ -24,7 +24,7 @@ namespace WeixinPF.Application.System.Interface
         NavigationInfo GetModel(SqlConnection conn, SqlTransaction trans, int id);
         DataTable GetChildList(int parent_id, string nav_type);
         DataTable GetDataList(int parent_id, string nav_type);
-        DataTable GetList(int parent_id, string nav_type, bool isAgent, IWXSystemConfigRepository wxSystemConfigRepository);
+        DataTable GetList(int parent_id, string nav_type, bool isAgent, ISystemConfigRepository wxSystemConfigRepository);
         int GetNavId(string nav_name);
 
         bool UpdateNavName(string old_nav_name, string new_nav_name);

@@ -78,7 +78,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             {
                 isAgent = true;
             }
-            dt = bll.GetList(0, MXEnums.NavigationEnum.System.ToString(), isAgent, new WXSystemConfigRepository());
+            dt = bll.GetList(0, MXEnums.NavigationEnum.System.ToString(), isAgent, new SystemConfigRepository());
             this.rptList.DataSource = dt;
             this.rptList.DataBind();
         }

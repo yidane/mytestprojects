@@ -13,54 +13,54 @@ namespace WeiXinPF.Plugins.WeiXinPay.Service.Models
     public class WeiXinPayNotifyInfo
     {
         [Key]
-        public Guid NotifyID { get; set; }
+        public Guid NotifyId { get; set; }
         [Required, MaxLength(20)]
         public string ModuleName { get; set; }
         [MaxLength(50)]
-        public string out_trade_no { get; set; }
+        public string OutTradeNo { get; set; }
         [MaxLength(50)]
-        public string appid { get; set; }
+        public string Appid { get; set; }
         [MaxLength(500)]
-        public string attach { get; set; }
+        public string Attach { get; set; }
         [Required]
-        public string bank_type { get; set; }
-        public int cash_fee { get; set; }
+        public string BankType { get; set; }
+        public int CashFee { get; set; }
         [MaxLength(50)]
-        public string cash_fee_type { get; set; }
-        public int coupon_count { get; set; }
-        public int coupon_fee { get; set; }
+        public string CashFeeType { get; set; }
+        public int CouponCount { get; set; }
+        public int CouponFee { get; set; }
         [MaxLength(50)]
-        public string device_info { get; set; }
+        public string DeviceInfo { get; set; }
         [MaxLength(50)]
-        public string err_code { get; set; }
+        public string ErrCode { get; set; }
         [MaxLength(50)]
-        public string err_code_des { get; set; }
+        public string ErrCodeDes { get; set; }
         [MaxLength(50)]
-        public string fee_type { get; set; }
+        public string FeeType { get; set; }
         [MaxLength(50)]
-        public string is_subscribe { get; set; }
+        public string IsSubscribe { get; set; }
         [MaxLength(50)]
-        public string mch_id { get; set; }
+        public string MchId { get; set; }
         [MaxLength(50)]
-        public string nonce_str { get; set; }
+        public string NonceStr { get; set; }
         [MaxLength(50)]
-        public string openid { get; set; }
+        public string Openid { get; set; }
         [MaxLength(50)]
-        public string result_code { get; set; }
+        public string ResultCode { get; set; }
         [MaxLength(50)]
-        public string return_code { get; set; }
+        public string ReturnCode { get; set; }
         [MaxLength(50)]
-        public string return_msg { get; set; }
+        public string ReturnMsg { get; set; }
         [MaxLength(50)]
-        public string sign { get; set; }
+        public string Sign { get; set; }
         [MaxLength(50)]
-        public string time_end { get; set; }
+        public string TimeEnd { get; set; }
         [Required]
-        public int total_fee { get; set; }
+        public int TotalFee { get; set; }
         [MaxLength(50)]
-        public string trade_type { get; set; }
+        public string TradeType { get; set; }
         [MaxLength(50)]
-        public string transaction_id { get; set; }
+        public string TransactionId { get; set; }
         [Required]
         public DateTime CreateTime { get; set; }
 
@@ -95,9 +95,9 @@ namespace WeiXinPF.Plugins.WeiXinPay.Service.Models
         /// 防止存在相同参数
         /// </summary>
         /// <param name="moudleName"></param>
-        /// <param name="out_trade_No"></param>
+        /// <param name="outTradeNo"></param>
         /// <returns></returns>
-        public bool ContainPayNotufy(string moudleName, string out_trade_No)
+        public bool ContainPayNotufy(string moudleName, string outTradeNo)
         {
             using (var db = new WeiXinPayDbContext())
             {
@@ -105,7 +105,7 @@ namespace WeiXinPF.Plugins.WeiXinPay.Service.Models
                     db.PayNotifyInfoContext.Any(
                         item =>
                         string.Equals(item.ModuleName, moudleName) &&
-                        string.Equals(out_trade_no, item.out_trade_no));
+                        string.Equals(OutTradeNo, item.OutTradeNo));
             }
         }
     }

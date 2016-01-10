@@ -67,6 +67,10 @@
       <HintPath>..\..\..\..\packages\NServiceBus.5.2.12\lib\net45\NServiceBus.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OneGulp.WeChat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Common\OneGulp.WeChat.dll</HintPath>
+    </Reference>
     <Reference Include="OneGulp.WeChat.MP">
       <HintPath>..\..\..\..\Common\OneGulp.WeChat.MP.dll</HintPath>
     </Reference>
@@ -524,8 +528,11 @@
     <Content Include="Functoin\BackPage\Admin\manager\wxcodemgr.aspx" />
     <Content Include="Functoin\BackPage\Admin\manager\wxcode_edit.aspx" />
     <Content Include="Functoin\BackPage\Admin\weixin\baseSetting.aspx" />
-    <Content Include="Functoin\BackPage\Admin\weixin\editorWeiXin.aspx" />
+    <Content Include="Functoin\BackPage\Admin\weixin\EditorWeiXin.aspx" />
     <Content Include="Functoin\BackPage\Admin\weixin\myweixinlist.aspx" />
+    <Content Include="Functoin\BackPage\WeiXin\OAuth2.aspx" />
+    <Content Include="Functoin\BackPage\WeiXin\WeChatPay\js\zepto.min.js" />
+    <Content Include="Functoin\BackPage\WeiXin\WeChatPay\Pay.aspx" />
     <Content Include="Functoin\StaticPage\Admin\usehelp\景区管理员\关注时回复.files\colorschememapping.xml" />
     <Content Include="Functoin\StaticPage\Admin\usehelp\景区管理员\关注时回复.files\filelist.xml" />
     <Content Include="Functoin\StaticPage\Admin\usehelp\景区管理员\关注时回复.files\header.htm" />
@@ -3376,6 +3383,7 @@
     <Content Include="xmlconfig\tenpay.config" />
     <Content Include="xmlconfig\urls.config" />
     <Content Include="xmlconfig\user.config" />
+    <Content Include="xmlconfig\autofac.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -3485,12 +3493,12 @@
     <Compile Include="Functoin\BackPage\Admin\weixin\baseSetting.aspx.designer.cs">
       <DependentUpon>baseSetting.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Functoin\BackPage\Admin\weixin\editorWeiXin.aspx.cs">
-      <DependentUpon>editorWeiXin.aspx</DependentUpon>
+    <Compile Include="Functoin\BackPage\Admin\weixin\EditorWeiXin.aspx.cs">
+      <DependentUpon>EditorWeiXin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Functoin\BackPage\Admin\weixin\editorWeiXin.aspx.designer.cs">
-      <DependentUpon>editorWeiXin.aspx</DependentUpon>
+    <Compile Include="Functoin\BackPage\Admin\weixin\EditorWeiXin.aspx.designer.cs">
+      <DependentUpon>EditorWeiXin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Functoin\BackPage\Admin\weixin\myweixinlist.aspx.cs">
       <DependentUpon>myweixinlist.aspx</DependentUpon>
@@ -3498,6 +3506,20 @@
     </Compile>
     <Compile Include="Functoin\BackPage\Admin\weixin\myweixinlist.aspx.designer.cs">
       <DependentUpon>myweixinlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Functoin\BackPage\WeiXin\OAuth2.aspx.cs">
+      <DependentUpon>OAuth2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Functoin\BackPage\WeiXin\OAuth2.aspx.designer.cs">
+      <DependentUpon>OAuth2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Functoin\BackPage\WeiXin\WeChatPay\Pay.aspx.cs">
+      <DependentUpon>Pay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Functoin\BackPage\WeiXin\WeChatPay\Pay.aspx.designer.cs">
+      <DependentUpon>Pay.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -61,8 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\PayNotifyManager.cs" />
-    <Compile Include="Application\Repository\IPayNotify.cs" />
+    <Compile Include="Common\PayNotifyManager.cs" />
+    <Compile Include="Application\Repository\IPayNotifyRepository.cs" />
+    <Compile Include="Application\Repository\IPayOrderRepository.cs" />
+    <Compile Include="Application\Service\PayOrderRepository.cs" />
     <Compile Include="Application\WeiXinPayDbContext.cs" />
     <Compile Include="Common\EncryptionManager.cs" />
     <Compile Include="Models\WeiXinPayNotifyInfo.cs" />
@@ -73,6 +75,12 @@
   <ItemGroup>
     <Folder Include="Handler\" />
     <Folder Include="Infrastructure\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\WeixinPF\Model\WeixinPF.Model\WeixinPF.Model.csproj">
+      <Project>{44d55bf4-ef1f-465d-810c-1be14910673f}</Project>
+      <Name>WeixinPF.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

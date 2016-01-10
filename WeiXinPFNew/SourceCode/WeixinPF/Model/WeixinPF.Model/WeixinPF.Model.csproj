@@ -34,7 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,11 +65,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Navigation.cs" />
     <Compile Include="System\sys_config.cs" />
-    <Compile Include="Weixin\WX_IndustryDefaultModule.cs" />
-    <Compile Include="Weixin\WX_Payment.cs" />
-    <Compile Include="Weixin\WX_Property.cs" />
-    <Compile Include="Weixin\WX_SystemConfig.cs" />
-    <Compile Include="Weixin\WX_UserWeixin.cs" />
+    <Compile Include="WeiXin\Message\RequestRule.cs" />
+    <Compile Include="WeiXin\Message\RequestRuleContent.cs" />
+    <Compile Include="WeiXin\Message\ResponseContentEntity.cs" />
+    <Compile Include="WeiXin\Message\ResponseMessageLog.cs" />
+    <Compile Include="WeiXin\Token\AccessToken.cs" />
+    <Compile Include="WeiXin\Token\JsApiTicket.cs" />
+    <Compile Include="WeiXin\Group\GroupInfo.cs" />
+    <Compile Include="WeiXin\User\UserInfo.cs" />
+    <Compile Include="WeiXin\AppInfo.cs" />
+    <Compile Include="WeiXin\IndustryDefaultModule.cs" />
+    <Compile Include="WeiXin\Payment.cs" />
+    <Compile Include="WeiXin\Property.cs" />
+    <Compile Include="WeiXin\SystemConfig.cs" />
+    <Compile Include="WeiXin\WeiXinDbContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

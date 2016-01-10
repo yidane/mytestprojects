@@ -15,7 +15,7 @@ using WeixinPF.Infrastructure.System;
 using WeixinPF.Infrastructure.Weixin;
 using WeixinPF.Model.Agent;
 using WeixinPF.Model.System;
-using WeixinPF.Model.Weixin;
+using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Web.UI
 {
@@ -53,8 +53,8 @@ namespace WeixinPF.Web.UI
             else
             {
                 //检查Cookies
-                string adminname = Utils.GetCookie("AdminName", "WeiXinPF");
-                string adminpwd = Utils.GetCookie("AdminPwd", "WeiXinPF");
+                var adminname = Utils.GetCookie("AdminName", "WeiXinPF");
+                var adminpwd = Utils.GetCookie("AdminPwd", "WeiXinPF");
                 if (adminname != "" && adminpwd != "")
                 {
                     var service = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
@@ -77,10 +77,7 @@ namespace WeixinPF.Web.UI
             if (IsAdminLogin())
             {
                 var model = Session[MXKeys.SESSION_ADMIN_INFO] as ManagerInfo;
-                if (model != null)
-                {
-                    return model;
-                }
+                return model;
             }
             return null;
         }
@@ -182,13 +179,13 @@ namespace WeixinPF.Web.UI
                 string uweixinId = Utils.GetCookie("nowweixinId", "WeiXinPF");
                 if (uweixinId != "")
                 {
-                    var service = new WXUserService(new WXUserRepository());
-                    var model = service.GetModel(int.Parse(uweixinId));
-                    if (model != null)
-                    {
-                        Session["nowweixin"] = model;
-                        return true;
-                    }
+                    //var service = new WxUserService(new WxUserRepository());
+                    //var model = service.GetModel(int.Parse(uweixinId));
+                    //if (model != null)
+                    //{
+                    //    Session["nowweixin"] = model;
+                    //    return true;
+                    //}
                 }
             }
             return false;
@@ -197,11 +194,11 @@ namespace WeixinPF.Web.UI
         /// <summary>
         /// 取得当前微信帐号信息
         /// </summary>
-        public WX_UserWeixinInfo GetWeiXinCode()
+        public AppInfo GetWeiXinCode()
         {
             if (IsWeiXinCode())
             {
-                var model = Session["nowweixin"] as WX_UserWeixinInfo;
+                var model = Session["nowweixin"] as AppInfo;
                 if (model != null)
                 {
                     return model;
@@ -225,11 +222,12 @@ namespace WeixinPF.Web.UI
 
                     hotel = new HotelService(new HotelRepository()).GetModel(hotelid);
 
-                    if (hotel !=null)
+                    if (hotel != null)
                     {
-                        return new WXUserService(new WXUserRepository()).GetModel(hotel.wid.Value);
+                        //return new WxUserService(new WxUserRepository()).GetModel(hotel.wid.Value);
+                        return null;
                     }
-                    
+
                 }
                 Response.Write("<script>parent.location.href='http://" + HttpContext.Current.Request.Url.Authority + "/admin/weixin/myweixinlist.aspx'</script>");
                 Response.End();
@@ -278,7 +276,7 @@ namespace WeixinPF.Web.UI
                     }
 
                     var userService = new HotelUserService(new HotelUserRepository(dbContext));
-                    
+
                     var hotelUser = userService.GetModel(admin.id);
 
                     if (hotelUser != null)
@@ -286,7 +284,7 @@ namespace WeixinPF.Web.UI
                         return hotelUser.HotelId;
                     }
                 }
-              
+
                 return 0;
             }
             return 0;

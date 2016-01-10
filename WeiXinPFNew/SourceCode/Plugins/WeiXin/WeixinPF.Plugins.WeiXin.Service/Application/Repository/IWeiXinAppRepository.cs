@@ -10,6 +10,6 @@ namespace WeixinPF.Plugins.WeiXin.Service.Application.Repository
 {
     public interface IWeiXinAppRepository : IRepository<WeiXinAppInfo>
     {
-        //WeiXinAppInfo GetWeiXinAppInfo(int appId);
+        WeiXinAppInfo GetWeiXinAppInfo(int id);
     }
 }

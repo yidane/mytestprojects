@@ -12,20 +12,20 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
 {
     public partial class wxcode_edit : ManagePage
     {
-        private WXUserService bll;
+        private AppInfoService bll;
         private WXAgentService aBll;
         private ManagerInfo adminEntity;
         private WX_AgentInfo agent;
         protected string returnPage = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            bll = new WXUserService(new WXUserRepository());
+            bll = new AppInfoService();
             aBll = new WXAgentService(new WXAgentRepository());
             adminEntity = GetAdminInfo(); //取得管理员信息
-             agent = aBll.GetAgentModel(adminEntity.id);
+            agent = aBll.GetAgentModel(adminEntity.id);
             if (!Page.IsPostBack)
             {
-                 int id = 0;
+                int id = 0;
 
                 if (!int.TryParse(Request.QueryString["id"] as string, out id))
                 {
@@ -52,45 +52,45 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         #region 赋值操作=================================
         private void ShowInfo(int id)
         {
-            var model = bll.GetModel(id);
+            var model = bll.GetAppInfo(id);
             lblId.Text = model.id.ToString();
             this.txtwxName.Text = model.wxName;
-            this.txtwxId.Text = model.wxId;
-            this.txtweixinCode.Text = model.weixinCode;
+            this.txtwxId.Text = model.WxId;
+            this.txtweixinCode.Text = model.WxCode;
             this.txtImgUrl.Text = model.headerpic;
-            this.txtapiurl.Text =MyCommFun.getWebSite()+"/api/weixin/api.aspx?apiid="+ model.id;
-            this.txtwxToken.Text = model.wxToken;
-            if(model.wStatus!=null && model.wStatus==0)
+            this.txtapiurl.Text = MyCommFun.getWebSite() + "/api/weixin/api.aspx?apiid=" + model.id;
+            this.txtwxToken.Text = model.WxToken;
+            if (model.wStatus)
             {
                 this.rblwStatus.SelectedValue = "0";
             }
-            
+
 
             this.txtAppId.Text = model.AppId;
             this.txtAppSecret.Text = model.AppSecret;
-           // txtEndTime.Text = model.endDate.Value.ToString("yyyy-MM-dd");
-            lblEndDate.Text = model.endDate.Value.ToString("yyyy-MM-dd");
-            lblAddDate.Text = model.createDate.Value.ToString("yyyy-MM-dd");
+            // txtEndTime.Text = model.endDate.Value.ToString("yyyy-MM-dd");
+            lblEndDate.Text = model.EndDate.Value.ToString("yyyy-MM-dd");
+            lblAddDate.Text = model.CreateDate.ToString("yyyy-MM-dd");
             lblEndDate.Font.Bold = true;
-            if (model.endDate < DateTime.Now)
+            if (model.EndDate < DateTime.Now)
             {
                 //过期
                 lblEndDate.ForeColor = System.Drawing.Color.Red;
                 lblEndDate.Text += "[已过期]";
 
             }
-            else if (model.endDate <= DateTime.Now.AddDays(20))
+            else if (model.EndDate <= DateTime.Now.AddDays(20))
             {
                 //快到期
-                TimeSpan ts = model.endDate.Value - DateTime.Now;
-                int sub = ts.Days;  
+                TimeSpan ts = model.EndDate.Value - DateTime.Now;
+                int sub = ts.Days;
                 lblEndDate.ForeColor = System.Drawing.Color.Red;
                 lblEndDate.Text += " [还有" + sub + "天到期]";
-              
+
             }
             else
-            { 
-                
+            {
+
             }
 
             //代理商信息
@@ -109,7 +109,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         #region 修改操作=================================
         private bool DoEdit()
         {
-            int _id =MyCommFun.Str2Int(lblId.Text);
+            int _id = MyCommFun.Str2Int(lblId.Text);
             string strErr = "";
             if (this.txtwxName.Text.Trim().Length == 0)
             {
@@ -144,31 +144,33 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             string AppId = this.txtAppId.Text;
             string AppSecret = this.txtAppSecret.Text;
 
-            var model = bll.GetModel(_id);
+            var model = bll.GetAppInfo(_id);
 
             model.wxName = wxName;
-            model.wxId = wxId;
-            model.weixinCode = weixinCode;
+            model.WxId = wxId;
+            model.WxCode = weixinCode;
             model.headerpic = headerpic;
-            model.apiurl = apiurl;
-            model.wxToken = wxToken;
+            model.Apiurl = apiurl;
+            model.WxToken = wxToken;
             model.AppId = AppId;
             model.AppSecret = AppSecret;
-            model.wStatus =MyCommFun.Str2Int( rblwStatus.SelectedItem.Value);
 
-            int addYear =MyCommFun.Str2Int( ddlMaxNum.SelectedItem.Value);
+            //TODO:状态赋值不对
+            //model.wStatus = MyCommFun.Str2Int( rblwStatus.SelectedItem.Value);
+
+            int addYear = MyCommFun.Str2Int(ddlMaxNum.SelectedItem.Value);
             if (addYear > 0)
             {
-                if (model.endDate.Value >= DateTime.Now)
+                if (model.EndDate.HasValue && model.EndDate.Value >= DateTime.Now)
                 {
                     //直接加
-                    model.endDate = model.endDate.Value.AddYears(addYear);
+                    model.EndDate = model.EndDate.Value.AddYears(addYear);
                 }
                 else
-                { 
+                {
                     //已过期的，直接在当天开始加年份
-                    model.endDate = DateTime.Now.AddYears(addYear);
-                 }
+                    model.EndDate = DateTime.Now.AddYears(addYear);
+                }
 
                 bool isAgent = false;
                 if (adminEntity.agentLevel < 0)
@@ -213,14 +215,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                             return false;
                         }
                     }
-                }               
+                }
             }
 
             bool ret = bll.Update(model);
 
             if (ret)
             {
-                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "【管理】修改微信号，主键为:" + model.id + ",微信号为：" + model.weixinCode); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "【管理】修改微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
                 return true;
             }
             return false;
@@ -230,7 +232,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         //保存
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            
+
             if (!DoEdit())
             {
                 JscriptMsg("保存过程中发生错误！", "", "Error");

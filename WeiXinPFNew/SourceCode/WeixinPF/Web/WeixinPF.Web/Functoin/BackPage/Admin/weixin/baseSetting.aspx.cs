@@ -12,7 +12,7 @@ using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Weixin;
-using WeixinPF.Model.Weixin;
+using WeixinPF.Model.WeiXin;
 using WeixinPF.Web.UI;
 
 namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
@@ -24,10 +24,10 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
     public partial class baseSetting : ManagePage
     {
 
-        private WXUserService bll;
+        private AppInfoService bll;
         protected void Page_Load(object sender, EventArgs e)
         {
-            bll = new WXUserService(new WXUserRepository());
+            bll = new AppInfoService();
             if (!Page.IsPostBack)
             {
                 //txtapiurl.Text = MyCommFun.getWebSite() + "/api/weixin/api.aspx";
@@ -44,7 +44,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             lblWeixinName.Text = weixin.wxName;
             lblAppid.Text = weixin.AppId;
 
-            var wxpayBll = new WXPaymentService(new WXPaymentRepository());
+            var wxpayBll = new WXPaymentService(new PaymentRepository());
             var model = wxpayBll.GetModelByWid(weixin.id);
             if (model == null || model.id == 0)
             {
@@ -60,12 +60,12 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                 this.txtcerInfoPwd.Text = model.cerInfoPwd;
 
             }
-            var propertyBll = new WXPropertyService(new WXPropertyRepository());
+            var propertyBll = new WXPropertyService(new PropertyRepository());
             var propertyEntity = propertyBll.GetModelByIName(weixin.id, MXEnums.WXPropertyKeyName.OpenOauth.ToString());
             if (propertyEntity != null)
             {
                 radOpenOAuth.SelectedValue = propertyEntity.iContent;
-                hidOpenOauthId.ID = propertyEntity.id.ToString();
+                hidOpenOauthId.ID = propertyEntity.Id.ToString();
             }            
         }
 
@@ -75,9 +75,9 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         //保存
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var wxpayBll = new WXPaymentService(new WXPaymentRepository());
+            var wxpayBll = new WXPaymentService(new PaymentRepository());
             int id =MyCommFun.Obj2Int( hidId.Value,0);
-            var wxpayModel = new WX_PaymentInfo();
+            var wxpayModel = new PaymentInfo();
             var weixin = GetWeiXinCode();
             if (id == 0)
             {
@@ -113,7 +113,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             }
 
             //OpenOAuth开启
-            var propertyBll = new WXPropertyService(new WXPropertyRepository());
+            var propertyBll = new WXPropertyService(new PropertyRepository());
             string pValue=radOpenOAuth.SelectedItem.Value;
             propertyBll.AddProperty(weixin.id, MXEnums.WXPropertyKeyName.OpenOauth.ToString(), pValue);
 

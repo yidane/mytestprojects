@@ -579,7 +579,7 @@ namespace WeixinPF.Infrastructure.System
         /// <param name="nav_type">导航类别</param>
         /// <param name="isAgent">是否为代理商</param>
         /// <returns>DataTable</returns>
-        public DataTable GetList(int parent_id, string nav_type, bool isAgent, IWXSystemConfigRepository wxSystemConfigRepository)
+        public DataTable GetList(int parent_id, string nav_type, bool isAgent, ISystemConfigRepository wxSystemConfigRepository)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select id,nav_type,name,title,sub_title,link_url,sort_id,is_lock,remark,parent_id,class_list,class_layer,channel_id,action_type,is_sys");

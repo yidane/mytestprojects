@@ -12,7 +12,7 @@ using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
 using WeixinPF.Infrastructure.Article;
 using WeixinPF.Infrastructure.Weixin;
-using WeixinPF.Model.Weixin;
+using WeixinPF.Model.WeiXin;
 using WeixinPF.Web.UI;
 
 namespace WeiXinPF.Web.admin.manager
@@ -20,7 +20,7 @@ namespace WeiXinPF.Web.admin.manager
     public partial class weixin_add : ManagePage
     {
         protected int uid = 0;
-        WXUserService bll = new WXUserService(new WXUserRepository());
+        AppInfoService bll = new AppInfoService();
         protected void Page_Load(object sender, EventArgs e)
         {
             uid = MyCommFun.RequestInt("uid", 0);
@@ -98,39 +98,39 @@ namespace WeiXinPF.Web.admin.manager
             DateTime endDate = MyCommFun.Obj2DateTime(txtEndData.Text);
 
 
-            var model = new WX_UserWeixinInfo
+            var model = new AppInfo
             {
                 uId = this.uid,
                 wxName = wxName,
-                wxId = wxId,
-                yixinId = "",
-                weixinCode = weixinCode,
-                wxPwd = wxPwd,
+                WxId = wxId,
+                YixinId = "",
+                WxCode = weixinCode,
+                WxPwd = wxPwd,
                 headerpic = headerpic,
-                apiurl = apiurl,
-                wxToken = wxToken,
-                wxProvince = wxProvince,
-                wxCity = wxCity,
+                Apiurl = apiurl,
+                WxToken = wxToken,
+                WxProvince = wxProvince,
+                WxCity = wxCity,
                 AppId = AppId,
                 AppSecret = AppSecret,
-                Access_Token = "",
-                openIdStr = "",
-                createDate = createDate,
-                endDate = endDate,
-                wenziMaxNum = -1,
-                tuwenMaxNum = -1,
-                yuyinMaxNum = -1,
-                wenziDefineNum = 0,
-                tuwenDefineNum = 0,
-                yuyinDefineNum = 0,
-                requestTTNum = 0,
-                requestUsedNum = 0,
-                smsTTNum = 0,
-                smsUsedNum = 0,
-                isDelete = false,
-                wStatus = 1,
-                remark = "",
-                seq = 99
+                AccessToken = "",
+                OpenIdStr = "",
+                CreateDate = createDate,
+                EndDate = endDate,
+                WenziMaxNum = -1,
+                TuwenMaxNum = -1,
+                YuyinMaxNum = -1,
+                WenziDefineNum = 0,
+                TuwenDefineNum = 0,
+                YuyinDefineNum = 0,
+                RequestTtNum = 0,
+                RequestUsedNum = 0,
+                SmsTtNum = 0,
+                SmsUsedNum = 0,
+                IsDelete = false,
+                wStatus = true,
+                Remark = "",
+                Seq = 99
             };
 
             //-1为无限制
@@ -147,13 +147,13 @@ namespace WeiXinPF.Web.admin.manager
                 {
                     //为微账户添加行业默认模块
                     var mBll = new ManagerService(new ManagerRepository(siteConfig.sysdatabaseprefix));
-                    var idBll = new WXIndustryDefaultModuleService(new WXIndustryDefaultModuleRepository());
+                    var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
                     var user = mBll.GetModel(uid);
                     int roleid = user.role_id;
                     idBll.addMouduleByRoleid(roleid, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
                 }
 
-                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.id + ",微信号为：" + model.weixinCode); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
                 return true;
             }
             return false;

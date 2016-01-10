@@ -8,6 +8,7 @@ using System.Net;
 using OneGulp.WeChat.MP;
 using OneGulp.WeChat.MP.AdvancedAPIs;
 using OneGulp.WeChat.MP.CommonAPIs;
+using OneGulp.WeChat.MP.Entities;
 
 namespace WeiXinPF.WeiXinComm
 {
@@ -78,12 +79,15 @@ namespace WeiXinPF.WeiXinComm
 
         private static Image ToImage(this Stream stream)
         {
-            Image img = default(Image);
-            if (stream != null)
-            {
-                img = Image.FromStream(stream);
-            }
-            return img;
+            //TODO:不知道干啥的逻辑
+            //Image img = default(Image);
+            //if (stream != null)
+            //{
+            //    img = Image.FromStream(stream);
+            //}
+            //return img;
+
+            return null;
         }
     }
 }

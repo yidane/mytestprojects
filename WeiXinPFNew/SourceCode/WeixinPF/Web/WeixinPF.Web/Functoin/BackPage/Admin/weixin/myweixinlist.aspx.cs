@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Infrastructure.Weixin;
+using WeixinPF.Model.WeiXin;
 using WeixinPF.Web.UI;
 
 namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
@@ -11,18 +12,19 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
     public partial class myweixinlist : ManagePage
     {
         protected int totalCount;
-        protected int page=1;
-        protected int pageSize=20;
-        private WXUserService bll;
+        protected int page = 1;
+        protected int pageSize = 20;
+        private AppInfoService bll;
         protected string keywords = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            bll = new WXUserService(new WXUserRepository());
+            bll = new AppInfoService();
             this.keywords = MXRequest.GetQueryString("keywords");
             if (!Page.IsPostBack)
             {
-                RptBind(CombSqlTxt(keywords), "createDate desc,id desc");
+                //RptBind(CombSqlTxt(keywords), "createDate desc,id desc");
+                RptBind(keywords, "createDate desc,id desc");
             }
         }
 
@@ -30,41 +32,39 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         private void RptBind(string _strWhere, string _orderby)
         {
             var model = GetAdminInfo(); //取得当前管理员信息
-            _strWhere = "uId=" + model.id +" and isDelete=0 " + _strWhere+" order by "+_orderby;
-          
+            _strWhere = "uId=" + model.id + " and isDelete=0 " + _strWhere + " order by " + _orderby;
+
             txtKeywords.Text = this.keywords;
-            var wxList=bll.GetModelList( _strWhere);
+            var wxList = bll.GetModelList(model.id, _strWhere);
 
             if (wxList != null)
             {
                 lblHasNum.Text = wxList.Count.ToString();
                 if (wxList.Count > 0)
                 {
-                    for (int i = 0; i < wxList.Count; i++)
+                    foreach (AppInfo appInfo in wxList)
                     {
-                        wxList[i].extStr = "<span class=\"span_zhengchang\">正常</span>";
-                        if (wxList[i].wStatus != null && wxList[i].wStatus == 0)
+                        appInfo.extStr = "<span class=\"span_zhengchang\">正常</span>";
+                        if (appInfo.wStatus)
                         {
-                            wxList[i].extStr = "<span class=\"span_jinyong\">禁用</span>";
+                            appInfo.extStr = "<span class=\"span_jinyong\">禁用</span>";
                         }
-                        
-                        if (wxList[i].endDate != null)
-                        {
-                            if (wxList[i].endDate < DateTime.Now)
-                            {
-                                wxList[i].extStr = "<span class=\"span_guoqi\">过期</span>";
-                            }
-                            else if (wxList[i].endDate < DateTime.Now.AddDays(15))
-                            {
-                                wxList[i].extStr = "<span class=\"span_kguoqi\">快到期</span>";
 
+                        if (appInfo.EndDate != null)
+                        {
+                            if (appInfo.EndDate < DateTime.Now)
+                            {
+                                appInfo.extStr = "<span class=\"span_guoqi\">过期</span>";
                             }
-                             
+                            else if (appInfo.EndDate < DateTime.Now.AddDays(15))
+                            {
+                                appInfo.extStr = "<span class=\"span_kguoqi\">快到期</span>";
+                            }
                         }
                     }
                 }
             }
-           
+
             lblTotNum.Text = model.wxNum.ToString();
 
             this.rptList.DataSource = wxList;
@@ -86,7 +86,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         }
         #endregion
 
-       
+
 
         //关健字查询
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -94,7 +94,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             Response.Redirect(Utils.CombUrlTxt("myweixinlist.aspx", "keywords={0}", txtKeywords.Text));
         }
 
-        
+
 
         /// <summary>
         /// 选择某一个微信公众帐号，并且将其保存到session里
@@ -108,30 +108,30 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                 case "toIndex":
                     {
                         int wid = int.Parse(e.CommandArgument.ToString());
-                        var weixin = bll.GetModel(wid);
-                        if (weixin.wStatus != null && weixin.wStatus == 0)
+                        var weixin = bll.GetAppInfo(wid);
+                        if (weixin.wStatus)
                         {
-                            MessageBox.Show(this,"账号已被禁用，无法进入");
+                            MessageBox.Show(this, "账号已被禁用，无法进入");
                             return;
                         }
 
-                        if (weixin.endDate != null)
-                         {
-                             if (weixin.endDate < DateTime.Now)
-                             {
-                                 MessageBox.Show(this, "账号已过期，无法进入");
-                                 return;
-                             }
-                         }
+                        if (weixin.EndDate != null)
+                        {
+                            if (weixin.EndDate < DateTime.Now)
+                            {
+                                MessageBox.Show(this, "账号已过期，无法进入");
+                                return;
+                            }
+                        }
 
                         Session["nowweixin"] = weixin;
                         Utils.WriteCookie("nowweixinId", "WeiXinPF", e.CommandArgument.ToString());
                         Response.Write("<script>parent.location.href='../../../../index.aspx'</script>");
                     }
                     break;
-            } 
+            }
         }
 
-       
+
     }
 }

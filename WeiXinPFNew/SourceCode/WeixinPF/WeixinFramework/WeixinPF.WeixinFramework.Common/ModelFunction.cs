@@ -1,13 +1,10 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WeiXinPF.Application.DomainModules.Photo;
 using WeixinPF.Common;
+using WeixinPF.Model.Weixin.Message;
+using WeixinPF.Model.WeiXin;
 
-namespace WeiXinPF.WeiXinComm
+namespace WeixinPF.WeixinFramework.Common
 {
     /// <summary>
     /// 该处主要处理模块插入回复信息的处理
@@ -23,9 +20,9 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="responseType"></param>
         /// <param name="responseVaule"></param>
-        private IList<Model.ResponseContentEntity> PanDuanMoudle(string modelFunctionName, int modelFunctionId, string openid, int apiid)
+        private IList<ResponseContentEntity> PanDuanMoudle(string modelFunctionName, int modelFunctionId, string openid, int apiid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
 
             if (modelFunctionName == "刮刮卡")
@@ -82,41 +79,41 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="openid">openid</param>
         /// <param name="responseType">回复类型：1纯文字，2图文</param>
         /// <param name="responseVaule">回复的内容</param>
-        private IList<Model.ResponseContentEntity> LuckyMoneyReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> LuckyMoneyReponse(int id, int apiid, string openid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
 
-            BLL.wx_dzpActionInfo ggkActBll = new BLL.wx_dzpActionInfo();
-            Model.wx_dzpActionInfo actModel = ggkActBll.GetModel(id);
-            if (actModel.beginDate > DateTime.Now)
-            {  //活动尚未开始 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
-            }
-            else if (actModel.endDate <= DateTime.Now)
-            {
-                //活动结束
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.endNotice;
-                responseEntity.rContent2 = actModel.endContent;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/shakeLuckyMoney/shakeLuckyMoney.html?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.endPic;
+            //BLL.wx_dzpActionInfo ggkActBll = new BLL.wx_dzpActionInfo();
+            //Model.wx_dzpActionInfo actModel = ggkActBll.GetModel(id);
+            //if (actModel.beginDate > DateTime.Now)
+            //{  //活动尚未开始 
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
+            //}
+            //else if (actModel.endDate <= DateTime.Now)
+            //{
+            //    //活动结束
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.endNotice;
+            //    responseEntity.rContent2 = actModel.endContent;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/shakeLuckyMoney/shakeLuckyMoney.html?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.endPic;
 
-            }
-            else
-            {
-                //活动正在进行中 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.actName;
-                responseEntity.rContent2 = actModel.brief;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/shakeLuckyMoney/shakeLuckyMoney.html?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = "/weixin/shakeLuckyMoney/images/shareLuckyMoney.png";
-            }
-            responselist.Add(responseEntity);
+            //}
+            //else
+            //{
+            //    //活动正在进行中 
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.actName;
+            //    responseEntity.rContent2 = actModel.brief;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/shakeLuckyMoney/shakeLuckyMoney.html?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = "/weixin/shakeLuckyMoney/images/shareLuckyMoney.png";
+            //}
+            //responselist.Add(responseEntity);
             return responselist;
 
         }
@@ -128,41 +125,41 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="openid"></param>
         /// <returns></returns>
-        private IList<Model.ResponseContentEntity> HuGuaiReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> HuGuaiReponse(int id, int apiid, string openid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //            ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //            responseEntity.id = id;
+            //            responseEntity.wid = apiid;
 
 
-            var ggkActBll = new PhotoService();
-           var actModel = ggkActBll.GetModel(id);
-            if (DateTime.Parse(actModel.beginDate) > DateTime.Now)
-            {  //活动尚未开始 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
-            }
-//            else if (DateTime.Parse(actModel.endDate) <= DateTime.Now)
-//            {
-//                //活动结束
-//                responseEntity.rcType = Model.ReponseContentType.txtpic;
-//                responseEntity.rContent = actModel.endNotice;
-//                responseEntity.rContent2 = actModel.endContent;
-//                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/end.aspx?wid=" + apiid + "&aid=" + id;
-//                responseEntity.picUrl = actModel.endPic;
-//
-//            }
-//            else
-//            { 
-                //活动正在进行中 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.actName;
-                responseEntity.rContent2 = actModel.brief;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/MakePhoto.html?wid=" + apiid + "&aid=" + id;
-//                responseEntity.picUrl = actModel.beginPic;
-//            }
-            responselist.Add(responseEntity);
+            //            var ggkActBll = new PhotoService();
+            //           var actModel = ggkActBll.GetModel(id);
+            //            if (DateTime.Parse(actModel.beginDate) > DateTime.Now)
+            //            {  //活动尚未开始 
+            //                responseEntity.rcType = Model.ReponseContentType.text;
+            //                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
+            //            }
+            ////            else if (DateTime.Parse(actModel.endDate) <= DateTime.Now)
+            ////            {
+            ////                //活动结束
+            ////                responseEntity.rcType = Model.ReponseContentType.txtpic;
+            ////                responseEntity.rContent = actModel.endNotice;
+            ////                responseEntity.rContent2 = actModel.endContent;
+            ////                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/end.aspx?wid=" + apiid + "&aid=" + id;
+            ////                responseEntity.picUrl = actModel.endPic;
+            ////
+            ////            }
+            ////            else
+            ////            { 
+            //                //活动正在进行中 
+            //                responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //                responseEntity.rContent = actModel.actName;
+            //                responseEntity.rContent2 = actModel.brief;
+            //                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/photo/MakePhoto.html?wid=" + apiid + "&aid=" + id;
+            ////                responseEntity.picUrl = actModel.beginPic;
+            ////            }
+            //            responselist.Add(responseEntity);
             return responselist;
 
         }
@@ -176,42 +173,42 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="openid">openid</param>
         /// <param name="responseType">回复类型：1纯文字，2图文</param>
         /// <param name="responseVaule">回复的内容</param>
-        private IList<Model.ResponseContentEntity> GGKReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> GGKReponse(int id, int apiid, string openid)
         {
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
-            BLL.wx_ggkActionInfo ggkActBll = new BLL.wx_ggkActionInfo();
-            Model.wx_ggkActionInfo actModel = ggkActBll.GetModel(id);
-            if (actModel.beginDate > DateTime.Now)
-            {  //活动尚未开始 
+            //BLL.wx_ggkActionInfo ggkActBll = new BLL.wx_ggkActionInfo();
+            //wx_ggkActionInfo actModel = ggkActBll.GetModel(id);
+            //if (actModel.beginDate > DateTime.Now)
+            //{  //活动尚未开始 
 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
-            }
-            else if (actModel.endDate <= DateTime.Now)
-            {
-                //活动结束
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.endNotice;
-                responseEntity.rContent2 = actModel.endContent;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/ggk/end.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.endPic;
-            }
-            else
-            {
-                //活动正在进行中
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.actName;
-                responseEntity.rContent2 = actModel.actContent;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/ggk/index.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.beginPic;
-            }
-            responselist.Add(responseEntity);
+            //    responseEntity.rcType = ReponseContentType.text;
+            //    responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
+            //}
+            //else if (actModel.endDate <= DateTime.Now)
+            //{
+            //    //活动结束
+            //    responseEntity.rcType = ReponseContentType.TextWithPicture;
+            //    responseEntity.rContent = actModel.endNotice;
+            //    responseEntity.rContent2 = actModel.endContent;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/ggk/end.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.endPic;
+            //}
+            //else
+            //{
+            //    //活动正在进行中
+            //    responseEntity.rcType = ReponseContentType.TextWithPicture;
+            //    responseEntity.rContent = actModel.actName;
+            //    responseEntity.rContent2 = actModel.actContent;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/ggk/index.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.beginPic;
+            //}
+            //responselist.Add(responseEntity);
 
             return responselist;
         }
@@ -224,42 +221,42 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="openid">openid</param>
         /// <param name="responseType">回复类型：1纯文字，2图文</param>
         /// <param name="responseVaule">回复的内容</param>
-        private IList<Model.ResponseContentEntity> DZPReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> DZPReponse(int id, int apiid, string openid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
 
-            BLL.wx_dzpActionInfo ggkActBll = new BLL.wx_dzpActionInfo();
-            Model.wx_dzpActionInfo actModel = ggkActBll.GetModel(id);
-            if (actModel.beginDate > DateTime.Now)
-            {  //活动尚未开始 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
-            }
-            else if (actModel.endDate <= DateTime.Now)
-            {
-                //活动结束
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.endNotice;
-                responseEntity.rContent2 = actModel.endContent;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/dzp/end.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.endPic;
+            //BLL.wx_dzpActionInfo ggkActBll = new BLL.wx_dzpActionInfo();
+            //Model.wx_dzpActionInfo actModel = ggkActBll.GetModel(id);
+            //if (actModel.beginDate > DateTime.Now)
+            //{  //活动尚未开始 
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
+            //}
+            //else if (actModel.endDate <= DateTime.Now)
+            //{
+            //    //活动结束
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.endNotice;
+            //    responseEntity.rContent2 = actModel.endContent;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/dzp/end.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.endPic;
 
-            }
-            else
-            {
-                //活动正在进行中
+            //}
+            //else
+            //{
+            //    //活动正在进行中
 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.actName;
-                responseEntity.rContent2 = actModel.brief;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/dzp/index.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.beginPic;
-            }
-            responselist.Add(responseEntity);
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.actName;
+            //    responseEntity.rContent2 = actModel.brief;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/dzp/index.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.beginPic;
+            //}
+            //responselist.Add(responseEntity);
             return responselist;
 
         }
@@ -272,42 +269,42 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="openid">openid</param>
         /// <param name="responseType">回复类型：1纯文字，2图文</param>
         /// <param name="responseVaule">回复的内容</param>
-        private IList<Model.ResponseContentEntity> ZJDReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> ZJDReponse(int id, int apiid, string openid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
 
-            BLL.wx_zjdActionInfo ggkActBll = new BLL.wx_zjdActionInfo();
-            Model.wx_zjdActionInfo actModel = ggkActBll.GetModel(id);
-            if (actModel.beginDate > DateTime.Now)
-            {  //活动尚未开始 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
-            }
-            else if (actModel.endDate <= DateTime.Now)
-            {
-                //活动结束
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.endNotice;
-                responseEntity.rContent2 = actModel.endContent;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/zjd/end.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.endPic;
+            //BLL.wx_zjdActionInfo ggkActBll = new BLL.wx_zjdActionInfo();
+            //Model.wx_zjdActionInfo actModel = ggkActBll.GetModel(id);
+            //if (actModel.beginDate > DateTime.Now)
+            //{  //活动尚未开始 
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "活动【" + actModel.actName + "】将于" + actModel.beginDate + "开始。";
+            //}
+            //else if (actModel.endDate <= DateTime.Now)
+            //{
+            //    //活动结束
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.endNotice;
+            //    responseEntity.rContent2 = actModel.endContent;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/zjd/end.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.endPic;
 
-            }
-            else
-            {
-                //活动正在进行中
+            //}
+            //else
+            //{
+            //    //活动正在进行中
 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.actName;
-                responseEntity.rContent2 = actModel.brief;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/zjd/index.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.beginPic;
-            }
-            responselist.Add(responseEntity);
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.actName;
+            //    responseEntity.rContent2 = actModel.brief;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/zjd/index.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.beginPic;
+            //}
+            //responselist.Add(responseEntity);
             return responselist;
 
         }
@@ -321,46 +318,46 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="openid">openid</param>
         /// <param name="responseType">回复类型：1纯文字，2图文</param>
         /// <param name="responseVaule">回复的内容</param>
-        private IList<Model.ResponseContentEntity> yhqjdReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> yhqjdReponse(int id, int apiid, string openid)
         {
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
 
-            BLL.wx_sTicket sttActBll = new BLL.wx_sTicket();
-            Model.wx_sTicket actModel = sttActBll.GetModel(id);
-            if (actModel.beginDate > DateTime.Now)
-            {  //活动尚未开始 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.actionName + "】将于" + actModel.beginDate + "开始。";
+            //BLL.wx_sTicket sttActBll = new BLL.wx_sTicket();
+            //Model.wx_sTicket actModel = sttActBll.GetModel(id);
+            //if (actModel.beginDate > DateTime.Now)
+            //{  //活动尚未开始 
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "活动【" + actModel.actionName + "】将于" + actModel.beginDate + "开始。";
 
-            }
-            else if (actModel.endDate <= DateTime.Now)
-            {
-                //活动结束
+            //}
+            //else if (actModel.endDate <= DateTime.Now)
+            //{
+            //    //活动结束
 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.endNotice;
-                responseEntity.rContent2 = actModel.endContent;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/sticket/end.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.endPic;
-            }
-            else
-            {
-                //活动正在进行中
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.endNotice;
+            //    responseEntity.rContent2 = actModel.endContent;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/sticket/end.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.endPic;
+            //}
+            //else
+            //{
+            //    //活动正在进行中
 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.actionName;
-                responseEntity.rContent2 = actModel.brief;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/sticket/index.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.beginPic;
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.actionName;
+            //    responseEntity.rContent2 = actModel.brief;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/sticket/index.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.beginPic;
 
-            }
+            //}
 
-            responselist.Add(responseEntity);
+            //responselist.Add(responseEntity);
             return responselist;
 
         }
@@ -372,36 +369,36 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="openid"></param>
         /// <returns></returns>
-        private IList<Model.ResponseContentEntity> xitieReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> xitieReponse(int id, int apiid, string openid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
 
-            BLL.wx_xt_base xtBll = new BLL.wx_xt_base();
-            Model.wx_xt_base actModel = xtBll.GetModel(id);
-            if (actModel.statedate < DateTime.Now)
-            {  //活动尚未开始 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "【" + actModel.wxTitle + "】将于" + actModel.statedate + "举办，现已经结束";
+            //BLL.wx_xt_base xtBll = new BLL.wx_xt_base();
+            //Model.wx_xt_base actModel = xtBll.GetModel(id);
+            //if (actModel.statedate < DateTime.Now)
+            //{  //活动尚未开始 
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "【" + actModel.wxTitle + "】将于" + actModel.statedate + "举办，现已经结束";
 
-            }
+            //}
 
-            else
-            {
-                //活动正在进行中
+            //else
+            //{
+            //    //活动正在进行中
 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.wxTitle;
-                responseEntity.rContent2 = actModel.word;
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/xitie/index.aspx?wid=" + apiid + "&xid=" + id;
-                responseEntity.picUrl = actModel.fengmian;
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.wxTitle;
+            //    responseEntity.rContent2 = actModel.word;
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/xitie/index.aspx?wid=" + apiid + "&xid=" + id;
+            //    responseEntity.picUrl = actModel.fengmian;
 
-            }
+            //}
 
-            responselist.Add(responseEntity);
+            //responselist.Add(responseEntity);
             return responselist;
         }
 
@@ -413,24 +410,24 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="openid"></param>
         /// <returns></returns>
-        private IList<Model.ResponseContentEntity> ucardReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> ucardReponse(int id, int apiid, string openid)
         {
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
-            BLL.wx_ucard_store ucardBll = new BLL.wx_ucard_store();
-            Model.wx_ucard_store ucard = ucardBll.GetModel(id);
+            //BLL.wx_ucard_store ucardBll = new BLL.wx_ucard_store();
+            //Model.wx_ucard_store ucard = ucardBll.GetModel(id);
 
-            
 
-            responseEntity.rcType = Model.ReponseContentType.txtpic;
-            responseEntity.rContent = ucard.storeName;
-            responseEntity.rContent2 = ucard.cardBrief;
-            responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/ucard/index.aspx?wid=" + apiid + "&id=" + id;
-            responseEntity.picUrl = ucard.hfPic;
-            responselist.Add(responseEntity);
+
+            //responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //responseEntity.rContent = ucard.storeName;
+            //responseEntity.rContent2 = ucard.cardBrief;
+            //responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/ucard/index.aspx?wid=" + apiid + "&id=" + id;
+            //responseEntity.picUrl = ucard.hfPic;
+            //responselist.Add(responseEntity);
             return responselist;
         }
 
@@ -441,40 +438,40 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="openid"></param>
         /// <returns></returns>
-        private IList<Model.ResponseContentEntity> DDYQPReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> DDYQPReponse(int id, int apiid, string openid)
         {
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
-            BLL.wx_qp_base ggkActBll = new BLL.wx_qp_base();
-            Model.wx_qp_base actModel = ggkActBll.GetModel(id);
-            if (actModel.actBegin > DateTime.Now)
-            {  //活动尚未开始 
+            //BLL.wx_qp_base ggkActBll = new BLL.wx_qp_base();
+            //Model.wx_qp_base actModel = ggkActBll.GetModel(id);
+            //if (actModel.actBegin > DateTime.Now)
+            //{  //活动尚未开始 
 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动【" + actModel.bName + "】将于" + actModel.actBegin + "开始。";
-            }
-            else if (actModel.actEnd <= DateTime.Now)
-            {
-                //活动结束
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "活动已经结束了。";
-               
-            }
-            else
-            {
-                //活动正在进行中
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.bName;
-                responseEntity.rContent2 = "";
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/qiangpiao/index.aspx?wid=" + apiid + "&aid=" + id;
-                responseEntity.picUrl = actModel.beginPic;
-            }
-            responselist.Add(responseEntity);
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "活动【" + actModel.bName + "】将于" + actModel.actBegin + "开始。";
+            //}
+            //else if (actModel.actEnd <= DateTime.Now)
+            //{
+            //    //活动结束
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "活动已经结束了。";
+
+            //}
+            //else
+            //{
+            //    //活动正在进行中
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.bName;
+            //    responseEntity.rContent2 = "";
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/qiangpiao/index.aspx?wid=" + apiid + "&aid=" + id;
+            //    responseEntity.picUrl = actModel.beginPic;
+            //}
+            //responselist.Add(responseEntity);
 
             return responselist;
         }
@@ -486,35 +483,35 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="openid"></param>
         /// <returns></returns>
-        private IList<Model.ResponseContentEntity> WXFReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> WXFReponse(int id, int apiid, string openid)
         {
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
-            BLL.wx_fc_floor fcBll = new BLL.wx_fc_floor();
-            Model.wx_fc_floor actModel = fcBll.GetModel(id);
-            if (actModel==null )
-            {  
+            //BLL.wx_fc_floor fcBll = new BLL.wx_fc_floor();
+            //Model.wx_fc_floor actModel = fcBll.GetModel(id);
+            //if (actModel == null)
+            //{
 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "该房产信息不存在";
-            }
-          
-            else
-            {
-               
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.newsTitle;
-               // responseEntity.rContent2 = actModel.pSummary;
-                responseEntity.rContent2 = "";
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/wfangchan/index.aspx?wid=" + apiid + "&fid=" + id;
-                responseEntity.picUrl = actModel.newsCover;
-            }
-            responselist.Add(responseEntity);
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "该房产信息不存在";
+            //}
+
+            //else
+            //{
+
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.newsTitle;
+            //    // responseEntity.rContent2 = actModel.pSummary;
+            //    responseEntity.rContent2 = "";
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/wfangchan/index.aspx?wid=" + apiid + "&fid=" + id;
+            //    responseEntity.picUrl = actModel.newsCover;
+            //}
+            //responselist.Add(responseEntity);
 
             return responselist;
         }
@@ -527,36 +524,36 @@ namespace WeiXinPF.WeiXinComm
         /// <param name="apiid"></param>
         /// <param name="openid"></param>
         /// <returns></returns>
-        private IList<Model.ResponseContentEntity> WQCReponse(int id, int apiid, string openid)
+        private IList<ResponseContentEntity> WQCReponse(int id, int apiid, string openid)
         {
 
-            IList<Model.ResponseContentEntity> responselist = new List<Model.ResponseContentEntity>();
+            IList<ResponseContentEntity> responselist = new List<ResponseContentEntity>();
 
-            Model.ResponseContentEntity responseEntity = new Model.ResponseContentEntity();
-            responseEntity.id = id;
-            responseEntity.wid = apiid;
+            //ResponseContentEntity responseEntity = new ResponseContentEntity();
+            //responseEntity.id = id;
+            //responseEntity.wid = apiid;
 
-            BLL.wx_wq_fuhuiSys wqcBll = new BLL.wx_wq_fuhuiSys();
+            //BLL.wx_wq_fuhuiSys wqcBll = new BLL.wx_wq_fuhuiSys();
 
-            Model.wx_wq_fuhuiSys actModel = wqcBll.GetModel(id);
-            if (actModel == null)
-            {
+            //Model.wx_wq_fuhuiSys actModel = wqcBll.GetModel(id);
+            //if (actModel == null)
+            //{
 
-                responseEntity.rcType = Model.ReponseContentType.text;
-                responseEntity.rContent = "该汽车信息不存在";
-            }
+            //    responseEntity.rcType = Model.ReponseContentType.text;
+            //    responseEntity.rContent = "该汽车信息不存在";
+            //}
 
-            else
-            {
+            //else
+            //{
 
-                responseEntity.rcType = Model.ReponseContentType.txtpic;
-                responseEntity.rContent = actModel.newstitle;
-                // responseEntity.rContent2 = actModel.pSummary;
-                responseEntity.rContent2 = "";
-                responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/wqiche/index.aspx?wid=" + apiid ;
-                responseEntity.picUrl = actModel.titlepic;
-            }
-            responselist.Add(responseEntity);
+            //    responseEntity.rcType = Model.ReponseContentType.txtpic;
+            //    responseEntity.rContent = actModel.newstitle;
+            //    // responseEntity.rContent2 = actModel.pSummary;
+            //    responseEntity.rContent2 = "";
+            //    responseEntity.detailUrl = MyCommFun.getWebSite() + "/weixin/wqiche/index.aspx?wid=" + apiid;
+            //    responseEntity.picUrl = actModel.titlepic;
+            //}
+            //responselist.Add(responseEntity);
 
             return responselist;
         }

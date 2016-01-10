@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{537EF868-0E21-48FC-96CB-8668589CF562}"
 EndProject
@@ -57,15 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.DBUtility", "Sourc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelUnitTest", "SourceCode\Plugins\Hotel\HotelUnitTest\HotelUnitTest.csproj", "{86811778-D4DA-450F-9E1A-79CDC68AEAE0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeiXin", "WeiXin", "{9E42F4D8-DCF9-4CE8-8A5F-FD6695B4F735}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeiXinPay", "WeiXinPay", "{914D3608-0EBB-4747-9B3E-A88CF301507A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Plugins.WeiXin", "SourceCode\Plugins\WeiXin\WeixinPF.Plugins.WeiXin\WeixinPF.Plugins.WeiXin.csproj", "{52FAFE7A-9A9A-4316-B2A7-0C445ADE28B1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Plugins.WeiXin.Service", "SourceCode\Plugins\WeiXin\WeixinPF.Plugins.WeiXin.Service\WeixinPF.Plugins.WeiXin.Service.csproj", "{A7BC41E6-C297-4B50-98AC-962CAE1474A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXinUnitTest", "SourceCode\Plugins\WeiXin\WeiXinUnitTest\WeiXinUnitTest.csproj", "{C574916C-F6BA-4810-8B76-8C26FFF97CC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXinPF.Plugins.WeiXinPay", "SourceCode\Plugins\WeiXinPay\WeiXinPF.Plugins.WeiXinPay\WeiXinPF.Plugins.WeiXinPay.csproj", "{B93901F0-0FBF-4DFC-B9EA-13313966EF82}"
 EndProject
@@ -73,7 +65,81 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXinPF.Plugins.WeiXinPay.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.Web.UI", "SourceCode\WeixinPF\Web\WeixinPF.Web.UI\WeixinPF.Web.UI.csproj", "{FA21B2DF-C6AE-431A-AE0F-F38AE2C2A2D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeixinPF.WeixinFramework.Common", "SourceCode\WeixinPF\WeixinFramework\WeixinPF.WeixinFramework.Common\WeixinPF.WeixinFramework.Common.csproj", "{5D40093C-2F2F-4413-A7FC-F04D5E39E585}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationTest", "SourceCode\WeixinPF\Application\ApplicationTest\ApplicationTest.csproj", "{856474A4-3B76-41E8-B52C-01D475C96BC6}"
+EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 17
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs40
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SourceCode\\Messages\\WeixinPF.Messages\\WeixinPF.Messages.csproj
+		SccProjectTopLevelParentUniqueName1 = WeiXinPFNew.sln
+		SccProjectName1 = SourceCode/Messages/WeixinPF.Messages
+		SccLocalPath1 = SourceCode\\Messages\\WeixinPF.Messages
+		SccProjectUniqueName2 = SourceCode\\WeixinPF\\WeixinPF.Shared\\WeixinPF.Shared.csproj
+		SccProjectTopLevelParentUniqueName2 = WeiXinPFNew.sln
+		SccProjectName2 = SourceCode/WeixinPF/WeixinPF.Shared
+		SccLocalPath2 = SourceCode\\WeixinPF\\WeixinPF.Shared
+		SccProjectUniqueName3 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web\\WeixinPF.Web.csproj
+		SccProjectTopLevelParentUniqueName3 = WeiXinPFNew.sln
+		SccProjectName3 = SourceCode/WeixinPF/Web/WeixinPF.Web
+		SccLocalPath3 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web
+		SccProjectUniqueName4 = SourceCode\\WeixinPF\\Infrastructure\\WeixinPF.Infrastructure\\WeixinPF.Infrastructure.csproj
+		SccProjectTopLevelParentUniqueName4 = WeiXinPFNew.sln
+		SccProjectName4 = SourceCode/WeixinPF/Infrastructure/WeixinPF.Infrastructure
+		SccLocalPath4 = SourceCode\\WeixinPF\\Infrastructure\\WeixinPF.Infrastructure
+		SccProjectUniqueName5 = SourceCode\\WeixinPF\\Application\\WeixinPF.Application\\WeixinPF.Application.csproj
+		SccProjectTopLevelParentUniqueName5 = WeiXinPFNew.sln
+		SccProjectName5 = SourceCode/WeixinPF/Application/WeixinPF.Application
+		SccLocalPath5 = SourceCode\\WeixinPF\\Application\\WeixinPF.Application
+		SccProjectUniqueName6 = SourceCode\\WeixinPF\\Common\\WeixinPF.Common\\WeixinPF.Common.csproj
+		SccProjectTopLevelParentUniqueName6 = WeiXinPFNew.sln
+		SccProjectName6 = SourceCode/WeixinPF/Common/WeixinPF.Common
+		SccLocalPath6 = SourceCode\\WeixinPF\\Common\\WeixinPF.Common
+		SccProjectUniqueName7 = SourceCode\\WeixinPF\\Model\\WeixinPF.Model\\WeixinPF.Model.csproj
+		SccProjectTopLevelParentUniqueName7 = WeiXinPFNew.sln
+		SccProjectName7 = SourceCode/WeixinPF/Model/WeixinPF.Model
+		SccLocalPath7 = SourceCode\\WeixinPF\\Model\\WeixinPF.Model
+		SccProjectUniqueName8 = SourceCode\\WeixinPF\\Common\\WeixinPF.DBUtility\\WeixinPF.DBUtility.csproj
+		SccProjectTopLevelParentUniqueName8 = WeiXinPFNew.sln
+		SccProjectName8 = SourceCode/WeixinPF/Common/WeixinPF.DBUtility
+		SccLocalPath8 = SourceCode\\WeixinPF\\Common\\WeixinPF.DBUtility
+		SccProjectUniqueName9 = SourceCode\\Plugins\\Hotel\\HotelUnitTest\\HotelUnitTest.csproj
+		SccProjectTopLevelParentUniqueName9 = WeiXinPFNew.sln
+		SccProjectName9 = SourceCode/Plugins/Hotel/HotelUnitTest
+		SccLocalPath9 = SourceCode\\Plugins\\Hotel\\HotelUnitTest
+		SccProjectUniqueName10 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay\\WeiXinPF.Plugins.WeiXinPay.csproj
+		SccProjectTopLevelParentUniqueName10 = WeiXinPFNew.sln
+		SccProjectName10 = SourceCode/Plugins/WeiXinPay/WeiXinPF.Plugins.WeiXinPay
+		SccLocalPath10 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay
+		SccProjectUniqueName11 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay.Service\\WeiXinPF.Plugins.WeiXinPay.Service.csproj
+		SccProjectTopLevelParentUniqueName11 = WeiXinPFNew.sln
+		SccProjectName11 = SourceCode/Plugins/WeiXinPay/WeiXinPF.Plugins.WeiXinPay.Service
+		SccLocalPath11 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay.Service
+		SccProjectUniqueName12 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web.UI\\WeixinPF.Web.UI.csproj
+		SccProjectTopLevelParentUniqueName12 = WeiXinPFNew.sln
+		SccProjectName12 = SourceCode/WeixinPF/Web/WeixinPF.Web.UI
+		SccLocalPath12 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web.UI
+		SccProjectUniqueName13 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel.Service\\WeixinPF.Hotel.Plugins.Service.csproj
+		SccProjectTopLevelParentUniqueName13 = WeiXinPFNew.sln
+		SccProjectName13 = SourceCode/Plugins/Hotel/WeixinPF.Plugins.Hotel.Service
+		SccLocalPath13 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel.Service
+		SccProjectUniqueName14 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel\\WeixinPF.Hotel.Plugins.csproj
+		SccProjectTopLevelParentUniqueName14 = WeiXinPFNew.sln
+		SccProjectName14 = SourceCode/Plugins/Hotel/WeixinPF.Plugins.Hotel
+		SccLocalPath14 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel
+		SccProjectUniqueName15 = SourceCode\\WeixinPF\\WeixinFramework\\WeixinPF.WeixinFramework.Common\\WeixinPF.WeixinFramework.Common.csproj
+		SccProjectTopLevelParentUniqueName15 = WeiXinPFNew.sln
+		SccProjectName15 = SourceCode/WeixinPF/WeixinFramework/WeixinPF.WeixinFramework.Common
+		SccLocalPath15 = SourceCode\\WeixinPF\\WeixinFramework\\WeixinPF.WeixinFramework.Common
+		SccProjectUniqueName16 = SourceCode\\WeixinPF\\Application\\ApplicationTest\\ApplicationTest.csproj
+		SccProjectTopLevelParentUniqueName16 = WeiXinPFNew.sln
+		SccProjectName16 = SourceCode/WeixinPF/Application/ApplicationTest
+		SccLocalPath16 = SourceCode\\WeixinPF\\Application\\ApplicationTest
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -123,18 +189,6 @@ Global
 		{86811778-D4DA-450F-9E1A-79CDC68AEAE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86811778-D4DA-450F-9E1A-79CDC68AEAE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86811778-D4DA-450F-9E1A-79CDC68AEAE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52FAFE7A-9A9A-4316-B2A7-0C445ADE28B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52FAFE7A-9A9A-4316-B2A7-0C445ADE28B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52FAFE7A-9A9A-4316-B2A7-0C445ADE28B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52FAFE7A-9A9A-4316-B2A7-0C445ADE28B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7BC41E6-C297-4B50-98AC-962CAE1474A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7BC41E6-C297-4B50-98AC-962CAE1474A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7BC41E6-C297-4B50-98AC-962CAE1474A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7BC41E6-C297-4B50-98AC-962CAE1474A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C574916C-F6BA-4810-8B76-8C26FFF97CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C574916C-F6BA-4810-8B76-8C26FFF97CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C574916C-F6BA-4810-8B76-8C26FFF97CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C574916C-F6BA-4810-8B76-8C26FFF97CC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B93901F0-0FBF-4DFC-B9EA-13313966EF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B93901F0-0FBF-4DFC-B9EA-13313966EF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B93901F0-0FBF-4DFC-B9EA-13313966EF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -147,6 +201,14 @@ Global
 		{FA21B2DF-C6AE-431A-AE0F-F38AE2C2A2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA21B2DF-C6AE-431A-AE0F-F38AE2C2A2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA21B2DF-C6AE-431A-AE0F-F38AE2C2A2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D40093C-2F2F-4413-A7FC-F04D5E39E585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D40093C-2F2F-4413-A7FC-F04D5E39E585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D40093C-2F2F-4413-A7FC-F04D5E39E585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D40093C-2F2F-4413-A7FC-F04D5E39E585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{856474A4-3B76-41E8-B52C-01D475C96BC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{856474A4-3B76-41E8-B52C-01D475C96BC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{856474A4-3B76-41E8-B52C-01D475C96BC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{856474A4-3B76-41E8-B52C-01D475C96BC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,87 +233,11 @@ Global
 		{44D55BF4-EF1F-465D-810C-1BE14910673F} = {E3F66AB3-0CA3-40D1-B42D-48C72EA86D1A}
 		{7D5B8436-B951-43A6-9934-1868E9B6645B} = {EEC5D0A8-87D3-4222-9E87-17B306E418DD}
 		{86811778-D4DA-450F-9E1A-79CDC68AEAE0} = {3EB239AC-158A-48C8-8436-F9CFF075D85D}
-		{9E42F4D8-DCF9-4CE8-8A5F-FD6695B4F735} = {537EF868-0E21-48FC-96CB-8668589CF562}
 		{914D3608-0EBB-4747-9B3E-A88CF301507A} = {537EF868-0E21-48FC-96CB-8668589CF562}
-		{52FAFE7A-9A9A-4316-B2A7-0C445ADE28B1} = {9E42F4D8-DCF9-4CE8-8A5F-FD6695B4F735}
-		{A7BC41E6-C297-4B50-98AC-962CAE1474A0} = {9E42F4D8-DCF9-4CE8-8A5F-FD6695B4F735}
-		{C574916C-F6BA-4810-8B76-8C26FFF97CC1} = {9E42F4D8-DCF9-4CE8-8A5F-FD6695B4F735}
 		{B93901F0-0FBF-4DFC-B9EA-13313966EF82} = {914D3608-0EBB-4747-9B3E-A88CF301507A}
 		{ABAEA938-59B9-440B-890A-00AEBEDBD988} = {914D3608-0EBB-4747-9B3E-A88CF301507A}
 		{FA21B2DF-C6AE-431A-AE0F-F38AE2C2A2D4} = {75DA46E1-B09C-4C90-AA37-1447D57D1211}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 18
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs40
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = SourceCode\\Messages\\WeixinPF.Messages\\WeixinPF.Messages.csproj
-		SccProjectTopLevelParentUniqueName1 = WeiXinPFNew.sln
-		SccProjectName1 = SourceCode/Messages/WeixinPF.Messages
-		SccLocalPath1 = SourceCode\\Messages\\WeixinPF.Messages
-		SccProjectUniqueName2 = SourceCode\\WeixinPF\\WeixinPF.Shared\\WeixinPF.Shared.csproj
-		SccProjectTopLevelParentUniqueName2 = WeiXinPFNew.sln
-		SccProjectName2 = SourceCode/WeixinPF/WeixinPF.Shared
-		SccLocalPath2 = SourceCode\\WeixinPF\\WeixinPF.Shared
-		SccProjectUniqueName3 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web\\WeixinPF.Web.csproj
-		SccProjectTopLevelParentUniqueName3 = WeiXinPFNew.sln
-		SccProjectName3 = SourceCode/WeixinPF/Web/WeixinPF.Web
-		SccLocalPath3 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web
-		SccProjectUniqueName4 = SourceCode\\WeixinPF\\Infrastructure\\WeixinPF.Infrastructure\\WeixinPF.Infrastructure.csproj
-		SccProjectTopLevelParentUniqueName4 = WeiXinPFNew.sln
-		SccProjectName4 = SourceCode/WeixinPF/Infrastructure/WeixinPF.Infrastructure
-		SccLocalPath4 = SourceCode\\WeixinPF\\Infrastructure\\WeixinPF.Infrastructure
-		SccProjectUniqueName5 = SourceCode\\WeixinPF\\Application\\WeixinPF.Application\\WeixinPF.Application.csproj
-		SccProjectTopLevelParentUniqueName5 = WeiXinPFNew.sln
-		SccProjectName5 = SourceCode/WeixinPF/Application/WeixinPF.Application
-		SccLocalPath5 = SourceCode\\WeixinPF\\Application\\WeixinPF.Application
-		SccProjectUniqueName6 = SourceCode\\WeixinPF\\Common\\WeixinPF.Common\\WeixinPF.Common.csproj
-		SccProjectTopLevelParentUniqueName6 = WeiXinPFNew.sln
-		SccProjectName6 = SourceCode/WeixinPF/Common/WeixinPF.Common
-		SccLocalPath6 = SourceCode\\WeixinPF\\Common\\WeixinPF.Common
-		SccProjectUniqueName7 = SourceCode\\WeixinPF\\Model\\WeixinPF.Model\\WeixinPF.Model.csproj
-		SccProjectTopLevelParentUniqueName7 = WeiXinPFNew.sln
-		SccProjectName7 = SourceCode/WeixinPF/Model/WeixinPF.Model
-		SccLocalPath7 = SourceCode\\WeixinPF\\Model\\WeixinPF.Model
-		SccProjectUniqueName8 = SourceCode\\WeixinPF\\Common\\WeixinPF.DBUtility\\WeixinPF.DBUtility.csproj
-		SccProjectTopLevelParentUniqueName8 = WeiXinPFNew.sln
-		SccProjectName8 = SourceCode/WeixinPF/Common/WeixinPF.DBUtility
-		SccLocalPath8 = SourceCode\\WeixinPF\\Common\\WeixinPF.DBUtility
-		SccProjectUniqueName9 = SourceCode\\Plugins\\Hotel\\HotelUnitTest\\HotelUnitTest.csproj
-		SccProjectTopLevelParentUniqueName9 = WeiXinPFNew.sln
-		SccProjectName9 = SourceCode/Plugins/Hotel/HotelUnitTest
-		SccLocalPath9 = SourceCode\\Plugins\\Hotel\\HotelUnitTest
-		SccProjectUniqueName10 = SourceCode\\Plugins\\WeiXin\\WeixinPF.Plugins.WeiXin\\WeixinPF.Plugins.WeiXin.csproj
-		SccProjectTopLevelParentUniqueName10 = WeiXinPFNew.sln
-		SccProjectName10 = SourceCode/Plugins/WeiXin/WeixinPF.Plugins.WeiXin
-		SccLocalPath10 = SourceCode\\Plugins\\WeiXin\\WeixinPF.Plugins.WeiXin
-		SccProjectUniqueName11 = SourceCode\\Plugins\\WeiXin\\WeixinPF.Plugins.WeiXin.Service\\WeixinPF.Plugins.WeiXin.Service.csproj
-		SccProjectTopLevelParentUniqueName11 = WeiXinPFNew.sln
-		SccProjectName11 = SourceCode/Plugins/WeiXin/WeixinPF.Plugins.WeiXin.Service
-		SccLocalPath11 = SourceCode\\Plugins\\WeiXin\\WeixinPF.Plugins.WeiXin.Service
-		SccProjectUniqueName12 = SourceCode\\Plugins\\WeiXin\\WeiXinUnitTest\\WeiXinUnitTest.csproj
-		SccProjectTopLevelParentUniqueName12 = WeiXinPFNew.sln
-		SccProjectName12 = SourceCode/Plugins/WeiXin/WeiXinUnitTest
-		SccLocalPath12 = SourceCode\\Plugins\\WeiXin\\WeiXinUnitTest
-		SccProjectUniqueName13 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay\\WeiXinPF.Plugins.WeiXinPay.csproj
-		SccProjectTopLevelParentUniqueName13 = WeiXinPFNew.sln
-		SccProjectName13 = SourceCode/Plugins/WeiXinPay/WeiXinPF.Plugins.WeiXinPay
-		SccLocalPath13 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay
-		SccProjectUniqueName14 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay.Service\\WeiXinPF.Plugins.WeiXinPay.Service.csproj
-		SccProjectTopLevelParentUniqueName14 = WeiXinPFNew.sln
-		SccProjectName14 = SourceCode/Plugins/WeiXinPay/WeiXinPF.Plugins.WeiXinPay.Service
-		SccLocalPath14 = SourceCode\\Plugins\\WeiXinPay\\WeiXinPF.Plugins.WeiXinPay.Service
-		SccProjectUniqueName15 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web.UI\\WeixinPF.Web.UI.csproj
-		SccProjectTopLevelParentUniqueName15 = WeiXinPFNew.sln
-		SccProjectName15 = SourceCode/WeixinPF/Web/WeixinPF.Web.UI
-		SccLocalPath15 = SourceCode\\WeixinPF\\Web\\WeixinPF.Web.UI
-		SccProjectUniqueName16 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel\\WeixinPF.Hotel.Plugins.csproj
-		SccProjectTopLevelParentUniqueName16 = WeiXinPFNew.sln
-		SccProjectName16 = SourceCode/Plugins/Hotel/WeixinPF.Plugins.Hotel
-		SccLocalPath16 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel
-		SccProjectUniqueName17 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel.Service\\WeixinPF.Hotel.Plugins.Service.csproj
-		SccProjectTopLevelParentUniqueName17 = WeiXinPFNew.sln
-		SccProjectName17 = SourceCode/Plugins/Hotel/WeixinPF.Plugins.Hotel.Service
-		SccLocalPath17 = SourceCode\\Plugins\\Hotel\\WeixinPF.Plugins.Hotel.Service
+		{5D40093C-2F2F-4413-A7FC-F04D5E39E585} = {35739526-9D65-4C7F-BA27-D36DC5C468D6}
+		{856474A4-3B76-41E8-B52C-01D475C96BC6} = {5DAD00D4-17D2-4676-8813-D765DB9FA243}
 	EndGlobalSection
 EndGlobal

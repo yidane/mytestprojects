@@ -35,12 +35,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -68,11 +68,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\NavigationRepository.cs" />
     <Compile Include="System\SiteConfigRepository.cs" />
-    <Compile Include="Weixin\WXIndustryDefaultModuleRepository.cs" />
-    <Compile Include="Weixin\WXPaymentRepository.cs" />
-    <Compile Include="Weixin\WXPropertyRepository.cs" />
-    <Compile Include="Weixin\WXSystemConfigRepository.cs" />
-    <Compile Include="Weixin\WXUserRepository.cs" />
+    <Compile Include="Weixin\AppInfoRepository.cs" />
+    <Compile Include="Weixin\Token\AccessTokenRepository.cs" />
+    <Compile Include="Weixin\IndustryDefaultModuleRepository.cs" />
+    <Compile Include="Weixin\PaymentRepository.cs" />
+    <Compile Include="Weixin\PropertyRepository.cs" />
+    <Compile Include="Weixin\SystemConfigRepository.cs" />
+    <Compile Include="Weixin\Token\JsApiTicketRepository.cs" />
+    <Compile Include="Weixin\User\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
