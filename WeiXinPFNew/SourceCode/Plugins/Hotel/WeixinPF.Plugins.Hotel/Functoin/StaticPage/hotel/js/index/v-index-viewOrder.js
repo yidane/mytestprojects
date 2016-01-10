@@ -32,11 +32,11 @@ var ViewOrder = Vue.extend({
     methods: {
         getOrderList: function (callBack) {
             // GET request
-            this.$http.get('Service/HotelService.asmx/GetOrderList',
+            this.$http.get('api/order/GetOrderList',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
 
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data.orders);
 
                     }
                     else{
@@ -56,7 +56,7 @@ var ViewOrder = Vue.extend({
             var room={
                 id:order.roomId
             };
-              
+
              this.$dispatch('onOrderDispatch', order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }

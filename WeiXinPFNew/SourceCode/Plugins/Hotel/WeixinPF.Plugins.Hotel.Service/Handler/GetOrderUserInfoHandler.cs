@@ -23,7 +23,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         {
             var service = new HotelOrderService();
             var order = service
-                .GetModelList(string.Format("openid={0}",message.OpendId))
+                .GetModelList(string.Format("openid='{0}'",message.OpendId))
                 .OrderByDescending(o => o.createDate)
                 .FirstOrDefault();
 

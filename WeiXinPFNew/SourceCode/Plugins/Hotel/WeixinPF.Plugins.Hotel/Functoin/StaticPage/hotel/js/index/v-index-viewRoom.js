@@ -19,10 +19,10 @@ var ViewRoom = Vue.extend({
     methods: {
         getData: function (callBack) {
             // GET request
-            this.$http.get('Service/HotelService.asmx/GetRoomList',
+            this.$http.get('api/room/GetRoomList',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data.rooms);
 
                     } else{
                         $.toast("获取房间失败!");
@@ -44,7 +44,7 @@ var ViewRoom = Vue.extend({
             if (room) {
               console.log(this.order);
                this.order={
-                 
+
                  discount:0,
                  totalPrice:0,
                  costPrice:0,

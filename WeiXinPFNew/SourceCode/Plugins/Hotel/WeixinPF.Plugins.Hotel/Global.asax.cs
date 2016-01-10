@@ -19,6 +19,8 @@ namespace WeixinPF.Hotel.Plugins
         protected void Application_Start(object sender, EventArgs e)
         {
             Bus = new BusEntry("WeixinPF.Hotel.Plugins");
+
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
         }
 
 

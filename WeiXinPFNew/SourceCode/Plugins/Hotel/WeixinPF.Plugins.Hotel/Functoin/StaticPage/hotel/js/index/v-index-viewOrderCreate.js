@@ -3,13 +3,12 @@
 var ViewOrderCreate = Vue.extend({
     template: '#view-orderCreate-template',
     props: ['wid','openid','hotel','room','order','orderCount'],
-    //data: function () {
-    //    return {
-    //        order:{
-    //
-    //        }
-    //    }
-    //},
+    data: function () {
+       return {
+           qrcodes:[]
+       }
+    },
+
     computed: {
         formCanEdit:function(){
             var result=false;
@@ -128,6 +127,17 @@ var ViewOrderCreate = Vue.extend({
 
 
     },
+    filters:{
+      'imgbase64':function(item){
+        var result='';
+        if(item)
+        {
+
+          result=  qr.toDataURL(item.code);
+        }
+         return result;
+      }
+    },
     watch: {
         'order': function (order, oldVal) {
 
@@ -152,7 +162,9 @@ var ViewOrderCreate = Vue.extend({
         //this.toggleItemShow();
         done();
     },
-
+    attached:function(){
+      console.log('attached');
+    },
     ready:function(){
         var self = this;
        this.getOrdrderData();
@@ -195,22 +207,27 @@ var ViewOrderCreate = Vue.extend({
                 this.getOrder(function(data){
                     self.order=data;
                     self.formReadonly();
+
+                    //获取房间详情
                     self.room.id=data.roomId;
                     self.getRoom(function (data) {
                         self.room=data;
                         self.$dispatch('onimgDataDispatch', self.room.roomPictures);
                         $.hidePreloader();
                         self.activateValidator();
-                            
-
 
                     },function(){
                         self.activateValidator();
                     });
-                    // if(self.$activateValidator)
-                    // {
-                    //     self.$activateValidator();
-                    // }
+
+                    //获取验证码
+                    self.getQrCode(function(data){
+                      self.qrcodes=data;
+                      self.renderQrcode();
+                    },
+                    function(response){
+                      $.toast("获取验证码失败!");
+                    });
 
                 },function(){
                     self.activateValidator();
@@ -234,6 +251,14 @@ var ViewOrderCreate = Vue.extend({
             {
                 self.activateValidator();
             }
+        },
+        renderQrcode:function(argument) {
+          for (var i = 0; i < this.qrcodes.length; i++) {
+            var qrdata= this.qrcodes[i];
+            qr.canvas({
+              canvas: document.getElementById('qr_'+i),
+              value: qrdata.code });
+          }
         },
         getNoOrderData: function () {
             var self = this;
@@ -259,10 +284,10 @@ var ViewOrderCreate = Vue.extend({
         },
         getRoom: function (callBack,errorCallBack) {
             // GET request
-            this.$http.get('Service/HotelService.asmx/GetRoom',
+            this.$http.get('api/room/GetRoom',
                 {wid:this.wid,openid:this.openid,hotelId:this.hotel.id,roomId:this.room.id}).then(function (response) {
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data);
                     }
 
                 }, function (response) {
@@ -271,10 +296,10 @@ var ViewOrderCreate = Vue.extend({
                 });
         },
         getOrderLastUserInfo:function(callBack){
-            this.$http.get('Service/HotelService.asmx/GetOrderLastUserInfo',
+            this.$http.get('api/order/GetOrderLastUserInfo',
                 {wid:this.wid,openid:this.openid}).then(function (response) {
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data);
                     }
 
                 }, function (response) {
@@ -284,10 +309,10 @@ var ViewOrderCreate = Vue.extend({
         },
         getOrder: function (callBack,errorCallBack) {
             // GET request
-            this.$http.get('Service/HotelService.asmx/GetOrder',
+            this.$http.get('api/order/GetOrder',
                 {wid:this.wid,openid:this.openid,orderId:this.order.id}).then(function (response) {
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data);
 
                     }
                     else{
@@ -298,6 +323,16 @@ var ViewOrderCreate = Vue.extend({
                     // handle error
                 });
         },
+        getQrCode:function(callBack,errorCallBack) {
+          this.$http.get('/api/order/getQrCode',
+              {orderId:this.order.id}).then(function (response) {
+                  if (response.data) {
+                      callBack(response.data);
+                  }
+              }, function (response) {
+                  errorCallBack(response);
+              });
+        },
         onSubmit: function () {
             var self=this;
             if(!this.canSubmit)
@@ -306,16 +341,16 @@ var ViewOrderCreate = Vue.extend({
             }
             var jsonOrder=JSON.stringify(this.order);
 
-            this.$http.post('Service/HotelService.asmx/SaveOrder',
+            this.$http.post('/api/order/Save',
                 {   wid:this.wid,
                     openid:this.openid,
                     hotelId:this.hotel.id,
                     roomId:this.room.id,
                     roomType:this.room.roomType,
-                    order:jsonOrder})
+                    order:this.order})
                 .then(function (response) {
-                    response.data=JSON.parse(response.data);
-                    if (response.data&&response.data.success) {
+                    // response.data=response.data.d;
+                    if (response.data) {
                         self.orderCount++;
                         self.updateOrderNumber(self.orderCount);
                         $.toast("保存成功!");
@@ -324,8 +359,7 @@ var ViewOrderCreate = Vue.extend({
                         $.toast("保存失败!");
                     }
                 }, function (response) {
-
-                    // handle error
+                  $.toast(response.data.message);
                 });
         },
         updateOrderNumber:function(num){

@@ -1,5 +1,5 @@
 //ȫ�����ã�vue-resource
-Vue.http.options.root = '/Functoin';
+Vue.http.options.root = '';
 Vue.http.headers.common['Authorization'] = 'Basic YXBpOnBhc3N3b3Jk';
 
 ////ȫ�����ã�vue-validator
@@ -136,10 +136,10 @@ var vm = new Vue({
             // callBack(data);
         },
         getOrderCount:function(callBack){
-            this.$http.get('Service/HotelService.asmx/GetOrderCount'
+            this.$http.get('api/order/GetOrderCount'
                 , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data.count);
                     } else{
                         $.toast("获取订单数量失败!");
                     }
@@ -150,10 +150,10 @@ var vm = new Vue({
         },
         getHotelData: function (callBack) {
 
-            this.$http.get('Service/HotelService.asmx/GetHotelInfo'
+            this.$http.get('api/hotel/GetHotelInfo'
                 , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
-                    if (response.data&&response.data.success) {
-                        callBack(response.data.data);
+                    if (response.data) {
+                        callBack(response.data);
                     } else{
                         $.toast("获取酒店信息失败!");
                     }
@@ -263,8 +263,6 @@ var vm = new Vue({
         this.getQueryString();
         this.initRouter();
         this.initPreLoader();
-
-
 
     }
 });
