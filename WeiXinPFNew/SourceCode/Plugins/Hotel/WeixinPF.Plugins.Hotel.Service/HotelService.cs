@@ -41,7 +41,7 @@ namespace WeixinPF.Hotel.Plugins.Service
 
         protected override void OnStart(string[] args)
         {
-            BusEntry.Start();
+            var bus = new BusEntry("WeixinPF.Hotel.Plugins.Service");
             //加载AutoMapper配置。
             //AutoMapperConfiguration.Configure();
             Console.WriteLine("Service start");

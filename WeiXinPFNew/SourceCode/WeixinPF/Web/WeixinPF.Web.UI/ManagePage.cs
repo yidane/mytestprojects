@@ -224,8 +224,8 @@ namespace WeixinPF.Web.UI
 
                     if (hotel != null)
                     {
-                        //return new WxUserService(new WxUserRepository()).GetModel(hotel.wid.Value);
-                        return null;
+                        return new AppInfoService().GetAppInfo(hotel.wid.Value);
+                        //return null;
                     }
 
                 }

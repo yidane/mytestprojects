@@ -34,25 +34,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
         [WebMethod]
         public void HelloWorld(int wid, int shopId)
         {
-            ShowAllRoomResponse res = null;
 
-            IAsyncResult responseData =
-                BusEntry.dictBus["hotel"]
-                .Send("WeixinPF.Hotel.Plugins..Service", new ShowAllRoom() { ShopId = shopId, Wid = wid })
-                .Register(response =>
-                {
-                    CompletionResult localResult = (CompletionResult)response.AsyncState;
-                    res = localResult.Messages[0] as ShowAllRoomResponse;
-                }, this);
-
-            WaitHandle asyncWaitHandle = responseData.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
-
-            if (responseData.IsCompleted)
-            {
-                Context.Response.Write(string.Format("{{'RoomName':'{0}','Price':'{1}'}}", res.RoomName, res.Price));
-                Context.Response.End();
-            }
 
         }
 
@@ -69,7 +51,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetHotelResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service",
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service",
                     new GetHotelRequest() { HotelId = hotelId })
                     .Register(response =>
                     {
@@ -108,7 +90,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetRoomListResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service",
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service",
                     new GetRoomListRequest() { HotelId = hotelId })
                     .Register(response =>
                     {
@@ -149,7 +131,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetRoomResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetRoomRequest() { HotelId = hotelId, RoomId = roomId })
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", new GetRoomRequest() { HotelId = hotelId, RoomId = roomId })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;
@@ -185,7 +167,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderUserInfoResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderUserInfoRequest() { OpendId = openid })
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", new GetOrderUserInfoRequest() { OpendId = openid })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;
@@ -237,7 +219,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
                     RoomType = roomType,
                     Order = JSONHelper.Deserialize<OrderDto>(order)
                 };
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", request)
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", request)
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;
@@ -276,7 +258,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", new GetOrderRequest() { OrderId = orderId })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;
@@ -314,7 +296,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderListResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service",
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service",
                 new GetOrderListRequest()
                 {
                     HotelId = hotelId,
@@ -357,7 +339,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderListResponse responseData = null;
-                IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", new GetOrderListRequest() { HotelId = hotelId })
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", new GetOrderListRequest() { HotelId = hotelId })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;

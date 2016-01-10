@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using NServiceBus;
 using WeixinPF.Common;
@@ -25,6 +26,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
         public int wid = 0;
 
         public const string ModuleName = "hotel";
+        public const string HotelServiceName = "WeixinPF.Hotel.Plugins.Service";
         protected void Page_Load(object sender, EventArgs e)
         {
             ids = MyCommFun.RequestInt("id");
@@ -49,52 +51,44 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             {
                 GetIdentifyingCodeResponse identifyingCodeObject = null;
 
-                IAsyncResult resIdentifyingCode = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetByIdnetifyingCodeIdRequest()
-                {
-                    IdentifyingCodeId = identifyingCodeId,
-                    ModuleName = ModuleName,
-                    Wid = this.wid
-                }).Register(response =>
-                {
-                    CompletionResult localResult = (CompletionResult)response.AsyncState;
-                    identifyingCodeObject = localResult.Messages[0] as GetIdentifyingCodeResponse;
-                }, this);
+                var result = Global.Bus.Send<GetIdentifyingCodeResponse>(HotelServiceName,
+                    new GetByIdnetifyingCodeIdRequest()
+                    {
+                        IdentifyingCodeId = identifyingCodeId,
+                        ModuleName = ModuleName,
+                        Wid = this.wid
+                    });
 
-                WaitHandle asyncWaitHandle = resIdentifyingCode.AsyncWaitHandle;
-                asyncWaitHandle.WaitOne(10000);
-
-                if (!resIdentifyingCode.IsCompleted || identifyingCodeObject == null)
+                if (!result.IsSuccess)
                 {
-                    this.Response.Write(
-                        "<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
+                    this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
+
                     return;
                 }
-
-
-                GetHotelOrderByOrderIdRequest orderRequest = new GetHotelOrderByOrderIdRequest()
+                else
                 {
-                    OrderId = int.Parse(identifyingCodeObject.OrderId)
-                };
+                    identifyingCodeObject = result.Data;
+                }               
+
+
+                var orderRequest = new GetHotelOrderByOrderIdRequest()
+                                    {
+                                        OrderId = int.Parse(identifyingCodeObject.OrderId)
+                                    };
                 GetHotelOrderResponse order = null;
 
-                IAsyncResult resOrder = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", orderRequest).Register(response =>
-                {
-                    CompletionResult localResult = (CompletionResult)response.AsyncState;
-                    order = localResult.Messages[0] as GetHotelOrderResponse;
-                }, this);
+                result = Global.Bus.Send<GetHotelOrderResponse>(HotelServiceName, orderRequest);               
 
-                WaitHandle asyncOrderWaitHandle = resOrder.AsyncWaitHandle;
-                asyncOrderWaitHandle.WaitOne(10000);
-
-                if (!resOrder.IsCompleted || order == null)
+                if (!result.IsSuccess)
                 {
                     this.Response.Write(
                         "<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
                     return;
                 }
-
-
-                //var order = HotelOrderService.GetOrderInfo(int.Parse(identifyingCodeObject.OrderId));
+                else
+                {
+                    order = result.Data;
+                }
 
                 if (order != null)
                 {
@@ -110,7 +104,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                     {
                         var useIdentifyingCode = new MakeUseOfIdentifyingCode() {IdentifyingCodeId = identifyingCodeId};
 
-                        BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", useIdentifyingCode)
+                        Global.Bus.MyBus.Send(HotelServiceName, useIdentifyingCode)
                             .Register<int>(response =>
                             {
                                 if (response == 1)
@@ -129,9 +123,6 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                                         "<script language='javascript' type='text/javascript'>alert('核销失败');</script>");
                                 }
                             });
-
-
-
                     }
                     else
                     {
@@ -161,20 +152,18 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
             GetIdentifyingCodeDetailResponse searchResponse = null;
 
-            IAsyncResult resSearchResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", searchRequest).Register(response =>
-            {
-                CompletionResult localResult = (CompletionResult)response.AsyncState;
-                searchResponse = localResult.Messages[0] as GetIdentifyingCodeDetailResponse;
-            }, this);
+            var result = Global.Bus.Send<GetIdentifyingCodeDetailResponse>(HotelServiceName, searchRequest);
 
-            WaitHandle asyncWaitHandle = resSearchResult.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
-
-            if (!resSearchResult.IsCompleted || searchResponse == null || !searchResponse.Details.Any())
+            if (!result.IsSuccess)
             {
                 this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！');location.href = 'dingdan_confirm.aspx?shopid=" +
-                                        hotelid + "';</script>");
+                        hotelid + "';</script>");
                 this.Response.End();
+
+            }
+            else
+            {
+                searchResponse = result.Data;
             }
 
             decimal amount = 0;
@@ -200,23 +189,18 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
             GetHotelOrderResponse orderResponse = null;
 
-            IAsyncResult resOrderResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetHotelOrderByOrderIdRequest() {OrderId = int.Parse(id)})
-                .Register(response =>
-                {
-                    CompletionResult localResult = (CompletionResult)response.AsyncState;
-                    orderResponse = localResult.Messages[0] as GetHotelOrderResponse;
-                }, this);
+            result = Global.Bus.Send<GetHotelOrderResponse>(HotelServiceName,
+                new GetHotelOrderByOrderIdRequest() {OrderId = int.Parse(id)});
 
-            WaitHandle WaitHandle = resOrderResult.AsyncWaitHandle;
-            WaitHandle.WaitOne(10000);
-
-            //var hotelOrder = new BLL.wx_hotel_dingdan().GetModel(int.Parse(id));
-            if (!resOrderResult.IsCompleted || orderResponse==null)
+            if (!result.IsSuccess)
             {
                 this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！');location.href = 'dingdan_confirm.aspx?shopid=" +
                                         hotelid + "';</script>");
                 this.Response.End();
-
+            }
+            else
+            {
+                orderResponse = result.Data;
             }
 
             //订单信息

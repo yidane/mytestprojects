@@ -144,6 +144,9 @@
     <Content Include="xmlconfig\tenpay.config" />
     <Content Include="xmlconfig\urls.config" />
     <Content Include="xmlconfig\user.config" />
+    <Content Include="xmlconfig\autofac.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Functoin\Service\HotelService.asmx" />

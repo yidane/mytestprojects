@@ -15,7 +15,7 @@ namespace WeixinPF.Web
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            BusEntry.Start();
+            //BusEntry.Start();
         }
 
         public override void Dispose()

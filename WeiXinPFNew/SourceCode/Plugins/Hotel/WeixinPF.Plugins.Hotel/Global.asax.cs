@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
+using System.Threading;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Shared;
@@ -13,26 +14,21 @@ namespace WeixinPF.Hotel.Plugins
 {
     public class Global : System.Web.HttpApplication
     {
+        public static BusEntry Bus;
+
         protected void Application_Start(object sender, EventArgs e)
         {
-            BusEntry.Start();
-            //BusConfiguration busConfiguration = new BusConfiguration();
-            //busConfiguration.EndpointName("WeixinPF.Hotel.Plugins");
-            //busConfiguration.PurgeOnStartup(true);
-            //busConfiguration.ApplyCommonConfiguration();
-
-            //Bus = NServiceBus.Bus.Create(busConfiguration).Start();
-
-            //注册Web Api 路由
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            Bus = new BusEntry("WeixinPF.Hotel.Plugins");
         }
 
 
         public override void Dispose()
         {
-            BusEntry.Dispose();
+            Bus?.Dispose();
 
             base.Dispose();
         }
+
+        
     }
 }

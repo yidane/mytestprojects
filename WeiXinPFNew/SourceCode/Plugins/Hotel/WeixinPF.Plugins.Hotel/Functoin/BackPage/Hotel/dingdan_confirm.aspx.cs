@@ -39,7 +39,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 #endif
 
             hotelid = this.GetHotelId();
-            wid = this.GetWeiXinCode().id;
+            wid = 1;//this.GetWeiXinCode().id;
             confirmnumber.CausesValidation = true;
         }
 
@@ -51,45 +51,39 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             GetIdentifyingCodeResponse identifyingCode = null;
             GetHotelOrderResponse hotelOrder = null;
 
-            
+            var result = Global.Bus
+                .Send<GetIdentifyingCodeResponse>("WeixinPF.Hotel.Plugins.Service",
+                    new GetIdentifyingCodeRequest()
+                    {
+                        ShopId = this.hotelid,
+                        Number = number,
+                        ModuleName = ModuleName,
+                        Wid = wid
+                    });
 
-
-            IAsyncResult resIdentifyingCode = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetIdentifyingCodeRequest()
-            {
-                ShopId = this.hotelid,
-                Number = number,
-                ModuleName = ModuleName,
-                Wid = wid
-            }).Register(response =>
-            {
-                CompletionResult localResult = (CompletionResult)response.AsyncState;
-                identifyingCode = localResult.Messages[0] as GetIdentifyingCodeResponse;
-            }, this);            
-
-            WaitHandle asyncWaitHandle = resIdentifyingCode.AsyncWaitHandle;
-            asyncWaitHandle.WaitOne(10000);
-
-            if (!resIdentifyingCode.IsCompleted || identifyingCode == null)
+            if (!result.IsSuccess)
             {
                 return;
             }
-
-            IAsyncResult resOrder = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins", new GetHotelOrderByOrderIdRequest()
+            else
             {
-                OrderId = int.Parse(identifyingCode.OrderId)
-            }).Register(response =>
-            {
-                CompletionResult localResult = (CompletionResult)response.AsyncState;
-                hotelOrder = localResult.Messages[0] as GetHotelOrderResponse;
-            }, this);
+                identifyingCode = result.Data;
+            }
 
-            WaitHandle asyncOrderWaitHandle = resOrder.AsyncWaitHandle;
-            asyncOrderWaitHandle.WaitOne(10000);
+            result = Global.Bus
+                .Send<GetHotelOrderResponse>("WeixinPF.Hotel.Plugins.Service",
+                    new GetHotelOrderByOrderIdRequest()
+                    {
+                        OrderId = int.Parse(identifyingCode.OrderId)
+                    });
 
-
-            if (!resOrder.IsCompleted || hotelOrder == null)
+            if (!result.IsSuccess)
             {
                 return;
+            }
+            else
+            {
+                hotelOrder = result.Data;
             }
 
             if (hotelOrder.OrderStatus.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId)
@@ -115,58 +109,9 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 }
                 else
                 {
-                    //this.Response.Write("<script language='javascript' type='text/javascript'>alert('请确认！')</script>");
-
                     this.Response.Redirect("commodity_detail.aspx?cid=" + identifyingCode.IdentifyingCodeId + "&shopid=" + identifyingCode.ShopId + "&id=" + identifyingCode.OrderId);
                 }
-            }
-
-
-
-            //var identifyingCode = IdentifyingCodeService.GetConfirmIdentifyingCodeInfo(this.hotelid, number, ModuleName, wid);
-
-            //if (identifyingCode != null)
-            //{
-            //    var order = new BLL.wx_hotel_dingdan().GetModel(int.Parse(identifyingCode.OrderId));
-
-            //    if (order != null)
-            //    {
-            //        if (order.orderStatus.Value.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId)
-            //            || order.orderStatus.Value.Equals(HotelStatusManager.OrderStatus.Refunding.StatusId)
-            //            || order.orderStatus.Value.Equals(HotelStatusManager.OrderStatus.Completed))
-            //        {
-            //            this.Response.Write(
-            //                "<script language='javascript' type='text/javascript'>alert('该订单已完成或进行退单处理，不能进行验证！')</script>");
-            //        }
-            //        else
-            //        {
-            //            if (identifyingCode.Status != 1)
-            //            {
-            //                if (identifyingCode.Status == 0)
-            //                {
-            //                    this.Response.Write("<script language='javascript' type='text/javascript'>alert('该商品未付款！')</script>");
-            //                }
-            //                else
-            //                {
-            //                    this.Response.Write("<script language='javascript' type='text/javascript'>alert('该商品已消费或者退单，请确认！')</script>");
-
-            //                }
-            //            }
-            //            else
-            //            {
-            //                this.Response.Redirect("commodity_detail.aspx?cid=" + identifyingCode.IdentifyingCodeId + "&shopid=" + identifyingCode.ShopId + "&id=" + identifyingCode.OrderId);
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
-            //    }
-            //}
-            //else
-            //{
-            //    this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
-            //}            
+            }           
         }
 
         protected void confirmnumber_Validating()
