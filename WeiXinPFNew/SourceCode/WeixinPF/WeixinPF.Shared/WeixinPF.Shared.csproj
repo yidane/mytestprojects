@@ -53,6 +53,7 @@
     <Compile Include="CommonConfiguration.cs" />
     <Compile Include="ConfigErrorQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
