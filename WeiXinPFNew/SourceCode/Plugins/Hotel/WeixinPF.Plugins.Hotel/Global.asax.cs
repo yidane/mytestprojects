@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Web.Http;
 using NServiceBus;
 using WeixinPF.Common;
 using WeixinPF.Shared;
@@ -21,6 +22,9 @@ namespace WeixinPF.Hotel.Plugins
             //busConfiguration.ApplyCommonConfiguration();
 
             //Bus = NServiceBus.Bus.Create(busConfiguration).Start();
+
+            //注册Web Api 路由
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
         }
 
 
