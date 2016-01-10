@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Messages.RequestResponse
 {
-    public class GetRoomListRequest
+    public class GetOrderCountResponse
     {
-        public int Wid { get; set; }
-        public string Openid { get; set; }
-        public int HotelId { get; set; }
+        public int Count { get; set; }
     }
 }
