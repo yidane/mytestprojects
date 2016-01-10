@@ -18,6 +18,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             try
             {
+                throw new Exception("123");
                 CreateOrderResponse responseData = null;
 
                 IAsyncResult asyncResult = BusEntry.dictBus["hotel"].Send("WeixinPF.Hotel.Plugins.Service", request)
@@ -45,7 +46,9 @@ namespace WeixinPF.Hotel.Plugins.Controller
             }
             catch
             {
-                throw new Exception("保存订失败。");
+                throw new HttpResponseException(
+                    Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    "保存订失败。"));
             }
             
         }
@@ -54,5 +57,37 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             return AjaxResult.Succeed(1);
         }
+
+
+        public List<QrCodeDto> GetQrCode(int orderId)
+        {
+            try
+            {
+                 var data=new List<QrCodeDto>();
+                for (int i = 1; i <= 3; i++)
+                {
+                    var qr = new QrCodeDto()
+                    {
+                        Code = "jxiaoxi"+i,
+                        Status = i
+                    };
+                    data.Add(qr);
+                }
+                return data;
+            }
+            catch 
+            {
+
+                throw new HttpResponseException(
+                     Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                     "获取验证码失败。"));
+            }
+        }
+    }
+
+    public class QrCodeDto
+    {
+        public string Code { get; set; }
+        public int Status { get; set; }
     }
 }
