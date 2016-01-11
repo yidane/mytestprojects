@@ -852,9 +852,9 @@
                                         <input name="arriveTime"
                                                :min="today"
                                                v-model="order.arriveTime"
-                                               type="date" placeholder="入住时间" />
+                                               type="date"  placeholder="入住时间" />
                                   <span class="button-danger item-input-icon"
-                                        v-if="isEmpty(order.arriveTime)">
+                                        v-if="arriveTimeRequired||isEmpty(order.arriveTime)">
                                      <i class="fa fa-exclamation-circle"></i>
                                  </span>
                                     </div>
@@ -880,7 +880,7 @@
                                                v-model="order.leaveTime"
                                                type="date" placeholder="离店时间" />
                                <span class="button-danger item-input-icon"
-                                     v-if="isEmpty(order.leaveTime)">
+                                     v-if="leaveTimeRequired||isEmpty(order.leaveTime)">
                                      <i class="fa fa-exclamation-circle"></i>
                                  </span>
                                     </div>

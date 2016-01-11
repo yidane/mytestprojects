@@ -119,6 +119,39 @@ var ViewOrderCreate = Vue.extend({
 
             return result;
         },
+        arriveTimeRequired:function(){
+            var result = false;
+            if (this.order.arriveTime ) {
+                var today = new Date((new Date()).setHours(0, 0, 0, 0));
+                var dateArrive=new Date(this.order.arriveTime);
+                if (dateArrive<today) {
+                    result = true;
+                }
+            }
+            return result;
+        },
+        leaveTimeRequired:function(){
+            var result = false;
+            if (this.order.leaveTime ) {
+                var today = new Date((new Date()).setHours(0, 0, 0, 0));
+                var dateleave=new Date(this.order.leaveTime);
+
+                if (dateleave<today) {
+                    result = true;
+                }
+
+                if(!result&&!this.arriveTimeRequired)
+                {
+                    var dateArrive=new Date(this.order.arriveTime);
+                    if(dateleave<=dateArrive)
+                    {
+                        result=true;
+                    }
+                }
+
+            }
+            return result;
+        },
         canSubmit: function () {
             var result = true;
 
@@ -185,12 +218,12 @@ var ViewOrderCreate = Vue.extend({
         }
     },
     watch: {
-        'order': function (order, oldVal) {
+        'order.id': function (val, oldVal) {
 
             //不同订单，显示不同信息
-            if (oldVal.id != order.id) {
+            if (oldVal != val) {
                 this.hasBeenSubmitted=false;
-                if (order.id > 0) {
+                if (val > 0) {
                     this.getOrdrderData();
                 }
                 else {
@@ -216,17 +249,7 @@ var ViewOrderCreate = Vue.extend({
         this.initSwiper();
         //this.toggleItemShow();
 
-        ////获取验证码
-        //self.getQrCode(function (data) {
-        //        self.qrcodes = data;
-        //        self.$nextTick(function () {
-        //            self.swiper.update();
-        //        });
-        //
-        //    },
-        //    function (response) {
-        //        $.toast("获取验证码失败!");
-        //    });
+
     },
     methods: {
         isIdCard: function (val) {
