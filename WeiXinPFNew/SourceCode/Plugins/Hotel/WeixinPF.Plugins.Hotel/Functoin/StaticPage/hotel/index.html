@@ -133,61 +133,61 @@
     <app-footer :current-view="currentView" :order-count="orderCount"
                 :wid="wid" :openid="openid" :hotel="hotel"
             ></app-footer>
-<div class="content">
-    <app-image :view-images="imgDatas"></app-image>
-    <component    :is="currentView" keep-alive transition="fade"
-               transition-mode="out-in" :current-view="currentView"
-               :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order">
-        <!-- 组件在 vm.currentview 变化时改变 -->
-    </component>
-</div>
+    <div class="content">
+        <app-image :view-images="imgDatas"></app-image>
+        <component    :is="currentView" keep-alive transition="fade"
+                      transition-mode="out-in" :current-view="currentView"
+                      :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order" :order-count="orderCount">
+            <!-- 组件在 vm.currentview 变化时改变 -->
+        </component>
+    </div>
 
 </div>
 
 
 <!-- 子组件模板 -->
 <template id="app-header-template">
-<style>
+    <style>
 
-    .bar{
-        -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
-        box-shadow: 0 0 1px rgba(0,0,0,.85);
-    }
-    .bar-nav
-     {
-         -webkit-box-shadow: 0 1px 6px #ccc;
-         box-shadow: 0 1px 6px #ccc;
-     }
-    .bar-tab
-    {
-        -webkit-box-shadow: 0 -5px 6px #ccc;
-        box-shadow: 0 -5px 6px #ccc;
-    }
-    .bar .fa{
-        position: relative;
-        z-index: 20;
-        padding: .6rem .1rem;
+        .bar{
+            -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+            box-shadow: 0 0 1px rgba(0,0,0,.85);
+        }
+        .bar-nav
+        {
+            -webkit-box-shadow: 0 1px 6px #ccc;
+            box-shadow: 0 1px 6px #ccc;
+        }
+        .bar-tab
+        {
+            -webkit-box-shadow: 0 -5px 6px #ccc;
+            box-shadow: 0 -5px 6px #ccc;
+        }
+        .bar .fa{
+            position: relative;
+            z-index: 20;
+            padding: .6rem .1rem;
 
-        line-height: 1.2rem;
-    }
+            line-height: 1.2rem;
+        }
 
-    .bar-tab .tab-item .fa {
-        top: .15rem;
-        width: 1.2rem;
-        height: 1.2rem;
-        font-size: 1.2rem;
-        line-height: 1.2rem;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
+        .bar-tab .tab-item .fa {
+            top: .15rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
 
-    .bar-tab .tab-item .fa~.tab-label {
-        display: block;
-        font-size: .55rem;
-        position: relative;
-        top: .15rem;
-    }
-</style>
+        .bar-tab .tab-item .fa~.tab-label {
+            display: block;
+            font-size: .55rem;
+            position: relative;
+            top: .15rem;
+        }
+    </style>
 
     <style>
 
@@ -211,26 +211,23 @@
     <style>
         .badge-status
         {
-            /* position: absolute; */
-            /* top: .1rem; */
-            /* left: 50%; */
-            /* z-index: 100; */
+
             height: .8rem;
             min-width: .8rem;
-            /* padding: 0 .2rem; */
-            font-size: .6rem;
-            /* line-height: .8rem; */
+
+            font-size: .7rem;
+
             color: #fff;
-            vertical-align: top;
-            /* background: red; */
+            vertical-align: middle;
+
             border-radius: .5rem;
             margin-left: .1rem;
         }
 
         .badge-success
-         {
-             background-color: #04BE02;
-         }
+        {
+            background-color: #04BE02;
+        }
         .badge-danger
         {
             background-color: #EF4F4F;
@@ -256,27 +253,27 @@
 
 
     <nav class="bar bar-tab">
-    <a class="tab-item external" href="#/about"
-       :class="{ active: currentView=='view-about' }"
-       @click="notify">
-        <i class="fa fa-hospital-o"></i>
+        <a class="tab-item external" href="#/about"
+           :class="{ active: currentView=='view-about' }"
+           @click="notify">
+            <i class="fa fa-hospital-o"></i>
 
-    <span class="tab-label">关于</span>
-    </a>
-    <a class="tab-item external active" href="#/room"
-       :class="{ active: currentView=='view-room' }"
-       @click="notify">
-        <i class="fa fa-bed"></i>
+            <span class="tab-label">关于</span>
+        </a>
+        <a class="tab-item external active" href="#/room"
+           :class="{ active: currentView=='view-room' }"
+           @click="notify">
+            <i class="fa fa-bed"></i>
 
-    <span class="tab-label">房型选择</span>
+            <span class="tab-label">房型选择</span>
 
-    </a>
-    <a class="tab-item external" href="#/order"
-       :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }" @click="notify">
-        <i class="fa fa-list"></i>
-    <span class="tab-label">订单</span>
-    <span class="badge">{{orderCount}}</span>
-    </a>
+        </a>
+        <a class="tab-item external" href="#/order"
+           :class="{ active: currentView=='view-order'||currentView=='view-orderCreate' }" @click="notify">
+            <i class="fa fa-list"></i>
+            <span class="tab-label">订单</span>
+            <span class="badge">{{orderCount}}</span>
+        </a>
 
     </nav>
 </template>
@@ -299,7 +296,7 @@
 
             <!--<div class="swiper-slide" v-for="imgData in viewImages">-->
 
-                <!--<img class="header-img" :src="imgData.img">-->
+            <!--<img class="header-img" :src="imgData.img">-->
             <!--</div>-->
         </div>
         <!-- Add Pagination -->
@@ -322,28 +319,11 @@
         }
     </style>
 
-    <!--<div class="cardexplain">-->
-
-
-        <!--<ul class="round">-->
-            <!--<li class="addr">-->
-                <!--<a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}"><span>{{hotel.address}}</span></a>-->
-            <!--</li>-->
-            <!--<li class="tel"><a href="tel:{{hotel.tel}}"><span>{{hotel.tel}} 电话预订</span></a></li>-->
-        <!--</ul>-->
-        <!--<div class="detailcontent">-->
-            <!--<h2>商家介绍</h2>-->
-
-            <!--<div class="content">-->
-                <!--<span class="jieshao">{{hotel.jieShao}}</span>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
     <div class="content-block-title">商家信息</div>
     <div class="list-block">
         <ul>
-            <a href="/weixin/map/map_address.html?type=hotel&id={{hotel.id}}" class="item-content item-link">
+            <a href="www.cloudorg.com.cn/weixin/map/map_address.html?type=hotel&id={{hotel.id}}" class="item-content item-link">
                 <div class="item-media"><i class="fa fa-map-o"></i></div>
                 <div class="item-inner">
                     <div class="item-title">{{hotel.address}}</div>
@@ -362,7 +342,7 @@
     <div class="card">
         <div class="card-header">商家介绍</div>
         <div class="card-content">
-            <div class="card-content-inner">{{hotel.jieShao}}</div>
+            <div class="card-content-inner">{{hotel.introduction}}</div>
         </div>
     </div>
 </template>
@@ -374,7 +354,7 @@
     <div class="list-block media-list">
         <ul>
             <li v-for="room in rooms">
-                <a :href="'#/order'+'/0'" @click="viewOrderCreate(room)" class="item-link item-content">
+                <a :href="'#/order'+'/0'+'/'+room.id" @click="viewOrderCreate(room)" class="item-link item-content">
                     <div class="item-media"><img :src="room.roomImgs[0].url" style='width: 4rem;'></div>
                     <div class="item-inner">
                         <div class="item-title-row">
@@ -425,8 +405,11 @@
 <template id="view-order-template">
     <div class="card" v-for="order in orders">
         <div class="card-header">
-            <span><b>{{order.orderTime}}</b>
-                    <b style='margin-left:0.5rem'>{{hotel.name}}</b></span>
+          <span>
+               <b>{{order.orderTime}}</b>
+               <b style='margin-left:0.5rem'>{{hotel.name}}</b>
+                <b style='margin-left:0.5rem'>{{order.roomType}}</b>
+           </span>
         </div>
         <div class="card-content">
             <div class="list-block media-list">
@@ -435,18 +418,23 @@
                         <a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)"
                            class="item-link item-content">
                             <div class="item-media">
-                                <img src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" style='width: 4rem;'></div>
+                                <img :src="order.roomPicture" style='width: 4rem;'></div>
                             <div class="item-inner">
                                 <div class="item-title-row">
                                     <div class="item-title">{{order.orderNumber}}</div>
                                     <div class="item-after">
                                         <span class="total-money color-red">￥{{order.orderPrice}}</span>
 
-                                         </div>
+                                    </div>
                                 </div>
-                                <div class="item-subtitle"><span class="badge badge-status badge-success">{{order.statusName}}</span></div>
+                                <div class="item-subtitle">
+                                       <span class="badge badge-status"
+                                             :class="order.status==0?'badge-dark':(order.status==2?'badge-danger':'badge-success')"
+                                               >{{order.statusName}}</span>
+                                    <span>{{order.orderTime}}</span>
+                                </div>
                                 <div class="item-text">
-                                     {{order.orderTime}}
+
 
 
 
@@ -459,32 +447,6 @@
         </div>
 
     </div>
-
-    <!--<div class="cardexplain">-->
-
-        <!--&lt;!&ndash;超过预订时间3天后自动删掉预订记录，免得占服务器资源！&ndash;&gt;-->
-        <!--<ul class="round" v-for="order in orders">-->
-            <!--<li class="title">-->
-                <!--<a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)">-->
-                <!--<span><b>{{order.orderTime}}</b>-->
-                    <!--<b style='margin-left:0.5rem'>{{hotel.name}}</b></span></a>-->
-            <!--</li>-->
-            <!--<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cpbiaoge">-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                    <!--<th>订单编号</th>-->
-                    <!--<th width="70" class="cc">订单金额</th>-->
-                    <!--<th width="60" class="cc">订单状态</th>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td>{{order.orderNumber}}</td>-->
-                    <!--<td class="cc">{{order.orderPrice}}</td>-->
-                    <!--<td class="cc"><em class="ok">{{order.statusName}}</em></td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</ul>-->
-    <!--</div>-->
 
 
 </template>
@@ -543,71 +505,179 @@
         }
     </style>
 
-    <ul class="round" style="display: none">
-        <li class="biaotou bradius pad">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>类型</td>
-                    <td class="yuanjia">原价</td>
-                    <td class="youhuijia">优惠价</td>
-                </tr>
-            </table>
-        </li>
-        <li><span class="noneorder">
-                <table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td>{{room.roomType}}</td>
-                        <td class="yuanjia">￥{{room.costPrice}}</td>
-                        <td class="youhuijia">￥{{room.totalPrice}}</td>
-                    </tr>
-                </table>
-            </span>
-        </li>
+    <!-- collapse-->
+    <style>
+        .list-block .item-content
+        {
+            padding-left:0;
+        }
+        .list-block .item-content>.item-header, .list-block .item-content>.item-media,
+        .list-block .item-content>.item-inner:first-child
+        {
+            padding-left:.75rem;
+        }
 
-    </ul>
-
-    <div class="detailcontent">
-        <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
-            <span class="gpd-item-title-name">商品说明</span>
-            <span class="gp-icons gpd-up-icon"></span>
-        </h2>
-        <div class="content  gpd-content">{{room.detail}} </div>
-    </div>
-
-    <div class="detailcontent">
-        <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/info.png" />
-            <span class="gpd-item-title-name">使用须知</span>
-            <span class="gp-icons gpd-up-icon"></span>
-
-        </h2>
-
-        <div class="content gpd-content">
-            {{room.instruction}}
-
-        </div>
-    </div>
+        .item-media .fa{
+            margin-top: .15rem;
+        }
 
 
-    <div class="detailcontent">
-        <h2 class="gpd-item-title">
-            <img class="detailicon-ticket" src="http://www.cloudorg.com.cn/weixin/restaurant/images/undo.png" />
-            <span class="gpd-item-title-name">退单规则</span>
-            <span class="gp-icons gpd-up-icon"></span>
+        .list-block .item-media+.item-inner {
+            margin-left: .25rem;
+        }
+        .item-collapse .item-inner .item-collapse-icon{
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
 
-        </h2>
+        }
+        .list-block  .item-collapse .item-inner .item-collapse-icon{
+            color: #c9c9ce;
+            font-size: 1.4em;
+            position: absolute;
+            top: .55rem;
+            right: .52rem;
+        }
+        .list-block  .item-content.item-collapse
+        {
+            display: block;
+        }
 
-        <div class="content gpd-content">
+        .list-block  .item-content.item-collapse .item-header
+        {
+            color: inherit;
+            text-overflow: ellipsis;
+            display: flex;
+        }
 
-            {{room.refundRule}}
-        </div>
-    </div>
+        .list-block  .item-content.item-collapse.in .item-header {
+            background-color: #DFDFDF;
+        }
+
+
+        .item-collapse.in  .item-inner  .item-collapse-icon:after
+        {
+            content: "\f106";
+        }
+
+        .item-collapse  .item-inner  .item-collapse-icon:after
+        {
+            content: "\f107";
+        }
+
+        .item-collapse .item-collapse-content {
+            position: relative;
+            display: none;
+            padding: 8px 15px;
+
+            overflow: hidden;
+            background: #fff;
+            -webkit-transition: height .35s ease;
+            -o-transition: height .35s ease;
+            transition: height .35s ease;
+        }
+        .list-block .item-content.item-collapse .item-header+.item-collapse-content {
+            margin-left: .75rem;
+        }
+        .item-collapse .item-collapse-content
+        {
+            display: none;
+        }
+
+        .item-collapse.in .item-collapse-content
+        {
+            display: block;
+        }
+
+        .item-collapse.in .item-collapse-content:after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 15px;
+            height: 1px;
+            content: '';
+            background-color: #c8c7cc;
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+        }
+
+        .item-input-readonly{
+            padding: 0 0 0 .25rem;
+            margin: 0;
+            width: 100%;
+            height: 2.15rem;
+            color: #3d4145;
+            font-size: .85rem;
+            font-family: inherit;
+        }
+    </style>
+
+
+
 
     <div class="list-block">
         <ul>
+            <li class="item-content">
+                <div class="item-inner">
+                    <div class="item-title">房间类型</div>
+                    <div class="item-after">{{room.roomType}}</div>
+                </div>
+            </li>
+            <li class="item-content">
+                <div class="item-inner">
+                    <div class="item-title">原价</div>
+                    <div class="item-after">￥{{room.costPrice}}</div>
+                </div>
+            </li>
+            <li class="item-content">
+                <div class="item-inner">
+                    <div class="item-title">优惠价</div>
+                    <div class="item-after">￥{{room.totalPrice}}</div>
+                </div>
+            </li>
+            <li class="item-content item-collapse">
+                <a class="item-header">
+                    <div class="item-media"><i class="fa fa-info-circle  fa-lg"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title">商品说明</div>
+                        <i class="item-collapse-icon"></i>
+
+                    </div>
+                </a>
+                <div class="item-collapse-content">
+                    {{{room.detail}}}
+                </div>
+            </li>
+            <li class="item-content item-collapse">
+                <a class="item-header">
+                    <div class="item-media"><i class="fa fa-question-circle  fa-lg"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title">使用须知</div>
+                        <i class="item-collapse-icon"></i>
+
+                    </div>
+                </a>
+                <div class="item-collapse-content">
+                    {{{room.instruction}}}
+                </div>
+            </li>
+            <li class="item-content item-collapse">
+                <a class="item-header">
+                    <div class="item-media"><i class="fa fa-undo  fa-lg"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title">退单规则</div>
+                        <i class="item-collapse-icon"></i>
+
+                    </div>
+                </a>
+                <div class="item-collapse-content">
+                    {{{room.refundRule}}}
+                </div>
+            </li>
             <a class="item-content item-link" href="tel:{{hotel.tel}}">
-                <div class="item-media"><i class="fa fa-phone"></i></div>
+                <div class="item-media"><i class="fa fa-phone  fa-lg"></i></div>
                 <div class="item-inner">
                     <div class="item-title">{{hotel.tel}}</div>
                     <div class="item-after">电话预订</div>
@@ -621,9 +691,23 @@
 
 
 
-    <div class='alert alert-warning' role='alert'>
+    <div class='alert alert-warning' role='alert' v-if="order.status==-1">
         <strong>提示</strong> 填写入住其中一人的真实信息即可。
     </div>
+    <div class='alert alert-warning' role='alert' v-if="order.status==0">
+        <strong>提示</strong> 此订单可重新修改后再提交！
+    </div>
+    <div class='alert alert-warning' role='alert' v-if="order.status==1">
+        <strong> 特别提醒!</strong> 订单只为您保留1个小时，请您尽快支付！
+    </div>
+    <div class='alert alert-warning' role='alert' v-if="order.status==2">
+        <strong> 抱歉!</strong> 您选购的房型商家已确认无房！欢迎您重新订购。
+    </div>
+
+    <div class='alert alert-warning' role='alert' v-if="order.status==3">
+        <strong> 特别提醒!</strong> 抱歉，由于景区酒店房源紧张，已付款订单不能申请退款，需电话联系酒店工作人员解决。
+    </div>
+
     <div class="footer-money">
 
         <p>
@@ -642,48 +726,57 @@
         <form novalidate @submit.prevent="onSubmit">
             <div class="list-block">
                 <ul>
-                  <li>
-<div class="silde-background">
+                    <li style="display: none;">
+                        <div class="silde-background">
 
 
 
-                    <div id="qr_swiper" class="swiper-container silde-center gpd-ablum swiper-container-horizontal">
-                        <div class="swiper-wrapper " style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);" id="swiperContain">
-                        <div class='swiper-slide swiper-image' v-for="qr in qrcodes">
-                                <img :src="qr|imgbase64">
-                        </div>
-                        <!-- Add Pagination -->
-                        <div class="swiper-pagination">
-                        </div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                <div class="full-w">
-                    <p class="text-uppercase">
-                        验证码：<strong id="ticketCode" class="text-danger item-pullleft">
-                            {{currentQr.code}}
-                        </strong>
-                        <strong id="ticket_status" class="pull-right item-pullleft">
-                          {{currentQr.status|qrcodeStatus}}
-                        </strong>
-                    </p>
-                </div>
-                  </li>
+                            <div id="qr_swiper" class="swiper-container silde-center gpd-ablum swiper-container-horizontal">
+                                <div class="swiper-wrapper " style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);" id="swiperContain">
+                                    <div class='swiper-slide swiper-image' v-for="qr in qrcodes">
+                                        <img :src="qr|imgbase64">
+                                    </div>
+                                    <!-- Add Pagination -->
+                                    <div class="swiper-pagination">
+                                    </div>
+                                    <!-- Add Arrows -->
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                            <div class="full-w">
+                                <p class="text-uppercase">
+                                    验证码：<strong id="ticketCode" class="text-danger item-pullleft">
+                                    {{currentQr.code}}
+                                </strong>
+                                    <strong id="ticket_status" class="pull-right item-pullleft">
+                                        {{currentQr.status|qrcodeStatus}}
+                                    </strong>
+                                </p>
+                            </div>
+                            </div>
+                    </li>
                     <li>
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">预订人</div>
                                 <div class="item-input">
-                                    <input name="oderName" type="text"
-                                           v-model="order.orderUser.userName"
-                                           placeholder="请输入您的真实姓名" />
-                                    <span class="button-danger item-input-icon"
-                                          v-if="isEmpty(order.orderUser.userName)">
-                                        <i class="fa fa-exclamation-circle"></i>
-                                    </span>
+
+                                    <div v-if="formCanEdit">
+                                        <input  name="oderName" type="text"
+
+                                                v-model="order.orderUser.userName"
+                                                placeholder="请输入您的真实姓名" />
+                                 <span class="button-danger item-input-icon"
+                                       v-if="isEmpty(order.orderUser.userName)">
+                                     <i class="fa fa-exclamation-circle"></i>
+                                 </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.orderUser.userName}}</span>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -694,83 +787,103 @@
                             <div class="item-inner">
                                 <div class="item-title label">身份证号</div>
                                 <div class="item-input">
-                                    <input name="identityNumber" type="text"
+                                    <div v-if="formCanEdit">
+                                        <input name="identityNumber" type="text"
+                                               v-model="order.orderUser.userIdcard"
+                                               placeholder="请输入您的身份证号" />
+                                  <span class="button-danger item-input-icon"
+                                        v-if="idCardRequired||isEmpty(order.orderUser.userIdcard)">
+                                     <i class="fa fa-exclamation-circle"></i>
+                                 </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.orderUser.userIdcard}}</span>
+                                    </div>
 
-                                            v-model="order.orderUser.userIdcard"
-                                           placeholder="请输入您的身份证号" />
-                                     <span class="button-danger item-input-icon"
-                                           v-if="idCardRequired||isEmpty(order.orderUser.userIdcard)">
-                                        <i class="fa fa-exclamation-circle"></i>
-                                    </span>
+
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li>
-                    <div class="item-content">
-                        <div class="item-media"><i class="icon icon-form-name"></i></div>
-                        <div class="item-inner">
-                            <div class="item-title label">联系电话</div>
-                            <div class="item-input">
-                                <input name="tel" type="tel"
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">联系电话</div>
+                                <div class="item-input">
+                                    <div v-if="formCanEdit">
+                                        <input name="tel" type="tel"
+                                               v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
+                             <span class="button-danger item-input-icon"
+                                   v-if="userMobileRequired||isEmpty(order.orderUser.userMobile)">
+                                     <i class="fa fa-exclamation-circle"></i>
+                                 </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.orderUser.userMobile}}</span>
+                                    </div>
 
-
-                                       v-model="order.orderUser.userMobile" required placeholder="请输入您的手机号" />
-                                <span class="button-danger item-input-icon"
-                                      v-if="userMobileRequired||isEmpty(order.orderUser.userMobile)">
-                                        <i class="fa fa-exclamation-circle"></i>
-                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
                     <li>
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-calendar"></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">入住时间</div>
                                 <div class="item-input">
-                                    <input name="arriveTime"
+                                    <div v-if="formCanEdit">
+                                        <input name="arriveTime"
+                                               :min="today"
+                                               v-model="order.arriveTime"
+                                               type="date" placeholder="入住时间" />
+                                  <span class="button-danger item-input-icon"
+                                        v-if="isEmpty(order.arriveTime)">
+                                     <i class="fa fa-exclamation-circle"></i>
+                                 </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.arriveTime}}</span>
+                                    </div>
 
-                                           :min="today"
-
-                                           v-model="order.arriveTime"
-                                           type="date" placeholder="入住时间" />
-                                     <span class="button-danger item-input-icon"
-                                           v-if="isEmpty(order.arriveTime)">
-                                        <i class="fa fa-exclamation-circle"></i>
-                                    </span>
                                 </div>
                             </div>
                         </div>
                     </li>
 
                     <li>
-                    <div class="item-content">
-                        <div class="item-media"><i class="icon icon-form-calendar"></i></div>
-                        <div class="item-inner">
-                            <div class="item-title label">离店时间</div>
-                            <div class="item-input">
-                                <input name="leaveTime"
-                                       :min="minLeaveDate"
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">离店时间</div>
+                                <div class="item-input">
+                                    <div v-if="formCanEdit">
+                                        <input name="leaveTime"
+                                               :min="minLeaveDate"
 
-                                       v-model="order.leaveTime"
-                                       type="date" placeholder="离店时间" />
-                                  <span class="button-danger item-input-icon"
-                                        v-if="isEmpty(order.leaveTime)">
-                                        <i class="fa fa-exclamation-circle"></i>
-                                    </span>
+                                               v-model="order.leaveTime"
+                                               type="date" placeholder="离店时间" />
+                               <span class="button-danger item-input-icon"
+                                     v-if="isEmpty(order.leaveTime)">
+                                     <i class="fa fa-exclamation-circle"></i>
+                                 </span>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.leaveTime}}</span>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
                     <li>
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-gender"></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">类型</div>
                                 <div class="item-input">
-                                    {{room.roomType}}
+                                    <span class="item-input-readonly"> {{room.roomType}}</span>
                                 </div>
                             </div>
                         </div>
@@ -781,12 +894,18 @@
                             <div class="item-inner">
                                 <div class="item-title label">预订数量</div>
                                 <div class="item-input">
-                                    <select name="orderNum"
+                                    <div v-if="formCanEdit">
+                                        <select name="orderNum"
 
-                                            v-model="order.orderNum">
-                                        <option v-for="n in 20" :value="n+1">{{n+1}}</option>
+                                                v-model="order.orderNum">
+                                            <option v-for="n in 20" :value="n+1">{{n+1}}</option>
 
-                                    </select>
+                                        </select>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.orderNum}}</span>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -797,7 +916,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">单价</div>
                                 <div class="item-input">
-                                    ￥{{room.totalPrice}}
+                                    <span class="item-input-readonly"> ￥{{room.totalPrice}}</span>
                                 </div>
                             </div>
                         </div>
@@ -808,11 +927,19 @@
                             <div class="item-inner">
                                 <div class="item-title label">备注</div>
                                 <div class="item-input">
-                                     <textarea name="remark"
-                                               style="height: 99px; overflow-y: visible"
-                                               v-model="order.remark"
-                                               placeholder="请输入备注信息"></textarea>
-                                    </select>
+                                    <div v-if="formCanEdit">
+                                      <textarea name="remark"
+
+                                                v-model="order.remark"
+                                                placeholder="请输入备注信息"></textarea>
+                                    </div>
+                                    <div v-else>
+                                        <span class="item-input-readonly">  {{order.remark}}</span>
+                                    </div>
+
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -821,12 +948,19 @@
             </div>
             <div class="content-block">
                 <div class="row">
-                    <div class="col-50" v-if="order.status==0||order.status==2">
-                        <a href="#" class="button button-big button-fill button-danger">取消订单</a></div>
-                    <div  :class="[order.status==-1?'col-100':'col-50']">
-                        <a href="#" class="button button-big button-fill button-success"
-                                :class="[canSubmit?'button-success':'disabled']"
-                                >提交</a></div>
+                    <div :class="[!formCanSubmit&&!formCanPay?'col-100':'col-50']" v-if="formCanCancel">
+                        <input type="button"  value="取消订单" class="button button-big button-fill button-danger">
+
+                    </div>
+                    <div  :class="[!formCanCancel?'col-100':'col-50']" v-if="formCanSubmit">
+                        <input type="submit"  value="提交" class="button button-big button-fill "
+                               :class="[canSubmit?'button-success':'disabled']">
+                    </div>
+                    <div  :class="[!formCanCancel?'col-100':'col-50']" v-if="formCanPay">
+
+                        <input type="button"  value="微信支付" class="button button-big button-fill button-success"
+                                >
+                    </div>
                 </div>
             </div>
 
@@ -851,9 +985,9 @@
 <!--<script src="../../../Common/web_component/swiper/swiper.min.js"></script>-->
 <script src="//cdn.bootcss.com/Swiper/3.2.7/js/swiper.min.js"></script>
 
-    <script src="../../../Common/JS/qrcode/qr.min.js"></script>
+<script src="../../../Common/JS/qrcode/qr.min.js"></script>
 <script src="https://rawgit.com/flatiron/director/master/build/director.min.js">
-   </script>
+</script>
 
 <script>
     //根据QueryString参数名称获取值

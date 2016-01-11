@@ -129,6 +129,7 @@
     <Content Include="Functoin\StaticPage\hotel\js\index\v-index-viewRoom.js" />
     <Content Include="Functoin\StaticPage\hotel\js\index\main.js" />
     <Content Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx" />
+    <Content Include="Functoin\StaticPage\hotel\js\userOrder\main.js" />
     <Content Include="Functoin\StaticPage\hotel\userOrder.html" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
@@ -190,7 +191,6 @@
     <Folder Include="Functoin\BackPage\Hotel\CSS\" />
     <Folder Include="Functoin\BackPage\Hotel\Image\" />
     <Folder Include="Functoin\BackPage\Hotel\JS\" />
-    <Folder Include="Functoin\StaticPage\hotel\js\userOrder\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

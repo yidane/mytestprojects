@@ -2,16 +2,16 @@
 
 var ViewRoom = Vue.extend({
     template: '#view-room-template',
-    props: ['wid','openid','hotel','order'],
+    props: ['wid', 'openid', 'hotel', 'order'],
     data: function () {
         return {
-           rooms:[]
+            rooms: []
         }
     },
     activate: function (done) {
         var self = this;
         this.getData(function (data) {
-            self.rooms=data;
+            self.rooms = data;
             $.hidePreloader();
         });
         done();
@@ -20,19 +20,19 @@ var ViewRoom = Vue.extend({
         getData: function (callBack) {
             // GET request
             this.$http.get('api/room/GetRoomList',
-                {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
+                { wid: this.wid, openid: this.openid, hotelId: this.hotel.id }).then(function (response) {
                     if (response.data) {
                         callBack(response.data.rooms);
 
-                    } else{
+                    } else {
                         $.toast("获取房间失败!");
                     }
 
 
-            }, function (response) {
+                }, function (response) {
 
-                // handle error
-            });
+                    // handle error
+                });
         },
         viewOrderCreate: function (room) {
             //var data={
@@ -42,18 +42,18 @@ var ViewRoom = Vue.extend({
             //    wid:wid
             //};
             if (room) {
-              console.log(this.order);
-               this.order={
+                console.log(this.order);
+                this.order = {
 
-                 discount:0,
-                 totalPrice:0,
-                 costPrice:0,
-                 orderNum:1,
-                 status:-1,
-                 orderUser:this.order.orderUser
-               };
+                    discount: 0,
+                    totalPrice: 0,
+                    costPrice: 0,
+                    orderNum: 1,
+                    status: -1,
+                    orderUser: this.order.orderUser
+                };
                 this.$dispatch('onimgDataDispatch', room.roomPictures);
-                 this.$dispatch('onOrderDispatch', this.order);
+                this.$dispatch('onOrderDispatch', this.order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }
         }

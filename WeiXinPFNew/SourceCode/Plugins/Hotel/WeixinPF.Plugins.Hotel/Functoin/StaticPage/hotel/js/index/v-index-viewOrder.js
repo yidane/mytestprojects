@@ -1,14 +1,14 @@
 ﻿
 var ViewOrder = Vue.extend({
     template: '#view-order-template',
-    props: ['wid','openid','hotel','room','order'],
+    props: ['wid', 'openid', 'hotel', 'room', 'order'],
     data: function () {
         return {
             orders: {}
         }
     },
     computed: {
-        statusCss:function(){
+        statusCss: function () {
 
         }
     },
@@ -21,7 +21,7 @@ var ViewOrder = Vue.extend({
     //    })
     //    done()
     //},
-    ready:function(){
+    ready: function () {
         var self = this;
         this.getOrderList(function (data) {
             $.hidePreloader();
@@ -33,31 +33,31 @@ var ViewOrder = Vue.extend({
         getOrderList: function (callBack) {
             // GET request
             this.$http.get('api/order/GetOrderList',
-                {wid:this.wid,openid:this.openid,hotelId:this.hotel.id}).then(function (response) {
+                { wid: this.wid, openid: this.openid, hotelId: this.hotel.id }).then(function (response) {
 
                     if (response.data) {
                         callBack(response.data.orders);
 
                     }
-                    else{
+                    else {
                         $.toast("获取订单失败!");
                     }
 
-            }, function (response) {
+                }, function (response) {
 
-                // handle error
-            });
+                    // handle error
+                });
         },
-        updateOrderNumber:function(num){
+        updateOrderNumber: function (num) {
             this.$dispatch('onUpdateOrderNumberDispatch', num);
         },
         viewOrderCreate: function (order) {
-        if (order) {
-            var room={
-                id:order.roomId
-            };
+            if (order) {
+                var room = {
+                    id: order.roomId
+                };
 
-             this.$dispatch('onOrderDispatch', order);
+                this.$dispatch('onOrderDispatch', order);
                 this.$dispatch('onviewOrderCreateDispatch', room);
             }
         }

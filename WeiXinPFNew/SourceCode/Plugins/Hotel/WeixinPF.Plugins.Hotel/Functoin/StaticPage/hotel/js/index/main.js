@@ -24,25 +24,25 @@ var vm = new Vue({
         person: {},
         imgDatas: [],
         headerTitle: '',
-        wid:0,
-        openid:'',
+        wid: 0,
+        openid: '',
         hotel: {},
         room: {
-            totalPrice:0,
-            costPrice:0,
-            roomType:''
+            totalPrice: 0,
+            costPrice: 0,
+            roomType: ''
         },
-        order:{
-            id:0,
-            discount:0,
-            totalPrice:0,
-            costPrice:0,
-            orderNum:1,
-            status:-1,
-            orderUser:{}
+        order: {
+            id: 0,
+            discount: 0,
+            totalPrice: 0,
+            costPrice: 0,
+            orderNum: 1,
+            status: -1,
+            orderUser: {}
         },
-        orderCount:0,
-        swiper:{}
+        orderCount: 0,
+        swiper: {}
     },
     components: {
         'app-header': {
@@ -75,18 +75,18 @@ var vm = new Vue({
             //this.currentView='view-orderCreate';
             this.room = data;
         },
-        'onUpdateOrderNumberDispatch':function(data){
+        'onUpdateOrderNumberDispatch': function (data) {
 
-                this.orderCount=data;
+            this.orderCount = data;
 
         },
-        'onOrderDispatch':function(data){
-            this.order=data;
+        'onOrderDispatch': function (data) {
+            this.order = data;
         }
     },
     watch: {
         'currentView': function (val, oldVal) {
-            var hotelImgType='hotelImg';
+            var hotelImgType = 'hotelImg';
             switch (val) {
                 case 'view-about':
                     this.headerTitle = '关于';
@@ -103,44 +103,43 @@ var vm = new Vue({
                 case 'view-orderCreate':
                     this.headerTitle = '订单';
                     window.document.title = '订单';
-                    hotelImgType='roomImg';
+                    hotelImgType = 'roomImg';
                     break;
             }
 
-            if(hotelImgType=='hotelImg')
-            {
-                this.imgDatas = [{name: 0, url: this.hotel.coverSrc}];
+            if (hotelImgType == 'hotelImg') {
+                this.imgDatas = [{ name: 0, url: this.hotel.coverSrc }];
                 this.changeImgs();
             }
         }
     },
     methods: {
         getData: function (callBack) {
-          var self = this;
-          this.getHotelData(function (data) {
-              self.hotel = data;
+            var self = this;
+            this.getHotelData(function (data) {
+                self.hotel = data;
 
-              //self.hotel.imgDatas = [{name: 0, url: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'}
-              //];
-              self.imgDatas=[{name: 0, url: self.hotel.coverSrc}];
-              self.changeImgs();
-          });
-          this.getOrderCount(function (data) {
-              self.orderCount = data;
+                //self.hotel.imgDatas = [{name: 0, url: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'}
+                //];
+                self.imgDatas = [{ name: 0, url: self.hotel.coverSrc }];
+                self.changeImgs();
+            });
+            this.getOrderCount(function (data) {
+                self.orderCount = data;
 
-          });
+            });
 
             // var data = [{no: 1, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141710309494.png'},
             //     {no: 2, img: 'http://www.cloudorg.com.cn/upload/201512/14/201512141712439846.jpg'},
             // ];
             // callBack(data);
         },
-        getOrderCount:function(callBack){
+        getOrderCount: function (callBack) {
             this.$http.get('api/order/GetOrderCount'
-                , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
+                , { wid: this.wid, openid: this.openid, hotelId: this.hotel.id }).then(function (response) {
                     if (response.data) {
                         callBack(response.data.count);
-                    } else{
+                    } else {
                         $.toast("获取订单数量失败!");
                     }
                 }, function (response) {
@@ -151,10 +150,10 @@ var vm = new Vue({
         getHotelData: function (callBack) {
 
             this.$http.get('api/hotel/GetHotelInfo'
-                , {wid: this.wid, openid: this.openid,hotelId:this.hotel.id}).then(function (response) {
+                , { wid: this.wid, openid: this.openid, hotelId: this.hotel.id }).then(function (response) {
                     if (response.data) {
                         callBack(response.data);
-                    } else{
+                    } else {
                         $.toast("获取酒店信息失败!");
                     }
                 }, function (response) {
@@ -162,17 +161,16 @@ var vm = new Vue({
                     // handle error
                 });
         },
-        getQueryString:function(){
-            var wid=getQueryStringByName('wid');
-            var hotelId=getQueryStringByName('hotelId');
-            var openid=getQueryStringByName('openid');
-            if(!openid)
-            {
-                console.log( '没有openid，跳转获取openid?');
-                document.location.href=this.getOpenid();
+        getQueryString: function () {
+            var wid = getQueryStringByName('wid');
+            var hotelId = getQueryStringByName('hotelId');
+            var openid = getQueryStringByName('openid');
+            if (!openid) {
+                console.log('没有openid，跳转获取openid?');
+                document.location.href = this.getOpenid();
                 return;
             }
-            this.getQueryData(wid,hotelId,openid);
+            this.getQueryData(wid, hotelId, openid);
         },
         initSwiper: function () {
             this.swiper = new Swiper('#img_swiper', {
@@ -181,14 +179,12 @@ var vm = new Vue({
                 paginationClickable: true
             });
         },
-        changeImgs:function(){
-            if(this.imgDatas)
-            {
+        changeImgs: function () {
+            if (this.imgDatas) {
                 this.swiper.removeAllSlides(); //�Ƴ�ȫ��
-                var data=[];
-                for(var i=0;i<this.imgDatas.length;i++)
-                {
-                    var div='<div class="swiper-slide"><img class="header-img" src="'+ this.imgDatas[i].url +'"></div>';
+                var data = [];
+                for (var i = 0; i < this.imgDatas.length; i++) {
+                    var div = '<div class="swiper-slide"><img class="header-img" src="' + this.imgDatas[i].url + '"></div>';
                     data.push(div);
                 }
                 this.swiper.appendSlide(data);
@@ -196,63 +192,63 @@ var vm = new Vue({
 
         },
 
-        getOpenid:function(){
-          //todo:跳转获取openid
-          var openid='test';
-          return document.location.href+"&openid="+openid;
+        getOpenid: function () {
+            //todo:跳转获取openid
+            var openid = 'test';
+            return document.location.href + "&openid=" + openid;
         },
-        getQueryData:function(wid,hotelId, openid) {
-          if (!this.openid) {
-            this.openid = openid;
-            this.wid = wid;
-            this.hotel.id= hotelId;
-            this.getData();
-          }
+        getQueryData: function (wid, hotelId, openid) {
+            if (!this.openid) {
+                this.openid = openid;
+                this.wid = wid;
+                this.hotel.id = hotelId;
+                this.getData();
+            }
 
         },
-        initRouter:function(){
+        initRouter: function () {
             var self = this;
-          var routes = {
+            var routes = {
 
 
-          '/room': function () {
+                '/room': function () {
 
-            self.currentView='view-room';
+                    self.currentView = 'view-room';
+                },
+                '/about': function () {
+
+                    self.currentView = 'view-about';
+                },
+                '/order': function () {
+
+                    self.currentView = 'view-order';
+                },
+                '/order/:orderId': function (orderId) {
+
+                    if (orderId) {
+                        self.order.id = orderId;
+                    }
+                    self.currentView = 'view-orderCreate';
+
+                },
+                '/order/:orderId/:roomId': function (orderId, roomId) {
+
+                    if (orderId) {
+                        self.order.id = orderId;
+                    }
+                    if (roomId) {
+                        self.room.id = roomId;
+                    }
+                    self.currentView = 'view-orderCreate';
+
+                }
+            };
+
+            var router = Router(routes);
+
+            router.init('/room');
         },
-        '/about': function () {
-
-            self.currentView='view-about';
-      },
-      '/order': function () {
-
-        self.currentView='view-order';
-      },
-      '/order/:orderId': function (orderId) {
-
-          if (orderId) {
-              self.order.id=orderId;
-          }
-        self.currentView='view-orderCreate';
-
-      },
-              '/order/:orderId/:roomId': function (orderId,roomId) {
-
-                  if (orderId) {
-                      self.order.id=orderId;
-                  }
-                  if (roomId) {
-                      self.room.id=roomId;
-                  }
-                  self.currentView='view-orderCreate';
-
-              }
-          };
-
-          var router = Router(routes);
-
-          router.init('/room');
-        },
-        initPreLoader:function(){
+        initPreLoader: function () {
             $.showPreloader();
         }
     },
