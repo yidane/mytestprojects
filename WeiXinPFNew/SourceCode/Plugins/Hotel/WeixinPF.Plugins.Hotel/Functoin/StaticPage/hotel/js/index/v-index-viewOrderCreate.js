@@ -163,7 +163,7 @@ var ViewOrderCreate = Vue.extend({
             ) {
                 return false;
             }
-            else if (this.userMobileRequired || this.idCardRequired) {
+            else if (this.userMobileRequired || this.idCardRequired||this.arriveTimeRequired||this.leaveTimeRequired) {
                 return false;
             }
 
