@@ -3,27 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NServiceBus;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WeixinPF.Common;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
-using WeixinPF.Hotel.Plugins.Service.Handler.Base;
-using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Hotel.Plugins.Service.AutoMapper;
 using WeixinPF.Messages.RequestResponse.Dtos;
 
-namespace WeixinPF.Hotel.Plugins.Service.Handler
+namespace HotelUnitTest
 {
-    public class GetOrderUserInfoHandler : BaseHandler, IHandleMessages<GetOrderUserInfoRequest>
+    [TestClass]
+    public class OrderUnitTest
     {
-        public readonly IBus _bus;
-
-        public GetOrderUserInfoHandler(IBus bus)
+        [TestMethod]
+        public void GetOrderList()
         {
-            _bus = bus;
+            AutoMapperConfiguration.Configure();
+            var service = new HotelOrderService();
+            var list = service.GetModelList(string.Format("openid='{0}'", "test"));
+
+            list.MapTo<List<OrderDto>>();
+
         }
-        public void Handle(GetOrderUserInfoRequest message)
+        [TestMethod]
+        public void GetOrderUserInfo()
         {
             var service = new HotelOrderService();
             var order = service
-                .GetModelList(string.Format("openid='{0}'", message.OpenId))
+                .GetModelList(string.Format("openid='{0}'", "test"))
                 .OrderByDescending(o => o.createDate)
                 .FirstOrDefault();
 
@@ -41,7 +47,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
                 user.UserIdcard = order.identityNumber;
             }
 
-            _bus.Reply(new GetOrderUserInfoResponse() { User = user });
+            Assert.IsTrue(!string.IsNullOrEmpty(user.UserName));
         }
     }
 }

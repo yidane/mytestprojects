@@ -64,12 +64,21 @@
   </Choose>
   <ItemGroup>
     <Compile Include="HotelServiceTest.cs" />
+    <Compile Include="OrderUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Messages\WeixinPF.Messages\WeixinPF.Messages.csproj">
+      <Project>{2ef4819a-7ecb-4cdd-a241-79f839125af8}</Project>
+      <Name>WeixinPF.Messages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\WeixinPF\Application\WeixinPF.Application\WeixinPF.Application.csproj">
       <Project>{c4941bbf-0230-4f8e-8f54-efcba0c80344}</Project>
       <Name>WeixinPF.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WeixinPF\Common\WeixinPF.Common\WeixinPF.Common.csproj">
+      <Project>{4c6c3917-60e6-42ed-ac44-d8da3d82a37b}</Project>
+      <Name>WeixinPF.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\WeixinPF\Infrastructure\WeixinPF.Infrastructure\WeixinPF.Infrastructure.csproj">
       <Project>{04186677-71c9-4400-a294-02176774c5f7}</Project>
