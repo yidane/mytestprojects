@@ -39,7 +39,8 @@ var vm = new Vue({
             costPrice: 0,
             orderNum: 1,
             status: -1,
-            orderUser: {}
+            orderUser: {},
+            router:{}
         },
         orderCount: 0,
         swiper: {}
@@ -174,9 +175,15 @@ var vm = new Vue({
         },
         initSwiper: function () {
             this.swiper = new Swiper('#img_swiper', {
-                pagination: '.swiper-pagination',
+                pagination: '#img_swiper .swiper-pagination',
+
+                nextButton: '#img_swiper .swiper-button-next',
+                prevButton: '#img_swiper .swiper-button-prev',
+
+                spaceBetween: 30,
                 centeredSlides: true,
-                paginationClickable: true
+                paginationClickable: true,
+                loop: true
             });
         },
         changeImgs: function () {
@@ -244,9 +251,9 @@ var vm = new Vue({
                 }
             };
 
-            var router = Router(routes);
+            this.router = Router(routes);
 
-            router.init('/room');
+            this.router.init('/room');
         },
         initPreLoader: function () {
             $.showPreloader();

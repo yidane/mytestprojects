@@ -53,13 +53,26 @@ var ViewOrder = Vue.extend({
         },
         viewOrderCreate: function (order) {
             if (order) {
-                var room = {
-                    id: order.roomId
-                };
+                //var room = {
+                //    id: order.roomId
+                //};
+                //this.$dispatch('onviewOrderCreateDispatch', room);
 
                 this.$dispatch('onOrderDispatch', order);
-                this.$dispatch('onviewOrderCreateDispatch', room);
             }
+        },
+        pullRefresh:function(){
+            var self=this;
+            // 添加'refresh'监听器
+            $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+                //$.showPreloader();
+                this.getOrderList(function (data) {
+                    //$.hidePreloader();
+                    self.orders = data;
+                    self.updateOrderNumber(data.length);
+                    $.pullToRefreshDone('.pull-to-refresh-content');
+                });
+            });
         }
     }
 });

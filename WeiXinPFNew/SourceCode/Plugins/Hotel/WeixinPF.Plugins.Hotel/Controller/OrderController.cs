@@ -17,6 +17,8 @@ namespace WeixinPF.Hotel.Plugins.Controller
     {
         private const int WaitSeconds = 10000000;
         private const string ServiceName = "WeixinPF.Hotel.Plugins.Service";
+
+        [System.Web.Http.HttpPost]
         public CreateOrderResponse Save(CreateOrderRequest request)
         {
             try

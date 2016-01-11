@@ -127,17 +127,23 @@
 <div id="div_app" class="page"  v-el:app>
 
 
-    <app-header :header-title="headerTitle"></app-header>
+    <app-header :header-title="headerTitle" :router></app-header>
 
 
     <app-footer :current-view="currentView" :order-count="orderCount"
                 :wid="wid" :openid="openid" :hotel="hotel"
             ></app-footer>
-    <div class="content">
+    <div class="content pull-to-refresh-content" data-ptr-distance="55">
+        <!-- 默认的下拉刷新层 -->
+        <div class="pull-to-refresh-layer">
+            <div class="preloader"></div>
+            <div class="pull-to-refresh-arrow"></div>
+        </div>
         <app-image :view-images="imgDatas"></app-image>
         <component    :is="currentView" keep-alive transition="fade"
                       transition-mode="out-in" :current-view="currentView"
-                      :wid="wid" :openid="openid" :hotel="hotel" :room="room" :order="order" :order-count="orderCount">
+                      :wid="wid" :openid="openid" :hotel="hotel"
+                      :room="room" :order="order" :order-count="orderCount" :router="router">
             <!-- 组件在 vm.currentview 变化时改变 -->
         </component>
     </div>
@@ -403,50 +409,56 @@
 </template>
 
 <template id="view-order-template">
-    <div class="card" v-for="order in orders">
-        <div class="card-header">
+
+    <div class="card-container">
+        <div class="card" v-for="order in orders">
+            <div class="card-header">
           <span>
                <b>{{order.orderTime}}</b>
                <b style='margin-left:0.5rem'>{{hotel.name}}</b>
                 <b style='margin-left:0.5rem'>{{order.roomType}}</b>
            </span>
-        </div>
-        <div class="card-content">
-            <div class="list-block media-list">
-                <ul>
-                    <li>
-                        <a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)"
-                           class="item-link item-content">
-                            <div class="item-media">
-                                <img :src="order.roomPicture" style='width: 4rem;'></div>
-                            <div class="item-inner">
-                                <div class="item-title-row">
-                                    <div class="item-title">{{order.orderNumber}}</div>
-                                    <div class="item-after">
-                                        <span class="total-money color-red">￥{{order.orderPrice}}</span>
+            </div>
+            <div class="card-content">
+                <div class="list-block media-list">
+                    <ul>
+                        <li>
+                            <a :href="'#/order'+'/'+ order.id " @click="viewOrderCreate(order)"
+                               class="item-link item-content">
+                                <div class="item-media">
+                                    <img :src="order.roomPicture" style='width: 4rem;'></div>
+                                <div class="item-inner">
+                                    <div class="item-title-row">
+                                        <div class="item-title">{{order.orderNumber}}</div>
+                                        <div class="item-after">
+                                            <span class="total-money color-red">￥{{order.orderPrice}}</span>
 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="item-subtitle">
+                                    <div class="item-subtitle">
                                        <span class="badge badge-status"
                                              :class="order.status==0?'badge-dark':(order.status==2?'badge-danger':'badge-success')"
                                                >{{order.statusName}}</span>
-                                    <span>{{order.orderTime}}</span>
+                                        <span>{{order.orderTime}}</span>
+                                    </div>
+                                    <div class="item-text">
+
+
+
+
+                                    </div>
                                 </div>
-                                <div class="item-text">
-
-
-
-
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
+
+
+
 
 
 </template>
@@ -614,7 +626,15 @@
         }
     </style>
 
-
+<style>
+    .silde-center {
+        text-align: center;
+        height: 225px;
+    }
+    .swiper-image {
+        height: 230px;
+    }
+</style>
 
 
     <div class="list-block">
@@ -726,35 +746,30 @@
         <form novalidate @submit.prevent="onSubmit">
             <div class="list-block">
                 <ul>
-                    <li style="display: none;">
+                    <li  v-show="isShowQRCode">
                         <div class="silde-background">
-
-
-
-                            <div id="qr_swiper" class="swiper-container silde-center gpd-ablum swiper-container-horizontal">
-                                <div class="swiper-wrapper " style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);" id="swiperContain">
+                            <div id="qr_swiper" class="silde-center swiper-container" id="swiper-container1">
+                                <div class="swiper-wrapper">
                                     <div class='swiper-slide swiper-image' v-for="qr in qrcodes">
-                                        <img :src="qr|imgbase64">
+                                    <img :src="qr|imgbase64">
                                     </div>
-                                    <!-- Add Pagination -->
-                                    <div class="swiper-pagination">
-                                    </div>
-                                    <!-- Add Arrows -->
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
                                 </div>
+                                <div class="swiper-pagination">
+                                    &nbsp;</div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
                             <div class="full-w">
                                 <p class="text-uppercase">
                                     验证码：<strong id="ticketCode" class="text-danger item-pullleft">
-                                    {{currentQr.code}}
+                                    {{currentQrcode.code}}
                                 </strong>
                                     <strong id="ticket_status" class="pull-right item-pullleft">
-                                        {{currentQr.status|qrcodeStatus}}
+                                        {{{currentQrcode.status|qrcodeStatus}}}
                                     </strong>
                                 </p>
                             </div>
-                            </div>
+            </div>
                     </li>
                     <li>
                         <div class="item-content">
@@ -936,10 +951,6 @@
                                     <div v-else>
                                         <span class="item-input-readonly">  {{order.remark}}</span>
                                     </div>
-
-
-
-
                                 </div>
                             </div>
                         </div>
