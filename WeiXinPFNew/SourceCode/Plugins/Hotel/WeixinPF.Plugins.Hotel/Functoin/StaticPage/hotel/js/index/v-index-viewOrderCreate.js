@@ -189,6 +189,7 @@ var ViewOrderCreate = Vue.extend({
 
             //不同订单，显示不同信息
             if (oldVal.id != order.id) {
+                this.hasBeenSubmitted=false;
                 if (order.id > 0) {
                     this.getOrdrderData();
                 }
