@@ -167,7 +167,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
             try
             {
                 GetOrderUserInfoResponse responseData = null;
-                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", new GetOrderUserInfoRequest() { OpendId = openid })
+                IAsyncResult asyncResult = new BusEntry("WeixinPF.Hotel.Plugins").MyBus.Send("WeixinPF.Hotel.Plugins.Service", new GetOrderUserInfoRequest() { OpenId = openid })
                         .Register(response =>
                         {
                             CompletionResult result = response.AsyncState as CompletionResult;
