@@ -5714,6 +5714,7 @@
     <Content Include="Common\images\font-awesome\scss\_mixins.scss" />
     <Content Include="Common\images\font-awesome\scss\_path.scss" />
     <Content Include="Common\images\font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\jxiaox-web-wexinpf.web.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
