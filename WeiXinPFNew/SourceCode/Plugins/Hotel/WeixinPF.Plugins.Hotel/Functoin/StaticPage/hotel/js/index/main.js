@@ -175,7 +175,7 @@ var vm = new Vue({
             this.getQueryData(wid,hotelId,openid);
         },
         initSwiper: function () {
-            this.swiper = new Swiper('.swiper-container', {
+            this.swiper = new Swiper('#img_swiper', {
                 pagination: '.swiper-pagination',
                 centeredSlides: true,
                 paginationClickable: true

@@ -5,7 +5,8 @@ var ViewOrderCreate = Vue.extend({
     props: ['wid','openid','hotel','room','order','orderCount'],
     data: function () {
        return {
-           qrcodes:[]
+           qrcodes:[],
+           currentQr:{}
        }
     },
 
@@ -136,6 +137,15 @@ var ViewOrderCreate = Vue.extend({
           result=  qr.toDataURL(item.code);
         }
          return result;
+      },
+      'qrcodeStatus':function(item) {
+        var result='';
+        if(item)
+        {
+
+          result=  qr.toDataURL(item.code);
+        }
+         return result;
       }
     },
     watch: {
@@ -169,11 +179,19 @@ var ViewOrderCreate = Vue.extend({
         var self = this;
        this.getOrdrderData();
         this.initItemCollapse();
+        this.initSwiper();
         //this.toggleItemShow();
 
-        //$('[type="date"].min-today').prop('min', function(){
-        //    return new Date().toJSON().split('T')[0];
-        //});
+        //获取验证码
+        self.getQrCode(function(data){
+          self.qrcodes=data;
+          setTimeout(function () {
+              self.swiper.update();
+          }, 2000);
+        },
+        function(response){
+          $.toast("获取验证码失败!");
+        });
     },
     methods: {
         isIdCard:function(val){
@@ -195,6 +213,13 @@ var ViewOrderCreate = Vue.extend({
             //{
             //    this.$activateValidator();
             //}
+        },
+        initSwiper: function () {
+            this.swiper = new Swiper('#qr_swiper', {
+                pagination: '.swiper-pagination',
+                centeredSlides: true,
+                paginationClickable: true
+            });
         },
         getOrdrderData:function(){
             var self = this;
@@ -223,7 +248,11 @@ var ViewOrderCreate = Vue.extend({
                     //获取验证码
                     self.getQrCode(function(data){
                       self.qrcodes=data;
-                      self.renderQrcode();
+                      setTimeout(function() {
+                        self.swiper.update();
+                      },2000);
+                      // self.renderQrcode();
+
                     },
                     function(response){
                       $.toast("获取验证码失败!");
@@ -252,14 +281,14 @@ var ViewOrderCreate = Vue.extend({
                 self.activateValidator();
             }
         },
-        renderQrcode:function(argument) {
-          for (var i = 0; i < this.qrcodes.length; i++) {
-            var qrdata= this.qrcodes[i];
-            qr.canvas({
-              canvas: document.getElementById('qr_'+i),
-              value: qrdata.code });
-          }
-        },
+        // renderQrcode:function(argument) {
+        //   for (var i = 0; i < this.qrcodes.length; i++) {
+        //     var qrdata= this.qrcodes[i];
+        //     qr.canvas({
+        //       canvas: document.getElementById('qr_'+i),
+        //       value: qrdata.code });
+        //   }
+        // },
         getNoOrderData: function () {
             var self = this;
             if(!this.order||!this.order.id||this.order.id<=0)
@@ -324,7 +353,7 @@ var ViewOrderCreate = Vue.extend({
                 });
         },
         getQrCode:function(callBack,errorCallBack) {
-          this.$http.get('/api/order/getQrCode',
+          this.$http.get('api/order/getQrCode',
               {orderId:this.order.id}).then(function (response) {
                   if (response.data) {
                       callBack(response.data);
@@ -341,7 +370,7 @@ var ViewOrderCreate = Vue.extend({
             }
             var jsonOrder=JSON.stringify(this.order);
 
-            this.$http.post('/api/order/Save',
+            this.$http.post('api/order/Save',
                 {   wid:this.wid,
                     openid:this.openid,
                     hotelId:this.hotel.id,

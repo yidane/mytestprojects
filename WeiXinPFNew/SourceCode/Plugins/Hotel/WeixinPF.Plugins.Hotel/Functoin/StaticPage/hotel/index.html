@@ -294,7 +294,7 @@
         }
     </style>
 
-    <div class="swiper-container">
+    <div id="img_swiper" class="swiper-container">
         <div class="swiper-wrapper">
 
             <!--<div class="swiper-slide" v-for="imgData in viewImages">-->
@@ -647,13 +647,13 @@
 
 
 
-                    <div class="swiper-container silde-center gpd-ablum swiper-container-horizontal">
+                    <div id="qr_swiper" class="swiper-container silde-center gpd-ablum swiper-container-horizontal">
                         <div class="swiper-wrapper " style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);" id="swiperContain">
                         <div class='swiper-slide swiper-image' v-for="qr in qrcodes">
                                 <img :src="qr|imgbase64">
                         </div>
                         <!-- Add Pagination -->
-                        <div class="swiper-pagination" id="swiperFooter">
+                        <div class="swiper-pagination">
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next"></div>
@@ -662,7 +662,12 @@
                 </div>
                 <div class="full-w">
                     <p class="text-uppercase">
-                        验证码：<strong id="ticketCode" class="text-danger item-pullleft"></strong><strong id="ticket_status" class="pull-right item-pullleft"></strong>
+                        验证码：<strong id="ticketCode" class="text-danger item-pullleft">
+                            {{currentQr.code}}
+                        </strong>
+                        <strong id="ticket_status" class="pull-right item-pullleft">
+                          {{currentQr.status|qrcodeStatus}}
+                        </strong>
                     </p>
                 </div>
                   </li>
