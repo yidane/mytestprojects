@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using NServiceBus;
 using WeixinPF.Common;
+using WeixinPF.Common.Enum;
 using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Shared;
 
@@ -15,15 +16,12 @@ namespace WeixinPF.Hotel.Plugins.Controller
 {
     public class OrderController : ApiController
     {
-        private const int WaitSeconds = 10000000;
-        private const string ServiceName = "WeixinPF.Hotel.Plugins.Service";
-
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public CreateOrderResponse Save(CreateOrderRequest request)
         {
             try
             {
-                var result = Global.Bus.Send<CreateOrderResponse>(ServiceName, request);
+                var result = Global.Bus.Send<CreateOrderResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
 
@@ -43,13 +41,62 @@ namespace WeixinPF.Hotel.Plugins.Controller
         }
 
         /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public CancelOrderResponse Cancel(CancelOrderRequest request)
+        {
+            try
+            {
+                var result = Global.Bus.Send<CancelOrderResponse>(Constants.HotelServiceAddress, request);
+                if (!result.IsSuccess)
+                {
+
+                    throw new HttpResponseException(
+                        Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                            "取消订单失败。"));
+                }
+                return result.Data;
+            }
+            catch
+            {
+                throw new HttpResponseException(
+                    Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    "取消订单失败。"));
+            }
+        }
+
+        public CancelOrderResponse Payed(PayedOrderRequest request)
+        {
+            try
+            {
+                var result = Global.Bus.Send<PayedOrderResponse>(Constants.HotelServiceAddress, request);
+                if (!result.IsSuccess)
+                {
+
+                    throw new HttpResponseException(
+                        Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                            "更改订单状态失败。"));
+                }
+                return result.Data;
+            }
+            catch
+            {
+                throw new HttpResponseException(
+                    Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                    "更改订单状态失败。"));
+            }
+        }
+        /// <summary>
         /// 获取最新历史订单里用户信息
         /// </summary>
         public GetOrderUserInfoResponse GetOrderLastUserInfo([FromUri]GetOrderUserInfoRequest request)
         {
             try
             {
-                var result = Global.Bus.Send<GetOrderUserInfoResponse>(ServiceName, request);
+                var result = Global.Bus.Send<GetOrderUserInfoResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
 
@@ -72,7 +119,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             try
             {
-                var result = Global.Bus.Send<GetOrderResponse>(ServiceName, request);
+                var result = Global.Bus.Send<GetOrderResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
                     throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
@@ -94,7 +141,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             try
             {
-                var result = Global.Bus.Send<GetOrderListResponse>(ServiceName, request);
+                var result = Global.Bus.Send<GetOrderListResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
                     throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
@@ -116,7 +163,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             try
             {
-                var result = Global.Bus.Send<GetOrderCountResponse>(ServiceName, request);
+                var result = Global.Bus.Send<GetOrderCountResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
 

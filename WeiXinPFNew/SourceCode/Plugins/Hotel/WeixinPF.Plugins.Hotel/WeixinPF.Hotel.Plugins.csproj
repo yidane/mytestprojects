@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controller\HotelController.cs" />
     <Compile Include="Controller\OrderController.cs" />
     <Compile Include="Controller\RoomController.cs" />

@@ -87,6 +87,7 @@
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\Profiles\OrderProfile.cs" />
     <Compile Include="Handler\Base\BaseHandler.cs" />
+    <Compile Include="Handler\CancelOrderHandler.cs" />
     <Compile Include="Handler\CreateOrderHandler.cs" />
     <Compile Include="Handler\GetByIdentifyingCodeIdHandler.cs" />
     <Compile Include="Application\Service\RoomService.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Handler\GetRoomHandler.cs" />
     <Compile Include="Handler\GetRoomListHandler.cs" />
     <Compile Include="Handler\MakeUseOfIdentifyingCodeHandler.cs" />
+    <Compile Include="Handler\PayedOrderHandler.cs" />
     <Compile Include="Handler\ShowAllRoomHandler.cs" />
     <Compile Include="HotelService.cs">
       <SubType>Component</SubType>

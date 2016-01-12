@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Command\ShowAllRoom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestResponse\HotelOrder\CancelOrderRequest.cs" />
+    <Compile Include="RequestResponse\HotelOrder\CancelOrderResponse.cs" />
     <Compile Include="RequestResponse\HotelOrder\GetOrderCountRequest.cs" />
     <Compile Include="RequestResponse\HotelOrder\GetOrderCountResponse.cs" />
     <Compile Include="RequestResponse\HotelOrder\Dtos\OrderDto.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="RequestResponse\HotelOrder\GetOrderUserInfoRequest.cs" />
     <Compile Include="RequestResponse\HotelOrder\CreateOrderRequest.cs" />
     <Compile Include="RequestResponse\HotelOrder\CreateOrderResponse.cs" />
+    <Compile Include="RequestResponse\HotelOrder\PayedOrderResponse.cs" />
     <Compile Include="RequestResponse\Hotel\GetHotelListRequest.cs" />
     <Compile Include="RequestResponse\Hotel\GetHotelListResponse.cs" />
     <Compile Include="RequestResponse\Hotel\GetHotelRequest.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeRequest.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeResponse.cs" />
     <Compile Include="Command\IdentifyingCode\MakeUseOfIdentifyingCode.cs" />
+    <Compile Include="RequestResponse\HotelOrder\PayedOrderRequest.cs" />
     <Compile Include="RequestResponse\Room\GetRoomListResponse.cs" />
     <Compile Include="RequestResponse\Room\GetRoomListRequest.cs" />
     <Compile Include="RequestResponse\Room\GetRoomRequest.cs" />

@@ -14,11 +14,6 @@ namespace WeixinPF.Hotel.Plugins.Controller
 {
     public class RoomController : ApiController
     {
-        private const int WaitSeconds = 10000000;
-
-        private string ServiceName = "WeixinPF.Hotel.Plugins.Service";
-
-
         /// <summary>
         /// 获取房间列表
         /// </summary>
@@ -26,7 +21,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             try
             {
-                var result = Global.Bus.Send<GetRoomListResponse>(ServiceName, request);
+                var result = Global.Bus.Send<GetRoomListResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
                     throw new HttpResponseException(
@@ -51,7 +46,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
         {
             try
             {
-                var result = Global.Bus.Send<GetRoomResponse>(ServiceName, request);
+                var result = Global.Bus.Send<GetRoomResponse>(Constants.HotelServiceAddress, request);
                 if (!result.IsSuccess)
                 {
                     throw new HttpResponseException(
