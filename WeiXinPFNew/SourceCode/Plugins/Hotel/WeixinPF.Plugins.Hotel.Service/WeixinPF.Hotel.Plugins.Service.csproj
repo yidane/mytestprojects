@@ -129,6 +129,7 @@
     <Compile Include="Models\RoomPictureInfo.cs" />
     <Compile Include="AutoMapper\Profiles\HotelProfile.cs" />
     <Compile Include="AutoMapper\Profiles\RoomProfile.cs" />
+    <Compile Include="PayNotify\PayNotifyRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\IdentifyingCodeRepository.cs" />
