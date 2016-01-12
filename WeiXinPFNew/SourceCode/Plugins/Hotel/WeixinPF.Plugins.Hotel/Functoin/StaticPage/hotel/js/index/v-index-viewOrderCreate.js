@@ -455,7 +455,9 @@ var ViewOrderCreate = Vue.extend({
                         self.orderCount++;
                         self.updateOrderNumber(self.orderCount);
                         $.toast("保存成功!");
+                        self.hasBeenSubmitted=true;
                         self.router.setRoute('/order');
+
                     }
                     else {
                         $.toast("保存失败!");
