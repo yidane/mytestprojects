@@ -85,6 +85,7 @@
     <Compile Include="Application\Service\IdentifyingCodeService.cs" />
     <Compile Include="Application\Service\RoomPictureService.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="AutoMapper\Profiles\IdentityingCodeProfile.cs" />
     <Compile Include="AutoMapper\Profiles\OrderProfile.cs" />
     <Compile Include="Handler\Base\BaseHandler.cs" />
     <Compile Include="Handler\CancelOrderHandler.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Handler\GetHotelHandler.cs" />
     <Compile Include="Handler\GetHotelListHandler.cs" />
     <Compile Include="Handler\GetHotelOrderHandler.cs" />
+    <Compile Include="Handler\GetIdentifyingCodeByOrderHandler.cs" />
     <Compile Include="Handler\GetIdentifyingCodeDetailHandler.cs" />
     <Compile Include="Handler\GetIdentifyingCodeHandler.cs" />
     <Compile Include="Handler\GetOrderCountHandler.cs" />

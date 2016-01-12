@@ -178,28 +178,23 @@ namespace WeixinPF.Hotel.Plugins.Controller
                         "获取数量列表失败。"));
             }
         }
-        public List<QrCodeDto> GetQrCode(int orderId)
+        public GetIdentifyingCodeByOrderResponse GetQrCode(GetIdentifyingCodeByOrderRequest request)
         {
             try
             {
-                var data = new List<QrCodeDto>();
-                for (int i = 1; i <= 3; i++)
+                var result = Global.Bus.Send<GetIdentifyingCodeByOrderResponse>(Constants.HotelServiceAddress, request);
+                if (!result.IsSuccess)
                 {
-                    var qr = new QrCodeDto()
-                    {
-                        Code = "jxiaoxi" + i,
-                        Status = i
-                    };
-                    data.Add(qr);
+
+                    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                            "获取数量列表失败。"));
                 }
-                return data;
+                return result.Data;
             }
             catch
             {
-
-                throw new HttpResponseException(
-                     Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-                     "获取验证码失败。"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                        "获取数量列表失败。"));
             }
         }
     }

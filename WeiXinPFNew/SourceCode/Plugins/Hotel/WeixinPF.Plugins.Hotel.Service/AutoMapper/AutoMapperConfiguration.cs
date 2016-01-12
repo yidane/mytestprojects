@@ -12,6 +12,7 @@ namespace WeixinPF.Hotel.Plugins.Service.AutoMapper
                 cfg.AddProfile<RoomProfile>();
                 cfg.AddProfile<HotelProfile>();
                 cfg.AddProfile<OrderProfile>();
+                cfg.AddProfile<IdentityingCodeProfile>();
             });
         }
     }

@@ -15,7 +15,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
     {
         public static IdentifyingCodeInfo GetConfirmIdentifyingCodeInfo(int shopId, string identifyingCode, string moduleName, int wid)
         {
-            
+
             if (shopId == 0 || string.IsNullOrEmpty(identifyingCode) || string.IsNullOrEmpty(moduleName))
             {
                 return null;
@@ -39,10 +39,10 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
             }
             catch (Exception ex)
             {
-                
+
                 throw;
             }
-            
+
         }
 
         public static IdentifyingCodeInfo GetIdentifyingCodeInfoByIdentifyingCodeId(Guid identifyingCodeId, string moduleName, int wid)
@@ -67,10 +67,10 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
             }
             catch (Exception ex)
             {
-                
+
                 throw;
             }
-            
+
         }
 
         public static bool MakeUseOfIdentifyingCode(Guid identifyingCodeId)
@@ -97,7 +97,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
                 return null;
             }
 
-            var identifyingCode = new IdentifyingCodeInfo(){IdentifyingCodeId = identifyingCodeId, ModuleName = moduleName};
+            var identifyingCode = new IdentifyingCodeInfo() { IdentifyingCodeId = identifyingCodeId, ModuleName = moduleName };
 
             using (var context = new HotelDbContext())
             {
@@ -107,7 +107,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
             }
         }
 
-        public static   bool AddIdentifyingCode(IdentifyingCodeInfo code)
+        public static bool AddIdentifyingCode(IdentifyingCodeInfo code)
         {
             if (code != null)
             {
@@ -131,6 +131,18 @@ namespace WeixinPF.Hotel.Plugins.Service.Application.Service
             }
 
             return false;
+        }
+
+        public static List<IdentifyingCodeInfo> GetIdentifyingCodeByOrder(int orderId, string moduleName)
+        {
+            using (var context = new HotelDbContext())
+            {
+                return new IdentifyingCodeRepository(context).Get(
+                        code => code.OrderId.Equals(orderId.ToString())
+                        && code.ModuleName.Equals(moduleName)
+                        ).ToList();
+                ;
+            }
         }
     }
 }

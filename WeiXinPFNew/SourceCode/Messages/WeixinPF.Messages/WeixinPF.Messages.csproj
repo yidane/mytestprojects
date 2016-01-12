@@ -74,6 +74,8 @@
     <Compile Include="RequestResponse\Hotel\GetHotelRequest.cs" />
     <Compile Include="RequestResponse\Hotel\GetHotelResponse.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetByIdnetifyingCodeIdRequest.cs" />
+    <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeByOrderRequest.cs" />
+    <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeByOrderResponse.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeDetailRequest.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeDetailResponse.cs" />
     <Compile Include="RequestResponse\IdentifyingCode\GetIdentifyingCodeRequest.cs" />
