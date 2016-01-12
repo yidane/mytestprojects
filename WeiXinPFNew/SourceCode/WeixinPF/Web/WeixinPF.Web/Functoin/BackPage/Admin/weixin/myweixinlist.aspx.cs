@@ -23,19 +23,17 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             this.keywords = MXRequest.GetQueryString("keywords");
             if (!Page.IsPostBack)
             {
-                //RptBind(CombSqlTxt(keywords), "createDate desc,id desc");
-                RptBind(keywords, "createDate desc,id desc");
+                RptBind(keywords);
             }
         }
 
         #region 数据绑定=================================
-        private void RptBind(string _strWhere, string _orderby)
+        private void RptBind(string keyWords)
         {
             var model = GetAdminInfo(); //取得当前管理员信息
-            _strWhere = "uId=" + model.Id + " and isDelete=0 " + _strWhere + " order by " + _orderby;
 
             txtKeywords.Text = this.keywords;
-            var wxList = bll.GetModelList(model.Id, _strWhere);
+            var wxList = bll.GetModelList(model.Id, keyWords);
 
             if (wxList != null)
             {
@@ -44,21 +42,21 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                 {
                     foreach (AppInfo appInfo in wxList)
                     {
-                        appInfo.extStr = "<span class=\"span_zhengchang\">正常</span>";
-                        if (appInfo.wStatus)
+                        appInfo.ExtStr = "<span class=\"span_zhengchang\">正常</span>";
+                        if (appInfo.WStatus)
                         {
-                            appInfo.extStr = "<span class=\"span_jinyong\">禁用</span>";
+                            appInfo.ExtStr = "<span class=\"span_jinyong\">禁用</span>";
                         }
 
                         if (appInfo.EndDate != null)
                         {
                             if (appInfo.EndDate < DateTime.Now)
                             {
-                                appInfo.extStr = "<span class=\"span_guoqi\">过期</span>";
+                                appInfo.ExtStr = "<span class=\"span_guoqi\">过期</span>";
                             }
                             else if (appInfo.EndDate < DateTime.Now.AddDays(15))
                             {
-                                appInfo.extStr = "<span class=\"span_kguoqi\">快到期</span>";
+                                appInfo.ExtStr = "<span class=\"span_kguoqi\">快到期</span>";
                             }
                         }
                     }
@@ -109,7 +107,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                     {
                         int wid = int.Parse(e.CommandArgument.ToString());
                         var weixin = bll.GetAppInfo(wid);
-                        if (weixin.wStatus)
+                        if (weixin.WStatus)
                         {
                             MessageBox.Show(this, "账号已被禁用，无法进入");
                             return;

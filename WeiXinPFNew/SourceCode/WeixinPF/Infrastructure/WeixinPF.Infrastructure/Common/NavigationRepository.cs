@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WeixinPF.Application.System.Interface;
 using WeixinPF.Application.Weixin.Repository;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.DBUtility;
-using WeixinPF.Model.System;
+using WeixinPF.Model.Common;
 
-namespace WeixinPF.Infrastructure.System
+namespace WeixinPF.Infrastructure.Common
 {
     public class NavigationRepository: INavigationRepository
     {

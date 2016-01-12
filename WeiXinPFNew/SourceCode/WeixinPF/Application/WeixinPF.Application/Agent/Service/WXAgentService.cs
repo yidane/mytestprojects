@@ -11,8 +11,8 @@ namespace WeixinPF.Application.Agent.Service
 {
     public class WXAgentService
     {
-        private readonly IWXAgentRepository _repository;
-        public WXAgentService(IWXAgentRepository repository)
+        private readonly IAgentRepository _repository;
+        public WXAgentService(IAgentRepository repository)
         {
             this._repository = repository;
         }

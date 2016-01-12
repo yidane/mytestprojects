@@ -3,22 +3,17 @@ using WeixinPF.Model.Agent;
 
 namespace WeixinPF.Application.Agent.Repository
 {
-    public interface IWXAgentRepository
+    public interface IManagerBillRepository
     {
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        int Add(AgentInfo model);
-
-        /// <summary>
-        /// 更新一条数据
-        /// </summary>
-        bool Update(AgentInfo model);
+        int Add(ManagerBillInfo model);
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        AgentInfo DataRowToModel(DataRow row);
+        ManagerBillInfo DataRowToModel(DataRow row);
 
         /// <summary>
         /// 获得数据列表
@@ -29,10 +24,5 @@ namespace WeixinPF.Application.Agent.Repository
         /// 获得查询分页数据
         /// </summary>
         DataSet GetList(int pageSize, int pageIndex, string strWhere, string filedOrder, out int recordCount);
-
-        /// <summary>
-        /// 得到一个对象实体
-        /// </summary>
-        AgentInfo GetAgentModel(int managerId);
     }
 }

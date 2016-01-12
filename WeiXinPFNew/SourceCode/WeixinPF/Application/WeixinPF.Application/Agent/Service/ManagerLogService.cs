@@ -39,11 +39,16 @@ namespace WeixinPF.Application.Agent.Service
             var managerLogInfo = new ManagerLogInfo
             {
                 UserId = userId,
+                SessionId = sessionId,
                 UserName = userName,
                 ActionType = actionType,
                 Remark = remark,
                 AddTime = DateTime.Now,
+#if DEBUG
+                UserIp = "127.0.0.1"
+#else
                 UserIp = MXRequest.GetIP()
+#endif
             };
 
             return _repository.Add(managerLogInfo);

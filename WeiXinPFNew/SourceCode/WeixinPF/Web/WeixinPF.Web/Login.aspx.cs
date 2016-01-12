@@ -8,8 +8,8 @@ using WeixinPF.Hotel.Plugins.Service.Application;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Infrastructure.Agent;
-using WeixinPF.Infrastructure.System;
-using WeixinPF.Model.System;
+using WeixinPF.Infrastructure.Common;
+using WeixinPF.Model.Common;
 
 namespace WeixinPF.Web
 {

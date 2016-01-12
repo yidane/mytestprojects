@@ -11,8 +11,8 @@ namespace WeixinPF.Application.Agent.Service
 {
     public class WXManagerBillService
     {
-        private readonly IWXManagerBillRepository _repository;
-        public WXManagerBillService(IWXManagerBillRepository repository)
+        private readonly IManagerBillRepository _repository;
+        public WXManagerBillService(IManagerBillRepository repository)
         {
             this._repository = repository;
         }

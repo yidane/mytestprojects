@@ -22,7 +22,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
     {
         private string action = MXEnums.ActionEnum.Add.ToString(); //操作类型
         private int id = 0;
-        WXAgentService aBll = new WXAgentService(new WXAgentRepository());
+        WXAgentService aBll = new WXAgentService(new AgentRepository());
         private bool isAgent = false;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -56,9 +56,9 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 //代理商信息
                 if (agent != null)
                 {
-                    lblremainMony.Text = agent.remainMony.Value.ToString();
-                    lblagentPrice.Text = agent.agentPrice.Value.ToString();
-                    lblMoney.Text = agent.agentPrice.Value.ToString();
+                    lblremainMony.Text = agent.RemainMony.Value.ToString();
+                    lblagentPrice.Text = agent.AgentPrice.Value.ToString();
+                    lblMoney.Text = agent.AgentPrice.Value.ToString();
                     isAgent = true;
                 }
 
@@ -149,7 +149,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             {
                 agent = aBll.GetAgentModel(adminEntity.Id);
                 isAgent = true;
-                if (agent.remainMony < agent.agentPrice)
+                if (agent.RemainMony < agent.AgentPrice)
                 {
                     JscriptMsg("余额不足，请联系管理员充值！", "", "Error");
                     return false;
@@ -209,22 +209,22 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
          
             if (addId>0 && isAgent)
             {
-                int xfjine = newMaxNum * agent.agentPrice.Value;//消费金额
+                int xfjine = newMaxNum * agent.AgentPrice.Value;//消费金额
 
                 //是代理商 :缴费，扣除金额，增加消费记录
-                agent.remainMony -= xfjine;
-                agent.userNum += 1;
-                agent.wcodeNum += newMaxNum;
+                agent.RemainMony -= xfjine;
+                agent.UserNum += 1;
+                agent.WcodeNum += newMaxNum;
                 bool updateRet= aBll.Update(agent);
 
                 if (updateRet)
                 {
-                    var bBll = new WXManagerBillService(new WXManagerBillRepository());
+                    var bBll = new WXManagerBillService(new ManagerBillRepository());
                     var bill = new ManagerBillInfo
                     {
                         BillMoney = xfjine,
-                        ManagerId = agent.managerId,
-                        OperPersonId = agent.managerId,
+                        ManagerId = agent.ManagerId,
+                        OperPersonId = agent.ManagerId,
                         OperDate = DateTime.Now,
                         BillUsed = "开通1个用户" + model.UserName + "的" + newMaxNum + "个微帐号",
                         MoneyType = "扣减"
@@ -268,7 +268,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             {
                 agent = aBll.GetAgentModel(adminEntity.Id);
                 isAgent = true;
-                if (agent.remainMony < agent.agentPrice * addNewNum)
+                if (agent.RemainMony < agent.AgentPrice * addNewNum)
                 {
                     JscriptMsg("余额不足，请联系管理员充值！", "", "Error");
                     return false;
@@ -320,20 +320,20 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
 
             if (updateRet && isAgent && addNewNum > 0)
             {
-                int xfjine = addNewNum * agent.agentPrice.Value;//消费金额
+                int xfjine = addNewNum * agent.AgentPrice.Value;//消费金额
 
-                agent.remainMony -= xfjine;
-                agent.wcodeNum += newMaxNum;
+                agent.RemainMony -= xfjine;
+                agent.WcodeNum += newMaxNum;
 
                 bool updateRet2 = aBll.Update(agent);
                 if (updateRet2)
                 {
-                    var bBll = new WXManagerBillService(new WXManagerBillRepository());
+                    var bBll = new WXManagerBillService(new ManagerBillRepository());
                     var bill = new ManagerBillInfo
                     {
                         BillMoney = xfjine,
-                        ManagerId = agent.managerId,
-                        OperPersonId = agent.managerId,
+                        ManagerId = agent.ManagerId,
+                        OperPersonId = agent.ManagerId,
                         OperDate = DateTime.Now,
                         BillUsed = "原用户" + model.UserName + "新增了" + addNewNum + "个微帐号",
                         MoneyType = "扣减"

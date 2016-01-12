@@ -65,12 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent\AgentDbContext.cs" />
     <Compile Include="Agent\Repository\IManagerLogRepository.cs" />
     <Compile Include="Agent\Repository\IManagerInfoRepository.cs" />
     <Compile Include="Agent\Repository\IManagerRoleRepository.cs" />
-    <Compile Include="Agent\Repository\IWXAgentRepository.cs" />
-    <Compile Include="Agent\Repository\IWXManagerBillRepository.cs" />
+    <Compile Include="Agent\Repository\IAgentRepository.cs" />
+    <Compile Include="Agent\Repository\IManagerBillRepository.cs" />
     <Compile Include="Agent\Service\ManagerLogService.cs" />
     <Compile Include="Agent\Service\ManagerRoleService.cs" />
     <Compile Include="Agent\Service\ManagerInfoService.cs" />
@@ -110,7 +109,6 @@
     <Compile Include="Weixin\Token\Service\JsApiTicketService.cs" />
     <Compile Include="Weixin\User\Repository\IUserRepository.cs" />
     <Compile Include="Weixin\User\Service\UserService.cs" />
-    <Compile Include="Weixin\WeiXinDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\WeixinPF.Common\WeixinPF.Common.csproj">

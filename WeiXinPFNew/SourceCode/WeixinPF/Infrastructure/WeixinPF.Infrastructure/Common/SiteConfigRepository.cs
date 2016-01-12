@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeixinPF.Application.System.Interface;
+﻿using WeixinPF.Application.System.Interface;
 using WeixinPF.Common.Helper;
-using WeixinPF.Model.System;
+using WeixinPF.Model.Common;
 
-namespace WeixinPF.Infrastructure.System
+namespace WeixinPF.Infrastructure.Common
 {
     /// <summary>
     /// 数据访问类:站点配置

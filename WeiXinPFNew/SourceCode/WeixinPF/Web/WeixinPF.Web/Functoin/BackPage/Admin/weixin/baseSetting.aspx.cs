@@ -41,11 +41,11 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         private void ShowInfo()
         {
             var weixin = GetWeiXinCode();
-            lblWeixinName.Text = weixin.wxName;
+            lblWeixinName.Text = weixin.WxName;
             lblAppid.Text = weixin.AppId;
 
             var wxpayBll = new WXPaymentService(new PaymentRepository());
-            var model = wxpayBll.GetModelByWid(weixin.id);
+            var model = wxpayBll.GetModelByWid(weixin.Id);
             if (model == null || model.id == 0)
             {
                 //新增记录
@@ -61,7 +61,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
 
             }
             var propertyBll = new WXPropertyService(new PropertyRepository());
-            var propertyEntity = propertyBll.GetModelByIName(weixin.id, MXEnums.WXPropertyKeyName.OpenOauth.ToString());
+            var propertyEntity = propertyBll.GetModelByIName(weixin.Id, MXEnums.WXPropertyKeyName.OpenOauth.ToString());
             if (propertyEntity != null)
             {
                 radOpenOAuth.SelectedValue = propertyEntity.iContent;
@@ -83,7 +83,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             {
                 //新增
                 
-                  wxpayModel.wid = weixin.id;
+                  wxpayModel.wid = weixin.Id;
                   wxpayModel.createDate = DateTime.Now;
             }
             else
@@ -115,7 +115,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             //OpenOAuth开启
             var propertyBll = new WXPropertyService(new PropertyRepository());
             string pValue=radOpenOAuth.SelectedItem.Value;
-            propertyBll.AddProperty(weixin.id, MXEnums.WXPropertyKeyName.OpenOauth.ToString(), pValue);
+            propertyBll.AddProperty(weixin.Id, MXEnums.WXPropertyKeyName.OpenOauth.ToString(), pValue);
 
             if (ret)
             {

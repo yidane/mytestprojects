@@ -45,7 +45,7 @@ namespace WeixinPF.Application.Weixin.Token.Service
                     }
 
                     //从数据库中获取Token
-                    var tokenFromDb = _accessTokenRepository.GetAccessToken(appInfo.id);
+                    var tokenFromDb = _accessTokenRepository.GetAccessToken(appInfo.Id);
                     //如果不存在
                     if (tokenFromDb == null || tokenFromDb.IsExpired())
                     {
@@ -57,7 +57,7 @@ namespace WeixinPF.Application.Weixin.Token.Service
                         var newAccessToken = new AccessToken
                         {
                             Id = Guid.NewGuid(),
-                            AppId = appInfo.id,
+                            AppId = appInfo.Id,
                             SysDateTime = DateTime.Now,
                             Ticket = accessTokenResult.access_token,
                             Expires = accessTokenResult.expires_in

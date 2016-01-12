@@ -17,7 +17,7 @@ namespace WeixinPF.Infrastructure.Weixin.Token
         private readonly EFRepository<JsApiTicket> _efRepository = new EFRepository<JsApiTicket>(new WeiXinDbContext());
         public JsApiTicket GetJsApiTicket(AppInfo appInfo)
         {
-            var result = _efRepository.Get(item => item.AppId == appInfo.id && !item.Expired)
+            var result = _efRepository.Get(item => item.AppId == appInfo.Id && !item.Expired)
                                       .OrderByDescending(item => item.SysDateTime)
                                       .Take(1);
 

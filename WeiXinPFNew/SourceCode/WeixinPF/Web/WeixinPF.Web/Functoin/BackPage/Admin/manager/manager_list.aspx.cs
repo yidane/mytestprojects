@@ -112,7 +112,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             ChkAdminLevel("manager_list", MXEnums.ActionEnum.Delete.ToString()); //检查权限
 
             bool isAgent = false;
-            var aBll = new WXAgentService(new WXAgentRepository());
+            var aBll = new WXAgentService(new AgentRepository());
             var adminEntity = GetAdminInfo(); //取得管理员信息
             var agent = new AgentInfo();
             if (adminEntity.AgentLevel > 0)
@@ -165,7 +165,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             if (isAgent && agent!=null)
             {
                 //如果为代理商，则将起用户数量减掉
-                agent.userNum -= sucCount;
+                agent.UserNum -= sucCount;
                 aBll.Update(agent);
             }
             AddAdminLog(MXEnums.ActionEnum.Delete.ToString(), "删除用户" + sucCount + "条，失败" + errorCount + "条"); //记录日志

@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 using WeixinPF.Application.Weixin.Repository;
-using WeixinPF.Model.System;
+using WeixinPF.Model.Common;
 
 namespace WeixinPF.Application.System.Interface
 {

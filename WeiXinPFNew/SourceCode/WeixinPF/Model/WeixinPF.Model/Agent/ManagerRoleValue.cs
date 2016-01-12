@@ -8,7 +8,7 @@ namespace WeixinPF.Model.Agent
     /// 管理角色权限:实体类
     /// </summary>
     [Serializable]
-    [Table("System_ManagerRole")]
+    [Table("System_ManagerRoleValue")]
     public class ManagerRoleValueInfo
     {
         /// <summary>

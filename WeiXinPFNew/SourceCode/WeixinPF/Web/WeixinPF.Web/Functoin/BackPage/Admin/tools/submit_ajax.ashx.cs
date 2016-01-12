@@ -4,8 +4,6 @@ using System.Text;
 using System.Data;
 using System.Web;
 using System.Web.SessionState;
-using WeiXinPF.Web.UI;
-using WeiXinPF.Common;
 using LitJson;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;

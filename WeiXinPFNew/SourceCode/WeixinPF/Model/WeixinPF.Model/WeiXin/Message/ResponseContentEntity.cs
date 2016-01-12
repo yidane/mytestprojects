@@ -1,8 +1,11 @@
-﻿namespace WeixinPF.Model.Weixin.Message
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WeixinPF.Model.Weixin.Message
 {
     /// <summary>
     /// 模块的回复，将内容实例化传递
     /// </summary>
+    [Table("WeiXin_ResponseContentEntity")]
     public class ResponseContentEntity
     {
         public ResponseContentEntity() { }

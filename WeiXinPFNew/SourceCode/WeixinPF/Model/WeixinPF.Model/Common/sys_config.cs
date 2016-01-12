@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WeixinPF.Model.System
+namespace WeixinPF.Model.Common
 {
     /// <summary>
     /// 站点配置实体类

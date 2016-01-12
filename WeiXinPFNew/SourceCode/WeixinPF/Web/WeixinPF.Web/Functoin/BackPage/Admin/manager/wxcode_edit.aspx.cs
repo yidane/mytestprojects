@@ -20,7 +20,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         protected void Page_Load(object sender, EventArgs e)
         {
             bll = new AppInfoService();
-            aBll = new WXAgentService(new WXAgentRepository());
+            aBll = new WXAgentService(new AgentRepository());
             adminEntity = GetAdminInfo(); //取得管理员信息
             agent = aBll.GetAgentModel(adminEntity.Id);
             if (!Page.IsPostBack)
@@ -53,14 +53,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
         private void ShowInfo(int id)
         {
             var model = bll.GetAppInfo(id);
-            lblId.Text = model.id.ToString();
-            this.txtwxName.Text = model.wxName;
+            lblId.Text = model.Id.ToString();
+            this.txtwxName.Text = model.WxName;
             this.txtwxId.Text = model.WxId;
             this.txtweixinCode.Text = model.WxCode;
-            this.txtImgUrl.Text = model.headerpic;
-            this.txtapiurl.Text = MyCommFun.getWebSite() + "/api/weixin/api.aspx?apiid=" + model.id;
+            this.txtImgUrl.Text = model.Headerpic;
+            this.txtapiurl.Text = MyCommFun.getWebSite() + "/api/weixin/api.aspx?apiid=" + model.Id;
             this.txtwxToken.Text = model.WxToken;
-            if (model.wStatus)
+            if (model.WStatus)
             {
                 this.rblwStatus.SelectedValue = "0";
             }
@@ -96,8 +96,8 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
             //代理商信息
             if (agent != null)
             {
-                lblremainMony.Text = agent.remainMony.Value.ToString();
-                lblagentPrice.Text = agent.agentPrice.Value.ToString();
+                lblremainMony.Text = agent.RemainMony.Value.ToString();
+                lblagentPrice.Text = agent.AgentPrice.Value.ToString();
             }
 
         }
@@ -146,10 +146,10 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
 
             var model = bll.GetAppInfo(_id);
 
-            model.wxName = wxName;
+            model.WxName = wxName;
             model.WxId = wxId;
             model.WxCode = weixinCode;
-            model.headerpic = headerpic;
+            model.Headerpic = headerpic;
             model.Apiurl = apiurl;
             model.WxToken = wxToken;
             model.AppId = AppId;
@@ -181,28 +181,28 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
                 {
                     agent = aBll.GetAgentModel(adminEntity.Id);
                     isAgent = true;
-                    if (agent.remainMony < agent.agentPrice)
+                    if (agent.RemainMony < agent.AgentPrice)
                     {
                         JscriptMsg("余额不足，请联系管理员充值！", "", "Error");
                         return false;
                     }
                     else
                     {
-                        int xfjine = addYear * agent.agentPrice.Value;//消费金额
+                        int xfjine = addYear * agent.AgentPrice.Value;//消费金额
 
                         //是代理商 :缴费，扣除金额，增加消费记录
-                        agent.remainMony -= xfjine;
+                        agent.RemainMony -= xfjine;
                         bool updateRet = aBll.Update(agent);
                         if (updateRet)
                         {
-                            var bBll = new WXManagerBillService(new WXManagerBillRepository());
+                            var bBll = new WXManagerBillService(new ManagerBillRepository());
                             var bill = new ManagerBillInfo
                             {
                                 BillMoney = xfjine,
-                                ManagerId = agent.managerId,
-                                OperPersonId = agent.managerId,
+                                ManagerId = agent.ManagerId,
+                                OperPersonId = agent.ManagerId,
                                 OperDate = DateTime.Now,
-                                BillUsed = "微帐号" + model.wxName + "增加时间" + addYear + "年",
+                                BillUsed = "微帐号" + model.WxName + "增加时间" + addYear + "年",
                                 MoneyType = "扣减"
                             };
 
@@ -222,7 +222,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.manager
 
             if (ret)
             {
-                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "【管理】修改微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "【管理】修改微信号，主键为:" + model.Id + ",微信号为：" + model.WxCode); //记录日志
                 return true;
             }
             return false;

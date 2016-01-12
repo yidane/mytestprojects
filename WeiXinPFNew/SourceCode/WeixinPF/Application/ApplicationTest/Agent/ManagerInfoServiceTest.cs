@@ -49,7 +49,8 @@ namespace ApplicationTest.Agent
                 AgentLevel = -1,
                 City = "北京",
                 County = "西三旗",
-                Province = "北京"
+                Province = "北京",
+                WxNum = 100
             };
 
             var managerInfoService = new ManagerInfoService();

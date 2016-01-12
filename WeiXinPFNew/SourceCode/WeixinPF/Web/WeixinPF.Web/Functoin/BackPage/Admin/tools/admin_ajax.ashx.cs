@@ -12,9 +12,9 @@ using WeixinPF.Application.System.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
-using WeixinPF.Infrastructure.System;
+using WeixinPF.Infrastructure.Common;
 using WeixinPF.Model.Agent;
-using WeixinPF.Model.System;
+using WeixinPF.Model.Common;
 using WeixinPF.Web.UI;
 
 //using WeiXinPF.API.Payment.wxpay;

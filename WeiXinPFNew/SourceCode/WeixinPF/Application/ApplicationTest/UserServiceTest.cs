@@ -21,9 +21,17 @@ namespace ApplicationTest
         [TestMethod]
         public void GetOpenId()
         {
-            var code = "0016f539a0f3689e71115826811e0b9M";
-            var userService = new UserService();
-            var openId = userService.GetOpenId(1, code);
+            try
+            {
+                var code = "02121dc6b290002f00bb7000d81c61bi";
+                var userService = new UserService();
+                var openId = userService.GetOpenId(1, code);
+                Assert.IsTrue(true);
+            }
+            catch (Exception exception)
+            {
+                Assert.Inconclusive(string.Format("由于code只能使用一次，此处不好重复调用测试用例.[{0}]", exception.Message));
+            }
         }
     }
 }

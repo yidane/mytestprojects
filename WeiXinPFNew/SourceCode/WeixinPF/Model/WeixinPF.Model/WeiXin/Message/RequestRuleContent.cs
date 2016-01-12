@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace WeixinPF.Model.WeiXin.Message
 {
+    [Table("WeiXin_RequestRuleContent")]
     public class RequestRuleContent
     {
         /// <summary>

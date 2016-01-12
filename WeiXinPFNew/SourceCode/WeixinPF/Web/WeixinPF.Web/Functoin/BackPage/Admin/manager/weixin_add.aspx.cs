@@ -101,13 +101,13 @@ namespace WeiXinPF.Web.admin.manager
 
             var model = new AppInfo
             {
-                uId = this.uid,
-                wxName = wxName,
+                UId = this.uid,
+                WxName = wxName,
                 WxId = wxId,
                 YixinId = "",
                 WxCode = weixinCode,
                 WxPwd = wxPwd,
-                headerpic = headerpic,
+                Headerpic = headerpic,
                 Apiurl = apiurl,
                 WxToken = wxToken,
                 WxProvince = wxProvince,
@@ -129,7 +129,7 @@ namespace WeiXinPF.Web.admin.manager
                 SmsTtNum = 0,
                 SmsUsedNum = 0,
                 IsDelete = false,
-                wStatus = true,
+                WStatus = true,
                 Remark = "",
                 Seq = 99
             };
@@ -154,7 +154,7 @@ namespace WeiXinPF.Web.admin.manager
                     idBll.addMouduleByRoleid(roleid, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
                 }
 
-                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.Id + ",微信号为：" + model.WxCode); //记录日志
                 return true;
             }
             return false;

@@ -106,7 +106,7 @@ namespace WeixinPF.Infrastructure.BaseRepository
         /// <returns></returns>
         public IQueryable<TEntity> Get(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> predicate)
         {
-            var skinCount = (pageIndex - 1)*pageSize;
+            var skinCount = (pageIndex - 1) * pageSize;
             if (predicate != null)
                 return Context.Set<TEntity>()
                     .Where<TEntity>(predicate)

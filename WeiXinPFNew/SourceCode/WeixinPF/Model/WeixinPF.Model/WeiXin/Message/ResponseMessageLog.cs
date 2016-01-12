@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Model.WeiXin.Message
 {
+    [Table("WeiXin_ResponseMessageLog")]
     public class ResponseMessageLog
     {
         //[ForeignKey()]

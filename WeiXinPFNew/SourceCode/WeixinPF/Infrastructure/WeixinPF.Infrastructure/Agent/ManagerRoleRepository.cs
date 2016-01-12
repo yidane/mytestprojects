@@ -15,7 +15,7 @@ namespace WeixinPF.Infrastructure.Agent
 {
     public class ManagerRoleRepository : IManagerRoleRepository
     {
-        private readonly EFRepository<ManagerRoleInfo> _efRepository = new EFRepository<ManagerRoleInfo>(new AgentDbContext());
+        private readonly EFRepository<ManagerRoleInfo> _efRepository = new EFRepository<ManagerRoleInfo>(new WeiXinDbContext());
         /// <summary>
         /// 是否存在该记录
         /// </summary>
@@ -47,122 +47,16 @@ namespace WeixinPF.Infrastructure.Agent
         /// </summary>
         public int Add(ManagerRoleInfo model)
         {
-            //StringBuilder strSql = new StringBuilder();
-            //strSql.Append("insert into " + databaseprefix + "manager_role(");
-            //strSql.Append("role_name,role_type,is_sys,agentId)");
-            //strSql.Append(" values (");
-            //strSql.Append("@role_name,@role_type,@is_sys,@agentId)");
-            //strSql.Append(";set @ReturnValue= @@IDENTITY");
-            //SqlParameter[] parameters = {
-            //        new SqlParameter("@role_name", SqlDbType.NVarChar,100),
-            //        new SqlParameter("@role_type", SqlDbType.TinyInt,1),
-            //        new SqlParameter("@is_sys", SqlDbType.TinyInt,1),
-            //        new SqlParameter("@agentId", SqlDbType.Int,4),
-            //        new SqlParameter("@ReturnValue",SqlDbType.Int)};
-            //parameters[0].Value = model.RoleName;
-            //parameters[1].Value = model.RoleType;
-            //parameters[2].Value = model.IsSys;
-            //parameters[3].Value = model.AgentId;
-            //parameters[4].Direction = ParameterDirection.Output;
-            //List<CommandInfo> sqllist = new List<CommandInfo>();
-            //CommandInfo cmd = new CommandInfo(strSql.ToString(), parameters);
-            //sqllist.Add(cmd);
+            _efRepository.Add(model);
 
-            //StringBuilder strSql2;
-            //if (model.ManagerRoleValues != null)
-            //{
-            //    foreach (ManagerRoleValueInfo modelt in model.ManagerRoleValues)
-            //    {
-            //        strSql2 = new StringBuilder();
-            //        strSql2.Append("insert into " + databaseprefix + "manager_role_value(");
-            //        strSql2.Append("role_id,nav_name,action_type)");
-            //        strSql2.Append(" values (");
-            //        strSql2.Append("@role_id,@nav_name,@action_type)");
-            //        SqlParameter[] parameters2 = {
-            //                new SqlParameter("@role_id", SqlDbType.Int,4),
-            //                new SqlParameter("@nav_name", SqlDbType.NVarChar,100),
-            //                new SqlParameter("@action_type", SqlDbType.NVarChar,50)};
-            //        parameters2[0].Direction = ParameterDirection.InputOutput;
-            //        parameters2[1].Value = modelt.NavName;
-            //        parameters2[2].Value = modelt.ActionType;
-            //        cmd = new CommandInfo(strSql2.ToString(), parameters2);
-            //        sqllist.Add(cmd);
-            //    }
-            //}
-            //DbHelperSQL.ExecuteSqlTranWithIndentity(sqllist);
-            //return (int)parameters[4].Value;
-
-            return 0;
+            return model.Id;
         }
         /// <summary>
         /// 更新一条数据
         /// </summary>
         public bool Update(ManagerRoleInfo model)
         {
-            //StringBuilder strSql = new StringBuilder();
-            //strSql.Append("update " + databaseprefix + "manager_role set ");
-            //strSql.Append("role_name=@role_name,");
-            //strSql.Append("role_type=@role_type,");
-            //strSql.Append("is_sys=@is_sys,");
-            //strSql.Append("agentId=@agentId");
-            //strSql.Append(" where id=@id");
-            //SqlParameter[] parameters = {
-            //        new SqlParameter("@role_name", SqlDbType.NVarChar,100),
-            //        new SqlParameter("@role_type", SqlDbType.TinyInt,1),
-            //        new SqlParameter("@is_sys", SqlDbType.TinyInt,1),
-            //        new SqlParameter("@agentId", SqlDbType.Int,4),
-            //        new SqlParameter("@id", SqlDbType.Int,4)};
-            //parameters[0].Value = model.RoleName;
-            //parameters[1].Value = model.RoleType;
-            //parameters[2].Value = model.IsSys;
-            //parameters[3].Value = model.AgentId;
-            //parameters[4].Value = model.Id;
-
-            //List<CommandInfo> sqllist = new List<CommandInfo>();
-            //CommandInfo cmd = new CommandInfo(strSql.ToString(), parameters);
-            //sqllist.Add(cmd);
-
-            ////先删除该角色所有权限
-            //StringBuilder strSql2 = new StringBuilder();
-            //strSql2.Append("delete from " + databaseprefix + "manager_role_value where role_id=@role_id ");
-            //SqlParameter[] parameters2 = {
-            //        new SqlParameter("@role_id", SqlDbType.Int,4)};
-            //parameters2[0].Value = model.Id;
-            //cmd = new CommandInfo(strSql2.ToString(), parameters2);
-            //sqllist.Add(cmd);
-
-            ////添加权限
-            //if (model.ManagerRoleValues != null)
-            //{
-            //    StringBuilder strSql3;
-            //    foreach (ManagerRoleValueInfo modelt in model.ManagerRoleValues)
-            //    {
-            //        strSql3 = new StringBuilder();
-            //        strSql3.Append("insert into " + databaseprefix + "manager_role_value(");
-            //        strSql3.Append("role_id,nav_name,action_type)");
-            //        strSql3.Append(" values (");
-            //        strSql3.Append("@role_id,@nav_name,@action_type)");
-            //        SqlParameter[] parameters3 = {
-            //                new SqlParameter("@role_id", SqlDbType.Int,4),
-            //                new SqlParameter("@nav_name", SqlDbType.NVarChar,100),
-            //                new SqlParameter("@action_type", SqlDbType.NVarChar,50)};
-            //        parameters3[0].Value = model.Id;
-            //        parameters3[1].Value = modelt.NavName;
-            //        parameters3[2].Value = modelt.ActionType;
-            //        cmd = new CommandInfo(strSql3.ToString(), parameters3);
-            //        sqllist.Add(cmd);
-            //    }
-            //}
-
-            //int rowsAffected = DbHelperSQL.ExecuteSqlTran(sqllist);
-            //if (rowsAffected > 0)
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+            //先删除旧数据，再插入操作
 
             return false;
         }

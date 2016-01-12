@@ -12,9 +12,9 @@ using WeixinPF.Model.Agent;
 
 namespace WeixinPF.Infrastructure.Agent
 {
-    public class WXAgentRepository: IWXAgentRepository
+    public class AgentRepository: IAgentRepository
     {
-        public WXAgentRepository()
+        public AgentRepository()
         {
         }
 
@@ -47,23 +47,23 @@ namespace WeixinPF.Infrastructure.Agent
                     new SqlParameter("@expiryDate", SqlDbType.DateTime),
                     new SqlParameter("@aRemark", SqlDbType.VarChar,1500),
                     new SqlParameter("@createDate", SqlDbType.DateTime)};
-            parameters[0].Value = model.managerId;
-            parameters[1].Value = model.companyName;
-            parameters[2].Value = model.companyInfo;
-            parameters[3].Value = model.agentPrice;
-            parameters[4].Value = model.agentPrice2;
-            parameters[5].Value = model.sqJine;
-            parameters[6].Value = model.czTotMoney;
-            parameters[7].Value = model.remainMony;
-            parameters[8].Value = model.userNum;
-            parameters[9].Value = model.wcodeNum;
-            parameters[10].Value = model.agentType;
-            parameters[11].Value = model.agentLevel;
-            parameters[12].Value = model.industry;
-            parameters[13].Value = model.agentArea;
-            parameters[14].Value = model.expiryDate;
-            parameters[15].Value = model.aRemark;
-            parameters[16].Value = model.createDate;
+            parameters[0].Value = model.ManagerId;
+            parameters[1].Value = model.CompanyName;
+            parameters[2].Value = model.CompanyInfo;
+            parameters[3].Value = model.AgentPrice;
+            parameters[4].Value = model.AgentPrice2;
+            parameters[5].Value = model.SqJine;
+            parameters[6].Value = model.CzTotalMoney;
+            parameters[7].Value = model.RemainMony;
+            parameters[8].Value = model.UserNum;
+            parameters[9].Value = model.WcodeNum;
+            parameters[10].Value = model.AgentType;
+            parameters[11].Value = model.AgentLevel;
+            parameters[12].Value = model.Industry;
+            parameters[13].Value = model.AgentArea;
+            parameters[14].Value = model.ExpiryDate;
+            parameters[15].Value = model.ARemark;
+            parameters[16].Value = model.CreateDate;
 
             object obj = DbHelperSQL.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -119,24 +119,24 @@ namespace WeixinPF.Infrastructure.Agent
                     new SqlParameter("@aRemark", SqlDbType.VarChar,1500),
                     new SqlParameter("@createDate", SqlDbType.DateTime),
                     new SqlParameter("@id", SqlDbType.Int,4)};
-            parameters[0].Value = model.managerId;
-            parameters[1].Value = model.companyName;
-            parameters[2].Value = model.companyInfo;
-            parameters[3].Value = model.agentPrice;
-            parameters[4].Value = model.agentPrice2;
-            parameters[5].Value = model.sqJine;
-            parameters[6].Value = model.czTotMoney;
-            parameters[7].Value = model.remainMony;
-            parameters[8].Value = model.userNum;
-            parameters[9].Value = model.wcodeNum;
-            parameters[10].Value = model.agentType;
-            parameters[11].Value = model.agentLevel;
-            parameters[12].Value = model.industry;
-            parameters[13].Value = model.agentArea;
-            parameters[14].Value = model.expiryDate;
-            parameters[15].Value = model.aRemark;
-            parameters[16].Value = model.createDate;
-            parameters[17].Value = model.id;
+            parameters[0].Value = model.ManagerId;
+            parameters[1].Value = model.CompanyName;
+            parameters[2].Value = model.CompanyInfo;
+            parameters[3].Value = model.AgentPrice;
+            parameters[4].Value = model.AgentPrice2;
+            parameters[5].Value = model.SqJine;
+            parameters[6].Value = model.CzTotalMoney;
+            parameters[7].Value = model.RemainMony;
+            parameters[8].Value = model.UserNum;
+            parameters[9].Value = model.WcodeNum;
+            parameters[10].Value = model.AgentType;
+            parameters[11].Value = model.AgentLevel;
+            parameters[12].Value = model.Industry;
+            parameters[13].Value = model.AgentArea;
+            parameters[14].Value = model.ExpiryDate;
+            parameters[15].Value = model.ARemark;
+            parameters[16].Value = model.CreateDate;
+            parameters[17].Value = model.Id;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -159,75 +159,75 @@ namespace WeixinPF.Infrastructure.Agent
             {
                 if (row["id"] != null && row["id"].ToString() != "")
                 {
-                    model.id = int.Parse(row["id"].ToString());
+                    model.Id = int.Parse(row["id"].ToString());
                 }
                 if (row["managerId"] != null && row["managerId"].ToString() != "")
                 {
-                    model.managerId = int.Parse(row["managerId"].ToString());
+                    model.ManagerId = int.Parse(row["managerId"].ToString());
                 }
                 if (row["companyName"] != null)
                 {
-                    model.companyName = row["companyName"].ToString();
+                    model.CompanyName = row["companyName"].ToString();
                 }
                 if (row["companyInfo"] != null)
                 {
-                    model.companyInfo = row["companyInfo"].ToString();
+                    model.CompanyInfo = row["companyInfo"].ToString();
                 }
                 if (row["agentPrice"] != null && row["agentPrice"].ToString() != "")
                 {
-                    model.agentPrice = int.Parse(row["agentPrice"].ToString());
+                    model.AgentPrice = int.Parse(row["agentPrice"].ToString());
                 }
                 if (row["agentPrice2"] != null && row["agentPrice2"].ToString() != "")
                 {
-                    model.agentPrice2 = int.Parse(row["agentPrice2"].ToString());
+                    model.AgentPrice2 = int.Parse(row["agentPrice2"].ToString());
                 }
                 if (row["sqJine"] != null && row["sqJine"].ToString() != "")
                 {
-                    model.sqJine = int.Parse(row["sqJine"].ToString());
+                    model.SqJine = int.Parse(row["sqJine"].ToString());
                 }
                 if (row["czTotMoney"] != null && row["czTotMoney"].ToString() != "")
                 {
-                    model.czTotMoney = int.Parse(row["czTotMoney"].ToString());
+                    model.CzTotalMoney = int.Parse(row["czTotMoney"].ToString());
                 }
                 if (row["remainMony"] != null && row["remainMony"].ToString() != "")
                 {
-                    model.remainMony = int.Parse(row["remainMony"].ToString());
+                    model.RemainMony = int.Parse(row["remainMony"].ToString());
                 }
                 if (row["userNum"] != null && row["userNum"].ToString() != "")
                 {
-                    model.userNum = int.Parse(row["userNum"].ToString());
+                    model.UserNum = int.Parse(row["userNum"].ToString());
                 }
                 if (row["wcodeNum"] != null && row["wcodeNum"].ToString() != "")
                 {
-                    model.wcodeNum = int.Parse(row["wcodeNum"].ToString());
+                    model.WcodeNum = int.Parse(row["wcodeNum"].ToString());
                 }
                 if (row["agentType"] != null && row["agentType"].ToString() != "")
                 {
-                    model.agentType = int.Parse(row["agentType"].ToString());
+                    model.AgentType = int.Parse(row["agentType"].ToString());
                 }
                 if (row["agentLevel"] != null)
                 {
-                    model.agentLevel = row["agentLevel"].ToString();
+                    model.AgentLevel = row["agentLevel"].ToString();
                 }
                 if (row["industry"] != null)
                 {
-                    model.industry = row["industry"].ToString();
+                    model.Industry = row["industry"].ToString();
                 }
                 if (row["agentArea"] != null)
                 {
-                    model.agentArea = row["agentArea"].ToString();
+                    model.AgentArea = row["agentArea"].ToString();
                 }
                 if (row["expiryDate"] != null && row["expiryDate"].ToString() != "")
                 {
-                    model.expiryDate = DateTime.Parse(row["expiryDate"].ToString());
+                    model.ExpiryDate = DateTime.Parse(row["expiryDate"].ToString());
                 }
                 if (row["aRemark"] != null)
                 {
-                    model.aRemark = row["aRemark"].ToString();
+                    model.ARemark = row["aRemark"].ToString();
                 }
                 if (row["createDate"] != null && row["createDate"].ToString() != "")
                 {
-                    model.createDate = DateTime.Parse(row["createDate"].ToString());
+                    model.CreateDate = DateTime.Parse(row["createDate"].ToString());
                 }
             }
             return model;

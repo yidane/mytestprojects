@@ -8,7 +8,7 @@ using System.Web.SessionState;
 using LitJson;
 using WeixinPF.Application.System;
 using WeixinPF.Common;
-using WeixinPF.Infrastructure.System;
+using WeixinPF.Infrastructure.Common;
 using WeixinPF.Web.UI;
 
 namespace WeixinPF.Web.Functoin.BackPage.Admin.tools

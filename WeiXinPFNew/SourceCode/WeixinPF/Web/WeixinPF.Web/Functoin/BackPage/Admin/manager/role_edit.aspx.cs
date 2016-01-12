@@ -8,7 +8,7 @@ using WeixinPF.Application.System.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.Infrastructure.Agent;
-using WeixinPF.Infrastructure.System;
+using WeixinPF.Infrastructure.Common;
 using WeixinPF.Infrastructure.Weixin;
 using WeixinPF.Model.Agent;
 using WeixinPF.Web.UI;

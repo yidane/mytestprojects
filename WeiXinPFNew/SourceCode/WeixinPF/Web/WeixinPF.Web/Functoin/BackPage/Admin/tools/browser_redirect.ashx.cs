@@ -2,8 +2,8 @@
 using System.Web;
 using System.Web.SessionState;
 using WeixinPF.Application.System;
-using WeixinPF.Infrastructure.System;
-using WeixinPF.Model.System;
+using WeixinPF.Infrastructure.Common;
+using WeixinPF.Model.Common;
 
 namespace WeixinPF.Web.Functoin.BackPage.Admin.tools
 {

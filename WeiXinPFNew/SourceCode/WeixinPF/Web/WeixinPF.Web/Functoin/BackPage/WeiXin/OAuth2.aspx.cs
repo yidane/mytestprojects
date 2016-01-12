@@ -64,10 +64,10 @@ namespace WeixinPF.Web.Functoin.BackPage.WeiXin
                     throw new Exception(string.Format("不合法的参数wid {0}", Wid));
 
                 //判断是否存在Code
-                if (!string.IsNullOrEmpty(Code))
+                if (string.IsNullOrEmpty(Code))
                 {
                     //存在Code，则向微信申请Code
-                    var newUrl = OAuthApi.GetAuthorizeUrl(appInfo.AppId, Request.Url.ToString(), "OAuth2", OAuthScope.snsapi_base);
+                    var newUrl = OAuthApi.GetAuthorizeUrl(appInfo.AppId, "http://www.cloudorg.com.cn/admin/login.aspx", "OAuth2", OAuthScope.snsapi_base);
                     Response.Redirect(newUrl);
                 }
                 else

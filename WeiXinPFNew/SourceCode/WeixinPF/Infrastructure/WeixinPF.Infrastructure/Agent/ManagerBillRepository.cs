@@ -12,9 +12,9 @@ using WeixinPF.Model.Agent;
 
 namespace WeixinPF.Infrastructure.Agent
 {
-    public class WXManagerBillRepository: IWXManagerBillRepository
+    public class ManagerBillRepository: IManagerBillRepository
     {
-        public WXManagerBillRepository()
+        public ManagerBillRepository()
         {
         }
 

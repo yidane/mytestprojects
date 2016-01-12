@@ -11,10 +11,10 @@ using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Hotel.Plugins.Service.Models;
 using WeixinPF.Infrastructure.Agent;
-using WeixinPF.Infrastructure.System;
+using WeixinPF.Infrastructure.Common;
 using WeixinPF.Infrastructure.Weixin;
 using WeixinPF.Model.Agent;
-using WeixinPF.Model.System;
+using WeixinPF.Model.Common;
 using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Web.UI
@@ -199,39 +199,33 @@ namespace WeixinPF.Web.UI
             if (IsWeiXinCode())
             {
                 var model = Session["nowweixin"] as AppInfo;
-                if (model != null)
-                {
-                    return model;
-                }
+                return model;
             }
-            else
+            //int shopid = GetShopId();
+            //if (shopid != 0)
+            //{
+            //    BLL.wx_diancai_shopinfo shopBll = new BLL.wx_diancai_shopinfo();
+            //    Model.wx_diancai_shopinfo shop = shopBll.GetModel(shopid);
+
+            //    return new BLL.wx_userweixin().GetModel(shop.wid.Value);
+            //}
+
+            int hotelid = GetHotelId();
+            if (hotelid != 0)
             {
-                //int shopid = GetShopId();
-                //if (shopid != 0)
-                //{
-                //    BLL.wx_diancai_shopinfo shopBll = new BLL.wx_diancai_shopinfo();
-                //    Model.wx_diancai_shopinfo shop = shopBll.GetModel(shopid);
+                HotelInfo hotel = null;
 
-                //    return new BLL.wx_userweixin().GetModel(shop.wid.Value);
-                //}
+                hotel = new HotelService(new HotelRepository()).GetModel(hotelid);
 
-                int hotelid = GetHotelId();
-                if (hotelid != 0)
+                if (hotel != null)
                 {
-                    HotelInfo hotel = null;
-
-                    hotel = new HotelService(new HotelRepository()).GetModel(hotelid);
-
-                    if (hotel != null)
-                    {
-                        return new AppInfoService().GetAppInfo(hotel.wid.Value);
-                        //return null;
-                    }
-
+                    return new AppInfoService().GetAppInfo(hotel.wid.Value);
+                    //return null;
                 }
-                Response.Write("<script>parent.location.href='http://" + HttpContext.Current.Request.Url.Authority + "/admin/weixin/myweixinlist.aspx'</script>");
-                Response.End();
+
             }
+            Response.Write("<script>parent.location.href='http://" + HttpContext.Current.Request.Url.Authority + "/admin/weixin/myweixinlist.aspx'</script>");
+            Response.End();
             return null;
         }
 

@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using WeixinPF.Application.Weixin.Repository;
 using WeixinPF.Infrastructure.BaseRepository;
 using WeixinPF.Model.WeiXin;
-using System.Linq;
-using System.Linq.Expressions;
-using WeixinPF.Application.Weixin;
-using WeixinPF.Model;
 
 namespace WeixinPF.Infrastructure.Weixin
 {
@@ -20,7 +15,7 @@ namespace WeixinPF.Infrastructure.Weixin
         {
             return new AppInfo
             {
-                id = 1,
+                Id = 1,
                 AppId = "wxdd6127bdb5e7611c",
                 AppSecret = "78fb32f17d30a6ade836319283ccf118"
             };
@@ -28,14 +23,13 @@ namespace WeixinPF.Infrastructure.Weixin
 
         public bool Exists(int appId)
         {
-            return _efRepository.Get(item => item.id == appId).Any();
+            return _efRepository.Get(item => item.Id == appId).Any();
         }
 
         public int GetUserWxNumCount(int uId)
         {
-            return _efRepository.Get(item => item.uId == uId).Count();
+            return _efRepository.Get(item => item.UId == uId).Count();
         }
-
 
         public bool Update(AppInfo appInfo)
         {
@@ -51,17 +45,18 @@ namespace WeixinPF.Infrastructure.Weixin
             if (appInfo == null)
                 return 0;
 
-            _efRepository.Add(appInfo);
-            return appInfo.id;
-        }
+            appInfo.CreateDate = DateTime.Now;
 
+            _efRepository.Add(appInfo);
+            return appInfo.Id;
+        }
 
         public bool Delete(int appId)
         {
             if (appId <= 0)
                 return false;
 
-            var appInfo = this.GetAppInfo(appId);
+            var appInfo = GetAppInfo(appId);
             if (appInfo == null)
                 return false;
             appInfo.IsDelete = true;
@@ -71,19 +66,22 @@ namespace WeixinPF.Infrastructure.Weixin
             return true;
         }
 
-
         public List<AppInfo> GetModelList(int uId, string keyWord)
         {
-            var query = _efRepository.Get(item => item.IsDelete && item.uId == uId);
+            var query = _efRepository.Get(item => !item.IsDelete && item.UId == uId);
+            //使用关键字过滤
             if (!string.IsNullOrEmpty(keyWord))
-                query = query.Where(item => item.wxName.Contains(keyWord) || item.WxCode.Contains(keyWord));
+                query = query.Where(item => item.WxName.Contains(keyWord) || item.WxCode.Contains(keyWord));
+
+            //排序
+            query = query.OrderByDescending(item => item.CreateDate).ThenByDescending(item => item.Id);
 
             return query.ToList();
         }
 
         public List<AppInfo> GetUserWeiXinListByUId(int pageSize, int pageIndex, int uId, out int total)
         {
-            var query = _efRepository.Get(item => item.uId == uId && item.IsDelete == false);
+            var query = _efRepository.Get(item => item.UId == uId && item.IsDelete == false);
             total = query.Count();
             return query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
         }
@@ -94,11 +92,11 @@ namespace WeixinPF.Infrastructure.Weixin
 
 
             var query = from s in weiXinContext.AppInfoContext
-                        join sd in weiXinContext.ManagerInfoContext on s.uId equals sd.Id into g
+                        join sd in weiXinContext.ManagerInfoContext on s.UId equals sd.Id into g
                         from stuDesc in g.DefaultIfEmpty()
                         where s.IsDelete == false
-                        where s.uId == uId
-                        orderby s.uId ascending
+                        where s.UId == uId
+                        orderby s.UId ascending
                         orderby s.CreateDate descending
                         select s;
 

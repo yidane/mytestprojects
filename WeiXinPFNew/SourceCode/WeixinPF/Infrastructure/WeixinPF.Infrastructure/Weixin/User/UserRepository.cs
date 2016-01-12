@@ -30,10 +30,5 @@ namespace WeixinPF.Infrastructure.Weixin.User
         {
             throw new NotImplementedException();
         }
-
-        public string GetOpenIdByCode(int appId, string code)
-        {
-            throw new Exception("此方法应该直接调用UserService中的GetOpenIdByCode");
-        }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Model.WeiXin.User
 {
+    [Table("WeiXin_User")]
     public class UserInfo
     {
         [Key]

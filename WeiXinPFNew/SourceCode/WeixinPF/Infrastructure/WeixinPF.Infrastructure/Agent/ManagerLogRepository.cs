@@ -16,7 +16,7 @@ namespace WeixinPF.Infrastructure.Agent
 {
     public class ManagerLogRepository : IManagerLogRepository
     {
-        private readonly EFRepository<ManagerLogInfo> _efRepository = new EFRepository<ManagerLogInfo>(new AgentDbContext());
+        private readonly EFRepository<ManagerLogInfo> _efRepository = new EFRepository<ManagerLogInfo>(new WeiXinDbContext());
 
         #region 基本方法==============================
         /// <summary>

@@ -33,7 +33,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             id = MyCommFun.QueryString("id");
             cid = MyCommFun.QueryString("cid");
             hotelid = this.GetHotelId();
-            wid = this.GetWeiXinCode().id;
+            wid = this.GetWeiXinCode().Id;
             if (!IsPostBack)
             {
                 if (ids != 0)

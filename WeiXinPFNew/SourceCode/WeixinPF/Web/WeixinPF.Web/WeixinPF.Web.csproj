@@ -2880,6 +2880,7 @@
     <Content Include="Functoin\BackPage\Admin\weixin\baseSetting.aspx" />
     <Content Include="Functoin\BackPage\Admin\weixin\EditorWeiXin.aspx" />
     <Content Include="Functoin\BackPage\Admin\weixin\myweixinlist.aspx" />
+    <Content Include="Functoin\BackPage\Admin\weixin\WxMenu.aspx" />
     <Content Include="Functoin\BackPage\WeiXin\OAuth2.aspx" />
     <Content Include="Functoin\BackPage\WeiXin\WeChatPay\js\zepto.min.js" />
     <Content Include="Functoin\BackPage\WeiXin\WeChatPay\Pay.aspx" />
@@ -5882,6 +5883,13 @@
     </Compile>
     <Compile Include="Functoin\BackPage\Admin\weixin\myweixinlist.aspx.designer.cs">
       <DependentUpon>myweixinlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Functoin\BackPage\Admin\weixin\WxMenu.aspx.cs">
+      <DependentUpon>WxMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Functoin\BackPage\Admin\weixin\WxMenu.aspx.designer.cs">
+      <DependentUpon>WxMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="Functoin\BackPage\WeiXin\OAuth2.aspx.cs">
       <DependentUpon>OAuth2.aspx</DependentUpon>

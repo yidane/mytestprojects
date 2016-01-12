@@ -63,7 +63,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Agent\ManagerInfoServiceTest.cs" />
+    <Compile Include="Agent\ManagerLogServiceTest.cs" />
+    <Compile Include="Agent\ManagerRoleServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokenServiceTest.cs" />
     <Compile Include="UserServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeixinPF.Application.System.Interface;
 using WeixinPF.Application.Weixin.Repository;
-using WeixinPF.Model.System;
+using WeixinPF.Model.Common;
 
 namespace WeixinPF.Application.System.Service
 {

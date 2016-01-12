@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using System.Web;
 using WeixinPF.Application.System;
 using WeixinPF.Common;
-using WeixinPF.Infrastructure.System;
-using WeixinPF.Model.System;
+using WeixinPF.Infrastructure.Common;
+using WeixinPF.Model.Common;
 
 namespace WeixinPF.Web.UI
 {

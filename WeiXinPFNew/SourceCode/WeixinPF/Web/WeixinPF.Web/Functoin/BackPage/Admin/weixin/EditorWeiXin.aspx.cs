@@ -86,20 +86,20 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         {
 
             var model = _appInfoService.GetAppInfo(id);
-            this.Id = model.id;
+            this.Id = model.Id;
 
-            this.txtwxName.Text = model.wxName;
+            this.txtwxName.Text = model.WxName;
             this.txtwxId.Text = model.WxId;
 
             this.txtweixinCode.Text = model.WxCode;
 
-            this.txtImgUrl.Text = model.headerpic;
+            this.txtImgUrl.Text = model.Headerpic;
             //this.txtapiurl.Text = model.apiurl;
             this.txtwxToken.Text = model.WxToken;
             this.txtAppId.Text = model.AppId;
             this.txtAppSecret.Text = model.AppSecret;
-            txtapiurl.Text = MyCommFun.getWebSite() + "/api/weixin/api.aspx?apiid=" + model.id; //todo: 改地址
-            this.txtEncodingAESKey.Text = model.extStr;
+            txtapiurl.Text = MyCommFun.getWebSite() + "/api/weixin/api.aspx?apiid=" + model.Id; //todo: 改地址
+            this.txtEncodingAESKey.Text = model.ExtStr;
             rblweixintype.SelectedValue = model.WxType == null ? "3" : model.WxType.Value.ToString();
         }
 
@@ -108,111 +108,119 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         #region 增加操作=================================
         private bool DoAdd()
         {
-            string strErr = "";
-            if (this.txtwxName.Text.Trim().Length == 0)
+            try
             {
-                strErr += "公众帐号名称不能为空！";
-            }
-            if (this.txtwxId.Text.Trim().Length == 0)
-            {
-                strErr += "公众号原始id不能为空！";
-            }
-
-            if (this.txtweixinCode.Text.Trim().Length == 0)
-            {
-                strErr += "微信号不能为空！";
-            }
-            if (this.txtwxToken.Text.Trim().Length == 0)
-            {
-                strErr += "TOKEN值不能为空！";
-            }
-
-            if (strErr != "")
-            {
-                JscriptMsg(strErr, "back", "Error");
-
-                return false;
-            }
-            var manager = GetAdminInfo();
-            int uId = manager.Id;
-            string wxName = this.txtwxName.Text;
-            string wxId = this.txtwxId.Text;
-
-            string weixinCode = this.txtweixinCode.Text;
-            string wxPwd = "";
-            string headerpic = this.txtImgUrl.Text;
-            string apiurl = "";
-            string wxToken = this.txtwxToken.Text;
-            string wxProvince = "";
-            string wxCity = "";
-            string AppId = this.txtAppId.Text;
-            string AppSecret = this.txtAppSecret.Text;
-            string EncodingAESKey = txtEncodingAESKey.Text;
-            DateTime createDate = DateTime.Now;
-            DateTime endDate = DateTime.Now.AddYears(1);
-
-
-            var model = new AppInfo
-            {
-                uId = uId,
-                wxName = wxName,
-                WxId = wxId,
-                YixinId = "",
-                WxCode = weixinCode,
-                WxPwd = wxPwd,
-                headerpic = headerpic,
-                Apiurl = apiurl,
-                WxToken = wxToken,
-                WxProvince = wxProvince,
-                WxCity = wxCity,
-                AppId = AppId,
-                AppSecret = AppSecret,
-                AccessToken = "",
-                OpenIdStr = "",
-                CreateDate = createDate,
-                EndDate = endDate,
-                WenziMaxNum = -1,
-                TuwenMaxNum = -1,
-                YuyinMaxNum = -1,
-                WenziDefineNum = 0,
-                TuwenDefineNum = 0,
-                YuyinDefineNum = 0,
-                RequestTtNum = 0,
-                RequestUsedNum = 0,
-                SmsTtNum = 0,
-                SmsUsedNum = 0,
-                IsDelete = false,
-                extStr = EncodingAESKey,
-                WxType = MyCommFun.Obj2Int(rblweixintype.SelectedItem.Value),
-                Remark = "",
-                Seq = 99
-            };
-
-            //-1为无限制
-            //暂存入extStr字段里
-
-            if (IsChaoGuoWxNum())
-            {
-                return false;
-            }
-
-            int wId = _appInfoService.Add(model);
-            this.Id = wId;
-            if (wId > 0)
-            {
-                Object obj = ConfigurationManager.AppSettings["industry_defaultAdd"];
-                if (obj != null && obj.ToString() == "true")
+                string strErr = "";
+                if (this.txtwxName.Text.Trim().Length == 0)
                 {
-                    //根据登录者所在行业为微帐号添加相应默认模块
-                    var mModel = GetAdminInfo(); //取得管理员信息
-                    var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
-                    idBll.addMouduleByRoleid(mModel.RoleId, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
+                    strErr += "公众帐号名称不能为空！";
+                }
+                if (this.txtwxId.Text.Trim().Length == 0)
+                {
+                    strErr += "公众号原始id不能为空！";
                 }
 
-                AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
-                return true;
+                if (this.txtweixinCode.Text.Trim().Length == 0)
+                {
+                    strErr += "微信号不能为空！";
+                }
+                if (this.txtwxToken.Text.Trim().Length == 0)
+                {
+                    strErr += "TOKEN值不能为空！";
+                }
+
+                if (strErr != "")
+                {
+                    JscriptMsg(strErr, "back", "Error");
+
+                    return false;
+                }
+                var manager = GetAdminInfo();
+                int uId = manager.Id;
+                string wxName = this.txtwxName.Text;
+                string wxId = this.txtwxId.Text;
+
+                string weixinCode = this.txtweixinCode.Text;
+                string wxPwd = "";
+                string headerpic = this.txtImgUrl.Text;
+                string apiurl = "";
+                string wxToken = this.txtwxToken.Text;
+                string wxProvince = "";
+                string wxCity = "";
+                string AppId = this.txtAppId.Text;
+                string AppSecret = this.txtAppSecret.Text;
+                string EncodingAESKey = txtEncodingAESKey.Text;
+                DateTime createDate = DateTime.Now;
+                DateTime endDate = DateTime.Now.AddYears(1);
+
+
+                var model = new AppInfo
+                {
+                    UId = uId,
+                    WxName = wxName,
+                    WxId = wxId,
+                    YixinId = "",
+                    WxCode = weixinCode,
+                    WxPwd = wxPwd,
+                    Headerpic = headerpic,
+                    Apiurl = apiurl,
+                    WxToken = wxToken,
+                    WxProvince = wxProvince,
+                    WxCity = wxCity,
+                    AppId = AppId,
+                    AppSecret = AppSecret,
+                    AccessToken = "",
+                    OpenIdStr = "",
+                    CreateDate = createDate,
+                    EndDate = endDate,
+                    WenziMaxNum = -1,
+                    TuwenMaxNum = -1,
+                    YuyinMaxNum = -1,
+                    WenziDefineNum = 0,
+                    TuwenDefineNum = 0,
+                    YuyinDefineNum = 0,
+                    RequestTtNum = 0,
+                    RequestUsedNum = 0,
+                    SmsTtNum = 0,
+                    SmsUsedNum = 0,
+                    IsDelete = false,
+                    ExtStr = EncodingAESKey,
+                    WxType = MyCommFun.Obj2Int(rblweixintype.SelectedItem.Value),
+                    Remark = "",
+                    Seq = 99
+                };
+
+                //-1为无限制
+                //暂存入extStr字段里
+
+                if (IsChaoGuoWxNum())
+                {
+                    return false;
+                }
+
+                int wId = _appInfoService.Add(model);
+                this.Id = wId;
+                if (wId > 0)
+                {
+                    Object obj = ConfigurationManager.AppSettings["industry_defaultAdd"];
+                    if (obj != null && obj.ToString() == "true")
+                    {
+                        //根据登录者所在行业为微帐号添加相应默认模块
+                        var mModel = GetAdminInfo(); //取得管理员信息
+                        var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
+                        idBll.addMouduleByRoleid(mModel.RoleId, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
+                    }
+
+                    AddAdminLog(MXEnums.ActionEnum.Add.ToString(), "添加微信号，主键为:" + model.Id + ",微信号为：" + model.WxCode); //记录日志
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception exception)
+            {
+                JscriptMsg("保存过程中发生错误！", "", "Error");
+                return false;
+            }
         }
         #endregion
 
@@ -257,13 +265,13 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             string EncodingAESKey = txtEncodingAESKey.Text;
             var model = _appInfoService.GetAppInfo(_id);
 
-            model.wxName = wxName;
+            model.WxName = wxName;
             model.WxId = wxId;
             model.WxCode = weixinCode;
-            model.headerpic = headerpic;
+            model.Headerpic = headerpic;
             model.Apiurl = apiurl;
             model.WxToken = wxToken;
-            model.extStr = EncodingAESKey;//暂存入extStr字段里
+            model.ExtStr = EncodingAESKey;//暂存入extStr字段里
             model.WxType = MyCommFun.Obj2Int(rblweixintype.SelectedItem.Value);
 
             if (model.AppId != AppId || model.AppSecret != AppSecret)
@@ -278,7 +286,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
 
             if (ret)
             {
-                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改微信号，主键为:" + model.id + ",微信号为：" + model.WxCode); //记录日志
+                AddAdminLog(MXEnums.ActionEnum.Edit.ToString(), "修改微信号，主键为:" + model.Id + ",微信号为：" + model.WxCode); //记录日志
                 if (!noChangeAppProp)
                 {  //更新access_token值
                     UpdateAccess_Token(_id, AppId, AppSecret);

@@ -1,4 +1,4 @@
-﻿using WeixinPF.Model.System;
+﻿using WeixinPF.Model.Common;
 
 namespace WeixinPF.Application.System.Interface
 {
