@@ -38,14 +38,13 @@ namespace WeixinPF.Infrastructure.Weixin
                     new SqlParameter("@remark", SqlDbType.VarChar,2000),
                     new SqlParameter("@quicklyFH", SqlDbType.Bit,1),
                     new SqlParameter("@createDate", SqlDbType.DateTime)};
-            parameters[0].Value = model.wid;
-            parameters[1].Value = model.mch_id;
-            parameters[2].Value = model.paykey;
-            parameters[3].Value = model.certInfoPath;
-            parameters[4].Value = model.cerInfoPwd;
-            parameters[5].Value = model.remark;
-            parameters[6].Value = model.quicklyFH;
-            parameters[7].Value = model.createDate;
+            parameters[0].Value = model.Wid;
+            parameters[1].Value = model.MchId;
+            parameters[2].Value = model.Paykey;
+            parameters[3].Value = model.CertInfoPath;
+            parameters[4].Value = model.CerInfoPwd;
+            parameters[5].Value = model.Remark;
+            parameters[7].Value = model.CreateDate;
 
             object obj = DbHelperSQL.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -84,15 +83,14 @@ namespace WeixinPF.Infrastructure.Weixin
                     new SqlParameter("@quicklyFH", SqlDbType.Bit,1),
                     new SqlParameter("@createDate", SqlDbType.DateTime),
                     new SqlParameter("@id", SqlDbType.Int,4)};
-            parameters[0].Value = model.wid;
-            parameters[1].Value = model.mch_id;
-            parameters[2].Value = model.paykey;
-            parameters[3].Value = model.certInfoPath;
-            parameters[4].Value = model.cerInfoPwd;
-            parameters[5].Value = model.remark;
-            parameters[6].Value = model.quicklyFH;
-            parameters[7].Value = model.createDate;
-            parameters[8].Value = model.id;
+            parameters[0].Value = model.Wid;
+            parameters[1].Value = model.MchId;
+            parameters[2].Value = model.Paykey;
+            parameters[3].Value = model.CertInfoPath;
+            parameters[4].Value = model.CerInfoPwd;
+            parameters[5].Value = model.Remark;
+            parameters[7].Value = model.CreateDate;
+            parameters[8].Value = model.Id;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -141,46 +139,35 @@ namespace WeixinPF.Infrastructure.Weixin
             {
                 if (row["id"] != null && row["id"].ToString() != "")
                 {
-                    model.id = int.Parse(row["id"].ToString());
+                    model.Id = int.Parse(row["id"].ToString());
                 }
                 if (row["wid"] != null && row["wid"].ToString() != "")
                 {
-                    model.wid = int.Parse(row["wid"].ToString());
+                    model.Wid = int.Parse(row["wid"].ToString());
                 }
                 if (row["mch_id"] != null)
                 {
-                    model.mch_id = row["mch_id"].ToString();
+                    model.MchId = row["mch_id"].ToString();
                 }
                 if (row["paykey"] != null)
                 {
-                    model.paykey = row["paykey"].ToString();
+                    model.Paykey = row["paykey"].ToString();
                 }
                 if (row["certInfoPath"] != null)
                 {
-                    model.certInfoPath = row["certInfoPath"].ToString();
+                    model.CertInfoPath = row["certInfoPath"].ToString();
                 }
                 if (row["cerInfoPwd"] != null)
                 {
-                    model.cerInfoPwd = row["cerInfoPwd"].ToString();
+                    model.CerInfoPwd = row["cerInfoPwd"].ToString();
                 }
                 if (row["remark"] != null)
                 {
-                    model.remark = row["remark"].ToString();
-                }
-                if (row["quicklyFH"] != null && row["quicklyFH"].ToString() != "")
-                {
-                    if ((row["quicklyFH"].ToString() == "1") || (row["quicklyFH"].ToString().ToLower() == "true"))
-                    {
-                        model.quicklyFH = true;
-                    }
-                    else
-                    {
-                        model.quicklyFH = false;
-                    }
+                    model.Remark = row["remark"].ToString();
                 }
                 if (row["createDate"] != null && row["createDate"].ToString() != "")
                 {
-                    model.createDate = DateTime.Parse(row["createDate"].ToString());
+                    model.CreateDate = DateTime.Parse(row["createDate"].ToString());
                 }
             }
             return model;

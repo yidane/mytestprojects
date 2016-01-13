@@ -6,16 +6,16 @@ using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
-    public class WXPaymentService
+    public class PaymentService
     {
         private readonly IPaymentRepository _repository;
 
-        public WXPaymentService()
+        public PaymentService()
         {
             _repository = DependencyManager.Resolve<IPaymentRepository>();
         }
 
-        public WXPaymentService(IPaymentRepository repository)
+        public PaymentService(IPaymentRepository repository)
         {
             _repository = repository;
         }

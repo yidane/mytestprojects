@@ -69,6 +69,8 @@
     <Compile Include="Common\NavigationRepository.cs" />
     <Compile Include="Common\SiteConfigRepository.cs" />
     <Compile Include="Weixin\AppInfoRepository.cs" />
+    <Compile Include="Weixin\Pay\PaymentInfoRepository.cs" />
+    <Compile Include="Weixin\Pay\UnifiedOrderRepository.cs" />
     <Compile Include="Weixin\Token\AccessTokenRepository.cs" />
     <Compile Include="Weixin\IndustryDefaultModuleRepository.cs" />
     <Compile Include="Weixin\PaymentRepository.cs" />

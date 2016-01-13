@@ -148,7 +148,7 @@ namespace WeiXinPF.Web.admin.manager
                 {
                     //为微账户添加行业默认模块
                     var mBll = new ManagerInfoService();
-                    var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
+                    var idBll = new IndustryDefaultModuleService(new IndustryDefaultModuleRepository());
                     var user = mBll.GetModel(uid);
                     int roleid = user.RoleId;
                     idBll.addMouduleByRoleid(roleid, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));

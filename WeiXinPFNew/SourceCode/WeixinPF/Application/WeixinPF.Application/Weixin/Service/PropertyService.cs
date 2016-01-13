@@ -7,16 +7,16 @@ using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
-    public class WXPropertyService
+    public class PropertyService
     {
         private readonly IPropertyRepository _repository;
 
-        public WXPropertyService()
+        public PropertyService()
         {
             _repository = DependencyManager.Resolve<IPropertyRepository>();
         }
 
-        public WXPropertyService(IPropertyRepository repository)
+        public PropertyService(IPropertyRepository repository)
         {
             _repository = repository;
         }

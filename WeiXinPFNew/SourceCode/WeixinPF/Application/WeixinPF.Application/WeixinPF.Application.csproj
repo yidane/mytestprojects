@@ -91,6 +91,13 @@
     <Compile Include="Weixin\Message\Repository\IRequestRuleRepository.cs" />
     <Compile Include="Weixin\Message\Repository\IResponseMessageLogRepository.cs" />
     <Compile Include="Weixin\Message\Service\ResponseMessageLogRepositoryService.cs" />
+    <Compile Include="Weixin\Pay\Repository\IPaymentInfoRepository.cs" />
+    <Compile Include="Weixin\Pay\Repository\IPayNotifyRepository.cs" />
+    <Compile Include="Weixin\Pay\Repository\IRefundOrderRepository.cs" />
+    <Compile Include="Weixin\Pay\Repository\IUnifiedOrderRepository.cs" />
+    <Compile Include="Weixin\Pay\Service\PaymentInfoService.cs" />
+    <Compile Include="Weixin\Pay\Service\PayNotifyService.cs" />
+    <Compile Include="Weixin\Pay\Service\UnifiedOrderService.cs" />
     <Compile Include="Weixin\Repository\IAppInfoRepository.cs" />
     <Compile Include="Weixin\Repository\IIndustryDefaultModuleRepository.cs" />
     <Compile Include="Weixin\Repository\IPaymentRepository.cs" />
@@ -98,10 +105,10 @@
     <Compile Include="Weixin\Repository\ISystemConfigRepository.cs" />
     <Compile Include="Weixin\Repository\IUserRepository.cs" />
     <Compile Include="Weixin\Service\AppInfoService.cs" />
-    <Compile Include="Weixin\Service\WXIndustryDefaultModuleService.cs" />
-    <Compile Include="Weixin\Service\WXPaymentService.cs" />
-    <Compile Include="Weixin\Service\WXPropertyService.cs" />
-    <Compile Include="Weixin\Service\WXSystemConfigService.cs" />
+    <Compile Include="Weixin\Service\IndustryDefaultModuleService.cs" />
+    <Compile Include="Weixin\Service\PaymentService.cs" />
+    <Compile Include="Weixin\Service\PropertyService.cs" />
+    <Compile Include="Weixin\Service\SystemConfigService.cs" />
     <Compile Include="Weixin\Service\WXUserService.cs" />
     <Compile Include="Weixin\Token\Repository\IAccessTokenRepository.cs" />
     <Compile Include="Weixin\Token\Repository\IJsApiTicketRepository.cs" />
@@ -123,6 +130,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

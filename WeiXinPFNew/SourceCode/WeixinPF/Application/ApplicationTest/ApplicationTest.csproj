@@ -67,6 +67,8 @@
     <Compile Include="Agent\ManagerRoleServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenServiceTest.cs" />
+    <Compile Include="DownloadLogTest.cs" />
+    <Compile Include="AutofacTest.cs" />
     <Compile Include="UserServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

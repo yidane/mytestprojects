@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace WeixinPF.Model.Weixin.Pay
 {
     [Table("WeiXin_Payment_PayNotifyInfo")]
-    public class WeiXinPayNotifyInfo
+    public class PayNotifyInfo
     {
         [Key]
         public Guid NotifyID { get; set; }

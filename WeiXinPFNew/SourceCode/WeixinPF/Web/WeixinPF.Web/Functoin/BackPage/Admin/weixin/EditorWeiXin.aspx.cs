@@ -207,7 +207,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                     {
                         //根据登录者所在行业为微帐号添加相应默认模块
                         var mModel = GetAdminInfo(); //取得管理员信息
-                        var idBll = new WXIndustryDefaultModuleService(new IndustryDefaultModuleRepository());
+                        var idBll = new IndustryDefaultModuleService(new IndustryDefaultModuleRepository());
                         idBll.addMouduleByRoleid(mModel.RoleId, wId, new ArticleCategoryRepository(siteConfig.sysdatabaseprefix));
                     }
 
@@ -353,7 +353,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
         {
             try
             {
-                var pBll = new WXPropertyService(new PropertyRepository());
+                var pBll = new PropertyService(new PropertyRepository());
 
                 if (!pBll.ExistsWid(_id))
                 {

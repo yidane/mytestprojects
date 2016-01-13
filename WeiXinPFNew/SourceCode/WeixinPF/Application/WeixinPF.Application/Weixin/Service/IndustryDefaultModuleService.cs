@@ -13,16 +13,16 @@ using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
-    public class WXIndustryDefaultModuleService
+    public class IndustryDefaultModuleService
     {
         private readonly IIndustryDefaultModuleRepository _repository;
 
-        public WXIndustryDefaultModuleService()
+        public IndustryDefaultModuleService()
         {
             this._repository = DependencyManager.Resolve<IIndustryDefaultModuleRepository>();
         }
 
-        public WXIndustryDefaultModuleService(IIndustryDefaultModuleRepository repository)
+        public IndustryDefaultModuleService(IIndustryDefaultModuleRepository repository)
         {
             this._repository = repository;
         }

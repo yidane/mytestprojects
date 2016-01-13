@@ -38,5 +38,13 @@ namespace WeixinPF.Common
 
             return _container.Resolve<T>();
         }
+
+        public static T ResolveByName<T>(string moudleName)
+        {
+            if (_container == null)
+                InitContainer();
+
+            return _container.ResolveNamed<T>(moudleName);
+        }
     }
 }

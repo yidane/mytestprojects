@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 namespace WeixinPF.Model.WeiXin.Pay
 {
     [Table("WeiXin_Payment_UnifiedOrderInfo")]
-    public class WeiXinUnifiedOrderInfo
+    public class UnifiedOrderInfo
     {
         /// <summary>
-        /// 微信号ID
+        /// 系统微信号ID
         /// </summary>
-        public int Wid { get; set; }
+        public int AppId { get; set; }
 
         /// <summary>
         /// 支付模块ID
         /// </summary>
-        public int PayModuleId { get; set; }
+        public string PayModuleName { get; set; }
 
         /// <summary>
         /// 业务系统订单号
@@ -84,11 +84,11 @@ namespace WeixinPF.Model.WeiXin.Pay
         {
             var stringBuilder = new StringBuilder();
             const string msg = "{0}必须赋值{1}";
-            if (Wid <= 0)
-                stringBuilder.AppendFormat(msg, "wid", Environment.NewLine);
+            if (AppId <= 0)
+                stringBuilder.AppendFormat(msg, "AppId", Environment.NewLine);
 
-            if (PayModuleId < 0)
-                stringBuilder.AppendFormat(msg, "PayModuleID", Environment.NewLine);
+            if (string.IsNullOrEmpty(PayModuleName))
+                stringBuilder.AppendFormat(msg, "PayModuleName", Environment.NewLine);
 
             if (string.IsNullOrEmpty(OrderId))
                 stringBuilder.AppendFormat(msg, "OrderId", Environment.NewLine);

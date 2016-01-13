@@ -70,9 +70,10 @@
     <Compile Include="WeiXin\Message\RequestRuleContent.cs" />
     <Compile Include="WeiXin\Message\ResponseContentEntity.cs" />
     <Compile Include="WeiXin\Message\ResponseMessageLog.cs" />
-    <Compile Include="WeiXin\Pay\WeiXinPayNotifyInfo.cs" />
-    <Compile Include="WeiXin\Pay\WeiXinRefundOrderInfo.cs" />
-    <Compile Include="WeiXin\Pay\WeiXinUnifiedOrderInfo.cs" />
+    <Compile Include="WeiXin\Pay\PaymentInfo.cs" />
+    <Compile Include="WeiXin\Pay\PayNotifyInfo.cs" />
+    <Compile Include="WeiXin\Pay\RefundOrderInfo.cs" />
+    <Compile Include="WeiXin\Pay\UnifiedOrderInfo.cs" />
     <Compile Include="WeiXin\Token\AccessToken.cs" />
     <Compile Include="WeiXin\Token\JsApiTicket.cs" />
     <Compile Include="WeiXin\Group\GroupInfo.cs" />

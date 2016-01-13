@@ -9,11 +9,11 @@ using WeixinPF.Model.WeiXin;
 
 namespace WeixinPF.Application.Weixin.Service
 {
-    public class WXSystemConfigService
+    public class SystemConfigService
     {
         private readonly ISystemConfigRepository _repository;
 
-        public WXSystemConfigService(ISystemConfigRepository repository)
+        public SystemConfigService(ISystemConfigRepository repository)
         {
             this._repository = repository;
         }

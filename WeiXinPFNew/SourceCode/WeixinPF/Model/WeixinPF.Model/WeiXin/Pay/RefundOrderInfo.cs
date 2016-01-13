@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Model.WeiXin.Pay
 {
-    class WeiXinRefundOrderInfo
+    class RefundOrderInfo
     {
     }
 }
