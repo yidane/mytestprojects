@@ -7,7 +7,9 @@ var ViewOrderCreate = Vue.extend({
         return {
             qrcodes: [],
              qrIndex:0,
-            hasBeenSubmitted:false
+             hasBeenSubmitted: false,
+             hasBeenCanceled: false,
+             hasBeenPayed: false
         }
     },
 
@@ -437,7 +439,7 @@ var ViewOrderCreate = Vue.extend({
             if (!this.canSubmit) {
                 return;
             }
-            this.hasBeenSubmitted=true;
+            this.hasBeenSubmitted = true;
 
 
             this.$http.post('api/order/Save',
@@ -450,12 +452,11 @@ var ViewOrderCreate = Vue.extend({
                     order: this.order
                 })
                 .then(function (response) {
-                    // response.data=response.data.d;
+                    self.hasBeenSubmitted = false;
                     if (response.data) {
                         self.orderCount++;
                         self.updateOrderNumber(self.orderCount);
                         $.toast("保存成功!");
-                        self.hasBeenSubmitted=true;
                         self.router.setRoute('/order');
 
                     }
@@ -463,10 +464,59 @@ var ViewOrderCreate = Vue.extend({
                         $.toast("保存失败!");
                     }
                 }, function (response) {
-                    if(response.data.message)
-                    {
+                    if (response.data.message) {
                         $.toast(response.data.message);
                     }
+                });
+        },
+        onPay: function () {
+            var self = this;
+
+            if (!this.hasBeenPayed) {
+                return;
+            }
+            this.hasBeenPayed = true;
+            this.$http.get('api/order/GetPayUrl',
+                {
+                    wid: this.wid,
+                    openid: this.openid,
+                    orderId: this.order.id
+                })
+                .then(function (response) {
+                    if (response.data) {
+                        document.location.href = response.data;
+                    }
+                }, function (response) {
+                    if (response.data.message) {
+                        $.toast(response.data.message);
+                    }
+                });
+        },
+        onCancel: function () {
+            var self = this;
+
+            if (!this.hasBeenCanceled) {
+                return;
+            }
+            this.hasBeenCanceled = true;
+            this.$http.post('api/order/Cancel',
+                {
+                    
+                    orderId: this.order.id
+                })
+                .then(function (response) {
+                    if (response.data) {
+                        $.toast("取消成功!");
+                        self.router.setRoute('/order');
+
+                    }
+                    else {
+                        $.toast("取消失败!");
+                    }
+                }, function (response) {
+                    if (response.data.message) {
+                        $.toast(response.data.message);
+                    }   
                 });
         },
         updateOrderNumber: function (num) {

@@ -110,7 +110,7 @@
     <Content Include="Common\web_component\swiper\swiper.min.css" />
     <Content Include="Common\web_component\swiper\swiper.min.js" />
     <Content Include="Functoin\BackPage\Hotel\commodity_detail.aspx" />
-    <Content Include="Functoin\BackPage\hotel_order_paycallback.aspx" />
+    <Content Include="Functoin\BackPage\Hotel\Pay\hotel_order_paycallback.aspx" />
     <Content Include="Functoin\StaticPage\hotel\css\hotelOrderList.css" />
     <Content Include="Functoin\StaticPage\hotel\css\hotels.css" />
     <Content Include="Functoin\StaticPage\hotel\css\mystyle.css" />
@@ -178,11 +178,11 @@
     <Compile Include="Functoin\BackPage\Hotel\dingdan_confirm.aspx.designer.cs">
       <DependentUpon>dingdan_confirm.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Functoin\BackPage\hotel_order_paycallback.aspx.cs">
+    <Compile Include="Functoin\BackPage\Hotel\Pay\hotel_order_paycallback.aspx.cs">
       <DependentUpon>hotel_order_paycallback.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Functoin\BackPage\hotel_order_paycallback.aspx.designer.cs">
+    <Compile Include="Functoin\BackPage\Hotel\Pay\hotel_order_paycallback.aspx.designer.cs">
       <DependentUpon>hotel_order_paycallback.aspx</DependentUpon>
     </Compile>
     <Compile Include="Functoin\Service\HotelService.asmx.cs">

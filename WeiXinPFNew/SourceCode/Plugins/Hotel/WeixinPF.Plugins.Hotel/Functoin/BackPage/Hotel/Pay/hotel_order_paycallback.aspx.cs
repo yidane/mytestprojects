@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using WeixinPF.Common;
 using WeixinPF.Common.Helper;
 using WeixinPF.Hotel.Plugins.Controller;
+using WeixinPF.Model.WeiXin.Pay;
 
 namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
 {
@@ -27,7 +28,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
             {
                 payData = EncryptionManager.AESDecrypt(payData, ticket);
 
-                var payDataModel = JSONHelper.Deserialize<UnifiedOrderEntity>(payData);
+                var payDataModel = JSONHelper.Deserialize<UnifiedOrderInfo>(payData);
 
                 if (payDataModel != null)
                 {

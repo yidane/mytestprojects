@@ -8,10 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using NServiceBus;
+using WeixinPF.Application.Weixin.Pay.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
 using WeixinPF.Common.Helper;
 using WeixinPF.Messages.RequestResponse;
+using WeixinPF.Model.WeiXin.Pay;
 using WeixinPF.Shared;
 
 namespace WeixinPF.Hotel.Plugins.Controller
@@ -89,37 +91,40 @@ namespace WeixinPF.Hotel.Plugins.Controller
                 var orderDto = order.Data;
                 if (orderDto != null)
                 {
-
+                    var unifiedOrderService = new UnifiedOrderService();
                     int wid = orderRequest.Wid;
                     //总花费
                     var dateSpan = orderDto.LeaveTime - orderDto.ArriveTime;
-                    var totalPrice = orderDto.OrderPrice * orderDto.OrderNum * dateSpan.Days;
+                    var totalPrice = orderDto.OrderPrice * orderDto.OrderNum * dateSpan.Days*100;//单位分
 
                     var port = WebHelper.GetHostPort();
                     var url = string.Format("{0}/Functoin/BackPage/hotel_order_paycallback.aspx", port);
-                    var entity = new UnifiedOrderEntity
+
+                    var entity = new UnifiedOrderInfo()
                     {
-                        wid = wid,
-                        total_fee = totalPrice == null ? 0 : (int)totalPrice,
-                        out_trade_no = orderDto.OrderNumber,
-                        openid = orderRequest.OpenId,
+                        PayModuleName="hotel",
+                        AppId = wid,
+                        TotalFee = totalPrice == null ? 0 : (int)totalPrice,
+                        OutTradeNo = orderDto.OrderNumber,
+                        Openid = orderRequest.OpenId,
                         OrderId = orderRequest.OrderId.ToString(),
-                        body = string.Format("订单编号{2} {3}{1}{0}间", orderDto.OrderNum, orderDto.RoomType
+                        Body = string.Format("订单编号{2} {3}{1}{0}间", orderDto.OrderNum, orderDto.RoomType
                             , orderDto.OrderNumber, orderDto.HotelName),
-                        PayModuleID = (int)PayModuleEnum.Hotel,
                         PayComplete = url
                     };
-
                     entity.Extra.Add("orderId", orderRequest.OrderId.ToString());
                     entity.Extra.Add("openid", orderRequest.OpenId);
                     entity.Extra.Add("hotelid", orderDto.HotelId.ToString());
                     entity.Extra.Add("roomid", orderDto.RoomId.ToString());
                     entity.Extra.Add("wid", wid.ToString());
 
-                    var ticket = EncryptionManager.CreateIV();
-                    var payData = EncryptionManager.AESEncrypt(entity.ToJson(), ticket);
 
-                    var strResult = PayHelper.GetPayUrl(payData, ticket);
+                    string message;
+                    var strResult = unifiedOrderService.UnifiedOrder(entity,out message);
+                    if (string.IsNullOrEmpty(strResult)&&!string.IsNullOrEmpty(message))
+                    {
+                        throw new Exception(message);
+                    }
                     return strResult;
                 }
                 else
@@ -273,153 +278,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
 
 
 
-
-    #region 测试支付用代码 接好后删除 
-  /// <summary>
-    /// 统一下单对象
-    /// </summary>
-
-    public class UnifiedOrderEntity
-    {
-        /// <summary>
-        /// 微信号ID
-        /// </summary>
-
-        public int wid { get; set; }
-
-        /// <summary>
-        /// 支付模块ID
-        /// </summary>
-
-        public int PayModuleID { get; set; }
-
-        /// <summary>
-        /// 业务系统订单号
-        /// </summary>
-
-        public string OrderId { get; set; }
-
-        /// <summary>
-        /// 商品信息
-        /// </summary>
-
-        public string body { get; set; }
-
-        /// <summary>
-        /// 商户订单号
-        /// </summary>
-
-        public string out_trade_no { get; set; }
-
-        /// <summary>
-        /// 支付费用，单位：分
-        /// </summary>
-
-        public int total_fee { get; set; }
-
-        /// <summary>
-        /// 支付的OpenID
-        /// </summary>
-
-        public string openid { get; set; }
-
-        /// <summary>
-        /// 支付前
-        /// </summary>
-
-        public string BeforePay { get; set; }
-
-        /// <summary>
-        /// 支付成功
-        /// </summary>
-
-        public string PaySuccess { get; set; }
-
-        /// <summary>
-        /// 支付失败
-        /// </summary>
-
-        public string PayFail { get; set; }
-
-        /// <summary>
-        /// 支付取消
-        /// </summary>
-
-        public string PayCancel { get; set; }
-
-        /// <summary>
-        /// 支付完成
-        /// </summary>
-
-        public string PayComplete { get; set; }
-
-        /// <summary>
-        /// 额外参数
-        /// </summary>
-
-        public Dictionary<string, string> Extra = new Dictionary<string, string>();
-
-        public string ToJson()
-        {
-            string message;
-            if (!CheckRequired(out message))
-            {
-                throw new Exception(message);
-            }
-
-            return JSONHelper.Serialize(this, "yyyy-MM-dd");
-        }
-
-        public bool CheckRequired(out string message)
-        {
-            var stringBuilder = new StringBuilder();
-            const string msg = "{0}必须赋值{1}";
-            if (wid <= 0)
-                stringBuilder.AppendFormat(msg, "wid", Environment.NewLine);
-
-            if (PayModuleID < 0)
-                stringBuilder.AppendFormat(msg, "PayModuleID", Environment.NewLine);
-
-            if (string.IsNullOrEmpty(OrderId))
-                stringBuilder.AppendFormat(msg, "OrderId", Environment.NewLine);
-
-            if (string.IsNullOrEmpty(body))
-                stringBuilder.AppendFormat(msg, "body", Environment.NewLine);
-
-            if (string.IsNullOrEmpty(out_trade_no))
-                stringBuilder.AppendFormat(msg, "out_trade_no", Environment.NewLine);
-
-            if (total_fee <= 0)
-                stringBuilder.AppendFormat(msg, "total_fee", Environment.NewLine);
-
-            if (string.IsNullOrEmpty(openid))
-                stringBuilder.AppendFormat(msg, "openid", Environment.NewLine);
-
-            if (stringBuilder.Length > 0)
-            {
-                message = stringBuilder.ToString();
-                return false;
-            }
-
-            message = string.Empty;
-            return true;
-        }
-    }
-
-    public enum PayModuleEnum
-    {
-        /// <summary>
-        /// 餐饮
-        /// </summary>
-        Restaurant = 0,
-
-        /// <summary>
-        /// 酒店
-        /// </summary>
-        Hotel = 1
-    }
-    #endregion
-
+ 
 
   
 
