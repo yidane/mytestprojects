@@ -63,7 +63,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
         private void JumpUrl(string payStatus)
         {
             var url = string.Empty;
-            url = string.Format("../StaticPage/hotel/index.html?openid={0}&wid={1}&hotelid={2}#/order", openid, wid, hotelid, _orderId, payStatus);
+            url = string.Format("../../../StaticPage/hotel/index.html?openid={0}&wid={1}&hotelid={2}#/order", openid, wid, hotelid, _orderId, payStatus);
             newUrl = url;
             Response.Redirect(url);
         }
