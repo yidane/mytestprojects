@@ -95,14 +95,14 @@ namespace WeixinPF.Hotel.Plugins.Controller
                     int wid = orderRequest.Wid;
                     //总花费
                     var dateSpan = orderDto.LeaveTime - orderDto.ArriveTime;
-                    var totalPrice = orderDto.OrderPrice * orderDto.OrderNum * dateSpan.Days*100;//单位分
+                    var totalPrice = orderDto.OrderPrice * orderDto.OrderNum * dateSpan.Days * 100;//单位分
 
                     var port = WebHelper.GetHostPort();
                     var url = string.Format("{0}/Functoin/BackPage/hotel_order_paycallback.aspx", port);
 
                     var entity = new UnifiedOrderInfo()
                     {
-                        PayModuleName="hotel",
+                        PayModuleName = "hotel",
                         AppId = wid,
                         TotalFee = totalPrice == null ? 0 : (int)totalPrice,
                         OutTradeNo = orderDto.OrderNumber,
@@ -119,11 +119,10 @@ namespace WeixinPF.Hotel.Plugins.Controller
                     entity.Extra.Add("wid", wid.ToString());
 
 
-                    string message;
-                    var strResult = unifiedOrderService.UnifiedOrder(entity,out message);
-                    if (string.IsNullOrEmpty(strResult)&&!string.IsNullOrEmpty(message))
+                    var strResult = unifiedOrderService.GeneratePayUrl(entity);
+                    if (string.IsNullOrEmpty(strResult))
                     {
-                        throw new Exception(message);
+                        throw new Exception("生成下单链接失败");
                     }
                     return strResult;
                 }
@@ -278,8 +277,8 @@ namespace WeixinPF.Hotel.Plugins.Controller
 
 
 
- 
 
-  
+
+
 
 }

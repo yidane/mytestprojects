@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WeixinPF.Application.Weixin.Token.Repository;
 using WeixinPF.Application.Weixin.Token.Service;
 using WeixinPF.Common;
 
-namespace ApplicationTest
+namespace ApplicationTest.WeiXin.Token
 {
     [TestClass]
     public class TokenServiceTest

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WeixinPF.Application.Weixin.User.Service;
 
-namespace ApplicationTest
+namespace ApplicationTest.WeiXin.User
 {
     [TestClass]
     public class UserServiceTest

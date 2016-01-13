@@ -1,13 +1,4 @@
-﻿
-/**************************************
- *
- * A_uthor:
- * createDate:2015-8-1
- * update:2015-8-1
- * 
- ***********************************/
-
-using System;
+﻿using System;
 using WeixinPF.Application.Weixin.Service;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
@@ -44,14 +35,14 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             lblWeixinName.Text = weixin.WxName;
             lblAppid.Text = weixin.AppId;
 
-            var wxpayBll = new PaymentService(new PaymentRepository());
-            var model = wxpayBll.GetModelByWid(weixin.Id);
+            var wxpayBll = new PaymentService();
+            var model = wxpayBll.GetModelByAppId(weixin.Id);
             if (model == null || model.Id == 0)
             {
                 //新增记录
             }
             else
-            { 
+            {
                 //修改
                 hidId.Value = model.Id.ToString();
                 this.txtmch_id.Text = model.MchId;
@@ -66,28 +57,28 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             {
                 radOpenOAuth.SelectedValue = propertyEntity.iContent;
                 hidOpenOauthId.ID = propertyEntity.Id.ToString();
-            }            
+            }
         }
 
         #endregion
- 
+
 
         //保存
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var wxpayBll = new PaymentService(new PaymentRepository());
-            int id =MyCommFun.Obj2Int( hidId.Value,0);
+            var wxpayBll = new PaymentService();
+            int id = MyCommFun.Obj2Int(hidId.Value, 0);
             var wxpayModel = new PaymentInfo();
             var weixin = GetWeiXinCode();
             if (id == 0)
             {
                 //新增
-                
-                  wxpayModel.Wid = weixin.Id;
-                  wxpayModel.CreateDate = DateTime.Now;
+
+                wxpayModel.AppId = weixin.Id;
+                wxpayModel.CreateDate = DateTime.Now;
             }
             else
-            { 
+            {
                 //修改
                 wxpayModel = wxpayBll.GetModel(id);
             }
@@ -96,12 +87,12 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             wxpayModel.Paykey = txtpaykey.Text.Trim();
             wxpayModel.CertInfoPath = txtcertInfoPath.Text.Trim();
             wxpayModel.CerInfoPwd = txtcerInfoPwd.Text.Trim();
-           
+
             bool ret = false;
             if (id == 0)
             {
                 wxpayModel.CreateDate = DateTime.Now;
-                int retNum=wxpayBll.Add(wxpayModel);
+                int retNum = wxpayBll.Add(wxpayModel);
                 if (retNum > 0)
                 {
                     ret = true;
@@ -109,12 +100,12 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
             }
             else
             {
-               ret= wxpayBll.Update(wxpayModel);
+                ret = wxpayBll.Update(wxpayModel);
             }
 
             //OpenOAuth开启
             var propertyBll = new PropertyService(new PropertyRepository());
-            string pValue=radOpenOAuth.SelectedItem.Value;
+            string pValue = radOpenOAuth.SelectedItem.Value;
             propertyBll.AddProperty(weixin.Id, MXEnums.WXPropertyKeyName.OpenOauth.ToString(), pValue);
 
             if (ret)
@@ -126,7 +117,7 @@ namespace WeixinPF.Web.Functoin.BackPage.Admin.weixin
                 JscriptMsg("修改信息成功！", "", "Error");
                 return;
             }
-            
+
         }
 
     }

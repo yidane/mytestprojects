@@ -6,6 +6,7 @@ using WeixinPF.Model.WeiXin.Group;
 using WeixinPF.Model.WeiXin.Message;
 using WeixinPF.Model.WeiXin.Token;
 using WeixinPF.Model.WeiXin.User;
+using PaymentInfo = WeixinPF.Model.WeiXin.Pay.PaymentInfo;
 
 namespace WeixinPF.Infrastructure
 {
@@ -79,6 +80,10 @@ namespace WeixinPF.Infrastructure
 
         public DbSet<UserInfo> UserInfoContext { get; set; }
 
+        #endregion
+
+        #region Pay
+        public DbSet<PaymentInfo> PaymentInfoContext { get; set; }
         #endregion
 
         #endregion

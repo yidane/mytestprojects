@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Model.WeiXin.Pay
 {
-    [Table("WeiXin_Payment_UnifiedOrderInfo")]
+    [Table("WeiXin_Pay_UnifiedOrderInfo")]
     public class UnifiedOrderInfo
     {
         /// <summary>

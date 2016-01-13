@@ -80,7 +80,7 @@
     <Compile Include="WeiXin\User\UserInfo.cs" />
     <Compile Include="WeiXin\AppInfo.cs" />
     <Compile Include="WeiXin\IndustryDefaultModule.cs" />
-    <Compile Include="WeiXin\Payment.cs" />
+    <Compile Include="WeiXin\PaymentInfo.cs" />
     <Compile Include="WeiXin\Property.cs" />
     <Compile Include="WeiXin\SystemConfig.cs" />
   </ItemGroup>

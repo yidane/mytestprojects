@@ -49,6 +49,11 @@ namespace WeixinPF.Common
             return string.Format("{0}?payData={1}&ticket={2}", payUrl, GetPayData(payData), ticket);
         }
 
+        public static string GetPayNotifyUrl()
+        {
+            return "http://www.cloudorg.com.cn/weixin/wechatpay/paynotify.aspx";
+        }
+
         /// <summary>
         /// 解决+号在url中取出来为空格的问题
         /// </summary>

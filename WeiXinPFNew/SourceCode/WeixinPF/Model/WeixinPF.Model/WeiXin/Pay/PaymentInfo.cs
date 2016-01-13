@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeixinPF.Model.WeiXin.Pay
 {
+    [Table("WeiXin_Pay_PaymentInfo")]
     public class PaymentInfo
     {
         [Key]
@@ -17,9 +15,6 @@ namespace WeixinPF.Model.WeiXin.Pay
 
         [Required, MaxLength(50)]
         public string OpenId { get; set; }
-
-        [Required, MaxLength(100)]
-        public string ShopName { get; set; }
 
         [Required, MaxLength(50)]
         public string OrderId { get; set; }
@@ -33,17 +28,19 @@ namespace WeixinPF.Model.WeiXin.Pay
         [Required, MaxLength(512)]
         public string Description { get; set; }
 
+        [Required, MaxLength(512)]
+        public string Body { get; set; }
+
         [Required, MaxLength(50)]
         public string ModuleName { get; set; }
 
         [Required, MaxLength(50)]
-        public string WXOrderCode { get; set; }
+        public string WxOrderCode { get; set; }
 
         [Required]
         public DateTime CreateTime { get; set; }
 
-        [Required]
-        public DateTime ModifyTime { get; set; }
+        public DateTime? ModifyTime { get; set; }
 
         [Required]
         public int Status { get; set; }

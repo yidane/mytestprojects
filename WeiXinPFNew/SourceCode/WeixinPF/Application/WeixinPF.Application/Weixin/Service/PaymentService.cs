@@ -8,14 +8,14 @@ namespace WeixinPF.Application.Weixin.Service
 {
     public class PaymentService
     {
-        private readonly IPaymentRepository _repository;
+        private readonly IPaymentInfoRepository _repository;
 
         public PaymentService()
         {
-            _repository = DependencyManager.Resolve<IPaymentRepository>();
+            _repository = DependencyManager.Resolve<IPaymentInfoRepository>();
         }
 
-        public PaymentService(IPaymentRepository repository)
+        public PaymentService(IPaymentInfoRepository repository)
         {
             _repository = repository;
         }
@@ -47,39 +47,31 @@ namespace WeixinPF.Application.Weixin.Service
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
-        {
-            return _repository.GetList(strWhere);
-        }
-
-        /// <summary>
-        /// 获得数据列表
-        /// </summary>
         public List<PaymentInfo> DataTableToList(DataTable dt)
         {
             var modelList = new List<PaymentInfo>();
-            var rowsCount = dt.Rows.Count;
-            if (rowsCount > 0)
-            {
-                PaymentInfo model = null;
-                for (var n = 0; n < rowsCount; n++)
-                {
-                    model = _repository.DataRowToModel(dt.Rows[n]);
-                    if (model != null)
-                    {
-                        modelList.Add(model);
-                    }
-                }
-            }
+            //var rowsCount = dt.Rows.Count;
+            //if (rowsCount > 0)
+            //{
+            //    PaymentInfo model = null;
+            //    for (var n = 0; n < rowsCount; n++)
+            //    {
+            //        model = _repository.DataRowToModel(dt.Rows[n]);
+            //        if (model != null)
+            //        {
+            //            modelList.Add(model);
+            //        }
+            //    }
+            //}
             return modelList;
         }
 
         /// <summary>
         /// 得到wid的微信支付配置信息一个对象实体
         /// </summary>
-        public PaymentInfo GetModelByWid(int wid)
+        public PaymentInfo GetModelByAppId(int appId)
         {
-            return _repository.GetModelByWid(wid);
+            return _repository.GetModelByAppId(appId);
         }
     }
 }
