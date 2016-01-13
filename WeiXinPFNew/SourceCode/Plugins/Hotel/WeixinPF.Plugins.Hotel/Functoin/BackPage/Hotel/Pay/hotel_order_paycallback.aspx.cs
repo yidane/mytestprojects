@@ -14,10 +14,10 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
     public partial class hotel_order_paycallback : System.Web.UI.Page
     {
         private string _orderId;
-        private string openid;
-        private string hotelid;
-        private string roomid;
-        protected string newUrl = string.Empty;
+        private string _openid;
+        private string _hotelid;
+        private string _roomid;
+        protected string NewUrl = string.Empty;
         private string wid;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,18 +34,18 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
                 {
 
                     _orderId = payDataModel.Extra["orderId"];
-                    openid = payDataModel.Extra["openid"];
-                    hotelid = payDataModel.Extra["hotelid"];
-                    roomid = payDataModel.Extra["roomid"];
+                    _openid = payDataModel.Extra["_openid"];
+                    _hotelid = payDataModel.Extra["_hotelid"];
+                    _roomid = payDataModel.Extra["_roomid"];
                     wid = payDataModel.Extra["wid"];
                     JumpUrl(payStatus);
                 }
                 else
                 {
                     _orderId = Request.QueryString["orderId"];
-                    openid = Request.QueryString["openid"];
-                    hotelid = Request.QueryString["hotelid"];
-                    roomid = Request.QueryString["roomid"];
+                    _openid = Request.QueryString["_openid"];
+                    _hotelid = Request.QueryString["_hotelid"];
+                    _roomid = Request.QueryString["_roomid"];
                     JumpUrl(payStatus);
                 }
             }
@@ -63,8 +63,8 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
         private void JumpUrl(string payStatus)
         {
             var url = string.Empty;
-            url = string.Format("../../../StaticPage/hotel/index.html?openid={0}&wid={1}&hotelid={2}#/order", openid, wid, hotelid, _orderId, payStatus);
-            newUrl = url;
+            url = string.Format("../../../StaticPage/hotel/index.html?_openid={0}&wid={1}&_hotelid={2}#/order", _openid, wid, _hotelid, _orderId, payStatus);
+            NewUrl = url;
             Response.Redirect(url);
         }
 
