@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Web.Http;
 using WeixinPF.Common;
 using WeixinPF.Common.Enum;
+using WeixinPF.Hotel.Plugins.Helper;
 using WeixinPF.Hotel.Plugins.Service.Application.Service;
 using WeixinPF.Hotel.Plugins.Service.Models;
+using WeixinPF.Messages.RequestResponse;
 using WeixinPF.Web.UI;
 using HotelService = WeixinPF.Hotel.Plugins.Functoin.Service.HotelService;
 
@@ -14,9 +18,8 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 {
     public partial class hotel_dingdan_cz : ManagePage
     {
-        public int dingdanid = 0;
-        private readonly HotelOrderService _hotelOrderService = new HotelOrderService();
-        protected HotelOrderInfo Order = new HotelOrderInfo();
+        public int OrderId = 0;
+        protected GetHotelOrderResponse Order;
         public string ordername = "";
         public string openid = "";
         public string beizhu = "";
@@ -32,24 +35,29 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
         public string uName = string.Empty;
         public string roleName = string.Empty;
         public string ordermsg = string.Empty;
-        private IList<IdentifyingCodeDTO> listCode;
+        private IList<QrCodeDto> _listCode;
+
+        public hotel_dingdan_cz()
+        {
+            Order = new GetHotelOrderResponse();
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             var adminInfo = GetAdminInfo();
             if (adminInfo != null)
             {
-                isAdmin = adminInfo.role_id == 13;//景区管理员
+                isAdmin = adminInfo.RoleId == 13;//景区管理员
             }
-            dingdanid = MyCommFun.RequestInt("id");
+            OrderId = MyCommFun.RequestInt("id");
             hotelid = MyCommFun.RequestInt("hotelid");
             if (Request.Form["__EVENTTARGET"] == "btn_completed")
             {
                 // Fire event
                 btn_completed_OnClick(this, new EventArgs());
             }
-            listCode = IdentifyingCodeService.GetIdentifyingCodeDTO("hotel", dingdanid);
-            GetData(dingdanid);
+           
+            GetData(OrderId);
 
             if (!IsPostBack)
             {
@@ -58,21 +66,45 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
         }
 
-        private void GetData(int dingdanid)
+        /// <summary>
+        /// 获取订单
+        /// </summary>
+        /// <param name="orderId"></param>
+        private void GetData(int orderId)
         {
-            Order = _hotelOrderService.GetModel(dingdanid);
-            GetOrderList(dingdanid);
+            var orderRequest = new GetHotelOrderByOrderIdRequest()
+            {
+                OrderId = orderId
+            }; 
+            var result = BusHelper.Send<GetHotelOrderResponse>(orderRequest);
+            Order = result;
+            GetIdentifyingCode(orderId);
+            GetOrderList(orderId);
             GetUserMsg(Order);
             //            GetOrderStatusMsg(Order);
+        }
+
+        /// <summary>
+        /// 获取验证码，只有已支付、退款中、退款完成由验证码
+        /// </summary>
+        /// <param name="orderId"></param>
+        private void GetIdentifyingCode(int orderId)
+        {
+            var request = new GetIdentifyingCodeByOrderRequest()
+            {
+                OrderId = orderId
+            };
+            var result = BusHelper.Send<GetIdentifyingCodeByOrderResponse>(request);
+            _listCode = result.Codes;
         }
 
         /// <summary>
         /// 获取订单状态
         /// </summary>
         /// <param name="order"></param>
-        private void GetOrderStatusMsg(HotelOrderInfo order)
+        private void GetOrderStatusMsg(GetHotelOrderResponse order)
         {
-            orderStatus = order.orderStatus;
+            orderStatus = order.OrderStatus;
             //支付状态下默认退款金额为订单总额
             if (orderStatus == HotelStatusManager.OrderStatus.Payed.StatusId)
             {
@@ -83,7 +115,12 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 {
                     hidConfirmStr.Value = "确定执行【退款】操作吗？";
 
-                    if (listCode != null && listCode.Any(c => c.Status == "已使用"))//订单中有验证码已使用
+//                    WHEN 0 THEN ''未支付''
+//                    WHEN 1 THEN ''已支付''
+//                    WHEN 2 THEN ''已使用''
+//                    WHEN 3 THEN ''申请退款''
+//                    WHEN 4 THEN ''已退款''
+                    if (_listCode != null && _listCode.Any(c => c.Status == 2))//订单中有验证码已使用
                     {
                         hidConfirmStr.Value = string.Format("{0}，{1}", "订单中有验证码已使用", hidConfirmStr.Value);
                     }
@@ -93,7 +130,8 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                      || orderStatus == HotelStatusManager.OrderStatus.Refunded.StatusId)
             {
 
-                var hotelService = new HotelService();
+              
+                 
                 tuidan = hotelService.GetModel(order.id, order.hotelid.Value);
                 if (tuidan != null && tuidan.operateUser > 0)
                 {
@@ -107,90 +145,46 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
         /// <summary>
         /// 获取最大可退价格
         /// </summary>
-        /// <param name="dingdan"></param>
-        private decimal GetPrice(HotelOrderInfo dingdan)
+        /// <param name="order"></param>
+        private decimal GetPrice(GetHotelOrderResponse order)
         {
             decimal result = 0;
 
-            var count = GetCodeCount(dingdan);
-            //总花费
-            var dateSpan = dingdan.leaveTime.Value - dingdan.arriveTime.Value;
-            //            var totalPrice = Order.price.Value * (Order.orderNum.Value - count) * dateSpan.Days;
-            var totalPrice = dingdan.price.Value * (dingdan.orderNum.Value) * dateSpan.Days;
-            result = totalPrice;
+            var dateSpan = order.LeaveDate - order.ArriveDate;
+            result = order.Price * order.OrderNum * dateSpan.Days;//单位分 
+
             return result;
         }
-
-        /// <summary>
-        /// 获取验证码剩余数量
-        /// </summary>
-        /// <returns></returns>
-        private int GetCodeCount(HotelOrderInfo dingdan)
-        {
-            var count = 0;
-
-            var wxHotelsInfo = new BLL.wx_hotels_info().GetModel(dingdan.hotelid.Value);
-            var listCodes = IdentifyingCodeService.GetIdentifyingCodeInfoByOrderId
-               (dingdan.hotelid.Value, "hotel",
-               dingdan.id.ToString(), wxHotelsInfo.wid.Value);
-
-            //查询状态为已使用的
-            var usedCode = listCodes.Where(t => t.Status == 2);
-
-            if (usedCode.Any())
-            {
-                count = dingdan.orderNum.Value - usedCode.Count();
-
-
-            }
-            else
-            {
-                count = dingdan.orderNum.Value;
-            }
-
-            if (count <= 0)
-            {
-                //                ordermsg = "房间已全部入住";
-                //                ordermsg = string.Format(@"  <div class='alert alert-warning' role='alert'>
-                //      <strong> 提示!</strong>  {0}
-                //         </div>", ordermsg);
-            }
-            else
-            {
-
-            }
-            return count;
-        }
-
+ 
         /// <summary>
         /// 获取订单详情
         /// </summary>
         /// <param name="dingdanid"></param>
-        private void GetOrderList(int dingdanid)
+        private void GetOrderList(int orderId)
         {
 
 
             if (Order != null)
             {
-                if (listCode != null && listCode.Any())
+                if (_listCode != null && _listCode.Any())
                 {
                     decimal amount = 0;
-                    arriveTime = string.Format("{0:yyyy/MM/dd HH:mm}", Order.arriveTime);
-                    leaveTime = string.Format("{0:yyyy/MM/dd HH:mm}", Order.leaveTime);
+                    arriveTime = string.Format("{0:yyyy/MM/dd HH:mm}", Order.ArriveDate);
+                    leaveTime = string.Format("{0:yyyy/MM/dd HH:mm}", Order.LeaveDate);
                     StringBuilder sb = new StringBuilder();
                     sb.Append("<tr><th>商品名称</th><th class=\"cc\">单价</th><th class=\"cc\">验证码</th><th class=\"cc\">是否验证</th><th class=\"cc\">入住时间</th><th class=\"cc\">离店时间</th> </tr>");
-                    foreach (var code in listCode)
+                    foreach (var code in _listCode)
                     {
                         var isUserd = "未验证";
-                        if (code.Status == "已使用")
+                        if (code.Status == 2)
                         {
                             isUserd = "已验证";
                         }
-                        var codeCount = code.IdentifyingCode.Length - 4;
+                        var codeCount = code.Code.Length - 4;
                         var icode = string.Format("****************{0}",
-                            code.IdentifyingCode.Substring(codeCount, 4));
-                        sb.Append(string.Format(" <tr><td>{0}</td>", Order.roomType));
-                        sb.Append(string.Format("<td class=\"cc\">￥{0}</td>", Order.price));
+                            code.Code.Substring(codeCount, 4));
+                        sb.Append(string.Format(" <tr><td>{0}</td>", Order.RoomType));
+                        sb.Append(string.Format("<td class=\"cc\">￥{0}</td>", Order.Price));
                         sb.Append(string.Format("<td class=\"cc\">{0}</td>", icode));
                         sb.Append(string.Format("<td class=\"cc\">{0}</td>", isUserd));
 
@@ -201,10 +195,9 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
                     }
                     //总花费
-                    var dateSpan = Order.leaveTime.Value - Order.arriveTime.Value;
-                    var totalPrice = Order.price.Value * Order.orderNum.Value * dateSpan.Days;
+                    
 
-                    amount += totalPrice;
+                    amount += GetPrice(Order);
 
                     sb.AppendFormat("<tr><td></td><td ></td><td ></td><td ></td><td ></td><td class=\"rr\">总计：<span class='text-danger total-money'>￥{0}</span></td></tr>", amount);
                     Dingdanlist = sb.ToString();
@@ -213,24 +206,29 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             }
         }
 
-        private void GetUserMsg(HotelOrderInfo manage)
+        private void GetUserMsg(GetHotelOrderResponse order)
         {
 
             //订单信息
-            if (manage != null)
+            if (order != null)
             {
-                var createTime = string.Format("{0:yyyy/MM/dd HH:mm}", Order.createDate);
-                var hotel = new BLL.wx_hotels_info().GetModel(manage.hotelid.Value);
-                Dingdanren += "<tr> <td>酒店商户或门店：" + hotel.hotelName + "</td></tr>";
-                Dingdanren += "<tr> <td>商户或门店编号：" + hotel.HotelCode + "</td></tr>";
-                Dingdanren += "<tr><td width=\"70\">订单编号： " + manage.orderNum + "</td></tr>";
+                var request = new GetHotelRequest()
+                {
+                    HotelId = order.HotelId
+                };
+                var hotel = BusHelper.Send<GetHotelResponse>(request);
+                var createTime = string.Format("{0:yyyy/MM/dd HH:mm}", Order.CreateDate);
+                
+                Dingdanren += "<tr> <td>酒店商户或门店：" + hotel.Name + "</td></tr>";
+                Dingdanren += "<tr> <td>商户或门店编号：" + hotel.Code + "</td></tr>";
+                Dingdanren += "<tr><td width=\"70\">订单编号： " + order.OrderNum + "</td></tr>";
                 Dingdanren += "<tr> <td>交易日期：" + createTime + "</td></tr>";
-                Dingdanren += "<tr><td>预定人：" + manage.oderName + "</td></tr>";
-                Dingdanren += "<tr><td>电话：" + manage.tel + "</td></tr>";
+                Dingdanren += "<tr><td>预定人：" + order.OrderPersonName + "</td></tr>";
+                Dingdanren += "<tr><td>电话：" + order.Tel + "</td></tr>";
                 //                dingdanren += "<tr><td>地址：" + manage.address + "</td></tr>";
                 //                dingdanren += "<tr><td>备注 ：" + manage.oderRemark + "</td></tr>";
 
-                status = HotelStatusManager.OrderStatus.GetStatusDict(manage.orderStatus.Value);
+                status = HotelStatusManager.OrderStatus.GetStatusDict(order.OrderStatus);
                 Dingdanren += "<tr><td>订单状态：<em  style='width:70px;' class='" + status.CssClass
                     + "'>" + status.StatusName + "</em></td></tr>";
 

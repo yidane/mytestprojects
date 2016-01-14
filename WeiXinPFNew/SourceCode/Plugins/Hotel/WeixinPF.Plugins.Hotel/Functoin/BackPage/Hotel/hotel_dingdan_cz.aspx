@@ -6,18 +6,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>订单处理</title>
-    <script type="text/javascript" src="../../scripts/jquery/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="../../scripts/jquery/Validform_v5.3.2_min.js"></script>
-    <script type="text/javascript" src="../../scripts/lhgdialog/lhgdialog.js?skin=idialog"></script>
-    <script type="text/javascript" src="../../scripts/datepicker/WdatePicker.js"></script>
-    <script type="text/javascript" src="../../scripts/swfupload/swfupload.js"></script>
-    <script type="text/javascript" src="../../scripts/swfupload/swfupload.queue.js"></script>
-    <script type="text/javascript" src="../../scripts/swfupload/swfupload.handlers.js"></script>
-    <script type="text/javascript" charset="utf-8" src="../../editor/kindeditor-min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="../../editor/lang/zh_CN.js"></script>
-    <script type="text/javascript" src="../js/layout.js"></script>
-    <link href="../skin/default/style.css" rel="stylesheet" type="text/css" />
-    <%--    <link href="../skin/mystyle.css" rel="stylesheet" type="text/css" />--%>
+    <script src="../../../Common/JS/jquery/jquery-2.1.0.min.js"></script>
+    <script src="../../../Common/JS/jquery/Validform_v5.3.2_min.js"></script> 
+    <script type="text/javascript" src="../../../Common/JS/lhgdialog/lhgdialog.js?skin=idialog"></script>
+<%--    <script type="text/javascript" src="../../scripts/datepicker/WdatePicker.js"></script>--%>
+    <script type="text/javascript" src="../../../Common/JS/swfupload/swfupload.js"></script>
+    <script type="text/javascript" src="../../../Common/JS/swfupload/swfupload.queue.js"></script>
+    <script type="text/javascript" src="../../../Common/JS/swfupload/swfupload.handlers.js"></script>
+    <script type="text/javascript" src="../../../Common/web_component/editor/kindeditor-min.js"></script> 
+    <script type="text/javascript" src="../../../Common/web_component/editor/lang/zh_CN.js"></script> 
+    <script type="text/javascript" src="../../../Common/JS/BackPage/layout.js"></script>
+    <link href="../../../Common/CSS/BackPage/default/style.css" rel="stylesheet" type="text/css" />
+    <%--    <link href="../skin/mystyle.css" rel="stylesheet" type="text/css" />--%>            
     <link href="../../weixin/KNSHotel/css/orderstyle.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(function () {

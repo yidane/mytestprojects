@@ -26,17 +26,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.Service
     {
         private const int WaitSeconds = 10000000;
 
-        [WebMethod]
-        public void Test()
-        {
-            this.WriteJson(new { success = true, message = "我是测试服务，请向我开炮！！！！" });
-        }
-        [WebMethod]
-        public void HelloWorld(int wid, int shopId)
-        {
 
-
-        }
 
         /// <summary>
         /// 获取酒店基本信息

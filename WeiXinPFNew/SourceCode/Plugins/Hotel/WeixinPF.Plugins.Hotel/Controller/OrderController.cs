@@ -112,7 +112,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
                             , orderDto.OrderNumber, orderDto.HotelName),
                         PayComplete = url
                     };
-                    entity.Extra.Add("orderId", orderRequest.OrderId.ToString());
+                    entity.Extra.Add("OrderId", orderRequest.OrderId.ToString());
                     entity.Extra.Add("openid", orderRequest.OpenId);
                     entity.Extra.Add("hotelid", orderDto.HotelId.ToString());
                     entity.Extra.Add("roomid", orderDto.RoomId.ToString());

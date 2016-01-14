@@ -33,7 +33,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
                 if (payDataModel != null)
                 {
 
-                    _orderId = payDataModel.Extra["orderId"];
+                    _orderId = payDataModel.Extra["OrderId"];
                     _openid = payDataModel.Extra["_openid"];
                     _hotelid = payDataModel.Extra["_hotelid"];
                     _roomid = payDataModel.Extra["_roomid"];
@@ -42,7 +42,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage
                 }
                 else
                 {
-                    _orderId = Request.QueryString["orderId"];
+                    _orderId = Request.QueryString["OrderId"];
                     _openid = Request.QueryString["_openid"];
                     _hotelid = Request.QueryString["_hotelid"];
                     _roomid = Request.QueryString["_roomid"];

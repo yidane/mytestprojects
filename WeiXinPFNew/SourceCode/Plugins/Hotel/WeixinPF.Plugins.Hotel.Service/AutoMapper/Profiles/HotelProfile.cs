@@ -10,6 +10,7 @@ namespace WeixinPF.Hotel.Plugins.Service.AutoMapper.Profiles
         {
             Mapper.CreateMap<HotelInfo, GetHotelResponse>()
                 .ForMember(dest => dest.Id, source => source.MapFrom(h => h.id))
+                .ForMember(dest => dest.Code, source => source.MapFrom(h => h.HotelCode))
                 .ForMember(dest => dest.Name, source => source.MapFrom(h => h.hotelName))
                 .ForMember(dest => dest.Address, source => source.MapFrom(h => h.hotelAddress))
                 .ForMember(dest => dest.Tel, source => source.MapFrom(h => h.hotelPhone))
