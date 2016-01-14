@@ -77,9 +77,9 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                                     };
                 GetHotelOrderResponse order = null;
 
-                result = Global.Bus.Send<GetHotelOrderResponse>(HotelServiceName, orderRequest);               
+              var orderResult = Global.Bus.Send<GetHotelOrderResponse>(HotelServiceName, orderRequest);               
 
-                if (!result.IsSuccess)
+                if (!orderResult.IsSuccess)
                 {
                     this.Response.Write(
                         "<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！')</script>");
@@ -87,7 +87,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 }
                 else
                 {
-                    order = result.Data;
+                    order = orderResult.Data;
                 }
 
                 if (order != null)
@@ -189,10 +189,10 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
 
             GetHotelOrderResponse orderResponse = null;
 
-            result = Global.Bus.Send<GetHotelOrderResponse>(HotelServiceName,
+            var orderResult = Global.Bus.Send<GetHotelOrderResponse>(HotelServiceName,
                 new GetHotelOrderByOrderIdRequest() {OrderId = int.Parse(id)});
 
-            if (!result.IsSuccess)
+            if (!orderResult.IsSuccess)
             {
                 this.Response.Write("<script language='javascript' type='text/javascript'>alert('该订单不存在或未付款，请确认！');location.href = 'dingdan_confirm.aspx?shopid=" +
                                         hotelid + "';</script>");
@@ -200,7 +200,7 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
             }
             else
             {
-                orderResponse = result.Data;
+                orderResponse = orderResult.Data;
             }
 
             //订单信息

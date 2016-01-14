@@ -41,7 +41,7 @@ namespace WeixinPF.Shared
         /// <param name="destinationEndpointName">目的地终端节点的名称（地址）</param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public ResultInfo Send<TResult>(string destinationEndpointName, dynamic message) where TResult : class
+        public ResultInfo<TResult> Send<TResult>(string destinationEndpointName, dynamic message) where TResult : class
         {
             TResult result = null;
             IAsyncResult asynResult = null;
@@ -64,18 +64,18 @@ namespace WeixinPF.Shared
             }
             catch (Exception ex)
             {
-                return new ResultInfo()
+                return new ResultInfo<TResult>()
                 {
                     IsSuccess = false,
                     Data = null,
                     Message = @"请求异常"
                 };
             }
-            
+
 
             if (asynResult.IsCompleted && result != null)
             {
-                return new ResultInfo()
+                return new ResultInfo<TResult>()
                 {
                     IsSuccess = true,
                     Data = result,
@@ -84,7 +84,7 @@ namespace WeixinPF.Shared
             }
             else
             {
-                return new ResultInfo()
+                return new ResultInfo<TResult>()
                 {
                     IsSuccess = false,
                     Data = null,
@@ -136,7 +136,7 @@ namespace WeixinPF.Shared
         //            busConfiguration.PurgeOnStartup(true);
         //            busConfiguration.ApplyCommonConfiguration();
         //            busConfiguration.EndpointName(fileName.Substring(0, fileName.Length - 4));
-                    
+
         //            dictBus.Add(busName, NServiceBus.Bus.Create(busConfiguration).Start());
         //        }
         //    }
@@ -148,6 +148,6 @@ namespace WeixinPF.Shared
             {
                 MyBus.Dispose();
             }
-        }        
+        }
     }
 }

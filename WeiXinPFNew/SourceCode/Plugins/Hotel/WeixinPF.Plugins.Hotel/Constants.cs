@@ -9,5 +9,7 @@ namespace WeixinPF.Hotel.Plugins
     {
         //Hotel Bus EndPoint Address
         public const string HotelServiceAddress = "WeixinPF.Hotel.Plugins.Service";
+
+        public const int HotelAdminRoleId = 20;
     }
 }

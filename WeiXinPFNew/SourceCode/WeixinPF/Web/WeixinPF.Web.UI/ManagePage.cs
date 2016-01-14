@@ -215,7 +215,7 @@ namespace WeixinPF.Web.UI
             {
                 HotelInfo hotel = null;
 
-                hotel = new HotelService(new HotelRepository()).GetModel(hotelid);
+                hotel = new HotelService().GetModel(hotelid);
 
                 if (hotel != null)
                 {

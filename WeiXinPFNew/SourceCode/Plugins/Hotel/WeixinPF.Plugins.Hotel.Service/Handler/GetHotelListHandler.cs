@@ -20,7 +20,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         }
         public void Handle(GetHotelListRequest message)
         {
-            var hotelService = new Application.Service.HotelService(new HotelRepository());
+            var hotelService = new Application.Service.HotelService();
 
             var entityList = hotelService.GetModelList(string.Format("wid={0}", message.Wid));
 

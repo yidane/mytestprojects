@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using WeixinPF.Hotel.Plugins.Service.Application.Repository;
+using WeixinPF.Hotel.Plugins.Service.Infrastructure;
 using WeixinPF.Hotel.Plugins.Service.Models;
 
 namespace WeixinPF.Hotel.Plugins.Service.Application.Service
 {
     public class HotelService
     {
-        public IHotelRepository _repository;
-        public HotelService(IHotelRepository repository)
+        private readonly IHotelRepository _repository;
+        public HotelService()
         {
-            this._repository = repository;
+            this._repository = new HotelRepository();
         }
         #region  BasicMethod
 

@@ -71,20 +71,20 @@ namespace WeixinPF.Hotel.Plugins.Functoin.BackPage.Hotel
                 identifyingCode = result.Data;
             }
 
-            result = Global.Bus
+           var orderResult = Global.Bus
                 .Send<GetHotelOrderResponse>("WeixinPF.Hotel.Plugins.Service",
                     new GetHotelOrderByOrderIdRequest()
                     {
                         OrderId = int.Parse(identifyingCode.OrderId)
                     });
 
-            if (!result.IsSuccess)
+            if (!orderResult.IsSuccess)
             {
                 return;
             }
             else
             {
-                hotelOrder = result.Data;
+                hotelOrder = orderResult.Data;
             }
 
             if (hotelOrder.OrderStatus.Equals(HotelStatusManager.OrderStatus.Refunded.StatusId)

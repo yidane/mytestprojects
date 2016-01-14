@@ -18,7 +18,7 @@ namespace WeixinPF.Hotel.Plugins.Service.Handler
         }
         public void Handle(GetHotelRequest message)
         {
-            var hotelService = new Application.Service.HotelService(new HotelRepository());
+            var hotelService = new Application.Service.HotelService();
             var entity = hotelService.GetModel(message.HotelId);
 
             _bus.Reply(entity.MapTo<GetHotelResponse>());

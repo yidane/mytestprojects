@@ -80,6 +80,7 @@
     <Compile Include="Application\Repository\IHotelOrderRepository.cs" />
     <Compile Include="Application\Repository\IHotelRepository.cs" />
     <Compile Include="Application\Repository\IHotelUserRepository.cs" />
+    <Compile Include="Application\Repository\IRefundOrderRepository.cs" />
     <Compile Include="Application\Repository\IRoomPictureRepository.cs" />
     <Compile Include="Application\Repository\IRoomRepository.cs" />
     <Compile Include="Application\Service\HotelAdminService.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Application\Service\HotelService.cs" />
     <Compile Include="Application\Service\HotelUserService.cs" />
     <Compile Include="Application\Service\IdentifyingCodeService.cs" />
+    <Compile Include="Application\Service\RefundOrderService.cs" />
     <Compile Include="Application\Service\RoomPictureService.cs" />
     <Compile Include="AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapper\Profiles\IdentityingCodeProfile.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Handler\Base\BaseHandler.cs" />
     <Compile Include="Handler\CancelOrderHandler.cs" />
     <Compile Include="Handler\CreateOrderHandler.cs" />
+    <Compile Include="Handler\DeleteOrderHandler.cs" />
     <Compile Include="Handler\GetByIdentifyingCodeIdHandler.cs" />
     <Compile Include="Application\Service\RoomService.cs" />
     <Compile Include="Handler\GetHotelHandler.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Handler\GetOrderHandler.cs" />
     <Compile Include="Handler\GetOrderListHandler.cs" />
     <Compile Include="Handler\GetOrderUserInfoHandler.cs" />
+    <Compile Include="Handler\GetPagedOrderListHandler.cs" />
     <Compile Include="Handler\GetRoomHandler.cs" />
     <Compile Include="Handler\GetRoomListHandler.cs" />
     <Compile Include="Handler\MakeUseOfIdentifyingCodeHandler.cs" />
@@ -121,6 +125,7 @@
     <Compile Include="Infrastructure\HotelOrderRepository.cs" />
     <Compile Include="Infrastructure\HotelRepository.cs" />
     <Compile Include="Infrastructure\HotelUserRepository.cs" />
+    <Compile Include="Infrastructure\RefundOrderRepository.cs" />
     <Compile Include="Infrastructure\RoomPictureRepository.cs" />
     <Compile Include="Infrastructure\RoomRepository.cs" />
     <Compile Include="Models\HotelAdminInfo.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="Models\HotelUserInfo.cs" />
     <Compile Include="Models\IdentifyingCodeDetailSearchDTO.cs" />
     <Compile Include="Models\IdentifyingCodeInfo.cs" />
+    <Compile Include="Models\RefundOrder.cs" />
     <Compile Include="Models\RoomInfo.cs" />
     <Compile Include="Models\RoomPictureInfo.cs" />
     <Compile Include="AutoMapper\Profiles\HotelProfile.cs" />

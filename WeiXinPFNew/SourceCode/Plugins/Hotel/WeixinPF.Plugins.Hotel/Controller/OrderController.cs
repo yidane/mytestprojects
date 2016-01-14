@@ -88,7 +88,7 @@ namespace WeixinPF.Hotel.Plugins.Controller
                     throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                         "获取订单信息失败。"));
                 }
-                var orderDto = order.Data;
+                var orderDto = order.Data.Order;
                 if (orderDto != null)
                 {
                     var unifiedOrderService = new UnifiedOrderService();

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace WeixinPF.Shared
 {
-    public class ResultInfo
+    public class ResultInfo<TResult>
     {
         public bool IsSuccess { get; set; }
-        public dynamic Data { get; set; }
+        public TResult Data { get; set; }
 
         public string Message { get; set; }
     }
