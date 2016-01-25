@@ -2882,7 +2882,6 @@
     <Content Include="Functoin\BackPage\Admin\weixin\myweixinlist.aspx" />
     <Content Include="Functoin\BackPage\Admin\weixin\WxMenu.aspx" />
     <Content Include="Functoin\BackPage\WeiXin\OAuth2.aspx" />
-    <Content Include="Functoin\BackPage\WeiXin\WeChatPay\js\zepto.min.js" />
     <Content Include="Functoin\BackPage\WeiXin\WeChatPay\Pay.aspx" />
     <Content Include="Functoin\StaticPage\Admin\usehelp\景区管理员\关注时回复.files\colorschememapping.xml" />
     <Content Include="Functoin\StaticPage\Admin\usehelp\景区管理员\关注时回复.files\filelist.xml" />
